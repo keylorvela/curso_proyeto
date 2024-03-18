@@ -2,14 +2,14 @@ const dbConnection = require('../../dbConfig');
 
 
 const verificarLogin = async (req, res) => {
-
+console.log("aquii")
   const htmlResponse = `
   <html>
     <head>
       <title>HTML Response</title>
     </head>
     <body>
-      <h1>Controller</h1>
+      <h1>Prueba 6</h1>
     </body>
   </html>
 `;

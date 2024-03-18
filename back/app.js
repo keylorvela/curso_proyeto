@@ -8,20 +8,6 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-/*app.get('/', (req, res) => {
-  const htmlResponse = `
-    <html>
-      <head>
-        <title>HTML Response</title>
-      </head>
-      <body>
-        <h1>Hola esto es una pruebaAAA</h1>
-      </body>
-    </html>
-  `;
-  return res.send(htmlResponse);
-});*/
-
 
 routes(app);
 
