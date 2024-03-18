@@ -3,7 +3,18 @@ const dbConnection = require('../../dbConfig');
 
 const verificarLogin = async (req, res) => {
 
-const correo = req.body.correo;
+  const htmlResponse = `
+  <html>
+    <head>
+      <title>HTML Response</title>
+    </head>
+    <body>
+      <h1>Controller</h1>
+    </body>
+  </html>
+`;
+return res.send(htmlResponse);
+/*const correo = req.body.correo;
 const contrasenna = req.body.contrasenna;
 const query = `CALL sp_VerificarUsuario('${correo}','${contrasenna}')`;
 console.log(query);
@@ -13,7 +24,7 @@ dbConnection.query(query, (err, results) => {
     } else {
     res.json(results[0])
     }
-});
+});*/
 }
 
 
