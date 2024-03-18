@@ -13,7 +13,7 @@ const verificarLogin = async (req, res) => {
     </body>
   </html>
 `;
-return res.send(htmlResponse);
+res.send(htmlResponse);
 /*const correo = req.body.correo;
 const contrasenna = req.body.contrasenna;
 const query = `CALL sp_VerificarUsuario('${correo}','${contrasenna}')`;
