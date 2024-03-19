@@ -2,18 +2,9 @@ const dbConnection = require('../../dbConfig');
 
 
 const verificarLogin = async (req, res) => {
-console.log("aquii")
-  const htmlResponse = `
-  <html>
-    <head>
-      <title>HTML Response</title>
-    </head>
-    <body>
-      <h1>Prueba 6</h1>
-    </body>
-  </html>
-`;
-res.send(htmlResponse);
+
+const Response = `Response from APIII`;
+res.json({ message: Response });
 /*const correo = req.body.correo;
 const contrasenna = req.body.contrasenna;
 const query = `CALL sp_VerificarUsuario('${correo}','${contrasenna}')`;
