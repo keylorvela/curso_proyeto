@@ -1,15 +1,9 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 require('dotenv').config();
 
+const dbUri = process.env.DB_URI;
 
-const dbConfig = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-};
-
-const dbConnection = mysql.createConnection(dbConfig);
+const dbConnection = mysql.createConnection(dbUri);
 
 dbConnection.connect((err) => {
   if (err) {
@@ -18,6 +12,5 @@ dbConnection.connect((err) => {
     console.log('Conexión exitosa a la base de datos MySQL');
   }
 });
-
 module.exports = dbConnection;
 

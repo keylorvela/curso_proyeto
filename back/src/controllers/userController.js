@@ -3,8 +3,16 @@ const dbConnection = require('../../dbConfig');
 
 const verificarLogin = async (req, res) => {
 
-const Response = `Response from APIII`;
-res.json({ message: Response });
+  const query = `select * from usuarios;`;
+  dbConnection.query(query, (err, results) => {
+      if (err) {
+      res.status(500).send('Error al llamar al proceso almacenado');
+      } else {
+      res.json(results)
+      }
+  });
+//const Response = `Response from APIII`;
+//res.json({ message: Response });
 /*const correo = req.body.correo;
 const contrasenna = req.body.contrasenna;
 const query = `CALL sp_VerificarUsuario('${correo}','${contrasenna}')`;
