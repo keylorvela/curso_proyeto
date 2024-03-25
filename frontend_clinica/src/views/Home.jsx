@@ -1,24 +1,21 @@
 import React from 'react'
 import styles from 'src/views/Home.module.css'
-import ButtonP from 'src/components/ButtonP.jsx'
+import MainNavbar from 'src/components/MainNavbar.jsx'
 
 function Home() {
     return (
         <>
             <div className={styles.page}>
                 
-                <div className={styles.head}>
+
+
+                <main className={styles.main}>
                 
+                    <section className={styles.content}></section>
+                    <aside className={styles.sidebar}></aside>
 
-                </div>
+                </main>
 
-
-                <div className={styles.main}>
-                <div className={styles.content}></div>
-                <div className={styles.sidebar}></div>
-
-
-                </div>
 
 
             </div>
