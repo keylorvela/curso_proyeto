@@ -22,6 +22,7 @@ function App() {
             <Route path="treatments" element={<Treatments />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
+          
         </main>
         <footer className={styles.footer}></footer>
       </div>

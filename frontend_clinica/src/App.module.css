@@ -9,16 +9,16 @@
 .head {
   height: 10%;
   width: 100%;
-  background-color: brown;
 }
 
 
 .main {
   height: 80%;
   width: 100%;
-  background-color: #1c3f33;
+  max-height: 80%;
+  overflow-y: auto;
   display:flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 1%;
   gap:1%;
 }
