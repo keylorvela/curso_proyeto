@@ -1,0 +1,27 @@
+.body {
+    background-color: #FFFFFF;
+    border: 2px solid #85B79D;
+    border-radius: 7px;
+    padding: 5%;
+}
+
+.btn {
+    color: #FFFFFF;
+    background-color: #85B79D;
+    border: 0px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.btn:hover {
+    background-color: #3e5348;
+}
+
+
+
+.img {
+    width: 50%;
+    /* O ajusta el tamaño según tus necesidades */
+    height: auto;
+    /* La altura se ajusta automáticamente según el ancho */
+}

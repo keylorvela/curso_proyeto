@@ -1,11 +1,41 @@
-.main{
-    width: 100%;
-    height: 100%;
+.main {
     direction: flex;
     flex-direction: column;
-    
+
 }
 
-.carousel{
+.carousel {
     width: 100%;
+    height: 25%;
+}
+
+.featured {
+    background-color: #E5D4ED;
+    margin-top: 10%;
+    width: 100%;
+    height: 65%;
+}
+
+
+
+.academy {
+    background-color: #ae00ff;
+    margin-top: 5%;
+    width: 100%;
+    height: 65%;
+    margin-bottom: 5%;
+
+}
+
+
+
+/* ---------- Mobile  */
+@media (max-width: 768px) {
+    .featured {
+        height: 85%;
+    }
+
+    .academy {
+        height: 85%;
+    }
 }

@@ -1,0 +1,16 @@
+.body{
+    direction: flex;
+    flex-direction: column;
+    background-color: #E5D4ED;
+    margin-top: 5%;
+    padding: 2%;
+}
+
+.main{
+    direction: flex;
+    flex-direction: row;
+}
+
+.treatment{
+    width: 15%;
+}
