@@ -1,0 +1,11 @@
+.imgDiv {
+    width: 100%; /* Ejemplo de ancho relativo */
+    height: 100%; /* Altura automática para mantener la proporción */
+
+}
+
+.img {
+    width: 100%;
+    
+    height: 100%; /* Puede ser auto o un valor fijo dependiendo de tu diseño */
+}
