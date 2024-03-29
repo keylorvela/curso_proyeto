@@ -1,3 +1,4 @@
+
 .imgDiv {
     width: 100%; /* Ejemplo de ancho relativo */
     height: 100%; /* Altura automática para mantener la proporción */
@@ -9,3 +10,28 @@
     
     height: 100%; /* Puede ser auto o un valor fijo dependiendo de tu diseño */
 }
+
+.aboutTitles {
+    color: #1D2D8C;
+    padding-top: 5%; 
+    padding-bottom: 5%; 
+    padding-left: 4%; 
+    padding-right: 8%; 
+    font-size: 4vw; 
+  }
+  
+.centerText {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.aboutDescription {
+    text-align: justify;
+    font-size: 2.5vw; 
+    margin-top: 2%; 
+    margin-left: 2%; 
+    margin-right: 2%; 
+    font-family: sans-serif;
+  }
+  
