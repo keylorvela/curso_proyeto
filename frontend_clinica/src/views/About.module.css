@@ -13,10 +13,8 @@
 
 .aboutTitles {
     color: #1D2D8C;
-    padding-top: 5%; 
-    padding-bottom: 5%; 
-    padding-left: 4%; 
-    padding-right: 8%; 
+    margin-left: -10%;
+    margin-top: 3%; 
     font-size: 4vw; 
   }
   
@@ -24,13 +22,15 @@
     display: flex; 
     justify-content: center;
     align-items: center;
+    margin-right: 8%;
+    margin-left: 5%;
 }
 
 .aboutDescription {
     text-align: justify;
     font-size: 2.5vw; 
     margin-top: 2%; 
-    margin-left: 2%; 
+    margin-left: -5%; 
     margin-right: 2%; 
     font-family: sans-serif;
   }
