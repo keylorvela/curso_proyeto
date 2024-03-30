@@ -11,7 +11,7 @@ import img from 'src/assets/stock2.jpg'
 const About = () => {
     return (
         <>
-            <h1 className={styles.aboutTitles} style={{ fontSize: '96px', marginLeft: '4%' }}>Sobre nosotros</h1>
+            <h1 className={styles.aboutTitles} style={{ fontSize: '7vw', marginLeft: '4%' }}>Sobre nosotros</h1>
             <Container className='d-flex justify-content-center'>
 
                 <Col sm={6}>
