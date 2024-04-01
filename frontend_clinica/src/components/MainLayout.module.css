@@ -3,7 +3,6 @@
     height: 100dvh;
     display: flex;
     flex-direction: column;
-    background-color: blue;
 }
 
 .nabvar{
@@ -16,7 +15,8 @@
 .main{
     height: 80%;
     width: 100%;
-    background-color: yellow;
+    max-height: 80%;
+    overflow-y: scroll;
 }
 
 .footer{
