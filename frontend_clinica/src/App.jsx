@@ -10,11 +10,6 @@ import MainNavbar from 'src/components/MainNavbar.jsx';
 function App() {
   return (
     <BrowserRouter>
-      <div className={styles.page}>
-        <nav className={styles.head}>
-          <MainNavbar/>
-        </nav>
-        <main className={styles.main}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="about" element={<About />} />
@@ -22,10 +17,6 @@ function App() {
             <Route path="treatments" element={<Treatments />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
-          
-        </main>
-        <footer className={styles.footer}></footer>
-      </div>
     </BrowserRouter>
   );
 }

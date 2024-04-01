@@ -1,10 +1,15 @@
+
+import MainLayout from 'src/components/MainLayout.jsx'
+import MainNavbar from 'src/components/MainNavbar.jsx'
+
+
+
 function Courses() {
     return (
-        <>
-            <h2>HOLA MUNDO COURSES</h2>
-        </>
-
-    );
+        <MainLayout>
+            <h2>COURSES</h2>
+        </MainLayout>
+      );
 }
 
 export default Courses;

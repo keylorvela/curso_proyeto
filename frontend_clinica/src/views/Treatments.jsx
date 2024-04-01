@@ -1,10 +1,14 @@
+
+import MainLayout from 'src/components/MainLayout.jsx'
+
+
+
 function Treatments() {
     return (
-        <>
-            <h2>HOLA MUNDO TREATMENTS</h2>
-        </>
-
-    );
+        <MainLayout>
+            <h2>TREATMENTS</h2>
+        </MainLayout>
+      );
 }
 
 export default Treatments;

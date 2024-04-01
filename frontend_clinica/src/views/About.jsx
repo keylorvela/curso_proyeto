@@ -6,11 +6,16 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Container from 'react-bootstrap/Container';
 
+
+import MainNavbar from 'src/components/MainNavbar.jsx';
+
 import img from 'src/assets/stock2.jpg'
 
-const About = () => {
+function About() {
     return (
         <>
+            <MainNavbar/>
+
             <h1 className={styles.aboutTitles} style={{ fontSize: '7vw', marginLeft: '4%' }}>Sobre nosotros</h1>
             <Container className='d-flex justify-content-center'>
 

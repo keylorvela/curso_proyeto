@@ -1,4 +1,4 @@
-.body{
+.body {
     direction: flex;
     flex-direction: column;
     background-color: #E5D4ED;
@@ -6,11 +6,17 @@
     padding: 2%;
 }
 
-.main{
+.main {
     direction: flex;
     flex-direction: row;
 }
 
-.treatment{
+.treatment {
     width: 15%;
+}
+
+.title {
+    color: #1D2D8C;
+    margin-top: 5%;
+    margin-bottom: 5%;
 }

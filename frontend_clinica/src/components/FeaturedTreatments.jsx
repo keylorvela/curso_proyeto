@@ -16,8 +16,8 @@ function FeaturedTreatments() {
     return (
         <>
             <main className={styles.body}>
-                <h2 className='ms-5 mt-1 mb-5 fw-light'>Tratamientos destacados:</h2>
-                <Container className='d-flex justify-content-end'>
+                <h2 className={`text-center ${styles.title}`}>Tratamientos destacados:</h2>
+                <Container className='d-flex justify-content-end gap-3'>
                     <Row>
                         <Col sm={3}>
                             <Treatment
