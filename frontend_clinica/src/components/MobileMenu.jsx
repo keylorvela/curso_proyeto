@@ -3,7 +3,7 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { Link, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Logo from 'src/assets/LogoELS.svg';
 import styles from 'src/components/MobileMenu.module.css'
@@ -38,11 +38,12 @@ function MobileMenu() {
                             <Link onClick = {handleClose} to="/about">Quienes Somos</Link>
                         </ListGroup.Item>
                         <ListGroup.Item>
-                            <Link onClick = {handleClose} to="/treatments">Tratamientos</Link>
-                        </ListGroup.Item>
-                        <ListGroup.Item>
                             <Link onClick = {handleClose} to="/courses">Cursos</Link>
                         </ListGroup.Item>
+                        <ListGroup.Item>
+                            <Link onClick = {handleClose} to="/treatments">Tratamientos</Link>
+                        </ListGroup.Item>
+                        
 
                     </ListGroup>
                 </Offcanvas.Body>

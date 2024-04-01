@@ -23,9 +23,10 @@ function MainNavbar() {
 
                             <Link to="/about" className={styles.navLink}>Quienes Somos</Link>
 
+                            <Link to="/courses" className={styles.navLink}>Cursos</Link>
+                            
                             <Link to="/treatments" className={styles.navLink}>Tratamientos</Link>
                         
-                            <Link to="/courses" className={styles.navLink}>Cursos</Link>
    
                 </div>
             </div>

@@ -19,7 +19,9 @@ function Home() {
     };
 
     return (
-        <div className={styles.mainHome} >
+        <div className={styles.mainHome}>
+
+            {/* Multiple classes */}
             <div className={`${styles.imageContainer} ${styles.academy}`}>
                 <Button onClick={handleAcademy} className='mb-5'> ACADEMIA </Button>
 
