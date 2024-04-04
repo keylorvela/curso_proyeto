@@ -1,18 +1,28 @@
 import styles from 'src/components/Treatment.module.css'
 import Image from 'react-bootstrap/Image';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 
-function Treatment({ photo, description, event }) {
+import { Link } from 'react-router-dom';
+
+
+
+
+function Treatment({ photo, name, event }) {
 
     return (
 
         <>
             <main className={styles.body}>
                 <Image src={photo} fluid />
-                <p className = 'mt-3'> {description} </p>
+                <p className={styles.font}> {name} </p>
+                <Link to="/treatments" className={`fw-bold ${styles.font}`}>
+                    Ver detalles
+                </Link>
                 <button className={`fw-bold ${styles.btn}`} onClick={event}>
-                    Más info
+                    <FontAwesomeIcon icon={faEdit} style={{ fontSize: '1.5em' }} />
                 </button>
             </main>
 

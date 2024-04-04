@@ -1,0 +1,24 @@
+.line {
+    display: flex;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: 5%;
+    width: 90%;
+    height: 0.6%;
+    background-color: #1D2D8C; 
+  }
+
+  .title {
+    color: #3F8EFC;
+    margin-left: 71%;
+    margin-top: 3%; 
+    font-size: 4vw; 
+  }
+  
+  .customButton {
+    font-weight: bold; 
+    font-size: 1.2em; 
+    padding: 10px 20px; 
+    margin-right: 5%;
+  }
+  
