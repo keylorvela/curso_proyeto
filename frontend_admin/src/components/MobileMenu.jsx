@@ -5,7 +5,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from 'react-router-dom';
 
-import Logo from 'src/assets/LogoELS.svg';
+import Logo from 'src/assets/LogoELS1.svg';
 import styles from 'src/components/MobileMenu.module.css'
 
 function MobileMenu() {

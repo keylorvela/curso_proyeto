@@ -1,7 +1,7 @@
 import MobileMenu from 'src/components/MobileMenu.jsx';
 
 import styles from 'src/components/MainNavbar.module.css'
-import Logo from 'src/assets/LogoELS.svg';
+import Logo from 'src/assets/LogoELS1.svg';
 import { Link, Outlet } from 'react-router-dom';
 
 
