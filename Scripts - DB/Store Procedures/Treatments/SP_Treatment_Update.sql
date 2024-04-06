@@ -12,16 +12,24 @@ CREATE PROCEDURE SP_Treatment_Update(
 BEGIN
     -- Declare control variable
     DECLARE v_treatmentCount INT;
+    DECLARE v_treatmentCategoryCount INT;
 
     -- Check if the treatment exists
     SELECT COUNT(*)
         INTO @v_treatmentCount
         FROM Treatment AS T
         WHERE T.ID = p_treatmentID;
+        
+	SELECT COUNT(*)
+        INTO @v_treatmentCategoryCount
+        FROM TreatmentCategory AS TC
+        WHERE TC.ID = p_categoryID;
 
     -- Error if the treatment does not exists
     IF @v_treatmentCount = 0 THEN
         SET o_status = "Error: Treatment NOT found";
+	ELSE IF @v_treatmentCategoryCount = 0 THEN
+		SET o_status = "Error: CategoryID NOT found";
     ELSE
         -- Update the treatment information
         UPDATE Treatment
@@ -34,6 +42,8 @@ BEGIN
 
         SET o_status = "Success: Treatment updated";
     END IF;
+
+    SELECT o_status;
 END //
 
 DELIMITER ;

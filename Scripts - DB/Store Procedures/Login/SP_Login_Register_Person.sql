@@ -28,6 +28,7 @@ BEGIN
         SET o_personID = -1;
     END IF;
 
+    SELECT o_status;
 END //
 
 DELIMITER ;

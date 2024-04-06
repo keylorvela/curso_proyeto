@@ -9,12 +9,16 @@ BEGIN
     DECLARE v_courseCount INT;
 
     SELECT COUNT(*)
-    FROM Course AS C
-    WHERE C.ID = p_courseID;
+        INTO v_courseCount
+        FROM Course AS C
+        WHERE C.ID = p_courseID;
 
     IF @v_courseCount = 0 THEN
         SET o_status = "Error: Course NOT found";
+        SELECT o_status;
     ELSE
+        SET o_status = "Success: Course found";
+
         SELECT
             Name,
             Description,
@@ -22,13 +26,13 @@ BEGIN
             StartingDate,
             ScheduleDate,
             ScheduleHour,
-            Capacity 
+            Capacity,
+            o_status
         FROM Course AS C
         INNER JOIN bqhd9nbafrpsvzpzrgvc.Group AS G
             ON G.CourseID = C.ID
         WHERE C.ID = p_courseID;
 
-        SET o_status = "Success: Course found";
     END IF;
 
 END //

@@ -23,6 +23,7 @@ BEGIN
             WHERE UserID = p_userID AND GroupID = p_groupID;
     END IF;
 
+    SELECT o_status;
 END //
 
 DELIMITER ;

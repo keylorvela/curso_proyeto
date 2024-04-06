@@ -29,6 +29,7 @@ BEGIN
         SET o_status = "Success: Course deleted";
     END IF;
     
+    SELECT o_status;
 END //
 
 DELIMITER ;

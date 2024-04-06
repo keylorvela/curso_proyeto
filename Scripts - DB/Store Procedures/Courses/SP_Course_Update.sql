@@ -42,6 +42,8 @@ BEGIN
 
         SET o_status = "Success: Course updated";
     END IF;
+    
+    SELECT o_status;
 END //
 
 DELIMITER ;

@@ -34,6 +34,8 @@ BEGIN
 
         SET o_status = "Success: Application updated";
     END IF;
+
+    SELECT o_status;
 END //
 
 DELIMITER ;

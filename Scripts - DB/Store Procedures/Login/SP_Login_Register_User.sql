@@ -41,6 +41,7 @@ BEGIN
         SET o_status = "Error: Failed insertion";
     END IF;
 
+    SELECT o_status;
 END //
 
 DELIMITER ;

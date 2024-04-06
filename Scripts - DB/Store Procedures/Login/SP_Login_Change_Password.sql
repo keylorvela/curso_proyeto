@@ -43,6 +43,8 @@ BEGIN
 			SET o_status = "Success: User updated";
         END IF;
     END IF;
+
+    SELECT o_status;
 END //
 
 DELIMITER ;

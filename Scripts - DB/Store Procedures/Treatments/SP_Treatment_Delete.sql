@@ -24,7 +24,8 @@ BEGIN
 
         SET o_status = "Success: Treatment deleted";
     END IF;
-    
+
+    SELECT o_status;
 END //
 
 DELIMITER ;
