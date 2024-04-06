@@ -1,0 +1,10 @@
+insert into Course (Name, Description, Price) values ('Compactor', 'Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.', 86535);
+insert into Course (Name, Description, Price) values ('Excavator', 'In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.', 98358);
+insert into Course (Name, Description, Price) values ('Trencher', 'Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.', 75249);
+insert into Course (Name, Description, Price) values ('Excavator', 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.', 50332);
+insert into Course (Name, Description, Price) values ('Dump Truck', 'Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.', 57870);
+insert into Course (Name, Description, Price) values ('Crawler', 'Fusce consequat. Nulla nisl. Nunc nisl.', 93289);
+insert into Course (Name, Description, Price) values ('Dump Truck', 'Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.', 63409);
+insert into Course (Name, Description, Price) values ('Scraper', 'Fusce consequat. Nulla nisl. Nunc nisl.', 66514);
+insert into Course (Name, Description, Price) values ('Backhoe', 'Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.', 86877);
+insert into Course (Name, Description, Price) values ('Backhoe', 'Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.', 58266);
