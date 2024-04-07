@@ -3,14 +3,14 @@ import cors from 'cors';
 import { Router } from "express";
 const router = Router();
 
-import ApplicationRoute from "./src/routes/Applications.route"
-import CoursesRoute from "./src/routes/Courses.route"
-import LoginRoute from "./src/routes/Login.route"
-import NewsRoute from "./src/routes/News.route"
-import ReviewsRoute from "./src/routes/Reviews.route"
-import StudentsRoute from "./src/routes/Students.route"
-import TeachersRoute from "./src/routes/Teachers.route"
-import TreatmentsRoute from "./src/routes/Treatments.route"
+import ApplicationRoute from "./routes/Applications.route"
+import CoursesRoute from "./routes/Courses.route"
+import LoginRoute from "./routes/Login.route"
+import NewsRoute from "./routes/News.route"
+import ReviewsRoute from "./routes/Reviews.route"
+import StudentsRoute from "./routes/Students.route"
+import TeachersRoute from "./routes/Teachers.route"
+import TreatmentsRoute from "./routes/Treatments.route"
 
 const app = express();
 const port = process.env.PORT || 3000;
