@@ -1,18 +1,16 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const Courses_controller_1 = require("../controllers/Courses.controller");
 const router = (0, express_1.Router)();
-router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200).send("Hola");
-}));
+// Rutas para la gestión de cursos
+router.get("/", Courses_controller_1.getCourseList);
+router.post("/", Courses_controller_1.createCourse);
+router.put("/:courseId", Courses_controller_1.updateCourse);
+router.delete("/:courseId", Courses_controller_1.deleteCourse);
+router.get("/:courseId", Courses_controller_1.searchCourse);
+// Rutas para la gestión de la participación en cursos
+router.post("/:courseId/drop-out", Courses_controller_1.dropOutCourse);
+router.get("/enrolled/:userID", Courses_controller_1.listEnrolledCourses);
 exports.default = router;
 //# sourceMappingURL=Courses.route.js.map
