@@ -10,11 +10,14 @@
     "add-build": "git add dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "pre-commit": [
-    "ts.check",
-    "build",
-    "add-build"
-  ],
+  "pre-commit": {
+    "run": [
+      "ts.check",
+      "build",
+      "add-build",
+      "test"
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
