@@ -1,7 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import { Router } from "express";
-const router = Router();
 
 import ApplicationRoute from "./routes/Applications.route"
 import CoursesRoute from "./routes/Courses.route"
@@ -26,13 +24,6 @@ app.use("/reviews", ReviewsRoute);
 app.use("/students", StudentsRoute);
 app.use("/teachers", TeachersRoute);
 app.use("/treatments", TreatmentsRoute);
-
-const hola = router.get("/", async (req, res) => {
-  res.status(200).send("Hola");
-})
-
-app.use("/", hola);
-
 
 app.listen(port, () => {
   console.log(`Servidor Express en ejecución en el puerto ${port}`);
