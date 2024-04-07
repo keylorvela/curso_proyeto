@@ -1,14 +1,14 @@
 {
     "builds": [
       {
-        "src": "app.ts",
-        "use": "@vercel/npm run start"
+        "src": "package.json",
+        "use": "@vercel/node"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "app.ts"
+        "dest": "package.json"
       }
     ]
   }
