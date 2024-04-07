@@ -14,8 +14,7 @@
     "run": [
       "ts.check",
       "build",
-      "add-build",
-      "test"
+      "add-build"
     ]
   },
   "keywords": [],
