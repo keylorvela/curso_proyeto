@@ -13,7 +13,6 @@ CREATE PROCEDURE SP_Course_Create(
 )
 BEGIN
     DECLARE v_courseCount INT;
-    DECLARE v_courseID INT;
 
     SELECT COUNT(*)
         INTO @v_courseCount
@@ -23,17 +22,15 @@ BEGIN
     IF (@v_courseCount > 0) THEN
         SET o_status = "Error: Course repeated";
     ELSE
-        INSERT INTO Course (Name, Description, Price) 
+        INSERT INTO Course (Name, Description, Price)
             VALUES (p_name, p_description, p_price);
 
-        SET v_courseID = LAST_INSERT_ID();
-
         INSERT INTO bqhd9nbafrpsvzpzrgvc.Group(StartingDate, ScheduleDate, ScheduleHour, Capacity, CourseID)
-            VALUES (p_startingDate, p_date, p_hour, p_capacity, @v_courseID);
+            VALUES (p_startingDate, p_date, p_hour, p_capacity, @LAST_INSERT_ID());
 
         SET o_status = "Success: Course created";
     END IF;
-    
+
     SELECT o_status;
 END //
 
