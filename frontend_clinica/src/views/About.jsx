@@ -21,17 +21,24 @@ function About() {
                 <div className={styles.main}>
 
                     <h1 className={styles.aboutTitles} style={{ fontSize: '7vw', marginLeft: '4%' }}>Sobre nosotros</h1>
-                    <Container className='d-flex justify-content-center'>
 
-                        <Col sm={6}>
+                    <Container className='d-flex'>
+
+                        <Col xs={8}>
                             <h2 className={styles.aboutTitles}>Nuestra clínica</h2>
-                            <p className={styles.aboutDescription}>Más aquí............................................. info</p>
+                            <p className={styles.aboutDescription}>
+                                Desde el 2016, nos hemos insertado al mercado estético buscando 2 objetivos, tener los mejores profesionales y
+                                tratamientos del sector estético, especializandonos en estética facial, y ser una academia estética que forme verdaderos
+                                profesionales en la rama, a los que consideren parte de la salud, para esto, dar el conocimiento óptimo y completo para que puedan tratar
+                                pacientes de la forma más integralmente posible.
+                            </p>
                         </Col>
-                        <Col sm={6}>
+                        <Col xs={8}>
                             <Image src={img} className="img-fluid" />
                         </Col>
 
                     </Container>
+
                     <div className={styles.imgDiv}>
                         <img
                             className={styles.img}
@@ -39,14 +46,19 @@ function About() {
                             alt="Imagen"
                         />
                     </div>
-                    <Container className='d-flex justify-content-center'>
+                    <Container className='d-flex'>
                         <Col sm={6}>
                             <div className={styles.centerText}>
                                 <h2 className={styles.aboutTitles} >Misión</h2>
 
                             </div>
                             <div className={styles.centerText}>
-                                <p className={styles.aboutDescription}>Más aquí..................................... info</p>
+                                <p className={styles.aboutDescription}>
+                                    Desde el 2016, nos hemos insertado al mercado estético buscando 2 objetivos, tener los mejores profesionales y
+                                    tratamientos del sector estético, especializandonos en estética facial, y ser una academia estética que forme verdaderos
+                                    profesionales en la rama, a los que consideren parte de la salud, para esto, dar el conocimiento óptimo y completo para que puedan tratar
+                                    pacientes de la forma más integralmente posible.
+                                </p>
                             </div>
                         </Col>
                         <Col sm={6}>

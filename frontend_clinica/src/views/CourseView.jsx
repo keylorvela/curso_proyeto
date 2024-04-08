@@ -153,7 +153,7 @@ function courseView() {
             </Col>
 
 
-            <Col className='px-5 pb-5 border rounded'>
+            <Col className='px-5 pb-5 my-4 border rounded'>
               <CourseForm/>
             </Col>
 

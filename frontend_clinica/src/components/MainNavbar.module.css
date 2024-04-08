@@ -38,9 +38,10 @@
 }
 
 .navLink{
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-decoration: none;
     color: #FFFFFF;
+    font-weight: 700;
 
 }
 
