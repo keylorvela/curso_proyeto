@@ -1,5 +1,6 @@
 import React from 'react';
-import MainNavbar from 'src/components/MainNavbar';
+import MainNavbar from 'src/components/MainNavbar.jsx';
+import MainFooter from 'src/components/MainFooter.jsx';
 import styles from 'src/components/MainLayout.module.css';
 
 function MainLayout({ children }) {
@@ -16,7 +17,7 @@ function MainLayout({ children }) {
         </main>
 
         <footer className={styles.footer}>
-
+          <MainFooter />
         </footer>
 
       </div>

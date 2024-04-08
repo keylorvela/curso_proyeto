@@ -1,0 +1,13 @@
+.main{
+    width: 100%;
+    height: 100%;
+    background-color: #1D2D8C;
+    color: #FFFFFF;
+    padding: 2%;
+}
+
+.link{
+    color:#FFFFFF;
+    size:5rem;
+    font-weight: 700;
+}

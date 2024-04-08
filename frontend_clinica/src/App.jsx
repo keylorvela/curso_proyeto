@@ -4,6 +4,9 @@ import Home from 'src/views/Home.jsx';
 import About from 'src/views/About.jsx';
 import Courses from 'src/views/Courses.jsx';
 import Treatments from 'src/views/Treatments.jsx';
+import TreatmentView from 'src/views/TreatmentView.jsx';
+
+import CourseView from 'src/views/CourseView.jsx';
 import NoPage from 'src/views/NoPage.jsx';
 import MainNavbar from 'src/components/MainNavbar.jsx';
 
@@ -15,6 +18,8 @@ function App() {
             <Route path="about" element={<About />} />
             <Route path="courses" element={<Courses />} />
             <Route path="treatments" element={<Treatments />} />
+            <Route path="treatment/:id" element={<TreatmentView />} />
+            <Route path="course/:id" element={<CourseView />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
     </BrowserRouter>

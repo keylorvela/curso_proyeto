@@ -27,7 +27,7 @@ function MobileMenu() {
             <Offcanvas show={show} onHide={handleClose} responsive="lg">
                 
                 
-                <Offcanvas.Header className = {styles.header} closeButton>
+                <Offcanvas.Header className = {styles.header} closeButton closeVariant='white'>
                     <Link onClick = {handleClose} to="/"><img className={styles.logoImg} src={Logo} alt="Clínica ELS Logo" /></Link>
                 </Offcanvas.Header>
 

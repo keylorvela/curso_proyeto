@@ -3,7 +3,7 @@ import Image from 'react-bootstrap/Image';
 import stock2 from 'src/assets/stock2.jpg';
 import stock3 from 'src/assets/stock3.jpg';
 import styles from 'src/views/Home.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 import { Button } from 'react-bootstrap';
@@ -22,12 +22,14 @@ function Home() {
         <div className={styles.mainHome}>
 
             {/* Multiple classes */}
-            <div className={`${styles.imageContainer} ${styles.academy}`}>
-                <Button onClick={handleAcademy} className='mb-5'> ACADEMIA </Button>
-
+            <div onClick={handleAcademy} className={`${styles.imageContainer} ${styles.academy}`}>
+                
+            <Link to="/treatments" className={`${styles.link} fw-bold text-decoration-underline`}>CLINICA</Link>
             </div>
-            <div className={`${styles.imageContainer} ${styles.clinic}`}>
-                <Button onClick={handleClinic} className='mb-5'> CLINICA </Button>
+
+            <div onClick={handleClinic} className={`${styles.imageContainer} ${styles.clinic}`}>
+
+            <Link to="/courses" className={`${styles.link} fw-bold text-decoration-underline`}>ACADEMIA</Link>
 
             </div>
         </div>
