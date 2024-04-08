@@ -10,18 +10,19 @@ import { Link } from 'react-router-dom';
 
 
 
-function Treatment({ photo, name, event }) {
+function Treatment({ treatmentInfo, event,photo }) {
+
 
     return (
 
         <>
             <main className={styles.body}>
                 <Image src={photo} fluid />
-                <p className={styles.font}> {name} </p>
+                <p className={styles.font}> {treatmentInfo.Name} </p>
                 <Link to="/treatments" className={`fw-bold ${styles.font}`}>
                     Ver detalles
                 </Link>
-                <button className={`fw-bold ${styles.btn}`} onClick={event}>
+                <button className={`fw-bold ${styles.btn}`} onClick={() => event(treatmentInfo)}>
                     <FontAwesomeIcon icon={faEdit} style={{ fontSize: '1.5em' }} />
                 </button>
             </main>

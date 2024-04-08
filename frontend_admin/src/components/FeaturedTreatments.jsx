@@ -1,3 +1,6 @@
+import {React,useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import styles from 'src/components/FeaturedTreatments.module.css'
 
 import Treatment from 'src/components/Treatment.jsx'
@@ -6,40 +9,30 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import img from 'src/assets/stock2.jpg'
+import TreatmentsService from 'src/services/Treatments.service.js'; 
 
 function FeaturedTreatments() {
 
-    const treatments = {
-        "all": [
-            {
-                "id": 1,
-                "name": "Limpieza facial"
-            },
-            {
-                "id": 2,
-                "name": "Peeling químico"
-            },
-            {
-                "id": 3,
-                "name": "Microdermoabrasión"
-            },
-            {
-                "id": 4,
-                "name": "Radiofrecuencia facial"
-            },
-            {
-                "id": 5,
-                "name": "Mesoterapia facial"
-            },
-            {
-                "id": 6,
-                "name": "Botox"
-            }
-        ]
-    }
+    const navegate = useNavigate ();
+    const [treatments, setTreatments] = useState([]);
 
-    const handleButton = () => {
-        alert('Ver tratamiento');
+    useEffect(() => {
+        const getTreatments = async () => {
+            try {
+              const treatmentsData = await TreatmentsService.getTreatments();
+              setTreatments(treatmentsData[0]);
+            } catch (error) {
+              console.error('getTreatments fail:', error);
+            }
+          };
+          getTreatments();
+      }, []);
+
+
+    const handleButton = (treatmentInfo) => {
+        navegate('/modifyTreatment/' + treatmentInfo.Name, {
+        state: {treatmentInfo}
+        });
     };
 
     return (
@@ -47,41 +40,16 @@ function FeaturedTreatments() {
             <main className={styles.body}>
                 <Container className='d-flex justify-content-end gap-3'>
                     <Row>
-                        {treatments.all.map(tratamiento => (
-                            <Col sm={3} key={tratamiento.id}>
+                        {treatments.map(tratamiento => (
+                            <Col sm={3} key={tratamiento.ID}>
                                 <Treatment
                                     photo={img}
-                                    name={tratamiento.name} 
+                                    treatmentInfo={tratamiento} 
                                     event={handleButton} 
                                     className={styles.treatment} 
                                 />
                             </Col>
                         ))}
-
-                        <Col sm={3}>
-                            <Treatment
-                                photo={img}
-                                name="Treatment Name"
-                                event={handleButton}
-                                className={styles.treatment}
-                            />
-                        </Col>
-                        <Col sm={3}>
-                            <Treatment
-                                photo={img}
-                                name="Treatment Name"
-                                event={handleButton}
-                                className={styles.treatment}
-                            />
-                        </Col>
-                        <Col sm={3}>
-                            <Treatment
-                                photo={img}
-                                name="Treatment Name"
-                                event={handleButton}
-                                className={styles.treatment}
-                            />
-                        </Col>
 
 
                     </Row>
