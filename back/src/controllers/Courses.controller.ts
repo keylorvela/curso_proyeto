@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
 import dbConnection from "../database/dbConfig";
+import { RowDataPacket } from 'mysql2';
+import { Course, EnrolledCourses } from "interfaces/Course.interface";
+import { OStatus } from "interfaces/OStatus.interface";
 
 // Comentario
 export const getCourseList = async (req: Request, res: Response) => {
@@ -12,7 +15,9 @@ export const getCourseList = async (req: Request, res: Response) => {
     }
 
     try {
-        const result = await dbConnection.query(`CALL SP_Course_ReadAll(${limit}, ${offset}, @o_status)`);
+        const result_course = await dbConnection.query<RowDataPacket[]>(`CALL SP_Course_ReadAll(${limit}, ${offset}, @o_status)`);
+        const result: Course[] = JSON.parse(JSON.stringify(result_course[0][0]));
+
         res.status(200).send(result);
     } catch (error) {
         console.error("Error:", error);
@@ -38,12 +43,11 @@ export const createCourse = async (req: Request, res: Response) => {
     }
 
     try {
-        const result = await dbConnection.query(`
+        const result_course = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Course_Create('${startingDate}','${date}','${hour}',${capacity},'${name}','${description}',${price},@o_status)`);
+        const result: OStatus[] = JSON.parse(JSON.stringify(result_course[0][0]));
 
-        // const status = result[0][0].status;
-
-        res.status(200).send({ result });
+        res.status(200).send(result[0] || {});
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send({ error: "Request Failed" });
@@ -69,7 +73,7 @@ export const updateCourse = async (req: Request, res: Response) => {
     }
 
     try {
-        const result = await dbConnection.query(`
+        const result_course = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Course_Update(
                 ${courseId},
                 '${startingDate}',
@@ -82,17 +86,14 @@ export const updateCourse = async (req: Request, res: Response) => {
                 @o_status
             )
         `);
+        const result: OStatus[] = JSON.parse(JSON.stringify(result_course[0][0]));
 
-        // const status = result[0][0].status;
-
-        res.status(200).send({ result });
+        res.status(200).send(result[0] || {});
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send({ error: "Request Failed" });
     }
 };
-
-
 
 export const deleteCourse = async (req: Request, res: Response) => {
     const courseId: number = Number(req.params.courseId);
@@ -104,20 +105,17 @@ export const deleteCourse = async (req: Request, res: Response) => {
     }
 
     try {
-        const result = await dbConnection.query(`
+        const result_course = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Course_Delete(${courseId}, @o_status)
         `);
+        const result: OStatus[] = JSON.parse(JSON.stringify(result_course[0][0]));
 
-        // const status = result[0][0].status;
-
-        res.status(200).send({ result });
+        res.status(200).send(result[0] || {});
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send({ error: "Request Failed" });
     }
 };
-
-
 
 export const dropOutCourse = async (req: Request, res: Response) => {
     const { userID, groupID }: { userID: number, groupID: number } = req.body;
@@ -129,24 +127,20 @@ export const dropOutCourse = async (req: Request, res: Response) => {
     }
 
     try {
-        const result = await dbConnection.query(`
+        const result_course = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Course_DropOut(${userID}, ${groupID}, @o_status)
         `);
+        const result: OStatus[] = JSON.parse(JSON.stringify(result_course[0][0]));
 
-        // const status = result[0][0].status;
-
-        res.status(200).send({ result });
+        res.status(200).send(result[0] || {});
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send({ error: "Request Failed" });
     }
 };
 
-
-
 export const listEnrolledCourses = async (req: Request, res: Response) => {
     const userID: number = Number(req.params.userID);
-
 
     if (isNaN(userID) || userID <= 0) {
         res.status(400).send({ error: "Invalid user ID" });
@@ -154,13 +148,12 @@ export const listEnrolledCourses = async (req: Request, res: Response) => {
     }
 
     try {
-        const result = await dbConnection.query(`
+        const result_course = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Course_ListEnrolled(${userID})
         `);
+        const result: EnrolledCourses[] = JSON.parse(JSON.stringify(result_course[0][0]));
 
-        const courses = result[0];
-
-        res.status(200).send({ courses });
+        res.status(200).send(result);
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send({ error: "Request Failed" });
@@ -177,18 +170,12 @@ export const searchCourse = async (req: Request, res: Response) => {
     }
 
     try {
-        const result = await dbConnection.query(`
+        const result_course = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Course_SearchFor(${courseId}, @o_status)
         `);
+        const result: Course[] = JSON.parse(JSON.stringify(result_course[0][0]));
 
-        // if (result[0].length === 0) {
-        //     res.status(404).send({ error: "Course not found" });
-        //     return;
-        // }
-
-        const courseInfo = result[0];
-
-        res.status(200).send({ courseInfo });
+        res.status(200).send(result[0] || {});
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send({ error: "Request Failed" });
