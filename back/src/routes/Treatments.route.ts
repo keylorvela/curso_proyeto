@@ -9,7 +9,7 @@ router.delete("/:treatmentID", deleteTreatment)
 
 router.get("/", getTreatmentList)
 
-router.get("/:categoryID", getTreatmentInformation)
+router.get("/:treatmentID", getTreatmentInformation)
 
 router.put("/", updateTreatment)
 
