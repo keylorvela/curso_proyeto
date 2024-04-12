@@ -19,7 +19,7 @@ BEGIN
         SET o_status = "Success: Treatment found";
 
         SELECT
-            Name, Description, Price, o_status
+            T.ID, Name, Description, Price, o_status
         FROM Treatment AS T
         WHERE T.ID = p_treatmentID;
     END IF;
