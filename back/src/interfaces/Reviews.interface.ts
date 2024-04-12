@@ -1,10 +1,8 @@
 export interface addReviewBody {
     p_name: String,
     p_reviewContent: String,
-    p_publishedDate: String,
-    p_stars: String,
-    p_response: String,
-    p_treatmentID: String
+    p_stars: number,
+    p_treatmentID: number
 }
 
 export interface removeReviewBody {
