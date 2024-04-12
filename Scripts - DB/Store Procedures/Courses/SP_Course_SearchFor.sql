@@ -20,6 +20,7 @@ BEGIN
         SET o_status = "Success: Course found";
 
         SELECT
+            C.ID,
             Name,
             Description,
             Price,
