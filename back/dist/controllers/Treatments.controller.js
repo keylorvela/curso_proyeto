@@ -18,8 +18,9 @@ const dbConfig_1 = __importDefault(require("../database/dbConfig"));
 const createTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { p_name, p_description, p_price, p_categoryID } = req.body;
     try {
-        const result = yield dbConfig_1.default.query(`CALL SP_Treatment_Create("${p_name}", "${p_description}", ${p_price}, ${p_categoryID}, @o_status)`);
-        res.status(200).send(result[0]);
+        const result_treatment = yield dbConfig_1.default.query(`CALL SP_Treatment_Create("${p_name}", "${p_description}", ${p_price}, ${p_categoryID}, @o_status)`);
+        const result = JSON.parse(JSON.stringify(result_treatment[0][0]));
+        res.status(200).send(result[0] || {});
     }
     catch (error) {
         res.status(500).send({ error: "Petition failed", error_detail: error });
@@ -36,8 +37,9 @@ const deleteTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function
         return;
     }
     try {
-        const result = yield dbConfig_1.default.query(`CALL SP_Treatment_Delete(${treatmentID}, @o_status)`);
-        res.status(200).send(result[0]);
+        const result_treatment = yield dbConfig_1.default.query(`CALL SP_Treatment_Delete(${treatmentID}, @o_status)`);
+        const result = JSON.parse(JSON.stringify(result_treatment[0][0]));
+        res.status(200).send(result[0] || {});
     }
     catch (error) {
         res.status(500).send({ error: "Petition failed", error_detail: error });
@@ -55,8 +57,9 @@ const getTreatmentList = (req, res) => __awaiter(void 0, void 0, void 0, functio
         return;
     }
     try {
-        const result = yield dbConfig_1.default.query(`CALL SP_Treatment_ReadAll(${categoryID}, ${limit}, ${offset}, @o_status)`);
-        res.status(200).send(result[0]);
+        const result_treatment = yield dbConfig_1.default.query(`CALL SP_Treatment_ReadAll(${categoryID}, ${limit}, ${offset}, @o_status)`);
+        const result = JSON.parse(JSON.stringify(result_treatment[0][0]));
+        res.status(200).send(result);
     }
     catch (error) {
         res.status(500).send({ error: "Petition failed", error_detail: error });
@@ -65,16 +68,17 @@ const getTreatmentList = (req, res) => __awaiter(void 0, void 0, void 0, functio
 exports.getTreatmentList = getTreatmentList;
 // Get treatment information
 const getTreatmentInformation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const str_categoryID = req.params.categoryID;
-    const categoryID = Number(str_categoryID) || null;
+    const str_treatmentID = req.params.treatmentID;
+    const treatmentID = Number(str_treatmentID) || null;
     // Check if id is a valid input
-    if (!categoryID || categoryID < 0) {
-        res.status(400).send({ error: "Category id must be a valid number" });
+    if (!treatmentID || treatmentID < 0) {
+        res.status(400).send({ error: "Treatment id must be a valid number" });
         return;
     }
     try {
-        const result = yield dbConfig_1.default.query(`CALL SP_Treatment_SearchFor(${categoryID}, @o_status)`);
-        res.status(200).send(result[0]);
+        const result_treatment = yield dbConfig_1.default.query(`CALL SP_Treatment_SearchFor(${treatmentID}, @o_status)`);
+        const result = JSON.parse(JSON.stringify(result_treatment[0][0]));
+        res.status(200).send(result[0] || {});
     }
     catch (error) {
         res.status(500).send({ error: "Petition failed", error_detail: error });
@@ -92,8 +96,9 @@ const updateTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function
         return;
     }
     try {
-        const result = yield dbConfig_1.default.query(`CALL SP_Treatment_Update(${treatmentID}, "${p_name}", "${p_description}", ${p_price}, ${categoryID}, @o_status)`);
-        res.status(200).send(result[0]);
+        const result_treatment = yield dbConfig_1.default.query(`CALL SP_Treatment_Update(${treatmentID}, "${p_name}", "${p_description}", ${p_price}, ${categoryID}, @o_status)`);
+        const result = JSON.parse(JSON.stringify(result_treatment[0][0]));
+        res.status(200).send(result[0] || {});
     }
     catch (error) {
         res.status(500).send({ error: "Petition failed", error_detail: error });

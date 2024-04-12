@@ -6,7 +6,7 @@ const router = (0, express_1.Router)();
 router.post("/", Treatments_controller_1.createTreatment);
 router.delete("/:treatmentID", Treatments_controller_1.deleteTreatment);
 router.get("/", Treatments_controller_1.getTreatmentList);
-router.get("/:categoryID", Treatments_controller_1.getTreatmentInformation);
+router.get("/:treatmentID", Treatments_controller_1.getTreatmentInformation);
 router.put("/", Treatments_controller_1.updateTreatment);
 exports.default = router;
 //# sourceMappingURL=Treatments.route.js.map

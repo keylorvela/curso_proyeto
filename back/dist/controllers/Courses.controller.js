@@ -23,7 +23,8 @@ const getCourseList = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         return;
     }
     try {
-        const result = yield dbConfig_1.default.query(`CALL SP_Course_ReadAll(${limit}, ${offset}, @o_status)`);
+        const result_course = yield dbConfig_1.default.query(`CALL SP_Course_ReadAll(${limit}, ${offset}, @o_status)`);
+        const result = JSON.parse(JSON.stringify(result_course[0][0]));
         res.status(200).send(result);
     }
     catch (error) {
@@ -40,10 +41,10 @@ const createCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return;
     }
     try {
-        const result = yield dbConfig_1.default.query(`
+        const result_course = yield dbConfig_1.default.query(`
             CALL SP_Course_Create('${startingDate}','${date}','${hour}',${capacity},'${name}','${description}',${price},@o_status)`);
-        // const status = result[0][0].status;
-        res.status(200).send({ result });
+        const result = JSON.parse(JSON.stringify(result_course[0][0]));
+        res.status(200).send(result[0] || {});
     }
     catch (error) {
         console.error("Error:", error);
@@ -59,7 +60,7 @@ const updateCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return;
     }
     try {
-        const result = yield dbConfig_1.default.query(`
+        const result_course = yield dbConfig_1.default.query(`
             CALL SP_Course_Update(
                 ${courseId},
                 '${startingDate}',
@@ -72,8 +73,8 @@ const updateCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 @o_status
             )
         `);
-        // const status = result[0][0].status;
-        res.status(200).send({ result });
+        const result = JSON.parse(JSON.stringify(result_course[0][0]));
+        res.status(200).send(result[0] || {});
     }
     catch (error) {
         console.error("Error:", error);
@@ -89,11 +90,11 @@ const deleteCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return;
     }
     try {
-        const result = yield dbConfig_1.default.query(`
+        const result_course = yield dbConfig_1.default.query(`
             CALL SP_Course_Delete(${courseId}, @o_status)
         `);
-        // const status = result[0][0].status;
-        res.status(200).send({ result });
+        const result = JSON.parse(JSON.stringify(result_course[0][0]));
+        res.status(200).send(result[0] || {});
     }
     catch (error) {
         console.error("Error:", error);
@@ -108,11 +109,11 @@ const dropOutCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         return;
     }
     try {
-        const result = yield dbConfig_1.default.query(`
+        const result_course = yield dbConfig_1.default.query(`
             CALL SP_Course_DropOut(${userID}, ${groupID}, @o_status)
         `);
-        // const status = result[0][0].status;
-        res.status(200).send({ result });
+        const result = JSON.parse(JSON.stringify(result_course[0][0]));
+        res.status(200).send(result[0] || {});
     }
     catch (error) {
         console.error("Error:", error);
@@ -127,11 +128,11 @@ const listEnrolledCourses = (req, res) => __awaiter(void 0, void 0, void 0, func
         return;
     }
     try {
-        const result = yield dbConfig_1.default.query(`
+        const result_course = yield dbConfig_1.default.query(`
             CALL SP_Course_ListEnrolled(${userID})
         `);
-        const courses = result[0];
-        res.status(200).send({ courses });
+        const result = JSON.parse(JSON.stringify(result_course[0][0]));
+        res.status(200).send(result);
     }
     catch (error) {
         console.error("Error:", error);
@@ -147,15 +148,11 @@ const searchCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return;
     }
     try {
-        const result = yield dbConfig_1.default.query(`
+        const result_course = yield dbConfig_1.default.query(`
             CALL SP_Course_SearchFor(${courseId}, @o_status)
         `);
-        // if (result[0].length === 0) {
-        //     res.status(404).send({ error: "Course not found" });
-        //     return;
-        // }
-        const courseInfo = result[0];
-        res.status(200).send({ courseInfo });
+        const result = JSON.parse(JSON.stringify(result_course[0][0]));
+        res.status(200).send(result[0] || {});
     }
     catch (error) {
         console.error("Error:", error);
