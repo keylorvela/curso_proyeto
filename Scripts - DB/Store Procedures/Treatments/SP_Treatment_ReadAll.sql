@@ -17,13 +17,13 @@ BEGIN
 
 		IF p_categoryID IS NULL THEN
 			SELECT
-				Name, Description, Price, o_status
+				T.ID, Name, Description, Price, o_status
 				FROM Treatment AS T
 				LIMIT p_limit
 				OFFSET p_offset;
         ELSE
 			SELECT
-				Name, Description, Price, o_status
+				T.ID, Name, Description, Price, o_status
 				FROM Treatment AS T
                 WHERE T.CategoryID = p_categoryID
 				LIMIT p_limit
