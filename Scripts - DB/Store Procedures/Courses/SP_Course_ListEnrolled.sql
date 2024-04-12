@@ -5,6 +5,8 @@ CREATE PROCEDURE SP_Course_ListEnrolled(
 )
 BEGIN
     SELECT
+        C.ID AS CourseID,
+        G.ID AS GroupID,
         C.Name,
         C.Description,
         G.ScheduleDate,
