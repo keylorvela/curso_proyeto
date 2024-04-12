@@ -21,6 +21,8 @@ BEGIN
         UPDATE GroupsByUser
             SET isActive = false
             WHERE UserID = p_userID AND GroupID = p_groupID;
+
+        SET o_status = "Success: GroupByUser updated";
     END IF;
 
     SELECT o_status;
