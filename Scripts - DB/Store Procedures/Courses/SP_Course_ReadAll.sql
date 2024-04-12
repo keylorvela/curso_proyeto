@@ -15,6 +15,7 @@ BEGIN
         SET o_status = "Success: Treatments found";
 
         SELECT
+            C.ID,
             Name,
             Description,
             Price,
