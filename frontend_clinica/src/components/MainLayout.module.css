@@ -1,14 +1,51 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
   
-  .content {
-    flex: 1;
+}
+
+.content {
+  flex: 1;
+}
+
+.main {
+  flex: 1;
+  position: relative;
+}
+
+.floatingButton {
+  position: fixed;
+  bottom: 20%;
+  right: 35px;
+  z-index: 1000;
+}
+
+
+.floatingButton:hover {
+  color: #25D366;
+}
+
+
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('src/assets/blob.svg');
+  background-size: cover;
+  z-index: -1; /* Asegúrate de que el fondo esté detrás del contenido */
+  opacity: 0.25;
+}
+
+
+
+/* ---------- Mobile  */
+@media (max-width: 768px) {
+  .floatingButton{
+    display: none;
   }
-  
-  .main {
-    flex: 1;
-  }
-  
+
+}

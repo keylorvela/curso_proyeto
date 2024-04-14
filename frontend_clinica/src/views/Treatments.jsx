@@ -124,8 +124,10 @@ function Treatments() {
                                     title={item.nombre}
                                     event={() => handleClick(item.id)}
                                 />
+                                
                             </Col>
                         ))}
+                        
                     </ContentTable>
                 </div>
             </div>

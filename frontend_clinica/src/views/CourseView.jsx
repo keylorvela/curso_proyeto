@@ -14,6 +14,10 @@ import img from 'src/assets/stock2.jpg'
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
 
+
+import { FaWhatsapp } from "react-icons/fa";
+import { FiShoppingCart } from "react-icons/fi";
+
 //Sólo de ejemplo
 async function getItem(numero, lista) {
   try {
@@ -89,24 +93,32 @@ function courseView() {
     <MainLayout>
       <div className={styles.page}>
         <Container>
-          <Row >
+
+
+
+
+          <Row className="pb-5 mb-5">
             <Col className={styles.title} xs={12}>
-              <h2 className="text-center fs-1 fw-semibold my-3">{course?.nombre}</h2>
+              <h2 className={`text-center fs-1 fw-semibold my-5`}>{course?.nombre}</h2>
             </Col>
           </Row>
+
+
           <Row className='mt-5'>
 
-            <Col xs={12} md={8}>
+            <Col xs={12} md={6}>
               <h3 className="fs-1 mb-3">Acerca del curso:</h3> <br />
               <p className="fs-3">{course?.explicacion} </p>
             </Col>
-            <Col className="align-self-center" xs={12} md={4}>
+            <Col className="align-self-center" xs={12} md={6}>
               <Image src={img} fluid />
             </Col>
           </Row>
+
+
           <Row className='mt-5 text-center'>
 
-            <h3 className="fs-1 mb-4">Horarios disponibles:</h3> <br />
+            <h3 className={`fs-1 mb-4 ${styles.textTitle}`}>Horarios disponibles:</h3> <br />
             {course?.horarios.map((horario, index) => (
               <Col className="mt-3" key={index}>
                 <Badge bg="primary"><p className="mx-2 my-2 fs-5">{horario}</p></Badge>
@@ -114,10 +126,13 @@ function courseView() {
             ))}
 
           </Row>
+
+
+
           <Row className="mt-5">
 
             <Col>
-              <h3 className="fs-1 mb-4">Contenido del curso:</h3> <br />
+              <h3 className={`fs-1 mb-4 ${styles.textTitle}`}>Contenido del curso:</h3> <br />
 
               <p className="fs-3">{course?.contenido} </p>
 
@@ -138,23 +153,27 @@ function courseView() {
             <Col md={6} xs={12} className="me-3">
               <Row>
 
-                <h3 className="fs-1 mb-4">Métodos de pago:</h3> <br />
+                <h3 className={`fs-1 mb-4 ${styles.textTitle}`}>Métodos de pago:</h3> <br />
                 <p className="fs-3"> Ofrecemos los siguientes métodos de pago: transferencia bancaria, Sinpe Móvil y link de pago directo con Conexión BP. ¿Listo para realizar tu compra? ¡Contáctanos por WhatsApp y reserva tu espacio!</p>
 
               </Row>
               <Row>
                 <Col>
-                  <Button variant="success btn-lg">Agenda tu cita</Button>
+                  <button className={`px-3 py-3 btn btn-primary btn-lg ${styles.wtsButton}`}>
+                    <FaWhatsapp className="me-3" /><b> Agenda tu cita </b>
+                  </button>
                 </Col>
                 <Col>
-                  <Button variant="success btn-lg">Conexión BP</Button>
+                  <button className={`px-3 py-3 btn btn-primary btn-lg ${styles.bpButton}`}>
+                    <FiShoppingCart className="me-3" /><b> Conexión BP</b>
+                  </button>
                 </Col>
               </Row>
             </Col>
 
 
-            <Col className='px-5 pb-5 my-4 border rounded'>
-              <CourseForm/>
+            <Col className={`px-5 pb-5 my-4 border rounded ${styles.form}`}>
+              <CourseForm />
             </Col>
 
 

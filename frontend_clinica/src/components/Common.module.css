@@ -1,0 +1,9 @@
+:root {
+  --main-blue: #1D2D8C;
+  --ligth-green: #85B79D;
+}
+
+
+.test {
+  background-color: red;
+}
