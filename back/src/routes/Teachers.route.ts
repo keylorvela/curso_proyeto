@@ -1,8 +1,12 @@
-import { Router } from "express";
-const router = Router();
+import express from "express";
+import { getAllProfessors, updateProfessor, deleteProfessor } from "../controllers/professorController";
 
-router.get("/", async (req, res) => {
-    res.status(200).send("Hola");
-})
+const router = express.Router();
+
+router.get("/all", getAllProfessors);
+
+router.put("/update", updateProfessor);
+
+router.delete("/delete/:userID", deleteProfessor);
 
 export default router;

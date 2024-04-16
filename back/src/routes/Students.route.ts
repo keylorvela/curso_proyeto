@@ -1,8 +1,15 @@
-import { Router } from "express";
-const router = Router();
+import express from "express";
+import { getAllStudents, getStudentsInGroup, updateStudent } from "../controllers/studentController";
 
-router.get("/", async (req, res) => {
-    res.status(200).send("Hola");
-})
+const router = express.Router();
+
+
+router.get("/all", getAllStudents);
+
+
+router.post("/group", getStudentsInGroup);
+
+
+router.put("/update", updateStudent);
 
 export default router;

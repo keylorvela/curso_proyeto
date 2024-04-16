@@ -1,8 +1,12 @@
-import { Router } from "express";
-const router = Router();
+import express from "express";
+import { getAllApplications, respondToApplication } from "../controllers/applicationController";
 
-router.get("/", async (req, res) => {
-    res.status(200).send("Hola");
-})
+const router = express.Router();
+
+
+router.get("/all", getAllApplications);
+
+
+router.put("/respond", respondToApplication);
 
 export default router;
