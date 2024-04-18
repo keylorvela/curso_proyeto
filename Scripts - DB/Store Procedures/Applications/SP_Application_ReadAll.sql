@@ -8,7 +8,7 @@ BEGIN
         SA.PaymentReceipt,
         SA.Date,
         G.StartingDate,
-        C.Name
+        C.Name AS CourseName
     FROM StudentApplication AS SA
     INNER JOIN bqhd9nbafrpsvzpzrgvc.Group AS G
         ON SA.GroupID = G.ID

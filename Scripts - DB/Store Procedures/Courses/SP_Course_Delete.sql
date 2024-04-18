@@ -19,7 +19,8 @@ BEGIN
         SET o_status = "Error: Course NOT found";
     ELSE
         -- Delete the course
-        DELETE FROM Course
+        UPDATE Course
+            SET isActive = 0
             WHERE ID = p_courseID;
 
         -- Delete the group
@@ -28,7 +29,7 @@ BEGIN
 
         SET o_status = "Success: Course deleted";
     END IF;
-    
+
     SELECT o_status;
 END //
 

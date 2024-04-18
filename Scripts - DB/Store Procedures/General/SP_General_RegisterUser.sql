@@ -1,6 +1,6 @@
 DELIMITER //
 
-CREATE PROCEDURE SP_Login_Register(
+CREATE PROCEDURE SP_General_RegisterUser(
 	IN p_name VARCHAR(64),
     IN p_email VARCHAR(64),
     IN p_phone_number VARCHAR(32),

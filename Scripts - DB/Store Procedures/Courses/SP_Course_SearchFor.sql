@@ -32,7 +32,7 @@ BEGIN
         FROM Course AS C
         INNER JOIN bqhd9nbafrpsvzpzrgvc.Group AS G
             ON G.CourseID = C.ID
-        WHERE C.ID = p_courseID;
+        WHERE C.ID = p_courseID AND C.isActive = 1;
 
     END IF;
 
