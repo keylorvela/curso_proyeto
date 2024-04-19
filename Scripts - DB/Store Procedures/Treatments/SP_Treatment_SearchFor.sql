@@ -21,7 +21,7 @@ BEGIN
         SELECT
             T.ID, Name, Description, Price, o_status
         FROM Treatment AS T
-        WHERE T.ID = p_treatmentID;
+        WHERE T.ID = p_treatmentID AND T.isActive = 1;
     END IF;
 END //
 

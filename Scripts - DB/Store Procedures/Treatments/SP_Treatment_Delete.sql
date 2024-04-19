@@ -19,7 +19,8 @@ BEGIN
         SET o_status = "Error: Treatment NOT found";
     ELSE
         -- Delete the treatment
-        DELETE FROM Treatment
+        UPDATE Treatment
+            SET isActive = 0
             WHERE ID = p_treatmentID;
 
         SET o_status = "Success: Treatment deleted";

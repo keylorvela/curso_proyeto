@@ -19,13 +19,14 @@ BEGIN
 			SELECT
 				T.ID, Name, Description, Price, o_status
 				FROM Treatment AS T
+				WHERE T.isActive = 1
 				LIMIT p_limit
 				OFFSET p_offset;
         ELSE
 			SELECT
 				T.ID, Name, Description, Price, o_status
 				FROM Treatment AS T
-                WHERE T.CategoryID = p_categoryID
+                WHERE T.CategoryID = p_categoryID AND T.isActive = 1
 				LIMIT p_limit
 				OFFSET p_offset;
 		END IF;

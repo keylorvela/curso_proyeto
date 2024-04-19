@@ -27,6 +27,7 @@ BEGIN
         FROM Course AS C
         INNER JOIN bqhd9nbafrpsvzpzrgvc.Group AS G
             ON G.CourseID = C.ID
+        WHERE C.isActive = 1
         LIMIT p_limit
         OFFSET p_offset;
 

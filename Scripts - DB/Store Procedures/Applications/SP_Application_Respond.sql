@@ -19,7 +19,7 @@ BEGIN
 
     -- Get the status ID
     SELECT ST.ID
-        INTO @v_statusID 
+        INTO @v_statusID
         FROM StatusType AS ST
         WHERE ST.StatusName = p_status;
 
