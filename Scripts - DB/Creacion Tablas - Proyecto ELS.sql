@@ -45,6 +45,9 @@ CREATE TABLE `StudentApplication` (
   `StudentName` varchar(64),
   `PaymentReceipt` blob,
   `Date` datetime,
+  `Email` varchar(64),
+  `PhoneNumber` varchar(32),
+  `Name` varchar(64),
   `StatusID` int,
   `GroupID` int
 );
