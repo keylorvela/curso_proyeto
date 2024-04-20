@@ -7,5 +7,14 @@ const promise_1 = __importDefault(require("mysql2/promise"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const dbUri = process.env.DB_URI;
-exports.default = promise_1.default.createPool(dbUri);
+const pool = promise_1.default.createPool(dbUri);
+pool.getConnection()
+    .then(connection => {
+    console.log("Conexión con la base de datos exitosa!");
+    connection.release();
+})
+    .catch(error => {
+    console.error("Error al conectar con la base de datos:", error);
+});
+exports.default = pool;
 //# sourceMappingURL=dbConfig.js.map
