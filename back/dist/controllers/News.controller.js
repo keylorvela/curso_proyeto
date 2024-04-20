@@ -22,7 +22,7 @@ const createNews = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     try {
         const result = yield dbConfig_1.default.query(`
-            CALL SP_News_Create("${title}", "${content}", ${groupID})
+            CALL SP_News_Create("${title}", "${content}", ${groupID}, @o_status)
         `);
         const resultStatus = JSON.parse(JSON.stringify(result[0]));
         res.status(200).send(resultStatus[0] || {});
@@ -40,7 +40,7 @@ const getAllNews = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     try {
         const result = yield dbConfig_1.default.query(`
-            CALL SP_News_ReadAll(${groupID})
+            CALL SP_News_ReadAll(${groupID}, @o_status)
         `);
         const newsList = JSON.parse(JSON.stringify(result[0]));
         res.status(200).send(newsList || []);
@@ -58,7 +58,7 @@ const deleteNews = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     try {
         const result = yield dbConfig_1.default.query(`
-            CALL SP_News_Delete(${newsID})
+            CALL SP_News_Delete(${newsID}, @o_status)
         `);
         const resultStatus = JSON.parse(JSON.stringify(result[0]));
         res.status(200).send(resultStatus[0] || {});
@@ -76,7 +76,7 @@ const updateNews = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     try {
         const result = yield dbConfig_1.default.query(`
-            CALL SP_News_Update(${newsID}, "${title}", "${content}")
+            CALL SP_News_Update(${newsID}, "${title}", "${content}", @o_status)
         `);
         const resultStatus = JSON.parse(JSON.stringify(result[0]));
         res.status(200).send(resultStatus[0] || {});

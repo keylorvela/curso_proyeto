@@ -17,7 +17,7 @@ const dbConfig_1 = __importDefault(require("../database/dbConfig"));
 const getAllProfessors = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield dbConfig_1.default.query(`
-            CALL SP_Professors_ReadAll()
+            CALL SP_Professors_ReadAll(@o_status)
         `);
         const professorsList = JSON.parse(JSON.stringify(result[0]));
         res.status(200).send(professorsList || []);
@@ -35,7 +35,7 @@ const updateProfessor = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
     try {
         yield dbConfig_1.default.query(`
-            CALL SP_Professors_Update(${personID}, "${photo}", "${email}", "${phoneNumber}", "${name}")
+            CALL SP_Professors_Update(${personID}, "${photo}", "${email}", "${phoneNumber}", "${name}", @o_status)
         `);
         const result = yield dbConfig_1.default.query(`
             SELECT @o_status AS o_status
@@ -56,7 +56,7 @@ const deleteProfessor = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
     try {
         yield dbConfig_1.default.query(`
-            CALL SP_Professors_Delete(${userID})
+            CALL SP_Professors_Delete(${userID}, @o_status)
         `);
         const result = yield dbConfig_1.default.query(`
             SELECT @o_status AS o_status

@@ -17,7 +17,7 @@ const dbConfig_1 = __importDefault(require("../database/dbConfig"));
 const getAllStudents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield dbConfig_1.default.query(`
-            CALL SP_Students_ReadAll()
+            CALL SP_Students_ReadAll(@o_status)
         `);
         const studentsList = JSON.parse(JSON.stringify(result[0]));
         res.status(200).send(studentsList || []);
@@ -35,7 +35,7 @@ const getStudentsInGroup = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
     try {
         const result = yield dbConfig_1.default.query(`
-            CALL SP_Students_ReadAll_inGroup(${groupID})
+            CALL SP_Students_ReadAll_inGroup(${groupID}, @o_status)
         `);
         const studentsList = JSON.parse(JSON.stringify(result[0]));
         res.status(200).send(studentsList || []);
@@ -53,7 +53,7 @@ const updateStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     try {
         yield dbConfig_1.default.query(`
-            CALL SP_Students_Update(${personID}, "${photo}", "${email}", "${phoneNumber}", "${name}")
+            CALL SP_Students_Update(${personID}, "${photo}", "${email}", "${phoneNumber}", "${name}", @o_status)
         `);
         const result = yield dbConfig_1.default.query(`
             SELECT @o_status AS o_status
