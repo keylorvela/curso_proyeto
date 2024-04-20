@@ -7,10 +7,20 @@ import { OStatus } from "../interfaces/OStatus.interface";
 
 // Create new treatment
 export const createTreatment = async(req: Request, res: Response) => {
-    const { p_name, p_description, p_price, p_categoryID }: createTreatmentBody = req.body;
+    const body: createTreatmentBody = req.body;
 
     try {
-        const result_treatment = await dbConnection.query<RowDataPacket[]>(`CALL SP_Treatment_Create("${p_name}", "${p_description}", ${p_price}, ${p_categoryID}, @o_status)`);
+        const result_treatment = await dbConnection.query<RowDataPacket[]>(`
+            CALL SP_Treatment_Create(
+                "${body.p_name}",
+                "${body.p_description}",
+                ${body.p_price},
+                "${body.p_includes}",
+                "${body.p_procedureDuration}",
+                "${body.p_effectDuration}",
+                "${body.p_information}",
+                ${body.p_categoryID},
+                @o_status)`);
         const result: TreatmentID[] = JSON.parse(JSON.stringify(result_treatment[0][0]));
 
         res.status(200).send(result[0] || {});
@@ -85,10 +95,10 @@ export const getTreatmentInformation = async(req: Request, res: Response) => {
 
 // Update a treatment
 export const updateTreatment = async(req: Request, res: Response) => {
-    const { p_treatmentID, p_name, p_description, p_price, p_categoryID }: updateTreatmentBody = req.body;
+    const body: updateTreatmentBody = req.body;
 
-    const treatmentID: number | null = Number(p_treatmentID) || null;
-    const categoryID: number | null = Number(p_categoryID) || null;
+    const treatmentID: number | null = Number(body.p_treatmentID) || null;
+    const categoryID: number | null = Number(body.p_categoryID) || null;
 
     // Check if both id´s are valid input
     if (!treatmentID || !categoryID || treatmentID < 0 || categoryID < 0) {
@@ -97,7 +107,18 @@ export const updateTreatment = async(req: Request, res: Response) => {
     }
 
     try {
-        const result_treatment = await dbConnection.query<RowDataPacket[]>(`CALL SP_Treatment_Update(${treatmentID}, "${p_name}", "${p_description}", ${p_price}, ${categoryID}, @o_status)`);
+        const result_treatment = await dbConnection.query<RowDataPacket[]>(`
+            CALL SP_Treatment_Update(
+                ${treatmentID},
+                "${body.p_name}",
+                "${body.p_description}",
+                ${body.p_price},
+                "${body.p_includes}",
+                "${body.p_procedureDuration}",
+                "${body.p_effectDuration}",
+                "${body.p_information}",
+                ${categoryID},
+                @o_status)`);
         const result: OStatus[] = JSON.parse(JSON.stringify(result_treatment[0][0]));
 
         res.status(200).send(result[0] || {});

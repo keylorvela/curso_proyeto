@@ -2,6 +2,10 @@ export interface createTreatmentBody {
     p_name: String
     p_description: String
     p_price: String
+    p_includes: String
+    p_procedureDuration: String
+    p_effectDuration: String
+    p_information: String
     p_categoryID: String
 }
 
@@ -10,6 +14,10 @@ export interface updateTreatmentBody {
     p_name: String
     p_description: String
     p_price: String
+    p_includes: String
+    p_procedureDuration: String
+    p_effectDuration: String
+    p_information: String
     p_categoryID: String
 }
 
@@ -22,5 +30,9 @@ export interface Treatment {
     Name: String
     Description: String
     Price: String
+    Includes: String
+    ProcedureDuration: String
+    EffectDuration: String
+    Information: String
     o_status: String
 }
