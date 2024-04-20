@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 export interface ApplicationBody {
     name: String,
     payment_receipt: String,
@@ -6,7 +5,6 @@ export interface ApplicationBody {
     phone_number: String,
     groupID: number
 }
-=======
 export interface Application {
     ID: string;
     StudentName: string;
@@ -15,4 +13,3 @@ export interface Application {
     StartingDate: string;
     CourseName: string;
 }
->>>>>>> b8179d4f9531529913348ecc37fa279a64c16f7f
