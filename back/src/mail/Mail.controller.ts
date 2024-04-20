@@ -24,16 +24,17 @@ export default class MailManager {
         return Math.floor(Math.random() * 9000 + 1000).toString();
     }
 
-    public async sendMail(from: string, to: string, subject: string): Promise<void> {
-
+    public async sendMail(from: string, to: string, subject: string, name: string): Promise<void> {
         return new Promise((resolve, reject) => {
+
             const OTP = this.generateOTP();
+            const html = mailTemplateGenerator( OTP, name );
 
             const mail_config = {
-                from: "",
+                from,
                 to,
                 subject,
-                html: mailTemplateGenerator( OTP )
+                html: html
             };
 
             this.transporter.sendMail(mail_config, (error, info) => {
