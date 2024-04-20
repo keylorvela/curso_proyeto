@@ -16,9 +16,19 @@ exports.updateTreatment = exports.getTreatmentInformation = exports.getTreatment
 const dbConfig_1 = __importDefault(require("../database/dbConfig"));
 // Create new treatment
 const createTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { p_name, p_description, p_price, p_categoryID } = req.body;
+    const body = req.body;
     try {
-        const result_treatment = yield dbConfig_1.default.query(`CALL SP_Treatment_Create("${p_name}", "${p_description}", ${p_price}, ${p_categoryID}, @o_status)`);
+        const result_treatment = yield dbConfig_1.default.query(`
+            CALL SP_Treatment_Create(
+                "${body.p_name}",
+                "${body.p_description}",
+                ${body.p_price},
+                "${body.p_includes}",
+                "${body.p_procedureDuration}",
+                "${body.p_effectDuration}",
+                "${body.p_information}",
+                ${body.p_categoryID},
+                @o_status)`);
         const result = JSON.parse(JSON.stringify(result_treatment[0][0]));
         res.status(200).send(result[0] || {});
     }
@@ -87,16 +97,27 @@ const getTreatmentInformation = (req, res) => __awaiter(void 0, void 0, void 0, 
 exports.getTreatmentInformation = getTreatmentInformation;
 // Update a treatment
 const updateTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { p_treatmentID, p_name, p_description, p_price, p_categoryID } = req.body;
-    const treatmentID = Number(p_treatmentID) || null;
-    const categoryID = Number(p_categoryID) || null;
+    const body = req.body;
+    const treatmentID = Number(body.p_treatmentID) || null;
+    const categoryID = Number(body.p_categoryID) || null;
     // Check if both id´s are valid input
     if (!treatmentID || !categoryID || treatmentID < 0 || categoryID < 0) {
         res.status(400).send({ error: "Both Ids must be a valid number" });
         return;
     }
     try {
-        const result_treatment = yield dbConfig_1.default.query(`CALL SP_Treatment_Update(${treatmentID}, "${p_name}", "${p_description}", ${p_price}, ${categoryID}, @o_status)`);
+        const result_treatment = yield dbConfig_1.default.query(`
+            CALL SP_Treatment_Update(
+                ${treatmentID},
+                "${body.p_name}",
+                "${body.p_description}",
+                ${body.p_price},
+                "${body.p_includes}",
+                "${body.p_procedureDuration}",
+                "${body.p_effectDuration}",
+                "${body.p_information}",
+                ${categoryID},
+                @o_status)`);
         const result = JSON.parse(JSON.stringify(result_treatment[0][0]));
         res.status(200).send(result[0] || {});
     }
