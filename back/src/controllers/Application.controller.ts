@@ -20,24 +20,26 @@ export const getAllApplications = async (req: Request, res: Response) => {
 
 
 
+export const respondToApplication = async (req: Request, res: Response) => {
+    const { applicationID, status }: { applicationID: number; status: string } = req.body;
 
-export const deleteTreatment = async(req: Request, res: Response) => {
-    const str_treatmentID = req.params.treatmentID;
-    const treatmentID: number | null = Number(str_treatmentID) || null;
-
-    // Check if id is a valid input
-    if (!treatmentID || treatmentID < 0) {
-        res.status(400).send({ error: "Treatment id must be a valid number" });
+    if (isNaN(applicationID) || applicationID < 0 || !status) {
+        res.status(400).send({ error: "Invalid input provided" });
         return;
     }
 
     try {
-        const result_treatment = await dbConnection.query<RowDataPacket[]>(`CALL SP_Treatment_Delete(${treatmentID}, @o_status)`);
-        const result: OStatus[] = JSON.parse(JSON.stringify(result_treatment[0][0]));
+        await dbConnection.query<RowDataPacket[]>(`
+            CALL SP_Application_Respond(${applicationID}, "${status}", @o_status)
+        `);
 
-        res.status(200).send(result[0] || {});
+        const result = await dbConnection.query<RowDataPacket[]>(`
+            SELECT @o_status AS o_status
+        `);
+
+        const resultStatus: OStatus[] = JSON.parse(JSON.stringify(result[0]));
+        res.status(200).send(resultStatus[0] || {});
     } catch (error) {
-        res.status(500).send({ error: "Petition failed", error_detail: error });
+        res.status(400).send({ error: "Request Failed", info: error });
     }
-};
-
+}
