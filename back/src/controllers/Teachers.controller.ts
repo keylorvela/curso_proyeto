@@ -7,7 +7,7 @@ import { Professor } from "interfaces/Professor.interface";
 export const getAllProfessors = async (req: Request, res: Response) => {
     try {
         const result = await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_Professors_ReadAll()
+            CALL SP_Professors_ReadAll(@o_status)
         `);
         const professorsList: Professor[] = JSON.parse(JSON.stringify(result[0]));
 
@@ -28,7 +28,7 @@ export const updateProfessor = async (req: Request, res: Response) => {
 
     try {
         await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_Professors_Update(${personID}, "${photo}", "${email}", "${phoneNumber}", "${name}")
+            CALL SP_Professors_Update(${personID}, "${photo}", "${email}", "${phoneNumber}", "${name}", @o_status)
         `);
 
         const result = await dbConnection.query<RowDataPacket[]>(`
@@ -52,7 +52,7 @@ export const deleteProfessor = async (req: Request, res: Response) => {
 
     try {
         await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_Professors_Delete(${userID})
+            CALL SP_Professors_Delete(${userID}, @o_status)
         `);
 
         const result = await dbConnection.query<RowDataPacket[]>(`

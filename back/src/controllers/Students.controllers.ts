@@ -8,7 +8,7 @@ import { Student } from "interfaces/Students.interface";
 export const getAllStudents = async (req: Request, res: Response) => {
     try {
         const result = await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_Students_ReadAll()
+            CALL SP_Students_ReadAll(@o_status)
         `);
         const studentsList: Student[] = JSON.parse(JSON.stringify(result[0]));
 
@@ -28,7 +28,7 @@ export const getStudentsInGroup = async (req: Request, res: Response) => {
 
     try {
         const result = await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_Students_ReadAll_inGroup(${groupID})
+            CALL SP_Students_ReadAll_inGroup(${groupID}, @o_status)
         `);
         const studentsList: Student[] = JSON.parse(JSON.stringify(result[0]));
 
@@ -40,7 +40,7 @@ export const getStudentsInGroup = async (req: Request, res: Response) => {
 
 
 export const updateStudent = async (req: Request, res: Response) => {
-    const { personID, photo, email, phoneNumber, name }: { personID: number; photo: any; email: string; phoneNumber: string; name: string } = req.body;
+    const { personID, photo, email, phoneNumber, name }: { personID: number; photo: string; email: string; phoneNumber: string; name: string } = req.body;
 
     if (isNaN(personID) || personID < 0 || !email || !name) {
         res.status(400).send({ error: "Invalid input provided" });
@@ -49,7 +49,7 @@ export const updateStudent = async (req: Request, res: Response) => {
 
     try {
         await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_Students_Update(${personID}, "${photo}", "${email}", "${phoneNumber}", "${name}")
+            CALL SP_Students_Update(${personID}, "${photo}", "${email}", "${phoneNumber}", "${name}", @o_status)
         `);
 
         const result = await dbConnection.query<RowDataPacket[]>(`

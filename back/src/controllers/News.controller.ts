@@ -19,7 +19,7 @@ export const createNews = async (req: Request, res: Response) => {
 
     try {
         const result = await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_News_Create("${title}", "${content}", ${groupID})
+            CALL SP_News_Create("${title}", "${content}", ${groupID}, @o_status)
         `);
 
         const resultStatus: OStatus[] = JSON.parse(JSON.stringify(result[0]));
@@ -39,7 +39,7 @@ export const getAllNews = async (req: Request, res: Response) => {
 
     try {
         const result = await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_News_ReadAll(${groupID})
+            CALL SP_News_ReadAll(${groupID}, @o_status)
         `);
         const newsList: News[] = JSON.parse(JSON.stringify(result[0]));
 
@@ -59,7 +59,7 @@ export const deleteNews = async (req: Request, res: Response) => {
 
     try {
         const result = await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_News_Delete(${newsID})
+            CALL SP_News_Delete(${newsID}, @o_status)
         `);
 
         const resultStatus: OStatus[] = JSON.parse(JSON.stringify(result[0]));
@@ -79,7 +79,7 @@ export const updateNews = async (req: Request, res: Response) => {
 
     try {
         const result = await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_News_Update(${newsID}, "${title}", "${content}")
+            CALL SP_News_Update(${newsID}, "${title}", "${content}", @o_status)
         `);
 
         const resultStatus: OStatus[] = JSON.parse(JSON.stringify(result[0]));
