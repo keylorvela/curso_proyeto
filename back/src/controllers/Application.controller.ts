@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { RowDataPacket } from "mysql2";
 import dbConnection from "../database/dbConfig";
 import { OStatus } from "../interfaces/OStatus.interface";
-import { ApplicationBody } from "../interfaces/Application.interface";
+import { Application, ApplicationBody } from "../interfaces/Application.interface";
 
 
 export const getAllApplications = async (req: Request, res: Response) => {
@@ -10,7 +10,7 @@ export const getAllApplications = async (req: Request, res: Response) => {
         const result = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Application_ReadAll()
         `);
-        const applicationsList: ApplicationBody[] = JSON.parse(JSON.stringify(result[0]));
+        const applicationsList: Application[] = JSON.parse(JSON.stringify(result[0]));
 
         res.status(200).send(applicationsList || []);
     } catch (error) {
@@ -32,7 +32,12 @@ export const respondToApplication = async (req: Request, res: Response) => {
             CALL SP_Application_Respond(${applicationID}, "${status}", @o_status)
         `);
 
-        res.status(200).send({ success: true });
+        const result = await dbConnection.query<RowDataPacket[]>(`
+            SELECT @o_status AS o_status
+        `);
+
+        const resultStatus: OStatus[] = JSON.parse(JSON.stringify(result[0]));
+        res.status(200).send(resultStatus[0] || {});
     } catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
     }
@@ -52,8 +57,7 @@ export const sendApplication = async (req: Request, res: Response) => {
 
         res.status(200).send(result[0] || {});
     } catch (error) {
-        res.status(500).send({ error: "Petition failed", error_detail: error });
+        res.status(400).send({ error: "Request Failed", info: error });
     }
 
 }
-
