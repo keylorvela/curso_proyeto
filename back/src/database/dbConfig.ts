@@ -5,6 +5,17 @@ dotenv.config();
 
 const dbUri : string = process.env.DB_URI!;
 
-export default mysql.createPool(dbUri);
+const pool = mysql.createPool(dbUri);
+
+pool.getConnection()
+    .then( connection => {
+        console.log("Conexión con la base de datos exitosa!");
+        connection.release();
+    })
+    .catch( error => {
+        console.error("Error al conectar con la base de datos:", error);
+    } )
+
+export default pool;
 
 
