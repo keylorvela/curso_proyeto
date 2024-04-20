@@ -4,12 +4,12 @@ import { getAllStudents, getStudentsInGroup, updateStudent } from "../controller
 const router = express.Router();
 
 
-router.get("/all", getAllStudents);
+router.get("/", getAllStudents);
 
 
-router.post("/group", getStudentsInGroup);
+router.get("/group", getStudentsInGroup);
 
 
-router.put("/update", updateStudent);
+router.put("/", updateStudent);
 
 export default router;
