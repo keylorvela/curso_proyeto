@@ -39,7 +39,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
 
     try {
         const mailManager = new MailManager();
-        await mailManager.sendMail("testELSPrueba@gmail.com", "deynernavarrob@gmail.com", "Prueba Cambio de contraseña");
+        await mailManager.sendMail("testELSPrueba@gmail.com", "deynernavarrob@gmail.com", "Prueba Cambio de contraseña", "Deyner");
 
         res.status(200).send({ message: "Password reset email sent successfully" });
     } catch (error) {
