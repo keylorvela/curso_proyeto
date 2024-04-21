@@ -21,17 +21,15 @@ BEGIN
 
         SELECT
             C.ID,
-            Name,
-            Description,
-            Price,
-            StartingDate,
-            ScheduleDate,
-            ScheduleHour,
-            Capacity,
+            C.Name,
+            C.Description,
+            C.Topics,
+            C.Includes,
+            C.Duration,
+            C.Price,
+            C.UserTarget,
             o_status
         FROM Course AS C
-        INNER JOIN bqhd9nbafrpsvzpzrgvc.Group AS G
-            ON G.CourseID = C.ID
         WHERE C.ID = p_courseID AND C.isActive = 1;
 
     END IF;

@@ -1,6 +1,6 @@
 DELIMITER //
 
-CREATE PROCEDURE SP_Course_DropOut(
+CREATE PROCEDURE SP_Group_DropOut(
     IN p_userID INT,
     IN p_groupID INT,
     OUT o_status VARCHAR(32)
@@ -10,7 +10,7 @@ BEGIN
     DECLARE v_groupByUserCount INT;
 
     SELECT COUNT(*)
-        INTO v_groupByUserCount
+        INTO @v_groupByUserCount
         FROM GroupsByUser AS GBU
         WHERE GBU.UserID = p_userID AND GBU.GroupID = p_groupID AND GBU.isActive = true;
 

@@ -5,6 +5,10 @@ CREATE PROCEDURE SP_Treatment_Update(
     IN p_name VARCHAR(64),
     IN p_description TEXT,
     IN p_price decimal(15,2),
+    IN p_includes TEXT,
+    IN p_procedureDuration TEXT,
+    IN p_effectDuration TEXT,
+    IN p_information TEXT,
     IN p_categoryID INT,
 
     OUT o_status VARCHAR(32)
@@ -37,6 +41,10 @@ BEGIN
                 Name = p_name,
                 Description = p_description,
                 Price = p_price,
+                Includes = p_includes,
+                ProcedureDuration = p_procedureDuration,
+                EffectDuration = p_effectDuration,
+                Information = p_information,
                 CategoryID = p_categoryID
             WHERE ID = p_treatmentID;
 

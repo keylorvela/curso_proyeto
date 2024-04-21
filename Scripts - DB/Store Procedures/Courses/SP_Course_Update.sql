@@ -2,13 +2,13 @@ DELIMITER //
 
 CREATE PROCEDURE SP_Course_Update(
     IN p_courseID INT,
-    IN p_startingDate DATE,
-    IN p_date VARCHAR(128),
-    IN p_hour TIME,
-    IN p_capacity INT,
-    IN p_name VARCHAR(32),
-    IN p_description TEXT,
-    IN p_price decimal(15,2),
+    IN p_name VARCHAR(64),
+    IN p_description text,
+    IN p_topics text,
+    IN p_includes text,
+    IN p_duration text,
+    IN p_price DECIMAL(15,2),
+    IN p_userTarget text,
 
     OUT o_status VARCHAR(32)
 )
@@ -28,16 +28,14 @@ BEGIN
     ELSE
         -- Update the course information
         UPDATE Course
-        INNER JOIN bqhd9nbafrpsvzpzrgvc.Group as G
-            on Course.ID = G.CourseID
         SET
             Course.Name = p_name,
             Course.Description = p_description,
+            Course.Topics = p_topics,
+            Course.Includes = p_includes,
+            Course.Duration = p_duration,
             Course.Price = p_price,
-            G.StartingDate = p_startingDate,
-            G.ScheduleDate = p_date,
-            G.ScheduleHour = p_hour,
-            G.Capacity = p_capacity
+            Course.UserTarget = p_userTarget
         WHERE ID = p_courseID;
 
         SET o_status = "Success: Course updated";

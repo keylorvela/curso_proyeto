@@ -17,18 +17,34 @@ BEGIN
 
 		IF p_categoryID IS NULL THEN
 			SELECT
-				T.ID, Name, Description, Price, o_status
-				FROM Treatment AS T
-				WHERE T.isActive = 1
-				LIMIT p_limit
-				OFFSET p_offset;
+				T.ID,
+				T.Name,
+				T.Description,
+				T.Price,
+				T.Includes,
+				T.ProcedureDuration,
+				T.EffectDuration,
+				T.Information,
+				o_status
+			FROM Treatment AS T
+			WHERE T.isActive = 1
+			LIMIT p_limit
+			OFFSET p_offset;
         ELSE
 			SELECT
-				T.ID, Name, Description, Price, o_status
-				FROM Treatment AS T
-                WHERE T.CategoryID = p_categoryID AND T.isActive = 1
-				LIMIT p_limit
-				OFFSET p_offset;
+				T.ID,
+				T.Name,
+				T.Description,
+				T.Price,
+				T.Includes,
+				T.ProcedureDuration,
+				T.EffectDuration,
+				T.Information,
+				o_status
+			FROM Treatment AS T
+            WHERE T.CategoryID = p_categoryID AND T.isActive = 1
+			LIMIT p_limit
+			OFFSET p_offset;
 		END IF;
 	END IF;
 END //
