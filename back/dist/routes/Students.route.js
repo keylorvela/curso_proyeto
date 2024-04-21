@@ -9,5 +9,6 @@ const router = express_1.default.Router();
 router.get("/", Students_controllers_1.getAllStudents);
 router.get("/group", Students_controllers_1.getStudentsInGroup);
 router.put("/", Students_controllers_1.updateStudent);
+router.post("/", Students_controllers_1.registerStudentInGroup);
 exports.default = router;
 //# sourceMappingURL=Students.route.js.map

@@ -8,6 +8,7 @@ const cors_1 = __importDefault(require("cors"));
 const Register_route_1 = __importDefault(require("./routes/General/Register.route"));
 const Applications_route_1 = __importDefault(require("./routes/Applications.route"));
 const Courses_route_1 = __importDefault(require("./routes/Courses.route"));
+const Group_route_1 = __importDefault(require("./routes/Group.route"));
 const Login_route_1 = __importDefault(require("./routes/Login.route"));
 const News_route_1 = __importDefault(require("./routes/News.route"));
 const Reviews_route_1 = __importDefault(require("./routes/Reviews.route"));
@@ -26,6 +27,7 @@ app.use("/register", Register_route_1.default);
 // ---------------------------------------------
 app.use("/applications", Applications_route_1.default);
 app.use("/courses", Courses_route_1.default);
+app.use("/group", Group_route_1.default);
 app.use("/login", Login_route_1.default);
 app.use("/news", News_route_1.default);
 app.use("/reviews", Reviews_route_1.default);

@@ -12,14 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateStudent = exports.getStudentsInGroup = exports.getAllStudents = void 0;
+exports.registerStudentInGroup = exports.updateStudent = exports.getStudentsInGroup = exports.getAllStudents = void 0;
 const dbConfig_1 = __importDefault(require("../database/dbConfig"));
 const getAllStudents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield dbConfig_1.default.query(`
             CALL SP_Students_ReadAll(@o_status)
         `);
-        const studentsList = JSON.parse(JSON.stringify(result[0]));
+        const studentsList = JSON.parse(JSON.stringify(result[0][0]));
         res.status(200).send(studentsList || []);
     }
     catch (error) {
@@ -37,7 +37,7 @@ const getStudentsInGroup = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const result = yield dbConfig_1.default.query(`
             CALL SP_Students_ReadAll_inGroup(${groupID}, @o_status)
         `);
-        const studentsList = JSON.parse(JSON.stringify(result[0]));
+        const studentsList = JSON.parse(JSON.stringify(result[0][0]));
         res.status(200).send(studentsList || []);
     }
     catch (error) {
@@ -52,18 +52,33 @@ const updateStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         return;
     }
     try {
-        yield dbConfig_1.default.query(`
+        const result_Update = yield dbConfig_1.default.query(`
             CALL SP_Students_Update(${personID}, "${photo}", "${email}", "${phoneNumber}", "${name}", @o_status)
         `);
-        const result = yield dbConfig_1.default.query(`
-            SELECT @o_status AS o_status
-        `);
-        const resultStatus = JSON.parse(JSON.stringify(result[0]));
-        res.status(200).send(resultStatus[0] || {});
+        const result = JSON.parse(JSON.stringify(result_Update[0][0]));
+        res.status(200).send(result[0] || {});
     }
     catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
     }
 });
 exports.updateStudent = updateStudent;
+const registerStudentInGroup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const body = req.body;
+    if (isNaN(body.UserID) || body.UserID < 0 || isNaN(body.GroupID) || body.GroupID < 0) {
+        res.status(400).send({ error: "Invalid IDs provided" });
+        return;
+    }
+    try {
+        const result_RegStudent = yield dbConfig_1.default.query(`
+            CALL SP_Students_AddStudentToGroup(${body.UserID}, ${body.GroupID}, @o_status)
+        `);
+        const result = JSON.parse(JSON.stringify(result_RegStudent[0][0]));
+        res.status(200).send(result[0] || {});
+    }
+    catch (error) {
+        res.status(400).send({ error: "Request Failed", info: error });
+    }
+});
+exports.registerStudentInGroup = registerStudentInGroup;
 //# sourceMappingURL=Students.controllers.js.map
