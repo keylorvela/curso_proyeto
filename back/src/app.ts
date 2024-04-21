@@ -5,6 +5,7 @@ import RegisterRoute from "./routes/General/Register.route"
 
 import ApplicationRoute from "./routes/Applications.route"
 import CoursesRoute from "./routes/Courses.route"
+import GroupRoute from "./routes/Group.route"
 import LoginRoute from "./routes/Login.route"
 import NewsRoute from "./routes/News.route"
 import ReviewsRoute from "./routes/Reviews.route"
@@ -27,6 +28,7 @@ app.use("/register", RegisterRoute)
 // ---------------------------------------------
 app.use("/applications", ApplicationRoute);
 app.use("/courses", CoursesRoute);
+app.use("/group", GroupRoute);
 app.use("/login", LoginRoute);
 app.use("/news", NewsRoute);
 app.use("/reviews", ReviewsRoute);
