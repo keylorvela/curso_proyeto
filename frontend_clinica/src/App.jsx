@@ -11,17 +11,20 @@ import NoPage from 'src/views/NoPage.jsx';
 import MainNavbar from 'src/components/MainNavbar.jsx';
 
 function App() {
+  
   return (
     <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="courses" element={<Courses />} />
-            <Route path="treatments" element={<Treatments />} />
-            <Route path="treatment/:id" element={<TreatmentView />} />
-            <Route path="course/:id" element={<CourseView />} />
-            <Route path="*" element={<NoPage />} />
-          </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="courses" element={<Courses />} />
+        <Route path="treatments" element={<Treatments />} />
+        <Route path="treatment/:id" element={<TreatmentView />} />
+        <Route path="course/:id" element={<CourseView />} />
+        <Route path="*" element={<NoPage />} />
+      </Routes>
+
+
     </BrowserRouter>
   );
 }

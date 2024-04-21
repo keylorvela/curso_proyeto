@@ -7,3 +7,32 @@
 .test {
   background-color: red;
 }
+
+
+.title{
+  color: var(--main-blue);
+  margin-bottom: 2%;
+  font-size: calc(1.5rem + 0.5vw);
+  font-weight: bold;
+}
+
+
+.wtsButton{
+  background-color: #33BA47;
+  color: #FFFFFF;
+  border: 0px;
+}
+
+.wtsButton:hover{
+  background-color: #154d1d;
+}
+
+.bpButton{
+  background-color: #FEA734;
+  color:#FFFFFF;
+  border: 0px;
+}
+
+.bpButton:hover{
+  background-color: #b87c2d;
+}
