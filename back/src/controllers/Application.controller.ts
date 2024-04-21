@@ -29,11 +29,11 @@ export const respondToApplication = async (req: Request, res: Response) => {
 
     try {
         await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_Application_Respond(${applicationID}, "${status}", @o_status)
-        `);
+            CALL SP_Application_Respond(?, ?, @o_status)
+        `, [applicationID, status]);
 
         const result = await dbConnection.query<RowDataPacket[]>(`
-            SELECT @o_status AS o_status
+            SELECT @o_status AS o_statusS
         `);
 
         const resultStatus: OStatus[] = JSON.parse(JSON.stringify(result[0]));
@@ -42,6 +42,7 @@ export const respondToApplication = async (req: Request, res: Response) => {
         res.status(400).send({ error: "Request Failed", info: error });
     }
 }
+
 
 export const sendApplication = async (req: Request, res: Response) => {
     const body: ApplicationBody = req.body;
@@ -52,12 +53,17 @@ export const sendApplication = async (req: Request, res: Response) => {
     }
 
     try {
-        const result_application = await dbConnection.query<RowDataPacket[]>(`SP_Application_Send("${body.name}", "${body.payment_receipt}", "${body.email}", "${body.phone_number}", ${body.groupID}, @o_status)`);
+        // Use parameterized query to prevent SQL injection
+        const result_application = await dbConnection.query<RowDataPacket[]>(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`, [body.name, body.payment_receipt, body.email, body.phone_number, body.groupID]);
+        
+        // Parse the result
         const result: OStatus[] = JSON.parse(JSON.stringify(result_application[0][0]));
 
+        // Send the response
         res.status(200).send(result[0] || {});
     } catch (error) {
+        // Handle errors
         res.status(400).send({ error: "Request Failed", info: error });
     }
-
 }
+
