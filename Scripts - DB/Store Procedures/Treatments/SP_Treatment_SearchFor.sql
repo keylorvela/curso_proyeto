@@ -19,7 +19,15 @@ BEGIN
         SET o_status = "Success: Treatment found";
 
         SELECT
-            T.ID, Name, Description, Price, o_status
+			T.ID,
+			T.Name,
+			T.Description,
+			T.Price,
+			T.Includes,
+			T.ProcedureDuration,
+			T.EffectDuration,
+			T.Information,
+			o_status
         FROM Treatment AS T
         WHERE T.ID = p_treatmentID AND T.isActive = 1;
     END IF;

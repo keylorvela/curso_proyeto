@@ -1,20 +1,21 @@
-export interface Course {
-    ID: number,
-    Name: String,
-    Description: String,
-    Price: String,
-    StartingDate: String,
-    ScheduleDate: String,
-    ScheduleHour: String,
-    Capacity: number,
-    o_status: String
+export interface CourseBody {
+    Name: string
+    Description: string
+    Topics: string
+    Includes: string
+    Duration: string
+    Price: number
+    UserTarget: string
 }
 
-export interface EnrolledCourses {
-    CourseID: number,
-    GroupID: number,
-    Name: String,
-    Description: String,
-    ScheduleDate: String,
-    ScheduleHour: String
+export interface Course {
+    ID: number,
+    Name: string
+    Description: string
+    Topics: string
+    Includes: string
+    Duration: string
+    Price: number
+    UserTarget: string
+    o_status: String
 }

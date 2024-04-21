@@ -35,10 +35,10 @@ const respondToApplication = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
     try {
         yield dbConfig_1.default.query(`
-            CALL SP_Application_Respond(${applicationID}, "${status}", @o_status)
-        `);
+            CALL SP_Application_Respond(?, ?, @o_status)
+        `, [applicationID, status]);
         const result = yield dbConfig_1.default.query(`
-            SELECT @o_status AS o_status
+            SELECT @o_status AS o_statusS
         `);
         const resultStatus = JSON.parse(JSON.stringify(result[0]));
         res.status(200).send(resultStatus[0] || {});
@@ -55,11 +55,15 @@ const sendApplication = (req, res) => __awaiter(void 0, void 0, void 0, function
         return;
     }
     try {
-        const result_application = yield dbConfig_1.default.query(`SP_Application_Send("${body.name}", "${body.payment_receipt}", "${body.email}", "${body.phone_number}", ${body.groupID}, @o_status)`);
+        // Use parameterized query to prevent SQL injection
+        const result_application = yield dbConfig_1.default.query(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`, [body.name, body.payment_receipt, body.email, body.phone_number, body.groupID]);
+        // Parse the result
         const result = JSON.parse(JSON.stringify(result_application[0][0]));
+        // Send the response
         res.status(200).send(result[0] || {});
     }
     catch (error) {
+        // Handle errors
         res.status(400).send({ error: "Request Failed", info: error });
     }
 });

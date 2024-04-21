@@ -1,6 +1,6 @@
 DELIMITER //
 
-CREATE PROCEDURE SP_Course_ListEnrolled(
+CREATE PROCEDURE SP_Group_ListEnrolled(
     IN p_UserID INT
 )
 BEGIN
@@ -15,7 +15,7 @@ BEGIN
     INNER JOIN bqhd9nbafrpsvzpzrgvc.Group AS G
         ON GU.GroupID = G.ID
     INNER JOIN Course AS C
-        ON GU.CourseID = C.ID
+        ON G.CourseID = C.ID
     WHERE GU.UserID = p_UserID;
 END //
 

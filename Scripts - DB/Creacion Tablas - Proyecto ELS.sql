@@ -23,11 +23,16 @@ CREATE TABLE `Person` (
 );
 
 CREATE TABLE `Treatment` (
-  `ID` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `Name` varchar(64),
+  `ID` int(11) PRIMARY NOT NULL AUTO_INCREMENT,
+  `Name` varchar(64) DEFAULT NULL,
   `Description` text,
-  `Price` decimal(15,2),
-  `CategoryID` int
+  `Price` decimal(15,2) DEFAULT NULL,
+  `Includes` text,
+  `ProcedureDuration` text,
+  `EffectDuration` text,
+  `Information` text,
+  `CategoryID` int(11) DEFAULT NULL,
+  `IsActive` tinyint(4) DEFAULT '1',
 );
 
 CREATE TABLE `TreatmentCategory` (
@@ -56,7 +61,12 @@ CREATE TABLE `Course` (
   `ID` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `Name` varchar(64),
   `Description` text,
-  `Price` decimal(15,2)
+  `Topics` text,
+  `Includes` text,
+  `Duration` text,
+  `Price` decimal(15,2),
+  `UserTarget` text
+  `isActive` bool
 );
 
 CREATE TABLE `GroupsByUser` (
@@ -69,10 +79,11 @@ CREATE TABLE `GroupsByUser` (
 CREATE TABLE `Group` (
   `ID` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `StartingDate` date,
-  `ScheduleDate` varchar(32),
+  `ScheduleDate` varchar(255),
   `ScheduleHour` time,
   `Capacity` int,
-  `CourseID` int
+  `CourseID` int,
+  `isActive` bool
 );
 
 CREATE TABLE `News` (
@@ -97,7 +108,7 @@ ALTER TABLE `User` ADD FOREIGN KEY (`UserTypeID`) REFERENCES `UserType` (`ID`);
 
 ALTER TABLE `GroupsByUser` ADD FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`);
 
-ALTER TABLE `User` ADD FOREIGN KEY (`PersonID`) REFERENCES `Person` (`ID`);
+ALTER TABLE `Person` ADD FOREIGN KEY (`ID`) REFERENCES `User` (`PersonID`);
 
 ALTER TABLE `StudentApplication` ADD FOREIGN KEY (`StatusID`) REFERENCES `StatusType` (`ID`);
 
@@ -112,3 +123,13 @@ ALTER TABLE `News` ADD FOREIGN KEY (`GroupID`) REFERENCES `Group` (`ID`);
 ALTER TABLE `Treatment` ADD FOREIGN KEY (`CategoryID`) REFERENCES `TreatmentCategory` (`ID`);
 
 ALTER TABLE `Review` ADD FOREIGN KEY (`TreatmentID`) REFERENCES `Treatment` (`ID`);
+
+ALTER TABLE `TreatmentImage` ADD FOREIGN KEY (`TreatmentID`) REFERENCES `Treatment` (`ID`);
+
+ALTER TABLE `CourseImage` ADD FOREIGN KEY (`CourseID`) REFERENCES `Course` (`ID`);
+
+ALTER TABLE `CourseImage` ADD FOREIGN KEY (`ImageTypeID`) REFERENCES `ImageType` (`ID`);
+
+ALTER TABLE `TreatmentImage` ADD FOREIGN KEY (`ImageTypeID`) REFERENCES `ImageType` (`ID`);
+
+

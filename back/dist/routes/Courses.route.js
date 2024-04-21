@@ -9,8 +9,5 @@ router.post("/", Courses_controller_1.createCourse);
 router.put("/:courseId", Courses_controller_1.updateCourse);
 router.delete("/:courseId", Courses_controller_1.deleteCourse);
 router.get("/:courseId", Courses_controller_1.searchCourse);
-// Rutas para la gestión de la participación en cursos
-router.post("/:courseId/drop-out", Courses_controller_1.dropOutCourse);
-router.get("/enrolled/:userID", Courses_controller_1.listEnrolledCourses);
 exports.default = router;
 //# sourceMappingURL=Courses.route.js.map

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { RowDataPacket } from "mysql2";
 import dbConnection from "../database/dbConfig";
 
-import { addReviewBody, removeReviewBody } from "../interfaces/Reviews.interface";
+import { ResponseBody, Review, TreatmentIDBody, addReviewBody, removeReviewBody } from "../interfaces/Reviews.interface";
 import { OStatus } from "interfaces/OStatus.interface";
 
 export const addReview = async (req: Request, res: Response) => {
@@ -38,13 +38,49 @@ export const addReview = async (req: Request, res: Response) => {
 export const removeReview = async (req: Request, res: Response) => {
     const { id }: removeReviewBody = req.body;
 
-    if (isNaN(id) || id < 0) {
+    if (isNaN(id) || id <= 0) {
         res.status(400).send({ error: "Id enter is not valid" });
         return;
     }
 
     try {
         const result_reviews = await dbConnection.query<RowDataPacket[]>(`CALL SP_Reviews_Remove_Review(${id}, @o_status)`);
+        const result: OStatus[] = JSON.parse(JSON.stringify(result_reviews[0][0]));
+
+        res.status(200).send(result[0] || {})
+    } catch (error) {
+        res.status(400).send({ error: "Request Failed", info: error });
+    }
+}
+
+export const listReviewsOfTreatment = async (req: Request, res: Response) => {
+    const { treatment_id }: TreatmentIDBody = req.body;
+
+    if (isNaN(treatment_id) || treatment_id <= 0) {
+        res.status(400).send({ error: "Id enter is not valid" });
+        return;
+    }
+
+    try {
+        const result_reviews = await dbConnection.query<RowDataPacket[]>(`CALL SP_Reviews_ReadAll(${treatment_id}, @o_status)`);
+        const result: Review[] = JSON.parse(JSON.stringify(result_reviews[0][0]));
+
+        res.status(200).send(result)
+    } catch (error) {
+        res.status(400).send({ error: "Request Failed", info: error });
+    }
+}
+
+export const addReviewRespond = async (req: Request, res: Response) => {
+    const { review_id, respond }: ResponseBody = req.body;
+
+    if (isNaN(review_id) || review_id <= 0 || respond.length <= 0) {
+        res.status(400).send({ error: "Input are not valid: Id must be an interger > 0 AND response cannot be empty" });
+        return;
+    }
+
+    try {
+        const result_reviews = await dbConnection.query<RowDataPacket[]>(`CALL SP_Reviews_Respond(${review_id}, "${respond}", @o_status)`);
         const result: OStatus[] = JSON.parse(JSON.stringify(result_reviews[0][0]));
 
         res.status(200).send(result[0] || {})

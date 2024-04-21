@@ -3,10 +3,10 @@ import { getAllProfessors, updateProfessor, deleteProfessor } from "../controlle
 
 const router = express.Router();
 
-router.get("/all", getAllProfessors);
+router.get("/", getAllProfessors);
 
-router.put("/update", updateProfessor);
+router.put("/", updateProfessor);
 
-router.delete("/delete/:userID", deleteProfessor);
+router.delete("/:userID", deleteProfessor);
 
 export default router;

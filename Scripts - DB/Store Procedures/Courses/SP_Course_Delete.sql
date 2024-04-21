@@ -23,10 +23,6 @@ BEGIN
             SET isActive = 0
             WHERE ID = p_courseID;
 
-        -- Delete the group
-        DELETE FROM bqhd9nbafrpsvzpzrgvc.Group
-            WHERE CourseID = p_courseID;
-
         SET o_status = "Success: Course deleted";
     END IF;
 

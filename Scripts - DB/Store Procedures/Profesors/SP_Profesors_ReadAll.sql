@@ -11,7 +11,7 @@ BEGIN
 	SELECT UT.ID
 		INTO @v_userTypeID
         FROM UserType AS UT
-        WHERE G.TypeName = "Profesor";
+        WHERE UT.TypeName = "Profesor";
 
     -- Verify if group exists
     IF @v_userTypeID IS NULL THEN

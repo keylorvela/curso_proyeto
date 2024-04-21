@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import dbConnection from "../database/dbConfig";
 import { RowDataPacket } from 'mysql2';
-import { Course, EnrolledCourses } from "interfaces/Course.interface";
+import { Course, CourseBody } from "interfaces/Course.interface";
 import { OStatus } from "interfaces/OStatus.interface";
 
 // Comentario
@@ -26,26 +26,27 @@ export const getCourseList = async (req: Request, res: Response) => {
 };
 
 export const createCourse = async (req: Request, res: Response) => {
-    const { startingDate, date, hour, capacity, name, description, price }: {
-        startingDate: string,
-        date: string,
-        hour: string,
-        capacity: number,
-        name: string,
-        description: string,
-        price: number
-    } = req.body;
+    const body: CourseBody = req.body;
 
     // Verificar si los parámetros requeridos están presentes
-    if (!startingDate || !date || !hour || !capacity || !name || !description || !price) {
-        res.status(400).send({ error: "All parameters are required" });
+    if (!body.Name || !body.Description || !body.Duration || !body.Price) {
+        res.status(400).send({ error: "At least: Name, Description, Duration, Price requiered" });
         return;
     }
 
     try {
         const result_course = await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_Course_Create('${startingDate}','${date}','${hour}',${capacity},'${name}','${description}',${price},@o_status)`);
-        const result: OStatus[] = JSON.parse(JSON.stringify(result_course[0][0]));
+            CALL SP_Course_Create(
+                '${body.Name}',
+                '${body.Description}',
+                '${body.Topics}',
+                '${body.Includes}',
+                '${body.Duration}',
+                ${body.Price},
+                '${body.UserTarget}',
+                @o_status)`);
+
+            const result: OStatus[] = JSON.parse(JSON.stringify(result_course[0][0]));
 
         res.status(200).send(result[0] || {});
     } catch (error) {
@@ -56,33 +57,19 @@ export const createCourse = async (req: Request, res: Response) => {
 
 export const updateCourse = async (req: Request, res: Response) => {
     const courseId: number = Number(req.params.courseId);
-    const { startingDate, date, hour, capacity, name, description, price }: {
-        startingDate: string,
-        date: string,
-        hour: string,
-        capacity: number,
-        name: string,
-        description: string,
-        price: number
-    } = req.body;
-
-
-    if (!startingDate || !date || !hour || !capacity || !name || !description || !price || isNaN(courseId) || courseId <= 0) {
-        res.status(400).send({ error: "All parameters are required" });
-        return;
-    }
+    const body: CourseBody = req.body;
 
     try {
         const result_course = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Course_Update(
                 ${courseId},
-                '${startingDate}',
-                '${date}',
-                '${hour}',
-                ${capacity},
-                '${name}',
-                '${description}',
-                ${price},
+                '${body.Name}',
+                '${body.Description}',
+                '${body.Topics}',
+                '${body.Includes}',
+                '${body.Duration}',
+                ${body.Price},
+                '${body.UserTarget}',
                 @o_status
             )
         `);
@@ -111,49 +98,6 @@ export const deleteCourse = async (req: Request, res: Response) => {
         const result: OStatus[] = JSON.parse(JSON.stringify(result_course[0][0]));
 
         res.status(200).send(result[0] || {});
-    } catch (error) {
-        console.error("Error:", error);
-        res.status(500).send({ error: "Request Failed" });
-    }
-};
-
-export const dropOutCourse = async (req: Request, res: Response) => {
-    const { userID, groupID }: { userID: number, groupID: number } = req.body;
-
-
-    if (!userID || !groupID) {
-        res.status(400).send({ error: "Both userID and groupID are required" });
-        return;
-    }
-
-    try {
-        const result_course = await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_Course_DropOut(${userID}, ${groupID}, @o_status)
-        `);
-        const result: OStatus[] = JSON.parse(JSON.stringify(result_course[0][0]));
-
-        res.status(200).send(result[0] || {});
-    } catch (error) {
-        console.error("Error:", error);
-        res.status(500).send({ error: "Request Failed" });
-    }
-};
-
-export const listEnrolledCourses = async (req: Request, res: Response) => {
-    const userID: number = Number(req.params.userID);
-
-    if (isNaN(userID) || userID <= 0) {
-        res.status(400).send({ error: "Invalid user ID" });
-        return;
-    }
-
-    try {
-        const result_course = await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_Course_ListEnrolled(${userID})
-        `);
-        const result: EnrolledCourses[] = JSON.parse(JSON.stringify(result_course[0][0]));
-
-        res.status(200).send(result);
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send({ error: "Request Failed" });

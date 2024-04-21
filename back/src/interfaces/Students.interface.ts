@@ -7,3 +7,8 @@ export interface Student {
     Name: string;
     o_status: string;
 }
+
+export interface RegStudentInGroup {
+    UserID: number;
+    GroupID: number;
+}
