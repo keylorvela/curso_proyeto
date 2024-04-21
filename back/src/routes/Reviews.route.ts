@@ -1,4 +1,4 @@
-import { addReview, removeReview } from "../controllers/Reviews.controller";
+import { addReview, removeReview, listReviewsOfTreatment, addReviewRespond } from "../controllers/Reviews.controller";
 import { Router } from "express";
 const router = Router();
 
@@ -6,8 +6,8 @@ router.post("/", addReview);
 
 router.delete("/", removeReview);
 
-router.get("/", (req, res) => {res.status(200).json({saludo: "Desde get Review :)"})});
+router.get("/", listReviewsOfTreatment);
 
-router.put("/", (req, res) => {res.status(200).json({saludo: "Desde put Review :)"})});
+router.put("/", addReviewRespond);
 
 export default router;
