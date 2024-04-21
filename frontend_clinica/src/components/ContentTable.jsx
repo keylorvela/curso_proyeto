@@ -1,4 +1,5 @@
 import styles from 'src/components/ContentTable.module.css'
+import commonStyles from 'src/components/Common.module.css'
 import TreatmentView from 'src/views/TreatmentView.jsx'
 
 import Treatment from 'src/components/Treatment.jsx'
@@ -18,18 +19,12 @@ function ContentTable({ title, handler, children }) {
         <>
             <Container>
                 <Row>
-                    <Col className='d-flex justify-content-center' sm={12}>
-                        <h2 className='fs-1'>  {title} </h2>
+                    <Col className='d-flex justify-content-center text-center' sm={12}>
+                        <h2 className={commonStyles.title}>  {title} </h2>
                     </Col>
                 </Row>
-                <Row>
-                    <Col className='d-flex justify-content-center' sm={12}>
-
-                    </Col>
-                </Row>
-                <Row>
-
-
+                
+                <Row >
                     {children}
 
                 </Row>

@@ -14,7 +14,7 @@ function Treatment({ title, event }) {
 
         <>
             <main className={styles.body}>
-                <Container className='text-center'>
+                <Container className = "text-center">
                     <Row>
                         <Col>
                             <Image src={img} rounded fluid />

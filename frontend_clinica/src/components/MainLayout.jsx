@@ -1,12 +1,15 @@
 import React from 'react';
 import MainNavbar from 'src/components/MainNavbar.jsx';
 import MainFooter from 'src/components/MainFooter.jsx';
+import AlertModal from 'src/components/utils/AlertModal.jsx';
 import styles from 'src/components/MainLayout.module.css';
 import { PiWhatsappLogoBold } from 'react-icons/pi';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-
+import { useState } from 'react';
 function MainLayout({ children }) {
+  const [showAlert, setShowAlert] = useState(false);
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -19,7 +22,12 @@ function MainLayout({ children }) {
           
           
           {children}
-
+          <AlertModal
+                  title="Atención"
+                  message="Whatsapp."
+                  showAlert={showAlert}
+                  setShowAlert={setShowAlert}
+          />
 
           {/* Botón whatsapp */}
           <div className={styles.floatingButton}>
@@ -28,7 +36,7 @@ function MainLayout({ children }) {
               overlay={<Tooltip><p className='fs-3 px-2'>Ir a whatsapp</p></Tooltip>}
             >
               <div>
-                <PiWhatsappLogoBold size={100} onClick={() => { alert("Whatsapp") }} />
+                <PiWhatsappLogoBold size={100} onClick={() => { setShowAlert(true) }} />
               </div>
             </OverlayTrigger>
           </div>

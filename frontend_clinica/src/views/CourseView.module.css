@@ -25,26 +25,6 @@
 }
 
 
-.wtsButton{
-  background-color: #33BA47;
-  color: #FFFFFF;
-  border: 0px;
-}
-
-.wtsButton:hover{
-  background-color: #154d1d;
-}
-
-.bpButton{
-  background-color: #FEA734;
-  color:#FFFFFF;
-  border: 0px;
-}
-
-.bpButton:hover{
-  background-color: #b87c2d;
-}
-
 
 /* ---------- Mobile  */
 @media (max-width: 768px) {
