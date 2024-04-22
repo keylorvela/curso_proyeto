@@ -8,8 +8,14 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { useState } from 'react';
 function MainLayout({ children }) {
+  
   const [showAlert, setShowAlert] = useState(false);
 
+  const getBg = () => {
+    const numeroAleatorio = Math.floor(Math.random() * 5) + 1; // Genera un número aleatorio del 1 al 10
+    return `blob${numeroAleatorio}.svg`;
+  }
+  
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -22,6 +28,8 @@ function MainLayout({ children }) {
           
           
           {children}
+
+          
           <AlertModal
                   title="Atención"
                   message="Whatsapp."
@@ -45,7 +53,7 @@ function MainLayout({ children }) {
 
       
       <MainFooter />
-      <div className={styles.backgroundImage}></div> {/* Aquí se coloca la imagen de fondo */}
+      <div className={styles.backgroundImage} style={{ backgroundImage: `url(src/assets/${getBg()})` }} ></div> {/* Aquí se coloca la imagen de fondo */}
 
     </div>
   );

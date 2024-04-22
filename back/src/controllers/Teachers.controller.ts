@@ -9,7 +9,7 @@ export const getAllProfessors = async (req: Request, res: Response) => {
         const result = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Professors_ReadAll(@o_status)
         `);
-        const professorsList: Professor[] = JSON.parse(JSON.stringify(result[0]));
+        const professorsList: Professor[] = JSON.parse(JSON.stringify(result[0][0]));
 
         res.status(200).send(professorsList || []);
     } catch (error) {
@@ -36,11 +36,14 @@ export const updateProfessor = async (req: Request, res: Response) => {
         `);
 
         const resultStatus: OStatus[] = JSON.parse(JSON.stringify(result[0]));
-        res.status(200).send(resultStatus[0] || {});
+        const professorInfo = result[0][0];
+
+        res.status(200).send(professorInfo || {});
     } catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
     }
 }
+
 
 export const deleteProfessor = async (req: Request, res: Response) => {
     const { userID }: { userID: number } = req.body;

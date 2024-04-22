@@ -1,8 +1,9 @@
+@import url('src/components/Common.module.css');
 
-
-.page{
+.page {
     height: 100%;
     width: 100%;
+    font-family: var(--font);
     padding: 2%;
     display: flex;
     flex-direction: column;
@@ -12,16 +13,16 @@
     align-content: center;
 }
 
-.main{
+.main {
     width: 90%;
 }
 
-.treatments{
+.treatments {
     width: 50%;
 }
 
 
-.loading{
+.loading {
     margin-top: 3%;
     width: 100%;
     height: 100%;
@@ -34,7 +35,7 @@
 
 /* ---------- Mobile  */
 @media (max-width: 768px) {
-    .treatments{
-        width:80%;
+    .treatments {
+        width: 80%;
     }
-  }
+}
