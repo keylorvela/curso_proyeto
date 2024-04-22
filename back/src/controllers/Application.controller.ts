@@ -12,11 +12,13 @@ export const getAllApplications = async (req: Request, res: Response) => {
         `);
         const applicationsList: Application[] = JSON.parse(JSON.stringify(result[0]));
 
+   
         res.status(200).send(applicationsList || []);
     } catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
     }
 }
+
 
 
 export const respondToApplication = async (req: Request, res: Response) => {
