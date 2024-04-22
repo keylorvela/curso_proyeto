@@ -19,7 +19,7 @@ const getAllApplications = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const result = yield dbConfig_1.default.query(`
             CALL SP_Application_ReadAll()
         `);
-        const applicationsList = JSON.parse(JSON.stringify(result[0]));
+        const applicationsList = JSON.parse(JSON.stringify(result[0][0]));
         res.status(200).send(applicationsList || []);
     }
     catch (error) {

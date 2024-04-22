@@ -19,7 +19,7 @@ const getAllProfessors = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const result = yield dbConfig_1.default.query(`
             CALL SP_Professors_ReadAll(@o_status)
         `);
-        const professorsList = JSON.parse(JSON.stringify(result[0]));
+        const professorsList = JSON.parse(JSON.stringify(result[0][0]));
         res.status(200).send(professorsList || []);
     }
     catch (error) {
@@ -41,7 +41,8 @@ const updateProfessor = (req, res) => __awaiter(void 0, void 0, void 0, function
             SELECT @o_status AS o_status
         `);
         const resultStatus = JSON.parse(JSON.stringify(result[0]));
-        res.status(200).send(resultStatus[0] || {});
+        const professorInfo = result[0][0];
+        res.status(200).send(professorInfo || {});
     }
     catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
