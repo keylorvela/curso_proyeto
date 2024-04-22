@@ -9,7 +9,7 @@ export const getAllProfessors = async (req: Request, res: Response) => {
         const result = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Professors_ReadAll(@o_status)
         `);
-        const professorsList: Professor[] = JSON.parse(JSON.stringify(result[0]));
+        const professorsList: Professor[] = JSON.parse(JSON.stringify(result[0][0]));
 
         res.status(200).send(professorsList || []);
     } catch (error) {

@@ -10,7 +10,7 @@ export const getAllApplications = async (req: Request, res: Response) => {
         const result = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Application_ReadAll()
         `);
-        const applicationsList: Application[] = JSON.parse(JSON.stringify(result[0]));
+        const applicationsList: Application[] = JSON.parse(JSON.stringify(result[0][0]));
 
    
         res.status(200).send(applicationsList || []);
