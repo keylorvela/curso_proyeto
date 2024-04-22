@@ -34,7 +34,7 @@ BEGIN
                 R.Stars,
                 R.Response,
                 o_status
-            FROM Reviews AS R
+            FROM Review AS R
             WHERE R.TreatmentID = p_treatmentID;
 
         SET v_transactionStatus = 1;
