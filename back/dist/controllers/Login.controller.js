@@ -44,15 +44,13 @@ exports.changePassword = changePassword;
 // Send the email password reset
 const requestEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
-    const email = body.requested_email;
-    const userName = "Deyner";
-    const TEMP_isValidEmail = true;
     try {
         const mailManager = new Mail_controller_1.default();
         const otp = mailManager.generateOTP();
-        // TODO: Call SP to verify email || SP that verifies email and save the OTP
-        if (TEMP_isValidEmail) {
-            yield mailManager.sendMail("testELSPrueba@gmail.com", email, "Solicitud de cambio de contraseña", userName, otp);
+        const result_verifyEmail = yield dbConfig_1.default.query(`CALL SP_Login_Verify_Email("${body.requested_email}", ${otp}, @o_status)`);
+        const result = JSON.parse(JSON.stringify(result_verifyEmail[0][0]));
+        if (result[0].IsValid) {
+            mailManager.sendMail("testELSPrueba@gmail.com", body.requested_email, "Solicitud de cambio de contraseña", result[0].Name, otp);
             res.status(200).send({ message: "Password reset email sent successfully" });
         }
         else {
@@ -60,18 +58,42 @@ const requestEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
     }
     catch (error) {
-        res.status(500).send({ error: "Failed to send password reset email" });
+        res.status(500).send({ error: "Failed to send password reset email", information: error });
     }
 });
 exports.requestEmail = requestEmail;
-// Verify the OTP validation
+// Make the OTP validation
 const verifyOTP = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200).json({});
+    const body = req.body;
+    if (isNaN(body.OTP) || body.OTP < 1000 || body.OTP > 9999) {
+        res.status(401).send({ error: "OTP not valid" });
+        return;
+    }
+    try {
+        const result_validateOTP = yield dbConfig_1.default.query(`CALL SP_Login_Verify_OTP(${body.OTP}, @o_status)`);
+        const result = JSON.parse(JSON.stringify(result_validateOTP[0][0]));
+        res.status(200).send(result[0] || {});
+    }
+    catch (error) {
+        res.status(401).send({ error: "Request Failed" });
+    }
 });
 exports.verifyOTP = verifyOTP;
 // Update the password
 const updatePasswordWithOTP = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200).json({});
+    const body = req.body;
+    if (isNaN(body.UserID) || body.UserID <= 0) {
+        res.status(401).send({ error: "OTP not valid" });
+        return;
+    }
+    try {
+        const result_passwordReset = yield dbConfig_1.default.query(`CALL SP_Login_ChangeByForget(${body.UserID}, "${body.Password}", @o_status)`);
+        const result = JSON.parse(JSON.stringify(result_passwordReset[0][0]));
+        res.status(200).send(result[0] || {});
+    }
+    catch (error) {
+        res.status(401).send({ error: "Request Failed" });
+    }
 });
 exports.updatePasswordWithOTP = updatePasswordWithOTP;
 //# sourceMappingURL=Login.controller.js.map
