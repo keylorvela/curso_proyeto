@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { changePassword, startSession, forgotPassword } from "../controllers/Login.controller";
+import { changePassword, startSession, requestEmail, verifyOTP, updatePasswordWithOTP } from "../controllers/Login.controller";
 
 const router = Router();
 
@@ -7,6 +7,10 @@ router.post("/", startSession)
 
 router.post("/changePassword", changePassword)
 
-router.post("/forgotPassword", forgotPassword)
+router.post("/requestEmail", requestEmail)
+
+router.post("/verifyOTP", verifyOTP)
+
+router.post("/updatePasswordWithOTP", updatePasswordWithOTP)
 
 export default router;
