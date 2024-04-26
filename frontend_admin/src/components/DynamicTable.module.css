@@ -1,7 +1,60 @@
 .headBorder {
-    border-width: 8px; 
-    border-color: #d2e70e;
-    border-left: none !important; 
-    border-right: none !important; 
+    border-width: 3px; 
+    border-color: #1D2D8C;
+    border-left: none ; 
+    border-right: none ; 
+    vertical-align: middle;
+    font-size: x-large;
+    font-weight: bold ;
 }
+
+.columnBtn {
+    text-align: right;
+}
+
+.customButton {
+    font-weight: bold; 
+    font-size: 0.8em; 
+    padding: 10px 20px; 
+    border: none;
+    background-color: #3F8EFC;
+  }
+
+.optionsButton{
+    margin-right: 2%;
+    background: none;
+    border: none;
+    color: #85B79D;
+}
+
+.optionsButton:hover{
+    background: none;
+    color: #b5ddc8;
+}
+
+.pagination {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    display: flex;
+    justify-content: center;
+    
+}
+  
+.pagination button {
+    margin: 0 ;
+}
+
+.movePgaeBtn{
+    color: #1D2D8C;
+    font-weight: 900;
+}
+
+.pageNumber{
+    background-color: #3F8EFC;
+    color: white;
+}
+
+  
+  
+  
   
