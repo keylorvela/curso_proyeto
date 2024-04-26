@@ -5,7 +5,13 @@ dotenv.config();
 
 const dbUri : string = process.env.DB_URI!;
 
-const pool = mysql.createPool(dbUri);
+const pool = mysql.createPool({
+    uri: dbUri,
+    waitForConnections: true,
+    connectionLimit: 4,
+    maxIdle: 4,
+    enableKeepAlive: true
+});
 
 pool.getConnection()
     .then( connection => {
