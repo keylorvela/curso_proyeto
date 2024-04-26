@@ -5,3 +5,7 @@ export interface StartSession {
 export interface RegisterPerson {
     PersonID: number
 }
+
+export interface ForgetPasswordBody {
+    requested_email: string
+}

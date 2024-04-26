@@ -1,3 +1,10 @@
+export interface photoBody {
+    imageID: number
+    url: string
+    imageType: string
+}
+
+
 export interface createTreatmentBody {
     p_name: String
     p_description: String
@@ -6,6 +13,7 @@ export interface createTreatmentBody {
     p_procedureDuration: String
     p_effectDuration: String
     p_information: String
+    p_photos: [ photoBody ]
     p_categoryID: String
 }
 
@@ -18,11 +26,18 @@ export interface updateTreatmentBody {
     p_procedureDuration: String
     p_effectDuration: String
     p_information: String
+    p_photos: [ photoBody ]
     p_categoryID: String
 }
 
 export interface TreatmentID {
     o_treatmentID: number
+}
+
+export interface TreatmentImage {
+    ID: number
+    ImageURL: string
+    o_status: string
 }
 
 export interface Treatment {
@@ -34,5 +49,7 @@ export interface Treatment {
     ProcedureDuration: String
     EffectDuration: String
     Information: String
+    Photos: [ TreatmentImage ] | string
     o_status: String
 }
+
