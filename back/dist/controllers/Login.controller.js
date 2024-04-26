@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.forgotPassword = exports.changePassword = exports.startSession = void 0;
+exports.updatePasswordWithOTP = exports.verifyOTP = exports.requestEmail = exports.changePassword = exports.startSession = void 0;
 const dbConfig_1 = __importDefault(require("../database/dbConfig"));
 const Mail_controller_1 = __importDefault(require("../mail/Mail.controller"));
 // Login action
@@ -41,16 +41,37 @@ const changePassword = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.changePassword = changePassword;
-const forgotPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // TODO: Get the necessary information
+// Send the email password reset
+const requestEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const body = req.body;
+    const email = body.requested_email;
+    const userName = "Deyner";
+    const TEMP_isValidEmail = true;
     try {
         const mailManager = new Mail_controller_1.default();
-        yield mailManager.sendMail("testELSPrueba@gmail.com", "deynernavarrob@gmail.com", "Prueba Cambio de contraseña", "Deyner");
-        res.status(200).send({ message: "Password reset email sent successfully" });
+        const otp = mailManager.generateOTP();
+        // TODO: Call SP to verify email || SP that verifies email and save the OTP
+        if (TEMP_isValidEmail) {
+            yield mailManager.sendMail("testELSPrueba@gmail.com", email, "Solicitud de cambio de contraseña", userName, otp);
+            res.status(200).send({ message: "Password reset email sent successfully" });
+        }
+        else {
+            res.status(403).send({ message: "Email does not match" });
+        }
     }
     catch (error) {
         res.status(500).send({ error: "Failed to send password reset email" });
     }
 });
-exports.forgotPassword = forgotPassword;
+exports.requestEmail = requestEmail;
+// Verify the OTP validation
+const verifyOTP = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.status(200).json({});
+});
+exports.verifyOTP = verifyOTP;
+// Update the password
+const updatePasswordWithOTP = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.status(200).json({});
+});
+exports.updatePasswordWithOTP = updatePasswordWithOTP;
 //# sourceMappingURL=Login.controller.js.map

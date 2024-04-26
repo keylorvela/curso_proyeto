@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchCourse = exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getCourseList = void 0;
 const dbConfig_1 = __importDefault(require("../database/dbConfig"));
-// Comentario
 const getCourseList = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const limit = Number(req.query.limit) || 10;
     const offset = Number(req.query.offset) || 0;
@@ -52,6 +51,19 @@ const createCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 '${body.UserTarget}',
                 @o_status)`);
         const result = JSON.parse(JSON.stringify(result_course[0][0]));
+        if (result.length > 0 && result[0].o_courseID != -1) {
+            const imagesPromise = body.Photos.map((photo) => __awaiter(void 0, void 0, void 0, function* () {
+                yield dbConfig_1.default.query(`
+                    CALL SP_Image_AddCourseImage(
+                        "${photo.url}",
+                        ${result[0].o_courseID},
+                        "${photo.imageType}",
+                        @o_status
+                    )
+                `);
+            }));
+            yield Promise.all(imagesPromise);
+        }
         res.status(200).send(result[0] || {});
     }
     catch (error) {
@@ -78,6 +90,12 @@ const updateCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             )
         `);
         const result = JSON.parse(JSON.stringify(result_course[0][0]));
+        const imagesPromise = body.Photos.map((photo) => __awaiter(void 0, void 0, void 0, function* () {
+            yield dbConfig_1.default.query(`
+                CALL SP_Image_UpdateCourseImage(${photo.imageID}, "${photo.url}", @o_status)
+            `);
+        }));
+        yield Promise.all(imagesPromise);
         res.status(200).send(result[0] || {});
     }
     catch (error) {
@@ -118,6 +136,8 @@ const searchCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             CALL SP_Course_SearchFor(${courseId}, @o_status)
         `);
         const result = JSON.parse(JSON.stringify(result_course[0][0]));
+        const result_images = yield dbConfig_1.default.query(`CALL SP_Image_ReadAllCourse(${courseId}, @o_status)`);
+        result[0].Photos = JSON.parse(JSON.stringify(result_images[0][0]));
         res.status(200).send(result[0] || {});
     }
     catch (error) {

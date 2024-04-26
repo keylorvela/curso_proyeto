@@ -31,11 +31,10 @@ class MailManager {
     generateOTP() {
         return Math.floor(Math.random() * 9000 + 1000).toString();
     }
-    sendMail(from, to, subject, name) {
+    sendMail(from, to, subject, name, otp) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
-                const OTP = this.generateOTP();
-                const html = (0, Mail_template_1.default)(OTP, name);
+                const html = (0, Mail_template_1.default)(otp, name);
                 const mail_config = {
                     from,
                     to,
