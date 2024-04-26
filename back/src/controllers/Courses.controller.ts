@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import dbConnection from "../database/dbConfig";
 import { RowDataPacket } from 'mysql2';
-import { Course, CourseBody } from "interfaces/Course.interface";
+import { Course, CourseBody, CourseID } from "interfaces/Course.interface";
 import { OStatus } from "interfaces/OStatus.interface";
 
-// Comentario
 export const getCourseList = async (req: Request, res: Response) => {
     const limit: number = Number(req.query.limit) || 10;
     const offset: number = Number(req.query.offset) || 0;
@@ -46,7 +45,22 @@ export const createCourse = async (req: Request, res: Response) => {
                 '${body.UserTarget}',
                 @o_status)`);
 
-            const result: OStatus[] = JSON.parse(JSON.stringify(result_course[0][0]));
+        const result: CourseID[] = JSON.parse(JSON.stringify(result_course[0][0]));
+
+        if (result.length > 0 && result[0].o_courseID != -1) {
+            const imagesPromise = body.Photos.map(async (photo) => {
+                await dbConnection.query<RowDataPacket[]>(`
+                    CALL SP_Image_AddCourseImage(
+                        "${photo.url}",
+                        ${result[0].o_courseID},
+                        "${photo.imageType}",
+                        @o_status
+                    )
+                `);
+            });
+
+            await Promise.all(imagesPromise);
+        }
 
         res.status(200).send(result[0] || {});
     } catch (error) {
@@ -74,6 +88,14 @@ export const updateCourse = async (req: Request, res: Response) => {
             )
         `);
         const result: OStatus[] = JSON.parse(JSON.stringify(result_course[0][0]));
+
+        const imagesPromise = body.Photos.map(async (photo) => {
+            await dbConnection.query<RowDataPacket[]>(`
+                CALL SP_Image_UpdateCourseImage(${photo.imageID}, "${photo.url}", @o_status)
+            `);
+        })
+
+        await Promise.all(imagesPromise);
 
         res.status(200).send(result[0] || {});
     } catch (error) {
@@ -118,6 +140,9 @@ export const searchCourse = async (req: Request, res: Response) => {
             CALL SP_Course_SearchFor(${courseId}, @o_status)
         `);
         const result: Course[] = JSON.parse(JSON.stringify(result_course[0][0]));
+
+        const result_images = await dbConnection.query<RowDataPacket[]>(`CALL SP_Image_ReadAllCourse(${courseId}, @o_status)`);
+        result[0].Photos = JSON.parse(JSON.stringify(result_images[0][0]));
 
         res.status(200).send(result[0] || {});
     } catch (error) {

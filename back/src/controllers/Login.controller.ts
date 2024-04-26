@@ -4,7 +4,7 @@ import dbConnection from "../database/dbConfig";
 
 import MailManager from "../mail/Mail.controller";
 
-import { StartSession } from "../interfaces/Login.interface"
+import { StartSession, ForgetPasswordBody } from "../interfaces/Login.interface"
 import { OStatus } from "interfaces/OStatus.interface";
 
 // Login action
@@ -34,15 +34,44 @@ export const changePassword = async (req: Request, res: Response) => {
     }
 }
 
-export const forgotPassword = async (req: Request, res: Response) => {
-    // TODO: Get the necessary information
+// Send the email password reset
+export const requestEmail = async (req: Request, res: Response) => {
+    const body: ForgetPasswordBody = req.body;
+
+    const email: string = body.requested_email;
+    const userName: string = "Deyner";
+    const TEMP_isValidEmail: boolean = true;
 
     try {
         const mailManager = new MailManager();
-        await mailManager.sendMail("testELSPrueba@gmail.com", "deynernavarrob@gmail.com", "Prueba Cambio de contraseña", "Deyner");
+        const otp = mailManager.generateOTP();
 
-        res.status(200).send({ message: "Password reset email sent successfully" });
+        // TODO: Call SP to verify email || SP that verifies email and save the OTP
+
+        if (TEMP_isValidEmail) {
+            await mailManager.sendMail(
+                "testELSPrueba@gmail.com",
+                email,
+                "Solicitud de cambio de contraseña",
+                userName,
+                otp
+            );
+            res.status(200).send({ message: "Password reset email sent successfully" });
+        }
+        else {
+            res.status(403).send({ message: "Email does not match" });
+        }
     } catch (error) {
         res.status(500).send({ error: "Failed to send password reset email" });
     }
+}
+
+// Verify the OTP validation
+export const verifyOTP = async (req: Request, res: Response) => {
+    res.status(200).json({})
+}
+
+// Update the password
+export const updatePasswordWithOTP = async (req: Request, res: Response) => {
+    res.status(200).json({})
 }
