@@ -7,21 +7,21 @@ import styles from 'src/views/Professors.module.css';
 import Container from 'react-bootstrap/Container';
 import { faPen, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
-function Professors() {
-    const columns = ['Nombre', 'Identificacion'];
+function Courses() {
+    const columns = ['Curso', ];
     const data = [
-        { Nombre: 'Juan', Email: 'juan@example.com' },
-        { Nombre: 'María', Email: 'maria@example.com' },
-        { Nombre: 'Pedro', Email: 'pedro@example.com' },
-        { Nombre: 'Juan', Email: 'juan@example.com' },
-        { Nombre: 'Juan', Email: 'juan@example.com' },
-        { Nombre: 'Juan', Email: 'juan@example.com' },
-        { Nombre: 'Juan', Email: 'juan@example.com' },
-        { Nombre: 'Juan', Email: 'juan@example.com' },
-        { Nombre: 'Juan', Email: 'juan@example.com' },
-        { Nombre: 'Juan', Email: 'juan@example.com' },
-        { Nombre: 'Juan', Email: 'juan@example.com' },
-        { Nombre: 'Juan', Email: 'juan@example.com' },
+        {  Email: 'juan@example.com' },
+        {  Email: 'maria@example.com' },
+        {  Email: 'pedro@example.com' },
+        {  Email: 'juan@example.com' },
+        {  Email: 'juan@example.com' },
+        {  Email: 'juan@example.com' },
+        {  Email: 'juan@example.com' },
+        {  Email: 'juan@example.com' },
+        {  Email: 'juan@example.com' },
+        {  Email: 'juan@example.com' },
+        {  Email: 'juan@example.com' },
+        {  Email: 'juan@example.com' },
     ];
 
 
@@ -45,13 +45,13 @@ function Professors() {
     return (
         <MainLayout>
             <Container fluid style={{ width: '98%' }}>
-                <h1 className={styles.title}>Profesores</h1>
+                <h1 className={styles.title}>Cursos disponibles</h1>
 
                 <DynamicTable
                     columns={columns}
                     data={data}
                     buttons={btn}
-                    mainButton='Añadir Profesor'
+                    mainButton='Añadir curso'
                     mainButtonClick={handleButtonAdd}
                 />
 
@@ -60,4 +60,4 @@ function Professors() {
     );
 }
 
-export default Professors;
+export default Courses;
