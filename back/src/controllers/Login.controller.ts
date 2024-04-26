@@ -4,7 +4,7 @@ import dbConnection from "../database/dbConfig";
 
 import MailManager from "../mail/Mail.controller";
 
-import { StartSession, ForgetPasswordBody } from "../interfaces/Login.interface"
+import { StartSession, ForgetPasswordBody, OTP_Verification, OTP_Body, OTP_Response, OTP_PasswordResetBody } from "../interfaces/Login.interface"
 import { OStatus } from "interfaces/OStatus.interface";
 
 // Login action
@@ -38,22 +38,19 @@ export const changePassword = async (req: Request, res: Response) => {
 export const requestEmail = async (req: Request, res: Response) => {
     const body: ForgetPasswordBody = req.body;
 
-    const email: string = body.requested_email;
-    const userName: string = "Deyner";
-    const TEMP_isValidEmail: boolean = true;
-
     try {
         const mailManager = new MailManager();
         const otp = mailManager.generateOTP();
 
-        // TODO: Call SP to verify email || SP that verifies email and save the OTP
+        const result_verifyEmail = await dbConnection.query<RowDataPacket[]>(`CALL SP_Login_Verify_Email("${body.requested_email}", ${otp}, @o_status)`);
+        const result: OTP_Verification[] = JSON.parse(JSON.stringify(result_verifyEmail[0][0]));
 
-        if (TEMP_isValidEmail) {
-            await mailManager.sendMail(
+        if (result[0].IsValid) {
+            mailManager.sendMail(
                 "testELSPrueba@gmail.com",
-                email,
+                body.requested_email,
                 "Solicitud de cambio de contraseña",
-                userName,
+                result[0].Name,
                 otp
             );
             res.status(200).send({ message: "Password reset email sent successfully" });
@@ -62,16 +59,44 @@ export const requestEmail = async (req: Request, res: Response) => {
             res.status(403).send({ message: "Email does not match" });
         }
     } catch (error) {
-        res.status(500).send({ error: "Failed to send password reset email" });
+        res.status(500).send({ error: "Failed to send password reset email", information: error });
     }
 }
 
-// Verify the OTP validation
+// Make the OTP validation
 export const verifyOTP = async (req: Request, res: Response) => {
-    res.status(200).json({})
+    const body: OTP_Body = req.body;
+
+    if (isNaN(body.OTP) || body.OTP < 1000 || body.OTP > 9999) {
+        res.status(401).send({ error: "OTP not valid" });
+        return;
+    }
+
+    try {
+        const result_validateOTP = await dbConnection.query<RowDataPacket[]>(`CALL SP_Login_Verify_OTP(${body.OTP}, @o_status)`);
+        const result: OTP_Response[] = JSON.parse(JSON.stringify(result_validateOTP[0][0]));
+
+        res.status(200).send(result[0] || {});
+    } catch (error) {
+        res.status(401).send({ error: "Request Failed" });
+    }
 }
 
 // Update the password
 export const updatePasswordWithOTP = async (req: Request, res: Response) => {
-    res.status(200).json({})
+    const body: OTP_PasswordResetBody = req.body;
+
+    if (isNaN(body.UserID) || body.UserID <= 0) {
+        res.status(401).send({ error: "OTP not valid" });
+        return;
+    }
+
+    try {
+        const result_passwordReset = await dbConnection.query<RowDataPacket[]>(`CALL SP_Login_ChangeByForget(${body.UserID}, "${body.Password}", @o_status)`);
+        const result: OTP_Response[] = JSON.parse(JSON.stringify(result_passwordReset[0][0]));
+
+        res.status(200).send(result[0] || {});
+    } catch (error) {
+        res.status(401).send({ error: "Request Failed" });
+    }
 }
