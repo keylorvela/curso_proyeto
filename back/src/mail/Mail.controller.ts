@@ -20,15 +20,13 @@ export default class MailManager {
         })
     }
 
-    private generateOTP() {
+    public generateOTP() {
         return Math.floor(Math.random() * 9000 + 1000).toString();
     }
 
-    public async sendMail(from: string, to: string, subject: string, name: string): Promise<void> {
+    public async sendMail(from: string, to: string, subject: string, name: string, otp: string): Promise<void> {
         return new Promise((resolve, reject) => {
-
-            const OTP = this.generateOTP();
-            const html = mailTemplateGenerator( OTP, name );
+            const html = mailTemplateGenerator( otp, name );
 
             const mail_config = {
                 from,
