@@ -55,6 +55,22 @@
 }
 
   
+.sortButton {
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.3s font-weight 0.3s;
+    color: black;
+  }
+  
+  .sortButton:hover {
+    color: grey;
+  }
+  
+  .sortButton.active {
+    color: #85B79D;
+    font-weight: bold;
+  }
+  
   
   
   
