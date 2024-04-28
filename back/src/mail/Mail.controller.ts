@@ -24,6 +24,19 @@ export default class MailManager {
         return Math.floor(Math.random() * 9000 + 1000).toString();
     }
 
+    public async testConnection() {
+        return new Promise((resolve, reject) => {
+            this.transporter.verify((error, success) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    resolve(success);
+                }
+            })
+        })
+    }
+
     public async sendMail(from: string, to: string, subject: string, name: string, otp: string): Promise<void> {
         return new Promise((resolve, reject) => {
             const html = mailTemplateGenerator( otp, name );

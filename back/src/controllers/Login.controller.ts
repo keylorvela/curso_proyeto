@@ -42,22 +42,30 @@ export const requestEmail = async (req: Request, res: Response) => {
         const mailManager = new MailManager();
         const otp = mailManager.generateOTP();
 
-        const result_verifyEmail = await dbConnection.query<RowDataPacket[]>(`CALL SP_Login_Verify_Email("${body.requested_email}", ${otp}, @o_status)`);
-        const result: OTP_Verification[] = JSON.parse(JSON.stringify(result_verifyEmail[0][0]));
+        await mailManager.testConnection()
+            .then((success) => {
+                res.status(200).json({message: "Connection tested (Success)", info: success});
+            })
+            .catch((error) => {
+                res.status(401).json({message: "Connection tested (Failed)", info: error});
+            });
 
-        if (result[0].IsValid) {
-            await mailManager.sendMail(
-                "testELSPrueba@gmail.com",
-                body.requested_email,
-                "Solicitud de cambio de contraseña",
-                result[0].Name,
-                otp
-            );
-            res.status(200).send({ message: "Password reset email sent successfully" });
-        }
-        else {
-            res.status(403).send({ message: "Email does not match" });
-        }
+        // const result_verifyEmail = await dbConnection.query<RowDataPacket[]>(`CALL SP_Login_Verify_Email("${body.requested_email}", ${otp}, @o_status)`);
+        // const result: OTP_Verification[] = JSON.parse(JSON.stringify(result_verifyEmail[0][0]));
+
+        // if (result[0].IsValid) {
+        //     await mailManager.sendMail(
+        //         "testELSPrueba@gmail.com",
+        //         body.requested_email,
+        //         "Solicitud de cambio de contraseña",
+        //         result[0].Name,
+        //         otp
+        //     );
+        //     res.status(200).send({ message: "Password reset email sent successfully" });
+        // }
+        // else {
+        //     res.status(403).send({ message: "Email does not match" });
+        // }
     } catch (error) {
         res.status(500).send({ error: "Failed to send password reset email", information: error });
     }

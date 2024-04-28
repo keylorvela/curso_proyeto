@@ -47,15 +47,28 @@ const requestEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const mailManager = new Mail_controller_1.default();
         const otp = mailManager.generateOTP();
-        const result_verifyEmail = yield dbConfig_1.default.query(`CALL SP_Login_Verify_Email("${body.requested_email}", ${otp}, @o_status)`);
-        const result = JSON.parse(JSON.stringify(result_verifyEmail[0][0]));
-        if (result[0].IsValid) {
-            yield mailManager.sendMail("testELSPrueba@gmail.com", body.requested_email, "Solicitud de cambio de contraseña", result[0].Name, otp);
-            res.status(200).send({ message: "Password reset email sent successfully" });
-        }
-        else {
-            res.status(403).send({ message: "Email does not match" });
-        }
+        yield mailManager.testConnection()
+            .then((success) => {
+            res.status(200).json({ message: "Connection tested (Success)", info: success });
+        })
+            .catch((error) => {
+            res.status(401).json({ message: "Connection tested (Failed)", info: error });
+        });
+        // const result_verifyEmail = await dbConnection.query<RowDataPacket[]>(`CALL SP_Login_Verify_Email("${body.requested_email}", ${otp}, @o_status)`);
+        // const result: OTP_Verification[] = JSON.parse(JSON.stringify(result_verifyEmail[0][0]));
+        // if (result[0].IsValid) {
+        //     await mailManager.sendMail(
+        //         "testELSPrueba@gmail.com",
+        //         body.requested_email,
+        //         "Solicitud de cambio de contraseña",
+        //         result[0].Name,
+        //         otp
+        //     );
+        //     res.status(200).send({ message: "Password reset email sent successfully" });
+        // }
+        // else {
+        //     res.status(403).send({ message: "Email does not match" });
+        // }
     }
     catch (error) {
         res.status(500).send({ error: "Failed to send password reset email", information: error });

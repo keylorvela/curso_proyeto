@@ -31,6 +31,20 @@ class MailManager {
     generateOTP() {
         return Math.floor(Math.random() * 9000 + 1000).toString();
     }
+    testConnection() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                this.transporter.verify((error, success) => {
+                    if (error) {
+                        reject(error);
+                    }
+                    else {
+                        resolve(success);
+                    }
+                });
+            });
+        });
+    }
     sendMail(from, to, subject, name, otp) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
