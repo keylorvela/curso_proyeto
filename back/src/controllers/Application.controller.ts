@@ -1,4 +1,4 @@
-import { Request, Response } from "express"; 
+import { Request, Response } from "express";
 import { RowDataPacket } from "mysql2";
 import dbConnection from "../database/dbConfig";
 import { OStatus } from "../interfaces/OStatus.interface";
