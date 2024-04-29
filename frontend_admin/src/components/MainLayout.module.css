@@ -1,26 +1,32 @@
-.page{
-    width: 100dvw;
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
+@import url('src/components/Common.module.css');
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+
+  font-family: var(--font);
+
 }
 
-.nabvar{
-    height: 10%;
-    width: 100%;
-    background-color: brown;
-
+.content {
+  flex: 1;
 }
 
-.main{
-    height: 80%;
-    width: 100%;
-    max-height: 80%;
-    overflow-y: scroll;
+.main {
+  flex: 1;
+  position: relative;
+  font-family: var(--font);
 }
 
-.footer{
-    height: 10%;
-    width: 100%;
-    background-color: green;
+
+
+/* ---------- Mobile  */
+@media (max-width: 768px) {
+  .floatingButton {
+    display: none;
+  }
+
 }

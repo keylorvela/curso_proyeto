@@ -13,21 +13,21 @@ function MainNavbar() {
             
             <div className={styles.navbar}>
 
-                <div class={styles.logoDiv}>
+                <div className={styles.logoDiv}>
                 <Link to="/"><img className={styles.logoImg} src={Logo} alt="Clínica ELS Logo" /></Link>
                 </div>
 
                 {/* Options */}
                 <div className={styles.mobileMenu}><MobileMenu/></div>
-                <div class={styles.content}>
+                <div className={styles.content}>
 
                             {/* <Link to="/students" className={styles.navLink}>Ver lista de estudiantes</Link>
 
-                            <Link to="/courses" className={styles.navLink}>Cursos</Link>
+                            <Link to="/courses" className={styles.navLink}>Cursos</Link>*/}
                             
                             <Link to="/profesors" className={styles.navLink}>Profesores</Link>
 
-                            <Link to="/applications" className={styles.navLink}>Solicitudes</Link>*/}
+                            <Link to="/applications" className={styles.navLink}>Solicitudes</Link>
                             
                             <Link to="/treatments" className={styles.navLink}>Tratamientos</Link>
                         

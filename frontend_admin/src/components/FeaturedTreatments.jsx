@@ -40,7 +40,7 @@ function FeaturedTreatments() {
             <main className={styles.body}>
                 <Container className='d-flex justify-content-end gap-3'>
                     <Row>
-                        {treatments.map(tratamiento => (
+                        {treatments?.map(tratamiento => (
                             <Col sm={3} key={tratamiento.ID}>
                                 <Treatment
                                     photo={img}
