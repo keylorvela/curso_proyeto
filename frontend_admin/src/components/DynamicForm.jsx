@@ -1,31 +1,29 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import styles from 'src/components/Common.module.css';
 
+function DynamicForm({ fields, onSubmit, buttons = [], initialValues }) {
+  const [formData, setFormData] = useState(initialValues);
 
-import styles from 'src/components/Common.module.css'
-
-function DynamicForm({ fields, onSubmit, buttons = [], initialValues = {} }) {
-  const [formValues, setFormValues] = useState(initialValues);
-
-  const handleChange = (e, fieldName) => {
-    setFormValues({ ...formValues, [fieldName]: e.target.value });
+  const handleChange = (value, fieldName) => {
+    setFormData({ ...formData, [fieldName]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formValues);
+    onSubmit(formData);
   };
 
   return (
-    <Form onSubmit={handleSubmit} >
-      {fields?.map((field) => (
+    <Form onSubmit={handleSubmit}>
+      {fields.map((field) => (
         <Form.Group key={field.id} controlId={`form${field.id}`} className='mb-4'>
-          <Form.Label className={`fs-5 ${styles.label}`} >{field.label}</Form.Label>
+          <Form.Label className={`fs-5 ${styles.label}`}>{field.label}</Form.Label>
           {field.type === 'select' ? (
             <Form.Control
               as="select"
-              onChange={(e) => handleChange(e, field.id)}
-              value={formValues[field.id] || ''}
+              onChange={(e) => handleChange(e.target.value, field.id)}
+              value={formData[field.id] || ''}
               required={field.required}
             >
               <option value="">{field.placeholder}</option>
@@ -40,8 +38,8 @@ function DynamicForm({ fields, onSubmit, buttons = [], initialValues = {} }) {
               as={field.type === 'textarea' ? 'textarea' : 'input'}
               type={field.type}
               placeholder={field.placeholder}
-              onChange={(e) => handleChange(e, field.id)}
-              value={formValues[field.id] || field.value}
+              onChange={(e) => handleChange(e.target.value, field.id)}
+              value={formData[field.id] || ''}
               required={field.required}
               rows={field.rows}
             />
@@ -50,7 +48,7 @@ function DynamicForm({ fields, onSubmit, buttons = [], initialValues = {} }) {
       ))}
       <div>
         {buttons.map((button, index) => (
-          button.type !== 'submit' && ( // Utiliza el operador lógico && para la condición
+          button.type !== 'submit' ? (
             <Button
               key={index}
               className='mx-2 my-2'
@@ -60,24 +58,22 @@ function DynamicForm({ fields, onSubmit, buttons = [], initialValues = {} }) {
             >
               {button.label}
             </Button>
+          ) : (
+            <div key={index} className='text-end'>
+              <Button
+                className='mx-2 my-4'
+                variant={button.variant}
+                type={button.type}
+              >
+                {button.label}
+              </Button>
+            </div>
           )
         ))}
+
       </div>
 
 
-      {/*Submit button */}
-      <div className  = 'text-end'>
-      {buttons.filter((button) => button.type === 'submit').map((button, index) => (
-        <Button
-          key={index}
-          className='mx-2 my-4 ' 
-          variant={button.variant}
-          type={button.type}
-        >
-          {button.label}
-        </Button>
-      ))}
-      </div>
 
     </Form>
   );
