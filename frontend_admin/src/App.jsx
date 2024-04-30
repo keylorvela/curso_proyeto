@@ -9,6 +9,8 @@ import ManageTreatment from 'src/views/ManageTreatment.jsx';
 import ManageCourse from 'src/views/ManageCourse.jsx';
 import ManageProfessor from 'src/views/ManageProfessor.jsx';
 import Students from 'src/views/Students.jsx';
+import StudentsByProf from 'src/views/StudentsByProf.jsx';
+import MyCourses from 'src/views/MyCourses.jsx';
 import Courses from 'src/views/Courses.jsx';
 import ModifyTest from 'src/views/ModifyTest.jsx';
 import Login from 'src/views/Login.jsx';
@@ -18,7 +20,7 @@ function App() {
   return (
     <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Students />} />
+            <Route path="/" element={<StudentsByProf />} />
             <Route path="treatments" element={<Treatments />} />
             <Route path="modifyTreatment/:id" element={<ModifyTreatment />} />
             <Route path="course/:id" element={<ManageCourse />} />
