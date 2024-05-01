@@ -18,6 +18,19 @@ const mailTemplateGenerator = (OTP, name) => {
         <style>
     
             /* Header styles */
+            .header_table {
+                width: 100%;
+                border-collapse: collapse;
+                height: 115px;
+            }
+            #row1-col1 {
+                min-width: 130px;
+                max-width: 175px;
+                /* width: 20%; */
+            }
+            #row1-col2 {
+                width: 100%;
+            }
             .montserrat-text {
                 font-family: "Montserrat", sans-serif;
                 font-optical-sizing: auto;
@@ -43,6 +56,13 @@ const mailTemplateGenerator = (OTP, name) => {
                 text-align: end;
                 color: #1D2D8C;
             }
+
+            /* Image style */
+            #imageContent {
+                width: 100%;
+                object-fit: contain;
+            }
+
             /* Divider */
             hr {
                 /* border: none; */
@@ -89,18 +109,29 @@ const mailTemplateGenerator = (OTP, name) => {
     
         <header class="mail_header">
             <div class="montserrat-text mail_title">
-                <h1 class="mail_title_h1">¿Olvidó su contraseña?</h1>
+                <table class="header_table">
+                    <tbody>
+                        <tr>
+                            <td id="row1-col1">
+                                <img src="https://i.ibb.co/ySHvv1Z/Logo.png" id="imageContent" alt="Logo ELS">
+                            </td>
+                            <td id="row1-col2">
+                                <h1 class="mail_title_h1">¿Olvidó su contraseña?</h1>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </header>
         <hr>
         <div class="content_container">
             <span class="montserrat-text span_greeting">¡Hola ${name}!</span>
             <p class="montserrat-text p_content">
-                Recibimos una petición de olvido su contraseña. Si es así, utiliza este !!METODO!!
+                Hemos recibido una solicitud para restablecer la contraseña de tu cuenta. Para completar este proceso, deberás ingresar el siguiente código de un solo uso en el formulario de recuperación.
             </p>
             <span class="montserrat-text span_code">Código: ${OTP}</span>
             <p class="montserrat-text p_content">
-                Si no solicitastes este cambio, puedes ignorar este mensaje.
+                Es importante que no compartas este código con nadie, ya que está diseñado para ser utilizado solo una vez y garantizar la seguridad de tu cuenta. Si no has solicitado esta acción, puedes ignorar este mensaje.
             </p>
         </div>
     

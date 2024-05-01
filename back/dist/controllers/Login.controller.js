@@ -82,12 +82,12 @@ exports.verifyOTP = verifyOTP;
 // Update the password
 const updatePasswordWithOTP = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
-    if (isNaN(body.UserID) || body.UserID <= 0) {
+    if (isNaN(body.UserID) || body.UserID <= 0 || isNaN(body.OTP) || body.OTP < 1000 || body.OTP > 9999) {
         res.status(401).send({ error: "OTP not valid" });
         return;
     }
     try {
-        const result_passwordReset = yield dbConfig_1.default.query(`CALL SP_Login_ChangeByForget(${body.UserID}, "${body.Password}", @o_status)`);
+        const result_passwordReset = yield dbConfig_1.default.query(`CALL SP_Login_ChangeByForget(${body.UserID}, ${body.OTP}, "${body.Password}", @o_status)`);
         const result = JSON.parse(JSON.stringify(result_passwordReset[0][0]));
         res.status(200).send(result[0] || {});
     }
