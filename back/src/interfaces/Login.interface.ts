@@ -14,11 +14,13 @@ export interface OTP_Body {
 
 export interface OTP_Response {
     UserID: number
+    OTP: number
     o_status: string
 }
 
 export interface OTP_PasswordResetBody {
     UserID: number
+    OTP: number
     Password: string
 }
 
