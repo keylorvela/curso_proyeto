@@ -1,10 +1,13 @@
+@import url('src/components/Common.module.css');
+
 .navbar{
     width: 100%;
-    height: 100%;
+    height: 100px;
+    font-family: var(--font);
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     background-color: #1D2D8C;
     gap: 5%;
     
@@ -13,7 +16,7 @@
 .logoDiv {
     width: 20%;
     height: 100%;
-    padding: 5%;
+    margin-left: 5%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -22,8 +25,8 @@
 }
 
 .logoImg {
-    width: 55px;
-    height: 55px;
+    width: 75px;
+    height: 75px;
 } 
 
 .content {
@@ -32,14 +35,19 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding: 5%;
+    gap:5%
     
 }
 
 .navLink{
+    font-size: 1.5rem;
     text-decoration: none;
     color: #FFFFFF;
+    font-weight: 700;
+    
+    font-family: var(--font);
 
 }
 
@@ -59,7 +67,7 @@
 
 
 /* ---------- Mobile  */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .mobileMenu{
       display: block;
     }

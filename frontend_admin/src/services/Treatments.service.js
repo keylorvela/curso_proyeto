@@ -18,6 +18,21 @@ const UserService = {
     }
   },
 
+  getTreatment: async (id) => {
+    const url = BASE_URL+`treatments/`+id;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Request fail');
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error('Function error getTreatment', error);
+      throw error;
+    }
+  },
+
   updateTreatment: async (treatmentInfo) => {
   
     const url = BASE_URL + 'treatments'; 
