@@ -6,7 +6,7 @@ import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
 
 import img from 'src/assets/stock2.jpg'
-import styles from 'src/views/AdminPage.module.css'
+import styles from 'src/views/admin/AdminPage.module.css'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 
@@ -60,7 +60,7 @@ function ManageProfessor() {
     ];
 
     const handleDelete = (id_p) => {
-        alert( id_p);
+        alert(id_p);
     }
 
     const buttons = [
@@ -73,11 +73,11 @@ function ManageProfessor() {
                 type: 'button',
                 label: 'Eliminar profesor',
                 onClick: (id) => handleDelete(id),
-                parameter:id
+                parameter: id
             }
         )
     }
-    
+
     return (
         <MainLayout>
 
@@ -88,6 +88,11 @@ function ManageProfessor() {
 
                         <Col className='mt-2' xs={12} md={4}>
                             <Image src={img} fluid rounded />
+                        </Col>
+
+
+                        {/*filler*/}
+                        <Col md={1}>
                         </Col>
 
                         <Col className='mt-2' xs={12} md={7}>

@@ -7,7 +7,7 @@ import DynamicForm from 'src/components/DynamicForm.jsx'
 import Loading from 'src/components/utils/Loading.jsx'
 
 import img from 'src/assets/stock2.jpg'
-import styles from 'src/views/AdminPage.module.css'
+import styles from 'src/views/admin/AdminPage.module.css'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 
@@ -25,9 +25,12 @@ function ManageTreatment() {
     //  A possible use
     useEffect(() => {
         async function fetchData() {
+
             try {
-                const data = await tServ.getTreatment(id);
-                setValues(data);
+                if (id) {
+                    const data = await tServ.getTreatment(id);
+                    setValues(data);
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
@@ -86,7 +89,7 @@ function ManageTreatment() {
         }
     ];
 
-    
+
 
     const buttons = []
     if (id) {
@@ -104,7 +107,7 @@ function ManageTreatment() {
 
     //Always at the end
     buttons.push({ variant: 'primary', type: 'submit', label: 'Guardar cambios' });
-   
+
 
     return (
         <MainLayout>
@@ -117,9 +120,13 @@ function ManageTreatment() {
                             <Loading size={15} />
                         </div>
                     ) : (
-                        <Row>
+                        <Row >
                             <Col className='mt-2' xs={12} md={4}>
                                 <Image src={img} fluid rounded />
+                            </Col>
+
+                            {/*filler*/}
+                            <Col md={1}>
                             </Col>
 
                             <Col className='mt-2' xs={12} md={7}>
@@ -132,8 +139,8 @@ function ManageTreatment() {
 
                             </Col>
                         </Row>
-                    )}I
-                    
+                    )}
+
                 </Container>
             </div>
 
