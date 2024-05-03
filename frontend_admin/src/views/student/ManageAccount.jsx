@@ -2,32 +2,34 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+
+import PasswordModal from 'src/components/PasswordModal.jsx'
+
+
 import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
 import GroupModal from 'src/components/GroupModal.jsx'
 
 import img from 'src/assets/stock2.jpg'
-import styles from 'src/views/admin/AdminPage.module.css'
+import styles from 'src/views/student/StudentPage.module.css'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 
 
-function ManageCourse() {
-    //TODO Fetch values from backend
+function ManageAccount() {
+    //TODO Fetch info related to this user
 
-    const [groupInfo, setGroupInfo] = useState({});
 
-    const { id } = useParams();
+    
+
+    const [passInfo, setPassInfo] = useState({});
+
     const [hide, setHide] = useState(false);
 
     //Aquí debería solicitar info del id de curso
     //Esta pagina sirve para agregar o modificar
     let values = {};
-    if (id) {
-        values = { name: 'name1', description: 'des1', price: '99' }
-    }
-
-
+   
 
     const handleModal = (state) => {
         setHide(state);
@@ -41,70 +43,47 @@ function ManageCourse() {
     const fields = [
         {
             id: 'name',
-            label: 'Nombre del curso:',
+            label: 'Nombre:',
             type: 'text',
-            placeholder: 'Ingresa el nombre del curso',
+            placeholder: 'Ingresa tu nombre',
             required: true,
         },
         {
-            id: 'description',
-            label: 'Descripción del curso:',
-            type: 'textarea',
-            placeholder: 'Ingresa la descripción del curso',
-            required: true,
-            rows: 6
-        },
-        {
-            id: 'price',
-            label: 'Coste:',
-            type: 'number',
-            placeholder: 'Costo del curso',
+            id: 'phone',
+            label: 'Teléfono:',
+            type: 'text',
+            placeholder: 'Ingresa tu número de teléfono',
             required: true,
         },
         {
-            id: 'date',
-            label: 'Fecha de inicio:',
-            type: 'date',
-            placeholder: 'Ingresa la fecha de inicio del curso',
-            required: true
-        },
-        {
-            id: 'capacity',
-            label: 'Capacidad:',
-            type: 'number',
-            placeholder: 'Capacidad del grupo',
+            id: 'email',
+            label: 'Correo:',
+            type: 'email',
+            placeholder: 'Ingresa tu correo electrónico',
             required: true,
         }
+
     ];
-    const handleDelete = (id_p) => {
-        alert( id_p);
+
+    const handleChangePassword = () => {
+        //Debería recuperarse de la sesión
+        setHide(true);
     }
 
     const buttons = [
+        { variant: 'primary', type: 'button', label: 'Cambiar contraseña', 
+        onClick: () => handleChangePassword()},
         { variant: 'primary', type: 'submit', label: 'Guardar cambios' },
-        { variant: 'primary', type: 'button', label: 'Asignar grupo', 
-        onClick: () => handleModal(true), },
                                     
     ]
-    if (id) {
-        buttons.push(
-            {
-                variant: 'danger',
-                type: 'button',
-                label: 'Eliminar curso',
-                onClick: (id) => handleDelete(id),
-                parameter:id
-            }
-        )
-    }
 
     return (
-        <MainLayout type={1}>
+        <MainLayout type={3}>
             {/*Modal use example*/}
-            <GroupModal hide={hide}
+            <PasswordModal hide={hide}
                 handleState={handleModal}
-                groupInfo={groupInfo}
-                setGroupInfo={setGroupInfo}
+                passInfo={passInfo}
+                setPassInfo={setPassInfo}
             />
 
 
@@ -142,4 +121,4 @@ function ManageCourse() {
     );
 }
 
-export default ManageCourse;
+export default ManageAccount;

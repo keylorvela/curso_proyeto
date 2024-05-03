@@ -3,31 +3,81 @@ import MainNavbar from 'src/components/MainNavbar.jsx';
 import styles from 'src/components/MainLayout.module.css';
 
 
+import { Link } from 'react-router-dom';
 
-function MainLayout({ children }) {
-  
-  
+
+
+function getLinks(type) {
+  /*
+  1 - Admin
+  2 - Professor
+  3 - Student
+
+  */
+
+
+  let links;
+  switch (type) {
+    case 1:
+      links = [
+        { to: 'admin/treatments', label: 'Tratamientos' },
+        { to: 'admin/professors', label: 'Profesores' },
+        { to: 'admin/applications', label: 'Solicitudes' },
+      ];
+      break;
+    case 2:
+      links = [
+        { to: 'professor/treatments', label: 'Tratamientos' },
+        { to: 'professor/professors', label: 'Profesores' },
+        { to: 'professor/applications', label: 'Solicitudes' },
+      ];
+      break;
+    case 3:
+      links = [
+        { to: 'student/courses', label: 'Mis Cursos' },
+        { to: 'student/profile', label: 'Mi Perfil' }
+      ];
+      break;
+
+    default:
+      links = null;
+  }
+  return links;
+}
+
+
+
+
+function MainLayout({ children, type }) {
+  /*
+    Type se refiere al tipo de interfaz, admin, student, professor
+  */
+
+  let links = getLinks(type);
+
+
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <nav className={styles.navbar}>
-          <MainNavbar />
+          <MainNavbar links={links} />
         </nav>
 
         <main className={styles.main}>
-          
-          
-          
+
+
+
           {children}
 
-          
 
 
-          
+
+
         </main>
       </div>
 
-      
+
     </div>
   );
 }
