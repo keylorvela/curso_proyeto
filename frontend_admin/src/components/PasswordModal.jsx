@@ -24,8 +24,6 @@ function PasswordModal({ hide, handleState, passInfo, setPassInfo }) {
 };
 
 
-    //TODO Fetch professors
-
     const handleChange = (e, fieldName) => {
         setPassInfo({ ...passInfo, [fieldName]: e.target.value });
     };

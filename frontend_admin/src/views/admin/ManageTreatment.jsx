@@ -110,7 +110,7 @@ function ManageTreatment() {
 
 
     return (
-        <MainLayout>
+        <MainLayout type = {1}>
 
             <div className={styles.page}>
                 <Container>
