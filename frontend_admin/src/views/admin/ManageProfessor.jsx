@@ -99,10 +99,7 @@ function ManageProfessor() {
                             <DynamicForm
                                 fields={fields}
                                 onSubmit={handleFormSubmit}
-                                buttons={[
-                                    { variant: 'primary', type: 'submit', label: 'Guardar cambios' }
-
-                                ]}
+                                buttons={buttons}
                                 initialValues={values}
 
 

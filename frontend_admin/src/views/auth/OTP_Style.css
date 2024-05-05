@@ -1,0 +1,125 @@
+* {
+    color: #1D2D8C;
+}
+/* ---------------------------------------------------- */
+/* >>> OTP Page - General style */
+
+/* Text info styles */
+.span_title {
+    font-size: 32px;
+    font-weight: 700;
+
+    margin-top: 20px;
+}
+.span_content {
+    margin-top: 20px;
+    font-size: 22px;
+}
+
+/* Input div container style */
+.input_container {
+    margin: 40px 0;
+    display: flex;
+    gap: 10px;
+}
+/* Disable default input style */
+.non_style_input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+/* Input text field style */
+.text_field {
+    height: 40px;
+    font-size: 20px;
+
+    border-bottom: 1px solid #1D2D8C;
+}
+
+/* Group input in verically */
+.input_vertical {
+    flex-direction: column;
+}
+/* Button style */
+.button_request {
+    height: 40px;
+    border: none;
+    outline: none;
+
+    background-color: #3F8EFC;
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    border-radius: 5px;
+}
+/* ---------------------------------------------------- */
+
+/* ---------------------------------------------------- */
+/* OTP Value Input fields style */
+.number_field {
+    background: #ffffff;
+    outline: 2px solid #1D2D8C;
+    border-radius: 10px;
+
+    flex-grow: 1;
+    width: 100%;
+    font-size: 78px;
+    font-weight: 900;
+    padding: 10px 0;
+
+    text-align: center;
+}
+/* ---------------------------------------------------- */
+
+
+/* ---------------------------------------------------- */
+/* >>> Password animation (Active when the 2 passwords doesnt match) */
+.password_checked {
+    animation-name: passwords_doesnt_match;
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+    animation-iteration-count: 2;
+}
+
+@keyframes passwords_doesnt_match {
+    0% {
+        transform: translateX(0px);
+        border-bottom: 1px solid #ff0000;
+    }
+    33% {
+        transform: translateX(-5px);
+    }
+    66% {
+        transform: translateX(5px);
+    }
+    100% {
+        transform: translateX(0px);
+        border-bottom: 1px solid #ff0000;
+    }
+}
+/* ---------------------------------------------------- */
+
+
+/* ---------------------------------------------------- */
+/* >>> Decrease font size when display on mobile */
+@media only screen and (max-width: 400px) {
+    .span_title {
+        font-size: 28px;
+    }
+    .span_content {
+        font-size: 18px;
+    }
+    .text_field {
+        font-size: 18px;
+    }
+    .button_request {
+        font-size: 16px;
+    }
+    .number_field {
+        font-size: 56px;
+        font-weight: 700;
+    }
+}
+/* ---------------------------------------------------- */

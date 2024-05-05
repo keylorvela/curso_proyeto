@@ -1,0 +1,22 @@
+.OTP_Card_Container {
+    background-color: #D3E5FF;
+    border-radius: 25px;
+    padding: 40px 50px;
+    margin: 0 20px;
+
+    max-width: 400px;
+    flex-grow: 1;
+}
+.OTP_Image {
+    width: 100%;
+}
+.OTP_Image img {
+    display: block;
+    width: 50%;
+    margin: auto;
+}
+
+.OTP_Content {
+    display: flex;
+    flex-direction: column;
+}

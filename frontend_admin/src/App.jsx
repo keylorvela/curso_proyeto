@@ -20,6 +20,7 @@ import MyCourses from 'src/views/MyCourses.jsx';
 import Courses from 'src/views/Courses.jsx';
 import ModifyTest from 'src/views/ModifyTest.jsx';
 import Login from 'src/views/Login.jsx';
+import Test from 'src/views/Test.jsx';
 
 function App() {
   return (
@@ -46,6 +47,9 @@ function App() {
 
 
         <Route path="professor/profile" element={<ManageProfessorAccount />} />
+
+        {/*For testing*/}
+        <Route path="test" element={<Test />} />
 
 
         <Route path="/*" element={
