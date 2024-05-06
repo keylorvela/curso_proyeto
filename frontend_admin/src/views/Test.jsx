@@ -1,12 +1,25 @@
 
-import OTP_Manager from "src/views/auth/OTP_Manager.jsx"
+import AlertModal from 'src/components/utils/AlertModal.jsx'
+
+import { useState } from "react";
+import { Button } from 'react-bootstrap';
 
 
-function Test(){
+function Test() {
+    const [showAlert, setShowAlert] = useState(false);
 
-    return(
 
-        <OTP_Manager></OTP_Manager>
+    return (
+        <>
+            <Button onClick = {() => setShowAlert(true)}>CLICK</Button>
+            <AlertModal
+                  type="info"
+                  title="Atención"
+                  message="No se encontraron tratamientos."
+                  showAlert={showAlert}
+                  setShowAlert={setShowAlert}
+                />
+        </>
     );
 
 }
