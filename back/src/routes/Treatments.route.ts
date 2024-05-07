@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getTreatmentList, getTreatmentInformation, createTreatment, deleteTreatment, updateTreatment } from "../controllers/Treatments.controller"
+import { getTreatmentList, getTreatmentInformation, createTreatment, deleteTreatment, updateTreatment, getTreatmentCategories } from "../controllers/Treatments.controller"
 
 const router = Router();
 
@@ -12,5 +12,7 @@ router.get("/", getTreatmentList)
 router.get("/:treatmentID", getTreatmentInformation)
 
 router.put("/", updateTreatment)
+
+router.get("/categories", getTreatmentCategories)
 
 export default router;

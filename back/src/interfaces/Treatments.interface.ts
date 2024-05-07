@@ -53,3 +53,7 @@ export interface Treatment {
     o_status: String
 }
 
+export interface Categories {
+    ID: number,
+    CategoryName: string
+}
