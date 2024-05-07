@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { getTreatments } from 'src/services/treatmentsService.js';
+import { getTreatments, getCategories } from 'src/services/treatmentsService.js';
 import MainLayout from 'src/components/MainLayout.jsx';
 import Treatment from 'src/components/Treatment.jsx';
 
@@ -16,6 +16,7 @@ import styles from 'src/views/Treatments.module.css';
 
 function Treatments() {
   const [treatments, setTreatments] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,6 +25,11 @@ function Treatments() {
   useEffect(() => {
     async function fetchData() {
       try {
+        // Get all categories
+        const data_categories = await getCategories();
+        setCategories(data_categories)
+
+        // Get all treatments
         const data = await getTreatments();
         setTreatments(data);
       } catch (error) {
@@ -43,6 +49,15 @@ function Treatments() {
     navigate(`/treatment/${id}`);
   };
 
+  const handleCategoryFilter = async (e) => {
+    let categoryID = parseInt( e.target.value );
+    categoryID = (categoryID === 0) ? undefined : categoryID;
+
+    setTreatments([]);
+    const data = await getTreatments(categoryID);
+    setTreatments(data);
+  }
+
   const getFilters = () => (
     <Form>
       <Row className='d-flex align-items-center mb-5'>
@@ -61,18 +76,22 @@ function Treatments() {
       <Row className='d-flex align-items-center mb-3'>
         <Stack direction="horizontal" gap={3}>
           <p className='fs-6'>Filtros disponibles:</p>
-          <Form.Select aria-label="Default select example">
-            <option>Categorías</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+          <Form.Select aria-label="Default select example" onChange={(e) => handleCategoryFilter(e)}>
+            <option key={0} value={0}>Todos</option>
+
+            {categories.map(category => (
+              <option key={category.ID} value={category.ID}>{category.CategoryName}</option>
+            ))}
+
           </Form.Select>
-          <Form.Select aria-label="Default select example">
+
+          {/*  */}
+          {/* <Form.Select aria-label="Default select example">
             <option>Open this select menu</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
-          </Form.Select>
+          </Form.Select> */}
         </Stack>
       </Row>
     </Form>
