@@ -24,12 +24,12 @@ function Home() {
             {/* Multiple classes */}
             <div onClick={handleAcademy} className={`${styles.imageContainer} ${styles.academy}`}>
                 
-            <Link to="/treatments" className={`${styles.link} fw-bold text-decoration-underline`}>CLINICA</Link>
+            <Link to="/treatments" className={`${styles.link} fw-bold ${styles.link_underline_animation}`}>CLINICA</Link>
             </div>
 
             <div onClick={handleClinic} className={`${styles.imageContainer} ${styles.clinic}`}>
 
-            <Link to="/courses" className={`${styles.link} fw-bold text-decoration-underline`}>ACADEMIA</Link>
+            <Link to="/courses" className={`${styles.link} fw-bold ${styles.link_underline_animation}`}>ACADEMIA</Link>
 
             </div>
         </div>

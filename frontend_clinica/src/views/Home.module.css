@@ -1,8 +1,5 @@
 @import url('src/components/Common.module.css');
 
-
-
-
 .imageContainer {
     height: 100%;
     width: 100%;
@@ -14,6 +11,8 @@
     justify-content: center;
     align-items: center;
     filter: grayscale(100%);
+
+    transition: filter 0.25s ease-out;
 }
 
 .academy {
@@ -38,18 +37,44 @@
 
 
 .link{
-    
     text-decoration: none;
     font-size: 5rem;
     color: #FFFFFF;
+}
 
+.link_underline_animation {
+    display: inline-block;
+    position: relative;
+}
+.link_underline_animation::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+
+    background-color: var(--main-blue);
+
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+.link_underline_animation:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+@media (max-width: 1000px) {
+    .link{
+        font-size: 3rem;
+    }
 }
 
 @media (max-width: 768px) {
     .mainHome {
         flex-direction: column;
     }
-    
     .academy,
     .clinic {
         width: 100%;
