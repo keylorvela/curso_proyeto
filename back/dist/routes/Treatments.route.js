@@ -8,5 +8,6 @@ router.delete("/:treatmentID", Treatments_controller_1.deleteTreatment);
 router.get("/", Treatments_controller_1.getTreatmentList);
 router.get("/:treatmentID", Treatments_controller_1.getTreatmentInformation);
 router.put("/", Treatments_controller_1.updateTreatment);
+router.get("/categories", Treatments_controller_1.getTreatmentCategories);
 exports.default = router;
 //# sourceMappingURL=Treatments.route.js.map
