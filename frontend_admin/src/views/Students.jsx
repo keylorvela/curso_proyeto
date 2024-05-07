@@ -37,7 +37,7 @@ function Students() {
 
 
     return (
-        <MainLayout>
+        <MainLayout type={2}>
             <Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.title}>Lista de estudiantes</h1>
 
@@ -47,6 +47,8 @@ function Students() {
                     buttons={btn}
                     mainButton='Añadir Estudiante'
                     mainButtonClick={handleButtonAdd}
+                    isSearching={true}
+                    searchKey='Nombre'
                 />
 
             </Container>

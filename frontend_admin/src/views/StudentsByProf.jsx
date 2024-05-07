@@ -34,7 +34,7 @@ function StudentsByProf() {
 
 
     return (
-        <MainLayout>
+        <MainLayout type={2}>
             <Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.title}>Lista de estudiantes</h1>
 
@@ -42,6 +42,8 @@ function StudentsByProf() {
                     columns={columns}
                     data={data}
                     buttons={btn}
+                    isSearching={true}
+                    searchKey='Nombre'
                 />
 
             </Container>

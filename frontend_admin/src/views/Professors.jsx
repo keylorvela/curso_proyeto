@@ -43,7 +43,7 @@ function Professors() {
 
 
     return (
-        <MainLayout>
+        <MainLayout type={2}>
             <Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.title}>Profesores</h1>
 
@@ -53,6 +53,8 @@ function Professors() {
                     buttons={btn}
                     mainButton='Añadir Profesor'
                     mainButtonClick={handleButtonAdd}
+                    isSearching={true}
+                    searchKey='Nombre'
                 />
 
             </Container>

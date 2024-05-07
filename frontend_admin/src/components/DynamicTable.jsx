@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Dropdown } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 
 import styles from 'src/components/DynamicTable.module.css';
 
-function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick }) {
+function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick, isSearching, searchKey }) {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(2);   //could be changed
@@ -19,6 +24,27 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick }) {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const [currentItems, setCurrentItems] = useState(data.slice(indexOfFirstItem, indexOfLastItem));
+  const [copyItems, setCopyItems] = useState(data.slice(indexOfFirstItem, indexOfLastItem));
+
+  //Search
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchChange = (event) => {
+    if (isSearching) {
+      const value = event.target.value;
+      setSearchTerm(value);
+
+      const filteredItems = copyItems.filter(item =>
+        item[searchKey].toLowerCase().includes(value.toLowerCase())
+      );
+      setCurrentItems(filteredItems);
+    }
+  };
+
+  useEffect(() => {
+    handleSearchChange({ target: { value: searchTerm } });
+  }, [copyItems]);
+
 
 
   //Sort
@@ -41,6 +67,7 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick }) {
   useEffect(() => {
     const newCurrent = data.slice(indexOfFirstItem, indexOfLastItem)
     setCurrentItems(newCurrent);
+    setCopyItems(newCurrent)
   }, [currentPage]);
 
   useEffect(() => {
@@ -52,6 +79,7 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick }) {
       }
     });
     setCurrentItems(newSortedData);
+    setCopyItems(newSortedData)
   }, [sort]);
 
 
@@ -82,8 +110,8 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick }) {
   };
 
   //Pagination vector
-  const pageNumbers = []; 
-  if (totalPages > 1) { 
+  const pageNumbers = [];
+  if (totalPages > 1) {
     pageNumbers.push( //Always button "1"
       <Button
         key={1}
@@ -154,7 +182,29 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick }) {
 
   return (
     <div>
-      <Table striped hover responsive borderless>
+      {isSearching && (
+        <div >
+          <Form>
+            <Row>
+              <Col md={3} sm={3}>
+                <Form.Group controlId="formSearch">
+                  <div className={styles.searchContainer}>
+                    <Form.Control
+                      className={styles.inputSearch}
+                      type="text"
+                      placeholder="Buscar..."
+                      value={searchTerm}
+                      onChange={handleSearchChange}
+                    />
+                    <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
+        </div>
+      )}
+      <Table striped hover responsive borderless className='mt-4'>
         <thead >
           <tr className={styles.headBorder}>
             {columns.map((column, index) => (
