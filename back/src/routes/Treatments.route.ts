@@ -9,10 +9,10 @@ router.delete("/:treatmentID", deleteTreatment)
 
 router.get("/", getTreatmentList)
 
+router.get("/categories", getTreatmentCategories)
+
 router.get("/:treatmentID", getTreatmentInformation)
 
 router.put("/", updateTreatment)
-
-router.get("/categories", getTreatmentCategories)
 
 export default router;
