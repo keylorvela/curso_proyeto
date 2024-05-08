@@ -20,6 +20,8 @@ import MyCourses from 'src/views/MyCourses.jsx';
 import Courses from 'src/views/Courses.jsx';
 import ModifyTest from 'src/views/ModifyTest.jsx';
 import Login from 'src/views/Login.jsx';
+import StudentsNews from 'src/views/StudentsNews.jsx';
+import ProfessorNews from 'src/views/ProfessorNews.jsx';
 import Test from 'src/views/Test.jsx';
 
 function App() {
@@ -28,7 +30,7 @@ function App() {
       <Routes>
 
 
-        <Route path="/" element={<StudentsByProf />} />
+        <Route path="/" element={<ProfessorNews />} />
         <Route path="treatments" element={<Treatments />} />
         <Route path="modifyTreatment/:id" element={<ModifyTreatment />} />
         <Route path="professors" element={<Professors />} />
@@ -44,7 +46,7 @@ function App() {
 
 
         <Route path="student/profile" element={<ManageAccount />} />
-
+        <Route path="students" element={<Students />} />
 
         <Route path="professor/profile" element={<ManageProfessorAccount />} />
 
