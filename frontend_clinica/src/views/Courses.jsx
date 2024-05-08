@@ -61,7 +61,8 @@ function Courses() {
           </Form.Group>
         </Col>
       </Row>
-      <Row className='d-flex align-items-center mb-3'>
+      {/* Cursos no tiene categorias */}
+      {/* <Row className='d-flex align-items-center mb-3'>
         <Stack direction="horizontal" gap={3}>
           <p className='fs-6'>Filtros disponibles:</p>
           <Form.Select aria-label="Default select example">
@@ -77,7 +78,7 @@ function Courses() {
             <option value="3">Three</option>
           </Form.Select>
         </Stack>
-      </Row>
+      </Row> */}
     </Form>
   );
 
