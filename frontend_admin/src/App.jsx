@@ -15,10 +15,10 @@ import ManageProfessorAccount from 'src/views/professor/ManageProfessorAccount.j
 
 
 import Students from 'src/views/Students.jsx';
+
 import StudentsByProf from 'src/views/StudentsByProf.jsx';
 import MyCourses from 'src/views/MyCourses.jsx';
 import Courses from 'src/views/Courses.jsx';
-import ModifyTest from 'src/views/ModifyTest.jsx';
 import Login from 'src/views/Login.jsx';
 import StudentsNews from 'src/views/StudentsNews.jsx';
 import ProfessorNews from 'src/views/ProfessorNews.jsx';
@@ -29,26 +29,31 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-
-        <Route path="/" element={<ProfessorNews />} />
-        <Route path="treatments" element={<Treatments />} />
-        <Route path="modifyTreatment/:id" element={<ModifyTreatment />} />
-        <Route path="professors" element={<Professors />} />
+        
+        <Route path="mycourses" element={<MyCourses />} />
 
 
+        <Route path="professor/news" element={<ProfessorNews />} />
+        <Route path="professor/profile" element={<ManageProfessorAccount />} />
 
+        <Route path="student/news" element={<StudentsNews />} />
+        <Route path="student/profile" element={<ManageAccount />} />
+
+        <Route path="admin/students" element={<Students />} />
+        <Route path="admin/courses" element={<Courses />} />
         <Route path="admin/course/:id" element={<ManageCourse />} />
         <Route path="admin/course" element={<ManageCourse />} />
+        <Route path="admin/professors" element={<Professors />} />
         <Route path="admin/professor/:id" element={<ManageProfessor />} />
         <Route path="admin/professor" element={<ManageProfessor />} />
+        <Route path="admin/treatments" element={<Treatments />} />
         <Route path="admin/treatment/:id" element={<ManageTreatment />} />
         <Route path="admin/treatment" element={<ManageTreatment />} />
+        <Route path="admin/applications" element={<Applications />} />
+        
 
 
-        <Route path="student/profile" element={<ManageAccount />} />
-        <Route path="students" element={<Students />} />
 
-        <Route path="professor/profile" element={<ManageProfessorAccount />} />
 
         {/*For testing*/}
         <Route path="test" element={<Test />} />

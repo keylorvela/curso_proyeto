@@ -34,7 +34,7 @@ function Applications() {
 
 
     return (
-        <MainLayout>
+        <MainLayout type = {1}>
             <Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.title}>Solicitudes de matrícula</h1>
 

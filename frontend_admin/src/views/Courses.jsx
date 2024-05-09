@@ -43,7 +43,7 @@ function Courses() {
 
 
     return (
-        <MainLayout>
+        <MainLayout type={1}>
             <Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.title}>Cursos disponibles</h1>
 

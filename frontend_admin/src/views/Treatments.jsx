@@ -15,7 +15,7 @@ function Treatments() {
     };
 
     return (
-        <MainLayout>
+        <MainLayout type = {1}>
             <h1 className={styles.title}>Tratamientos</h1>
             <div className={styles.line}></div>
             <div className="d-flex justify-content-end">
