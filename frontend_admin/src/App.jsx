@@ -50,10 +50,6 @@ function App() {
         <Route path="admin/treatment/:id" element={<ManageTreatment />} />
         <Route path="admin/treatment" element={<ManageTreatment />} />
         <Route path="admin/applications" element={<Applications />} />
-        
-
-
-
 
         {/*For testing*/}
         <Route path="test" element={<Test />} />
