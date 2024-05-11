@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import styles from 'src/components/Common.module.css';
 
-function DynamicForm({ fields, onSubmit, buttons = [], initialValues }) {
+function DynamicForm({ fields, onSubmit, buttons = [], initialValues={} }) {
   const [formData, setFormData] = useState(initialValues);
 
   const handleChange = (value, fieldName) => {

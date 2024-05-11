@@ -34,8 +34,10 @@ function App() {
         <Route path="mycourses" element={<MyCourses />} />
 
 
+        <Route path="professor/courses" element={<MyCourses />} />
         <Route path="professor/news" element={<ProfessorNews />} />
         <Route path="professor/profile" element={<ManageProfessorAccount />} />
+        <Route path="professor/students" element={<StudentsByProf />} />
 
         <Route path="student/news" element={<StudentsNews />} />
         <Route path="student/profile" element={<ManageAccount />} />

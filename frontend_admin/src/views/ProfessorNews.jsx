@@ -6,9 +6,12 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import MainLayout from 'src/components/MainLayout.jsx';
+import DynamicForm from 'src/components/DynamicForm.jsx';
+import BaseModal from 'src/components/utils/BaseModal.jsx';
 import styles from 'src/views/ProfessorNews.module.css';
 
 function ProfessorNews() {
+    const [modalShow, setModalShow] = useState(false);
 
     const example = [
         { date: "2024-05-07", description: "¡Nuevo horario de clases!" },
@@ -22,15 +25,62 @@ function ProfessorNews() {
 
 
 
+
+    //Add news
+    const handleFormSubmit = (data) => {
+        alert(JSON.stringify(data));
+    }
+
+    const fields = [
+        {
+            id: 'title',
+            label: 'Titulo:',
+            type: 'text',
+            placeholder: 'Ingresa el título de la noticia',
+            required: true,
+        },
+        {
+            id: 'content',
+            label: 'Mensaje:',
+            type: 'textarea',
+            placeholder: 'Escribe el contenido de la noticia',
+            rows: 2,
+            required: true,
+
+        }
+
+    ];
+
+    const buttons = [{ variant: 'primary', type: 'submit', label: 'Publicar' }]
+
+
     return (
         <MainLayout type={2}>
+            {/* ADD NEWS MODAL*/}
+            <BaseModal
+                pshow={modalShow}
+                setShow={setModalShow}
+            >
+                <div className = 'px-3'>
+                    <DynamicForm
+                        fields={fields}
+                        onSubmit={handleFormSubmit}
+                        buttons={buttons}
+                        initialValues={{}}
+                    />
+                </div>
+            </BaseModal>
+
+
+
+
             <Container fluid style={{ width: '98%' }}>
                 <h2 className={styles.courseName}>{courseName}</h2>
                 <Row>
                     <Col md={7} className={styles.colCustom}>
                         <div className={styles.newsHeader}>
                             <h3 className={styles.subTitle}>Noticias</h3>
-                            <Button variant="primary" className={styles.unsubscribeButton}>Añadir noticia</Button>
+                            <Button onClick={() => setModalShow(true)} variant="primary" className={styles.unsubscribeButton}>Añadir noticia</Button>
                         </div>
                         {news.map((New, index) => (
                             <Card key={index} className={styles.newsCard}>
@@ -54,7 +104,7 @@ function ProfessorNews() {
                         <p className={styles.subInfo}><strong>Horarios:</strong><br />{schedule}</p>
                         <p className={styles.subInfo}>
                             <strong>Estudiantes:</strong><br />
-                            <Link className={styles.newsDate} to="/students">Ver lista de estudiantes</Link>
+                            <Link className={styles.newsDate} to="/professor/students">Ver lista de estudiantes</Link>
                         </p>
                     </Col>
                 </Row>
