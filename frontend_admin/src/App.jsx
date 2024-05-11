@@ -25,6 +25,7 @@ import ProfessorNews from 'src/views/ProfessorNews.jsx';
 import Test from 'src/views/Test.jsx';
 
 function App() {
+  //TODO Add authentication
   return (
     <BrowserRouter>
       <Routes>
