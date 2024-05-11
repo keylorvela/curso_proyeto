@@ -10,18 +10,18 @@ import { faEye  } from '@fortawesome/free-solid-svg-icons';
 function MyCourses() {
     const columns = ['Curso', ];
     const data = [
-        {  Email: 'juan@example.com' },
-        {  Email: 'maria@example.com' },
-        {  Email: 'pedro@example.com' },
-        {  Email: 'juan@example.com' },
-        {  Email: 'juan@example.com' },
-        {  Email: 'juan@example.com' },
-        {  Email: 'juan@example.com' },
-        {  Email: 'juan@example.com' },
-        {  Email: 'juan@example.com' },
-        {  Email: 'juan@example.com' },
-        {  Email: 'juan@example.com' },
-        {  Email: 'juan@example.com' },
+        {  CourseName: 'juan@example.com' },
+        {  CourseName: 'maria@example.com' },
+        {  CourseName: 'pedro@example.com' },
+        {  CourseName: 'juan@example.com' },
+        {  CourseName: 'juan@example.com' },
+        {  CourseName: 'juan@example.com' },
+        {  CourseName: 'juan@example.com' },
+        {  CourseName: 'juan@example.com' },
+        {  CourseName: 'juan@example.com' },
+        {  CourseName: 'juan@example.com' },
+        {  CourseName: 'juan@example.com' },
+        {  CourseName: 'juan@example.com' },
     ];
 
 

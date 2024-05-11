@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import MainLayout from 'src/components/MainLayout.jsx'
@@ -11,21 +11,45 @@ import styles from 'src/views/admin/AdminPage.module.css'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 
+import CourseService from "../../services/Courses.service"
+import GroupService from "../../services/Group.service"
+
 
 function ManageCourse() {
-    //TODO Fetch values from backend
-
-    const [groupInfo, setGroupInfo] = useState({});
+    //TODO Fetch courseInfo from backend
 
     const { id } = useParams();
     const [hide, setHide] = useState(false);
 
     //Aquí debería solicitar info del id de curso
     //Esta pagina sirve para agregar o modificar
-    let values = {};
-    if (id) {
-        values = { name: 'name1', description: 'des1', price: '99' }
-    }
+    const [courseInfo, setCourseInfo] = useState({});
+    const [groupInfo, setGroupInfo] = useState({});
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                // Get course information
+                const courseData = await CourseService.GetCourseInfo(id);
+                const groupData = await GroupService.GetGroupList(id);
+
+                setCourseInfo({
+                    name: courseData.Name,
+                    description: courseData.Description,
+                    price: courseData.Price
+                });
+
+                setGroupInfo({
+                    startingDate: groupData[0].StartingDate,
+                    capacity: groupData[0].Capacity
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        fetchData();
+    }, []);
 
 
 
@@ -123,14 +147,18 @@ function ManageCourse() {
                             </Col>
 
                         <Col className='mt-2' xs={12} md={7}>
-                            <DynamicForm
-                                fields={fields}
-                                onSubmit={handleFormSubmit}
-                                buttons={buttons}
-                                initialValues={values}
-
-
-                            />
+                            {
+                                Object.keys(courseInfo).length !== 0
+                                &&
+                                Object.keys(groupInfo).length !== 0
+                                &&
+                                <DynamicForm
+                                    fields={fields}
+                                    onSubmit={handleFormSubmit}
+                                    buttons={buttons}
+                                    initialValues={courseInfo}
+                                />
+                            }
                         </Col>
 
                     </Row>
