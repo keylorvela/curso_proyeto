@@ -19,7 +19,12 @@ export const getAllProfessors = async (req: Request, res: Response) => {
 }
 
 export const getProfessorInformation = async (req: Request, res: Response) => {
-    const { userID }: { userID: number } = req.body;
+    const userID : number | null = Number(req.params.userID) || null;
+
+    if (!userID) {
+        res.status(400).send({ error: "User id must be a valid number" });
+        return;
+    }
 
     try {
         const resultInformation = await dbConnection.query<RowDataPacket[]>(`
