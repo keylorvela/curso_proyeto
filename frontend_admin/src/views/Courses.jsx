@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
 import styles from 'src/views/Professors.module.css';
+import TableModal from 'src/components/utils/TableModal.jsx';
 
 import Container from 'react-bootstrap/Container';
 import { faPen, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
@@ -10,8 +11,10 @@ import { faPen, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import CourseService from "../services/Courses.service"
 
 function Courses() {
-    const columns = ['Curso' ];
+    const columns = ['Curso'];
     const [data, setData] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalData, setModalData] = useState(null);
 
     useEffect(() => {
         async function fetchData() {
@@ -37,7 +40,13 @@ function Courses() {
     };
 
     const handleButtonDetails = (rowData) => {
-        alert(`Botón2 clickeado para ${rowData.Email}`);
+        setModalData(rowData);
+        setShowModal(true);
+    };
+
+
+    const handleModalClose = () => {
+        setShowModal(false);
     };
 
     const handleButtonAdd = () => {
@@ -65,6 +74,22 @@ function Courses() {
                         mainButtonClick={handleButtonAdd}
                     />
                 }
+
+                {showModal && modalData && (
+                    <TableModal
+                        show={showModal}
+                        onHide={handleModalClose}
+                        title="Curso"
+                        photo="src/assets/stock2.jpg"
+                        roundedPhoto={false}
+                        labels={[
+                            { title: "Curso", content: modalData.CourseName },
+                            { title: "Grupo", content: modalData.CourseName },
+                            { title: "Profesor", content: modalData.CourseName },
+                            { title: "Horario", content: modalData.CourseName },
+                        ]}
+                    />
+                )}
 
             </Container>
         </MainLayout>

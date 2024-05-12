@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
 import styles from 'src/views/Professors.module.css';
+import TableModal from 'src/components/utils/TableModal.jsx';
 
 import Container from 'react-bootstrap/Container';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +12,8 @@ import StudentService from '../services/Students.service';
 
 function Students() {
     const [data, setData] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalData, setModalData] = useState(null);
     const columns = ['Nombre', 'Email', 'Teléfono']; //Consistency between columnName-dataKeyName
 
     useEffect(() => {
@@ -34,10 +37,16 @@ function Students() {
     }, []);
 
     const handleButtonDetails = (rowData) => {
-        alert(`Botón2 clickeado para ${rowData.Email}`);
+        setModalData(rowData);
+        setShowModal(true);
     };
+
+    const handleModalClose = () => {
+        setShowModal(false);
+    };
+
     const handleButtonAdd = () => {
-        alert(`Botón3`);
+        alert(`BotónADD`);
     };
 
     const btn = [
@@ -62,7 +71,23 @@ function Students() {
                         isSearching={true}
                         searchKey='Nombre'
                     />
+
                 }
+                {showModal && modalData && (
+                    <TableModal
+                        show={showModal}
+                        onHide={handleModalClose}
+                        title={modalData.Nombre} 
+                        photo="src/assets/stock2.jpg"
+                        roundedPhoto={true}
+                        labels={[
+                            { title: "Estado", content: modalData.Nombre },
+                            { title: "Email", content: modalData.Email },
+                            { title: "Curso", content: modalData.Email },
+                            { title: "Teléfono", content: modalData.Telefono },
+                        ]}
+                    />
+                )}
 
             </Container>
         </MainLayout>
