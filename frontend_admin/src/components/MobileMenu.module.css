@@ -1,5 +1,6 @@
+@import "src/components/Common.module.css";
 .header{
-    background-color: #1D2D8C;
+    background-color: var(--main-blue);
     color: #FFFFFF;
 }
 

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
-import styles from 'src/views/CommonTable.module.css';
+import styles from 'src/components/Common.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
 
 import Container from 'react-bootstrap/Container';
@@ -66,7 +66,7 @@ function Professors() {
     return (
         <MainLayout type={2}>
             <Container fluid style={{ width: '98%' }}>
-                <h1 className={styles.title}>Profesores</h1>
+                <h1 className={styles.tableTitle}>Profesores</h1>
 
                 {
                     data.length

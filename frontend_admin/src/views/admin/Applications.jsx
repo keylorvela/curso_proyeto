@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
-import styles from 'src/views/CommonTable.module.css';
+import styles from 'src/components/Common.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
 import Container from 'react-bootstrap/Container';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
@@ -54,7 +54,7 @@ function Applications() {
     return (
         <MainLayout type={1}>
             <Container fluid style={{ width: '98%' }}>
-                <h1 className={styles.title}>Solicitudes de matrícula</h1>
+                <h1 className={styles.tableTitle}>Solicitudes de matrícula</h1>
                 <DynamicTable
                     columns={columns}
                     data={data}

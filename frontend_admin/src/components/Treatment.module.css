@@ -1,6 +1,8 @@
+@import "src/components/Common.module.css";
+
 .body {
     background-color: #FFFFFF;
-    border: 2px solid #85B79D;
+    border: 2px solid var(--ligth-green);
     border-radius: 7px;
     padding: 5%;
     margin: 2%;
@@ -8,24 +10,24 @@
 
 .btn {
     color: #FFFFFF;
-    background-color: #85B79D;
+    background-color: var(--ligth-green);
     border: 0px;
     border-radius: 5px;
     padding: 10px;
     margin-left: 20%;
+    font-family: var(--font);
 }
 
 .font {
-    color: #85B79D;
+    color: var(--ligth-green);
     font-weight: bold; 
     font-size: 1.5vw; 
+    font-family: var(--font);
 }
 
 
 
 .img {
     width: 50%;
-    /* O ajusta el tamaño según tus necesidades */
     height: auto;
-    /* La altura se ajusta automáticamente según el ancho */
 }

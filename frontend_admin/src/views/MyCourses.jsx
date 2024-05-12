@@ -2,7 +2,7 @@ import React from 'react';
 
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
-import styles from 'src/views/CommonTable.module.css';
+import styles from 'src/components/Common.module.css';
 
 import Container from 'react-bootstrap/Container';
 import { faEye  } from '@fortawesome/free-solid-svg-icons';
@@ -37,7 +37,7 @@ function MyCourses() {
     return (
         <MainLayout type={2}>
             <Container fluid style={{ width: '98%' }}>
-                <h1 className={styles.title}>Mis Cursos</h1>
+                <h1 className={styles.tableTitle}>Mis Cursos</h1>
 
                 <DynamicTable
                     columns={columns}
