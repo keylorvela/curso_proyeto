@@ -3,6 +3,7 @@ import { RowDataPacket } from "mysql2";
 import dbConnection from "../database/dbConfig";
 import { OStatus } from "../interfaces/OStatus.interface";
 import { Professor } from "interfaces/Professor.interface";
+import { PersonInformation } from "interfaces/General/Person.interface";
 
 export const getAllProfessors = async (req: Request, res: Response) => {
     try {
@@ -12,6 +13,21 @@ export const getAllProfessors = async (req: Request, res: Response) => {
         const professorsList: Professor[] = JSON.parse(JSON.stringify(result[0][0]));
 
         res.status(200).send(professorsList || []);
+    } catch (error) {
+        res.status(400).send({ error: "Request Failed", info: error });
+    }
+}
+
+export const getProfessorInformation = async (req: Request, res: Response) => {
+    const { userID }: { userID: number } = req.body;
+
+    try {
+        const resultInformation = await dbConnection.query<RowDataPacket[]>(`
+            CALL SP_General_GetUserInformation(${userID}, @o_status)
+        `);
+        const result: PersonInformation[] = JSON.parse(JSON.stringify(resultInformation[0][0]));
+
+        res.status(200).send(result[0] || {});
     } catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
     }
