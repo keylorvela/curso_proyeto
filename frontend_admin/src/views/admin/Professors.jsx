@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
-import styles from 'src/views/Professors.module.css';
+import styles from 'src/views/CommonTable.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
 
 import Container from 'react-bootstrap/Container';
 import { faPen, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
-import TeachersService from '../services/Teachers.service';
+import TeachersService from 'src/services/Teachers.service';
 
 function Professors() {
     const columns = ['Nombre', 'Email'];

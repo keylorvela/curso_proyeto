@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
-import styles from 'src/views/Professors.module.css';
+import styles from 'src/views/CommonTable.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
 
 import Container from 'react-bootstrap/Container';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
-import StudentService from '../services/Students.service';
+import StudentService from 'src/services/Students.service';
 
-function Students() {
+function StudentsByProf() {
     const [data, setData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState(null);
@@ -22,9 +22,9 @@ function Students() {
                 // Get students
                 const data_raw = await StudentService.GetStudentList();
                 const new_data = data_raw.map(student => ({
+                    ID: student.UserID,
                     Nombre: student.Name,
-                    Email: student.Email,
-                    Telefono: student.PhoneNumber
+                    Email: student.Email
                 }))
 
                 setData(new_data);
@@ -45,10 +45,6 @@ function Students() {
         setShowModal(false);
     };
 
-    const handleButtonAdd = () => {
-        alert(`BotónADD`);
-    };
-
     const btn = [
         { button: faCirclePlus, onButtonClick: handleButtonDetails }
     ]
@@ -66,25 +62,23 @@ function Students() {
                         columns={columns}
                         data={data}
                         buttons={btn}
-                        mainButton='Añadir Estudiante'
-                        mainButtonClick={handleButtonAdd}
                         isSearching={true}
                         searchKey='Nombre'
                     />
-
                 }
+
                 {showModal && modalData && (
                     <TableModal
                         show={showModal}
                         onHide={handleModalClose}
-                        title={modalData.Nombre} 
+                        title={modalData.Nombre}
                         photo="src/assets/stock2.jpg"
                         roundedPhoto={true}
                         labels={[
                             { title: "Estado", content: modalData.Nombre },
                             { title: "Email", content: modalData.Email },
                             { title: "Curso", content: modalData.Email },
-                            { title: "Teléfono", content: modalData.Telefono },
+                            { title: "Teléfono", content: modalData.ID },
                         ]}
                     />
                 )}
@@ -94,4 +88,4 @@ function Students() {
     );
 }
 
-export default Students;
+export default StudentsByProf;

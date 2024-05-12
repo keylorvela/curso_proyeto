@@ -1,6 +1,6 @@
 import MainLayout from 'src/components/MainLayout.jsx'
 import FeaturedTreatments from 'src/components/FeaturedTreatments.jsx'
-import styles from 'src/views/Treatments.module.css';
+import styles from 'src/views/admin/Treatments.module.css';
 
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';

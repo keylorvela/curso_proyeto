@@ -11,8 +11,8 @@ import styles from 'src/views/admin/AdminPage.module.css'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 
-import CourseService from "../../services/Courses.service"
-import GroupService from "../../services/Group.service"
+import CourseService from "src/services/Courses.service"
+import GroupService from "src/services/Group.service"
 
 
 function ManageCourse() {

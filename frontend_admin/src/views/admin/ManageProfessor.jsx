@@ -10,7 +10,7 @@ import styles from 'src/views/admin/AdminPage.module.css'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 
-import TeachersService from '../../services/Teachers.service';
+import TeachersService from 'src/services/Teachers.service';
 
 
 function ManageProfessor() {

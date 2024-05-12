@@ -2,7 +2,7 @@ import { React, useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 import MainLayout from 'src/components/MainLayout.jsx';
-import styles from 'src/views/StudentsNews.module.css';
+import styles from 'src/views/student/StudentsNews.module.css';
 
 function StudentsNews() {
 

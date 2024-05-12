@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Treatments from 'src/views/Treatments.jsx';
-import ModifyTreatment from 'src/views/ModifyTreatment.jsx';
-import Professors from 'src/views/Professors.jsx';
-import Applications from 'src/views/Applications.jsx';
+import Treatments from 'src/views/admin/Treatments.jsx';
+import ModifyTreatment from 'src/views/admin/ModifyTreatment.jsx';
+import Professors from 'src/views/admin/Professors.jsx';
+import Applications from 'src/views/admin/Applications.jsx';
 
 
 import ManageTreatment from 'src/views/admin/ManageTreatment.jsx';
@@ -14,14 +14,14 @@ import ManageAccount from 'src/views/student/ManageAccount.jsx';
 import ManageProfessorAccount from 'src/views/professor/ManageProfessorAccount.jsx';
 
 
-import Students from 'src/views/Students.jsx';
+import Students from 'src/views/admin/Students.jsx';
 
-import StudentsByProf from 'src/views/StudentsByProf.jsx';
+import StudentsByProf from 'src/views/professor/StudentsByProf.jsx';
 import MyCourses from 'src/views/MyCourses.jsx';
-import Courses from 'src/views/Courses.jsx';
+import Courses from 'src/views/admin/Courses.jsx';
 import Login from 'src/views/Login.jsx';
-import StudentsNews from 'src/views/StudentsNews.jsx';
-import ProfessorNews from 'src/views/ProfessorNews.jsx';
+import StudentsNews from 'src/views/student/StudentsNews.jsx';
+import ProfessorNews from 'src/views/professor/ProfessorNews.jsx';
 import Test from 'src/views/Test.jsx';
 
 function App() {

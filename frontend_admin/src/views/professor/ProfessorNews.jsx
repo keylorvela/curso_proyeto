@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MainLayout from 'src/components/MainLayout.jsx';
 import DynamicForm from 'src/components/DynamicForm.jsx';
 import BaseModal from 'src/components/utils/BaseModal.jsx';
-import styles from 'src/views/ProfessorNews.module.css';
+import styles from 'src/views/professor/ProfessorNews.module.css';
 
 function ProfessorNews() {
     const [modalShow, setModalShow] = useState(false);

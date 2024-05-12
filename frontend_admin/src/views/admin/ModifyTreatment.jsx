@@ -2,7 +2,7 @@ import { React, useState, useEffect  } from 'react';
 import { useLocation  } from 'react-router-dom';
 import { Image, Form, Button, Col, Row,Alert  } from 'react-bootstrap';
 
-import styles from 'src/views/ModifyTreatment.module.css';
+import styles from 'src/views/admin/ModifyTreatment.module.css';
 import MainLayout from 'src/components/MainLayout.jsx';
 import img from 'src/assets/stock2.jpg';
 import TreatmentsService from 'src/services/Treatments.service.js'; 

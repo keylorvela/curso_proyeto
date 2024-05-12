@@ -2,7 +2,7 @@ import React from 'react';
 
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
-import styles from 'src/views/Professors.module.css';
+import styles from 'src/views/CommonTable.module.css';
 
 import Container from 'react-bootstrap/Container';
 import { faEye  } from '@fortawesome/free-solid-svg-icons';
