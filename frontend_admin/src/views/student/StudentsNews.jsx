@@ -19,7 +19,7 @@ function StudentsNews() {
 
 
     return (
-        <MainLayout type={2}>
+        <MainLayout type={3}>
             <Container fluid style={{ width: '98%' }}>
                 <h2 className={styles.courseName}>{courseName}</h2>
                 <Row>

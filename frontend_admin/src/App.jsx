@@ -1,31 +1,31 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
 import Treatments from 'src/views/admin/Treatments.jsx';
-import ModifyTreatment from 'src/views/admin/ModifyTreatment.jsx';
 import Professors from 'src/views/admin/Professors.jsx';
 import Applications from 'src/views/admin/Applications.jsx';
-
-
 import ManageTreatment from 'src/views/admin/ManageTreatment.jsx';
 import ManageCourse from 'src/views/admin/ManageCourse.jsx';
 import ManageProfessor from 'src/views/admin/ManageProfessor.jsx';
+import Students from 'src/views/admin/Students.jsx';
+import Courses from 'src/views/admin/Courses.jsx';
 
-import ManageAccount from 'src/views/student/ManageAccount.jsx';
 
 import ManageProfessorAccount from 'src/views/professor/ManageProfessorAccount.jsx';
-
-
-import Students from 'src/views/admin/Students.jsx';
-
 import StudentsByProf from 'src/views/professor/StudentsByProf.jsx';
-import MyCourses from 'src/views/MyCourses.jsx';
-import Courses from 'src/views/admin/Courses.jsx';
-import Login from 'src/views/Login.jsx';
-import StudentsNews from 'src/views/student/StudentsNews.jsx';
 import ProfessorNews from 'src/views/professor/ProfessorNews.jsx';
-import Test from 'src/views/Test.jsx';
+
+
+import ManageStudentAccount from 'src/views/student/ManageAccount.jsx';
+import StudentsNews from 'src/views/student/StudentsNews.jsx';
+
+import MyCourses from 'src/views/MyCourses.jsx';
+
 
 function App() {
   //TODO Add authentication
+
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -40,7 +40,8 @@ function App() {
         <Route path="professor/students" element={<StudentsByProf />} />
 
         <Route path="student/news" element={<StudentsNews />} />
-        <Route path="student/profile" element={<ManageAccount />} />
+        <Route path="student/courses" element={<MyCourses />} />
+        <Route path="student/profile" element={<ManageStudentAccount />} />
 
         <Route path="admin/students" element={<Students />} />
         <Route path="admin/courses" element={<Courses />} />

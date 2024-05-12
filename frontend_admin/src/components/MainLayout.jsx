@@ -18,9 +18,11 @@ function getLinks(type) {
   switch (type) {
     case 1:
       links = [
-        { to: '/admin/treatments', label: 'Tratamientos' },
+        { to: '/admin/students', label: 'Lista estudiantes' },
+        { to: '/admin/courses', label: 'Cursos' },
         { to: '/admin/professors', label: 'Profesores' },
         { to: '/admin/applications', label: 'Solicitudes' },
+        { to: '/admin/treatments', label: 'Tratamientos' },
       ];
       break;
     case 2:

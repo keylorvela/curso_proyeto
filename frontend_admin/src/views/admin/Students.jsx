@@ -55,7 +55,7 @@ function Students() {
 
 
     return (
-        <MainLayout type={2}>
+        <MainLayout type={1}>
             <Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.title}>Lista de estudiantes</h1>
 

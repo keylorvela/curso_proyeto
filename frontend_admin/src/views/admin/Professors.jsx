@@ -59,7 +59,7 @@ function Professors() {
 
 
     return (
-        <MainLayout type={2}>
+        <MainLayout type={1}>
             <Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.title}>Profesores</h1>
 
