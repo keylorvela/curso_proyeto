@@ -1,4 +1,6 @@
 export interface PersonInformation {
+    UserId: number
+    PersonId: number
     Name: string
     Photo: string
     PhoneNumber: string
