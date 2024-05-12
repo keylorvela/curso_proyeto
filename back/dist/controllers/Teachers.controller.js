@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProfessor = exports.updateProfessor = exports.getAllProfessors = void 0;
+exports.deleteProfessor = exports.updateProfessor = exports.getProfessorInformation = exports.getAllProfessors = void 0;
 const dbConfig_1 = __importDefault(require("../database/dbConfig"));
 const getAllProfessors = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -27,6 +27,20 @@ const getAllProfessors = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.getAllProfessors = getAllProfessors;
+const getProfessorInformation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userID } = req.body;
+    try {
+        const resultInformation = yield dbConfig_1.default.query(`
+            CALL SP_General_GetUserInformation(${userID}, @o_status)
+        `);
+        const result = JSON.parse(JSON.stringify(resultInformation[0][0]));
+        res.status(200).send(result[0] || {});
+    }
+    catch (error) {
+        res.status(400).send({ error: "Request Failed", info: error });
+    }
+});
+exports.getProfessorInformation = getProfessorInformation;
 const updateProfessor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { personID, photo, email, phoneNumber, name } = req.body;
     if (isNaN(personID) || personID < 0 || !email || !name) {
