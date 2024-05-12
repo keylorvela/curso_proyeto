@@ -5,6 +5,7 @@ import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
 import styles from 'src/components/Common.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
+import Loading from 'src/components/utils/Loading.jsx';
 
 import Container from 'react-bootstrap/Container';
 import { faPen, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
@@ -12,8 +13,10 @@ import { faPen, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import CourseService from "src/services/Courses.service"
 
 function Courses() {
+    const [loading, setLoading] = useState(true);
+
     const columns = ['Curso'];
-    const navegate = useNavigate ();
+    const navegate = useNavigate();
     const [data, setData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState(null);
@@ -28,8 +31,12 @@ function Courses() {
                 }))
 
                 setData(new_data);
+
             } catch (error) {
                 console.error('Error fetching data:', error);
+            }
+            finally {
+                setLoading(false);
             }
         }
 
@@ -65,8 +72,18 @@ function Courses() {
 
     return (
         <MainLayout type={1}>
+
             <Container fluid style={{ width: '98%' }}>
+
+
+
                 <h1 className={styles.tableTitle}>Cursos disponibles</h1>
+
+                {loading && (
+                    <div className='text-center my-5'>
+                        <Loading size={15} />
+                    </div>
+                )}
 
                 {
                     data.length

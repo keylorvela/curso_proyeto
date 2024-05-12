@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
+import Loading from 'src/components/utils/Loading.jsx';
 import styles from 'src/components/Common.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
 
@@ -12,6 +13,7 @@ import StudentService from 'src/services/Students.service';
 
 function Students() {
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState(null);
     const columns = ['Nombre', 'Email', 'Teléfono']; //Consistency between columnName-dataKeyName
@@ -30,6 +32,8 @@ function Students() {
                 setData(new_data);
             } catch (error) {
                 console.error('Error fetching data:', error);
+            }finally{
+                setLoading(false)
             }
         }
 
@@ -59,6 +63,13 @@ function Students() {
             <Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.tableTitle}>Lista de estudiantes</h1>
 
+                {loading && (
+                    <div className='text-center my-5'>
+                        <Loading size={15} />
+                    </div>
+                )}
+
+
                 {
                     data.length
                     &&
@@ -77,7 +88,7 @@ function Students() {
                     <TableModal
                         show={showModal}
                         onHide={handleModalClose}
-                        title={modalData.Nombre} 
+                        title={modalData.Nombre}
                         photo="src/assets/stock2.jpg"
                         roundedPhoto={true}
                         labels={[

@@ -39,7 +39,7 @@ function getLinks(type) {
       break;
 
     default:
-      links = null;
+      links = {};
   }
   return links;
 }
