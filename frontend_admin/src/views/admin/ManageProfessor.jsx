@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import MainLayout from 'src/components/MainLayout.jsx'
@@ -10,18 +10,44 @@ import styles from 'src/views/admin/AdminPage.module.css'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 
+import TeachersService from '../../services/Teachers.service';
+
 
 function ManageProfessor() {
-    //TODO Fetch values from backend
+    //TODO Fetch teacherInformation from backend
     const { id } = useParams();
 
     //Aquí debería solicitar info del id de curso
     //Esta pagina sirve para agregar o modificar
-    let values = {};
-    if (id) {
-        values = { name: 'name1', description: 'des1', id_prof: '99' }
-    }
+    const [teacherInformation, setTeacherInformation] = useState({});
+    // if (id) {
+    //     teacherInformation = {
+    //         name: 'name1',
+    //         phoneNumber: '',
+    //         email: ''
+    //     }
+    // }
 
+    useEffect(() => {
+        async function fetchData() {
+            if (!id) {
+                return;
+            }
+            try {
+                // Get course information
+                const teacherData = await TeachersService.GetTeacherInfo(id);
+                setTeacherInformation({
+                    name: teacherData.Name,
+                    phoneNumber: teacherData.PhoneNumber,
+                    email: teacherData.Email,
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        fetchData();
+    }, []);
 
     const handleFormSubmit = (formValues) => {
         console.log(formValues)
@@ -100,9 +126,7 @@ function ManageProfessor() {
                                 fields={fields}
                                 onSubmit={handleFormSubmit}
                                 buttons={buttons}
-                                initialValues={values}
-
-
+                                initialValues={teacherInformation}
                             />
                         </Col>
 
