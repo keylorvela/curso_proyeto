@@ -28,7 +28,11 @@ const getAllProfessors = (req, res) => __awaiter(void 0, void 0, void 0, functio
 });
 exports.getAllProfessors = getAllProfessors;
 const getProfessorInformation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userID } = req.body;
+    const userID = Number(req.params.userID) || null;
+    if (!userID) {
+        res.status(400).send({ error: "User id must be a valid number" });
+        return;
+    }
     try {
         const resultInformation = yield dbConfig_1.default.query(`
             CALL SP_General_GetUserInformation(${userID}, @o_status)
