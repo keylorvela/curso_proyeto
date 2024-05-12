@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
-import styles from 'src/views/CommonTable.module.css';
+import styles from 'src/components/Common.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
 
 import Container from 'react-bootstrap/Container';
@@ -57,7 +57,7 @@ function Students() {
     return (
         <MainLayout type={1}>
             <Container fluid style={{ width: '98%' }}>
-                <h1 className={styles.title}>Lista de estudiantes</h1>
+                <h1 className={styles.tableTitle}>Lista de estudiantes</h1>
 
                 {
                     data.length

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
-import styles from 'src/views/CommonTable.module.css';
+import styles from 'src/components/Common.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
 
 import Container from 'react-bootstrap/Container';
@@ -12,6 +13,7 @@ import CourseService from "src/services/Courses.service"
 
 function Courses() {
     const columns = ['Curso'];
+    const navegate = useNavigate ();
     const [data, setData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState(null);
@@ -36,7 +38,10 @@ function Courses() {
 
 
     const handleButtonEdit = (rowData) => {
-        alert(`Botón clickeado para ${rowData.Nombre}`);
+        navegate('/admin/course/' + 1);
+        /*navegate('/admin/course/' + 1, {
+            state: {rowData}
+            });*/
     };
 
     const handleButtonDetails = (rowData) => {
@@ -50,7 +55,7 @@ function Courses() {
     };
 
     const handleButtonAdd = () => {
-        alert(`Botón3`);
+        navegate('/admin/course');
     };
     const btn = [
         { button: faPen, onButtonClick: handleButtonEdit },
@@ -61,7 +66,7 @@ function Courses() {
     return (
         <MainLayout type={1}>
             <Container fluid style={{ width: '98%' }}>
-                <h1 className={styles.title}>Cursos disponibles</h1>
+                <h1 className={styles.tableTitle}>Cursos disponibles</h1>
 
                 {
                     data.length

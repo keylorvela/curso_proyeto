@@ -2,6 +2,7 @@
 
 :root {
   --main-blue: #1D2D8C;
+  --ligth-blue: #3F8EFC;
   --ligth-green: #85B79D;
   --font:  "Montserrat", sans-serif;
 }
@@ -19,5 +20,15 @@
     color: var(--main-blue);
     font-weight: bold;
     font-family: var(--font);
+}
+
+.tableTitle {
+  font-family: var(--font);
+  font-weight: 600;
+  color: var(--ligth-blue);
+  text-align: right;
+  margin-top: 3%; 
+  margin-bottom: -1%;
+  font-size: 4vw; 
 }
   

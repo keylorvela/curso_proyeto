@@ -1,5 +1,7 @@
+@import "src/components/Common.module.css";
+
 * {
-    color: #1D2D8C;
+    color: var(--main-blue);
 }
 /* ---------------------------------------------------- */
 /* >>> OTP Page - General style */
@@ -8,7 +10,7 @@
 .span_title {
     font-size: 32px;
     font-weight: 700;
-
+    font-family: var(--font);
     margin-top: 20px;
 }
 .span_content {
@@ -32,8 +34,8 @@
 .text_field {
     height: 40px;
     font-size: 20px;
-
-    border-bottom: 1px solid #1D2D8C;
+    font-family: var(--font);
+    border-bottom: 1px solid var(--main-blue);
 }
 
 /* Group input in verically */
@@ -46,12 +48,12 @@
     border: none;
     outline: none;
 
-    background-color: #3F8EFC;
+    background-color: var(--ligth-blue);
     color: #ffffff;
 
     font-size: 16px;
     font-weight: 500;
-
+    font-family: var(--font);
     border-radius: 5px;
 }
 /* ---------------------------------------------------- */
@@ -60,9 +62,9 @@
 /* OTP Value Input fields style */
 .number_field {
     background: #ffffff;
-    outline: 2px solid #1D2D8C;
+    outline: 2px solid var(--main-blue);
     border-radius: 10px;
-
+    font-family: var(--font);
     flex-grow: 1;
     width: 100%;
     font-size: 78px;

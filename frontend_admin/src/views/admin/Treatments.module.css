@@ -5,11 +5,11 @@
     margin-left: 5%;
     width: 90%;
     height: 0.6%;
-    background-color: #1D2D8C; 
+    background-color: var(--main-blue);
   }
 
   .title {
-    color: #3F8EFC;
+    color: var(--ligth-blue);
     margin-left: 71%;
     margin-top: 3%; 
     font-size: 4vw; 
