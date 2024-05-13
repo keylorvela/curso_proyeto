@@ -42,7 +42,7 @@ const getAllNews = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const result = yield dbConfig_1.default.query(`
             CALL SP_News_ReadAll(${groupID}, @o_status)
         `);
-        const newsList = JSON.parse(JSON.stringify(result[0]));
+        const newsList = JSON.parse(JSON.stringify(result[0][0]));
         res.status(200).send(newsList || []);
     }
     catch (error) {
