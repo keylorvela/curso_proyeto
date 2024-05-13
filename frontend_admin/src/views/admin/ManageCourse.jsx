@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -16,7 +15,9 @@ import GroupService from "src/services/Group.service"
 
 
 function ManageCourse() {
-    //TODO Fetch courseInfo from backend
+    // TODO: Agregar los campos para crear/modificar un curso
+    // TODO: API Calls para crear y modificar un curso
+    // TODO: Funcionalidad de eliminar curso
 
     const { id } = useParams();
     const [hide, setHide] = useState(false);
@@ -30,18 +31,33 @@ function ManageCourse() {
         async function fetchData() {
             try {
                 // Get course information
-                const courseData = await CourseService.GetCourseInfo(id);
-                const groupData = await GroupService.GetGroupList(id);
+                let courseName = "";
+                let courseDescription = "";
+                let coursePrice = "";
+                let courseStartingDate = "";
+                let courseCapacity = "";
 
+                if (id) {
+                    const courseData = await CourseService.GetCourseInfo(id);
+                    const groupData = await GroupService.GetGroupList(id);
+
+                    courseName = courseData.Name;
+                    courseDescription = courseData.Description.replace(/\//g, '\n');
+                    coursePrice = courseData.Price;
+                    courseStartingDate = groupData[0].StartingDate.split('T')[0];
+                    courseCapacity = groupData[0].Capacity;
+                }
                 setCourseInfo({
-                    name: courseData.Name,
-                    description: courseData.Description,
-                    price: courseData.Price
+                    name: courseName,
+                    description: courseDescription,
+                    price: coursePrice,
+                    date: courseStartingDate,
+                    capacity: courseCapacity
                 });
 
                 setGroupInfo({
-                    startingDate: groupData[0].StartingDate,
-                    capacity: groupData[0].Capacity
+                    startingDate: courseStartingDate,
+                    capacity: courseCapacity
                 });
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -50,17 +66,6 @@ function ManageCourse() {
 
         fetchData();
     }, []);
-
-
-
-    const handleModal = (state) => {
-        setHide(state);
-    };
-
-    const handleFormSubmit = (formValues) => {
-        console.log(formValues)
-    };
-
 
     const fields = [
         {
@@ -100,15 +105,29 @@ function ManageCourse() {
             required: true,
         }
     ];
-    const handleDelete = (id_p) => {
-        alert( id_p);
+
+    const handleModal = (state) => {
+        setHide(state);
+    };
+
+    const handleFormSubmit = (formValues) => {
+        // Si no tiene id := Crear curso
+        // Si no := Modificar curso
+    };
+
+    const handleDelete = async (courseID) => {
+        try {
+            // await CourseService.DeleteCourse( courseID );
+            alert("Se elimino el curso");
+        } catch (error) {
+            console.error("Error al eliminar el cursos", error);
+        }
     }
 
     const buttons = [
         { variant: 'primary', type: 'submit', label: 'Guardar cambios' },
-        { variant: 'primary', type: 'button', label: 'Asignar grupo', 
+        { variant: 'primary', type: 'button', label: 'Asignar grupo',
         onClick: () => handleModal(true), },
-                                    
     ]
     if (id) {
         buttons.push(
@@ -131,8 +150,6 @@ function ManageCourse() {
                 groupInfo={groupInfo}
                 setGroupInfo={setGroupInfo}
             />
-
-
 
             <div className={styles.page}>
                 <Container>

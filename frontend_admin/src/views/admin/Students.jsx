@@ -12,6 +12,8 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import StudentService from 'src/services/Students.service';
 
 function Students() {
+    // TODO: Funcionalidad del botón Añadir estudiante
+
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -24,9 +26,12 @@ function Students() {
                 // Get students
                 const data_raw = await StudentService.GetStudentList();
                 const new_data = data_raw.map(student => ({
+                    // UserID: student.UserID,
+                    // PersonID: student.PersonID,
                     Nombre: student.Name,
                     Email: student.Email,
-                    Telefono: student.PhoneNumber
+                    Telefono: student.PhoneNumber,
+                    // Foto: student.Photo
                 }))
 
                 setData(new_data);
@@ -92,9 +97,9 @@ function Students() {
                         photo="src/assets/stock2.jpg"
                         roundedPhoto={true}
                         labels={[
-                            { title: "Estado", content: modalData.Nombre },
+                            { title: "Nombre", content: modalData.Nombre },
                             { title: "Email", content: modalData.Email },
-                            { title: "Curso", content: modalData.Email },
+                            // { title: "Curso", content: modalData.Email },
                             { title: "Teléfono", content: modalData.Telefono },
                         ]}
                     />

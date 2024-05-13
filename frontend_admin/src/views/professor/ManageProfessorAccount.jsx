@@ -14,12 +14,11 @@ import styles from 'src/views/professor/ProfessorPage.module.css'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 import TeachersService from 'src/services/Teachers.service';
-import UserService from 'src/services/User.service';
 
 function ManageProfessorAccount() {
     // TODO: Obtener el userID
     // TODO: Funcionalidad del cambio de contraseña
-    const userID = 5;
+    const userID = 6;
 
     const [passInfo, setPassInfo] = useState({});
     const [hide, setHide] = useState(false);
@@ -110,9 +109,8 @@ function ManageProfessorAccount() {
                 handleState={handleModal}
                 passInfo={passInfo}
                 setPassInfo={setPassInfo}
+                userID={userID}
             />
-
-
 
             <div className={styles.page}>
                 <Container>

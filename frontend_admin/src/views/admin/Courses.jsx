@@ -27,6 +27,7 @@ function Courses() {
                 // Get courses
                 const data_raw = await CourseService.GetCourseList();
                 const new_data = data_raw.map(course => ({
+                    // CourseID: course.ID,
                     CourseName: course.Name,
                 }))
 
@@ -52,6 +53,7 @@ function Courses() {
     };
 
     const handleButtonDetails = (rowData) => {
+        console.log(rowData)
         setModalData(rowData);
         setShowModal(true);
     };
@@ -74,8 +76,6 @@ function Courses() {
         <MainLayout type={1}>
 
             <Container fluid style={{ width: '98%' }}>
-
-
 
                 <h1 className={styles.tableTitle}>Cursos disponibles</h1>
 

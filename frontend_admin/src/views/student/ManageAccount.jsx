@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 
@@ -14,31 +13,38 @@ import img from 'src/assets/stock2.jpg'
 import styles from 'src/views/student/StudentPage.module.css'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
-
+import StudentService from 'src/services/Students.service';
 
 function ManageAccount() {
-    //TODO Fetch info related to this user
+    // TODO: Obtener el userID
+    const userID = 6;
 
-
-    
 
     const [passInfo, setPassInfo] = useState({});
-
     const [hide, setHide] = useState(false);
+    const [studentInformation, setStudentInformation] = useState({});
 
-    //Aquí debería solicitar info del id de curso
-    //Esta pagina sirve para agregar o modificar
-    let values = {};
-   
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                // Get student information
+                const student_data = await StudentService.GetStudentsInformation( userID );
 
-    const handleModal = (state) => {
-        setHide(state);
-    };
+                setStudentInformation({
+                    userID: student_data.UserId,
+                    personID: student_data.PersonId,
+                    photo: student_data.Photo,
+                    name: student_data.Name,
+                    phoneNumber: student_data.PhoneNumber,
+                    email: student_data.Email,
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
 
-    const handleFormSubmit = (formValues) => {
-        console.log(formValues)
-    };
-
+        fetchData();
+    }, []);
 
     const fields = [
         {
@@ -49,7 +55,7 @@ function ManageAccount() {
             required: true,
         },
         {
-            id: 'phone',
+            id: 'phoneNumber',
             label: 'Teléfono:',
             type: 'text',
             placeholder: 'Ingresa tu número de teléfono',
@@ -65,16 +71,34 @@ function ManageAccount() {
 
     ];
 
+    const handleModal = (state) => {
+        setHide(state);
+    };
+
+    const handleFormSubmit = async (formValues) => {
+        try {
+            await StudentService.UpdateStudentInformation(
+                formValues.personID,
+                formValues.name,
+                formValues.phoneNumber,
+                formValues.email,
+                formValues.photo
+            );
+            alert("Modificación de info del estudiante exitosa!");
+        } catch (error) {
+            console.error("Error in update teacher information", error);
+        }
+    };
+
     const handleChangePassword = () => {
         //Debería recuperarse de la sesión
         setHide(true);
     }
 
     const buttons = [
-        { variant: 'primary', type: 'button', label: 'Cambiar contraseña', 
+        { variant: 'primary', type: 'button', label: 'Cambiar contraseña',
         onClick: () => handleChangePassword()},
         { variant: 'primary', type: 'submit', label: 'Guardar cambios' },
-                                    
     ]
 
     return (
@@ -84,9 +108,8 @@ function ManageAccount() {
                 handleState={handleModal}
                 passInfo={passInfo}
                 setPassInfo={setPassInfo}
+                userID={userID}
             />
-
-
 
             <div className={styles.page}>
                 <Container>
@@ -102,14 +125,16 @@ function ManageAccount() {
                             </Col>
 
                         <Col className='mt-2' xs={12} md={7}>
-                            <DynamicForm
-                                fields={fields}
-                                onSubmit={handleFormSubmit}
-                                buttons={buttons}
-                                initialValues={values}
-
-
-                            />
+                            {
+                                Object.keys(studentInformation).length
+                                &&
+                                <DynamicForm
+                                    fields={fields}
+                                    onSubmit={handleFormSubmit}
+                                    buttons={buttons}
+                                    initialValues={studentInformation}
+                                />
+                            }
                         </Col>
 
                     </Row>

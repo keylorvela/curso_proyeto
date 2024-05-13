@@ -9,9 +9,14 @@ import Container from 'react-bootstrap/Container';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 import StudentService from 'src/services/Students.service';
+import GroupService from 'src/services/Group.service';
 
 function StudentsByProf() {
-    const [data, setData] = useState([]);
+    // TODO: Obtener el id del grupo
+    const groupID = 1;
+
+    const [groupInformation, setGroupInformation] = useState({});
+    const [studentsList, setStudentsList] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState(null);
     const columns = ['Nombre', 'Email', 'Teléfono']; //Consistency between columnName-dataKeyName
@@ -20,14 +25,21 @@ function StudentsByProf() {
         async function fetchData() {
             try {
                 // Get students
-                const data_raw = await StudentService.GetStudentList();
-                const new_data = data_raw.map(student => ({
-                    ID: student.UserID,
+                const studentList_data = await StudentService.GetStudentsFromGroup( groupID );
+                const studentList_formatted = studentList_data.map(student => ({
+                    UserID: student.UserID,
+                    ID: student.PersonID,
                     Nombre: student.Name,
-                    Email: student.Email
+                    Email: student.Email,
+                    Telefono: student.PhoneNumber,
+                    // Foto: student.Photo
                 }))
 
-                setData(new_data);
+                // Get group information
+                const group_data = await GroupService.GetGroupInformation( groupID );
+
+                setGroupInformation( group_data );
+                setStudentsList( studentList_formatted );
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -56,11 +68,11 @@ function StudentsByProf() {
                 <h1 className={styles.tableTitle}>Lista de estudiantes</h1>
 
                 {
-                    data.length
+                    studentsList.length
                     &&
                     <DynamicTable
                         columns={columns}
-                        data={data}
+                        data={studentsList}
                         buttons={btn}
                         isSearching={true}
                         searchKey='Nombre'
@@ -77,8 +89,8 @@ function StudentsByProf() {
                         labels={[
                             { title: "Estado", content: modalData.Nombre },
                             { title: "Email", content: modalData.Email },
-                            { title: "Curso", content: modalData.Email },
-                            { title: "Teléfono", content: modalData.ID },
+                            { title: "Curso", content: groupInformation.Name },
+                            { title: "Teléfono", content: modalData.Telefono },
                         ]}
                     />
                 )}
