@@ -28,8 +28,8 @@ const getAllStudents = (req, res) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.getAllStudents = getAllStudents;
 const getStudentsInGroup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { groupID } = req.body;
-    if (isNaN(groupID) || groupID < 0) {
+    const groupID = Number(req.query.groupID) || null;
+    if (!groupID || isNaN(groupID) || groupID < 0) {
         res.status(400).send({ error: "Invalid group ID provided" });
         return;
     }
