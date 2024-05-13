@@ -11,6 +11,7 @@ import Container from 'react-bootstrap/Container';
 import { faPen, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 import CourseService from "src/services/Courses.service"
+import GroupService from "src/services/Group.service"
 
 function Courses() {
     const [loading, setLoading] = useState(true);
@@ -27,8 +28,8 @@ function Courses() {
                 // Get courses
                 const data_raw = await CourseService.GetCourseList();
                 const new_data = data_raw.map(course => ({
-                    // CourseID: course.ID,
                     CourseName: course.Name,
+                    CourseID: course.ID,
                 }))
 
                 setData(new_data);
@@ -46,15 +47,30 @@ function Courses() {
 
 
     const handleButtonEdit = (rowData) => {
-        navegate('/admin/course/' + 1);
+        navegate(`/admin/course/${rowData.CourseID}`);
         /*navegate('/admin/course/' + 1, {
             state: {rowData}
             });*/
     };
 
-    const handleButtonDetails = (rowData) => {
-        console.log(rowData)
-        setModalData(rowData);
+    const handleButtonDetails = async (rowData) => {
+        try {
+            // Get all groups in the course
+            const groupList = await GroupService.GetGroupsInACourse(rowData.CourseID);
+            const groupInformation = await GroupService.GetGroupInformation(groupList[0].GroupID);
+
+            setModalData(groupInformation);
+        } catch (error) {
+            console.error("Error al obtener los detalles del curso/grupo", error);
+            setModalData({
+                Name: rowData.CourseName,
+                GroupID: rowData.CourseName,
+                TeacherName: rowData.CourseName,
+                ScheduleDate: rowData.CourseName,
+                ScheduleHour: rowData.CourseName
+            });
+        }
+
         setShowModal(true);
     };
 
@@ -105,10 +121,10 @@ function Courses() {
                         photo="src/assets/stock2.jpg"
                         roundedPhoto={false}
                         labels={[
-                            { title: "Curso", content: modalData.CourseName },
-                            { title: "Grupo", content: modalData.CourseName },
-                            { title: "Profesor", content: modalData.CourseName },
-                            { title: "Horario", content: modalData.CourseName },
+                            { title: "Curso", content: modalData.Name },
+                            { title: "Grupo", content: modalData.GroupID },
+                            { title: "Profesor", content: modalData.TeacherName },
+                            { title: "Horario", content: `${modalData.ScheduleDate} - ${modalData.ScheduleHour}` },
                         ]}
                     />
                 )}

@@ -44,8 +44,8 @@ function ManageCourse() {
                     courseName = courseData.Name;
                     courseDescription = courseData.Description.replace(/\//g, '\n');
                     coursePrice = courseData.Price;
-                    courseStartingDate = groupData[0].StartingDate.split('T')[0];
-                    courseCapacity = groupData[0].Capacity;
+                    courseStartingDate = ( groupData.length ) ? groupData[0].StartingDate.split('T')[0] : "";
+                    courseCapacity = ( groupData.length ) ? groupData[0].Capacity : "";
                 }
                 setCourseInfo({
                     name: courseName,
