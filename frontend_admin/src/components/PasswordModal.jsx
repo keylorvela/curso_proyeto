@@ -4,18 +4,32 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useState } from 'react';
 
-function PasswordModal({ hide, handleState, passInfo, setPassInfo }) {
+import UserService from 'src/services/User.service';
+
+function PasswordModal({ hide, handleState, passInfo, setPassInfo, userID }) {
 
   const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formVal = event.currentTarget;
+
     if (!formVal.checkValidity()) {
         event.stopPropagation();
-    } else {
-        alert('¡El formulario se envió correctamente!');
-        console.log(JSON.stringify(passInfo));
+    }
+    else if (passInfo.new_pass != passInfo.conf_pass) {
+        alert("Contraseñas nuevas not match")
+    }
+    else {
+
+        const response = await UserService.ChangePassword(userID, passInfo.og_pass, passInfo.new_pass);
+        if (response.o_status.includes("Error")) {
+            alert("Contraseña no es la actual")
+        }
+        else {
+            alert("Se cambio la contraseña!")
+        }
+
         setPassInfo({});
         setValidated(false);
     }
