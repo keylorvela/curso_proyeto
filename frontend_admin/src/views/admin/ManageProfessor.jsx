@@ -34,12 +34,14 @@ function ManageProfessor() {
                 return;
             }
             try {
-                // Get course information
-                const teacherData = await TeachersService.GetTeacherInfo(id);
+                // Get teacher information
+                const teacher_data = await TeachersService.GetTeacherInformation(id);
                 setTeacherInformation({
-                    name: teacherData.Name,
-                    phoneNumber: teacherData.PhoneNumber,
-                    email: teacherData.Email,
+                    personID: teacher_data.PersonId,
+                    name: teacher_data.Name,
+                    photo: teacher_data.Photo,
+                    phoneNumber: teacher_data.PhoneNumber,
+                    email: teacher_data.Email,
                 });
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -49,8 +51,19 @@ function ManageProfessor() {
         fetchData();
     }, []);
 
-    const handleFormSubmit = (formValues) => {
-        console.log(formValues)
+    const handleFormSubmit = async (formValues) => {
+        try {
+            await TeachersService.UpdateTeacherInformation(
+                formValues.personID,
+                formValues.name,
+                formValues.phoneNumber,
+                formValues.email,
+                formValues.photo
+            );
+            alert("Modificación de info del profesor exitosa!");
+        } catch (error) {
+            console.error("Error in update teacher information", error);
+        }
     };
 
 
@@ -62,22 +75,22 @@ function ManageProfessor() {
             placeholder: 'Ingresa el nombre del profesor',
             required: true,
         },
+        // {
+        //     id: 'id_prof',
+        //     label: 'Identificación:',
+        //     type: 'text',
+        //     placeholder: 'Ingresa la identificación del profesor',
+        //     required: true,
+        // },
         {
-            id: 'id_prof',
-            label: 'Identificación:',
-            type: 'text',
-            placeholder: 'Ingresa la identificación del profesor',
-            required: true,
-        },
-        {
-            id: 'phone',
+            id: 'phoneNumber',
             label: 'Número telefónico del profesor:',
             type: 'text',
             placeholder: 'Ingresa el teléfono del profesor',
             required: true,
         },
         {
-            id: 'mail',
+            id: 'email',
             label: 'Email del profesor:',
             type: 'email',
             placeholder: 'Ingresa el correo electrónica del profesor',
@@ -122,12 +135,16 @@ function ManageProfessor() {
                         </Col>
 
                         <Col className='mt-2' xs={12} md={7}>
-                            <DynamicForm
-                                fields={fields}
-                                onSubmit={handleFormSubmit}
-                                buttons={buttons}
-                                initialValues={teacherInformation}
-                            />
+                            {
+                                Object.keys(teacherInformation).length
+                                &&
+                                <DynamicForm
+                                    fields={fields}
+                                    onSubmit={handleFormSubmit}
+                                    buttons={buttons}
+                                    initialValues={teacherInformation}
+                                />
+                            }
                         </Col>
 
                     </Row>
