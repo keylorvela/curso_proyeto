@@ -55,7 +55,7 @@ function App() {
         <Route path="admin/applications" element={<Applications />} />
 
         {/*For testing*/}
-        <Route path="test" element={<Professors />} />
+        <Route path="test" element={<Treatments />} />
 
 
         <Route path="/*" element={

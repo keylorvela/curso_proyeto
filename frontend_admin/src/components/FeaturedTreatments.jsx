@@ -20,7 +20,7 @@ function FeaturedTreatments() {
         const getTreatments = async () => {
             try {
               const treatmentsData = await TreatmentsService.getTreatments();
-              setTreatments(treatmentsData[0]);
+              setTreatments(treatmentsData);
             } catch (error) {
               console.error('getTreatments fail:', error);
             }
