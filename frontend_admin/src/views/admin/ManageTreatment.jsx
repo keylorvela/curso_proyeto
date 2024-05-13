@@ -51,7 +51,7 @@ function ManageTreatment() {
 
 
 
-
+    //TODO Workaround categories
     const fields = [
         {
             id: 'Name',
