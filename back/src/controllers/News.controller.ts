@@ -30,7 +30,7 @@ export const createNews = async (req: Request, res: Response) => {
 };
 
 export const getAllNews = async (req: Request, res: Response) => {
-    const groupID : number | null = Number(req.params.groupID) || null;
+    const groupID : number | null = Number(req.query.groupID) || null;
 
     if (!groupID || isNaN(groupID) || groupID < 0) {
         res.status(400).send({ error: "Invalid group ID provided" });
