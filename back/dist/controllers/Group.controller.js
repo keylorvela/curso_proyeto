@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteGroup = exports.dropOutGroup = exports.listEnrolledGroup = exports.updateGroup = exports.createGroup = exports.listGroupByCourse = void 0;
+exports.deleteGroup = exports.dropOutGroup = exports.listEnrolledGroup = exports.updateGroup = exports.createGroup = exports.getGroupInformation = exports.listGroupByCourse = void 0;
 const dbConfig_1 = __importDefault(require("../database/dbConfig"));
 const listGroupByCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const courseId = Number(req.params.courseId);
@@ -32,6 +32,24 @@ const listGroupByCourse = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.listGroupByCourse = listGroupByCourse;
+const getGroupInformation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const groupId = Number(req.params.groupId);
+    // Verificar si courseId es un número válido
+    if (isNaN(groupId) || groupId <= 0) {
+        res.status(400).send({ error: "Invalid group ID" });
+        return;
+    }
+    try {
+        const result_group = yield dbConfig_1.default.query(`CALL SP_Group_GetGroupInformation(${groupId}, @o_status)`);
+        const result = JSON.parse(JSON.stringify(result_group[0][0]));
+        res.status(200).send(result[0] || {});
+    }
+    catch (error) {
+        console.error("Error:", error);
+        res.status(500).send({ error: "Request Failed" });
+    }
+});
+exports.getGroupInformation = getGroupInformation;
 const createGroup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     // Verificar si los parámetros requeridos están presentes
