@@ -33,8 +33,8 @@ const createNews = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.createNews = createNews;
 const getAllNews = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { groupID } = req.body;
-    if (isNaN(groupID) || groupID < 0) {
+    const groupID = Number(req.params.groupID) || null;
+    if (!groupID || isNaN(groupID) || groupID < 0) {
         res.status(400).send({ error: "Invalid group ID provided" });
         return;
     }
