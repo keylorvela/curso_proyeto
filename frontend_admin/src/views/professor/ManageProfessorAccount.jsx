@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 
@@ -14,31 +13,39 @@ import img from 'src/assets/stock2.jpg'
 import styles from 'src/views/professor/ProfessorPage.module.css'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
-
+import TeachersService from 'src/services/Teachers.service';
+import UserService from 'src/services/User.service';
 
 function ManageProfessorAccount() {
-    //TODO Fetch info related to this user
-
-
-    
+    // TODO: Obtener el userID
+    // TODO: Funcionalidad del cambio de contraseña
+    const userID = 5;
 
     const [passInfo, setPassInfo] = useState({});
-
     const [hide, setHide] = useState(false);
+    const [teacherInformation, setTeacherInformation] = useState({});
 
-    //Aquí debería solicitar info del id de curso
-    //Esta pagina sirve para agregar o modificar
-    let values = {};
-   
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                // Get teacher information
+                const teacher_data = await TeachersService.GetTeacherInformation( userID );
 
-    const handleModal = (state) => {
-        setHide(state);
-    };
+                setTeacherInformation({
+                    personID: teacher_data.PersonId,
+                    name: teacher_data.Name,
+                    photo: teacher_data.Photo,
+                    phoneNumber: teacher_data.PhoneNumber,
+                    email: teacher_data.Email,
+                });
 
-    const handleFormSubmit = (formValues) => {
-        console.log(formValues)
-    };
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
 
+        fetchData();
+    }, []);
 
     const fields = [
         {
@@ -49,7 +56,7 @@ function ManageProfessorAccount() {
             required: true,
         },
         {
-            id: 'phone',
+            id: 'phoneNumber',
             label: 'Teléfono:',
             type: 'text',
             placeholder: 'Ingresa tu número de teléfono',
@@ -62,19 +69,38 @@ function ManageProfessorAccount() {
             placeholder: 'Ingresa tu correo electrónico',
             required: true,
         }
-
     ];
+
+    const handleModal = (state) => {
+        setHide(state);
+    };
+
+    const handleFormSubmit = async (formValues) => {
+        try {
+            await TeachersService.UpdateTeacherInformation(
+                formValues.personID,
+                formValues.name,
+                formValues.phoneNumber,
+                formValues.email,
+                formValues.photo
+            );
+            alert("Modificación de info del profesor exitosa!");
+        } catch (error) {
+            console.error("Error in update teacher information", error);
+        }
+    };
 
     const handleChangePassword = () => {
         //Debería recuperarse de la sesión
+        // ---> await UserService.ChangePassword(userID, oldPassword, newPassword);
+
         setHide(true);
     }
 
     const buttons = [
-        { variant: 'primary', type: 'button', label: 'Cambiar contraseña', 
+        { variant: 'primary', type: 'button', label: 'Cambiar contraseña',
         onClick: () => handleChangePassword()},
         { variant: 'primary', type: 'submit', label: 'Guardar cambios' },
-                                    
     ]
 
     return (
@@ -102,14 +128,16 @@ function ManageProfessorAccount() {
                             </Col>
 
                         <Col className='mt-2' xs={12} md={7}>
-                            <DynamicForm
-                                fields={fields}
-                                onSubmit={handleFormSubmit}
-                                buttons={buttons}
-                                initialValues={values}
-
-
-                            />
+                            {
+                                Object.keys(teacherInformation).length
+                                &&
+                                <DynamicForm
+                                    fields={fields}
+                                    onSubmit={handleFormSubmit}
+                                    buttons={buttons}
+                                    initialValues={teacherInformation}
+                                />
+                            }
                         </Col>
 
                     </Row>
