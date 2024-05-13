@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const Register_route_1 = __importDefault(require("./routes/General/Register.route"));
+const User_route_1 = __importDefault(require("./routes/General/User.route"));
 const Applications_route_1 = __importDefault(require("./routes/Applications.route"));
 const Courses_route_1 = __importDefault(require("./routes/Courses.route"));
 const Group_route_1 = __importDefault(require("./routes/Group.route"));
@@ -22,6 +23,7 @@ app.use(express_1.default.json());
 // General routes
 // ---------------------------------------------
 app.use("/register", Register_route_1.default);
+app.use("/user", User_route_1.default);
 // ---------------------------------------------
 // Dedicated routes
 // ---------------------------------------------
