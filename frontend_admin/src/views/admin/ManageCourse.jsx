@@ -124,7 +124,8 @@ function ManageCourse() {
 
     return (
         <MainLayout type={1}>
-            {/*Modal use example*/}
+
+            {/*Modal fro group may be refactored for BaseModal*/}
             <GroupModal hide={hide}
                 handleState={handleModal}
                 groupInfo={groupInfo}

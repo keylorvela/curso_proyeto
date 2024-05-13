@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
+import Loading from 'src/components/utils/Loading.jsx';
 import styles from 'src/components/Common.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
 import Container from 'react-bootstrap/Container';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 function Applications() {
+    const [loading, setLoading] = useState(false);
     const columns = ['ID', 'Nombre', 'Email']; 
     const data = [
         {ID: '284283749', Nombre: 'Juan', Email: 'juan@example.com' },
@@ -55,6 +57,13 @@ function Applications() {
         <MainLayout type={1}>
             <Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.tableTitle}>Solicitudes de matrícula</h1>
+
+                {loading && (
+                    <div className='text-center my-5'>
+                        <Loading size={15} />
+                    </div>
+                )}
+
                 <DynamicTable
                     columns={columns}
                     data={data}

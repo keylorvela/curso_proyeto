@@ -76,7 +76,7 @@ function ModifyTreatment() {
 
 
     return (
-        <MainLayout>
+        <MainLayout type = {1}>
             {alertMessage && <Alert variant="info">{alertMessage}</Alert>}
             <Row style={{ marginTop: '3%' }}>
                 <Col md={4} style={{ position: 'relative', marginLeft: '4.5%' }}>

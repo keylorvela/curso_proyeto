@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
+import Loading from 'src/components/utils/Loading.jsx';
 import styles from 'src/components/Common.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
 
@@ -12,6 +13,9 @@ import { faPen, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import TeachersService from 'src/services/Teachers.service';
 
 function Professors() {
+    const [loading, setLoading] = useState(true);
+
+
     const columns = ['Nombre', 'Email'];
     const navegate = useNavigate ();
     const [data, setData] = useState([]);
@@ -31,6 +35,8 @@ function Professors() {
                 setData(new_data);
             } catch (error) {
                 console.error('Error fetching data:', error);
+            }finally{
+                setLoading(false);
             }
         }
 
@@ -64,9 +70,15 @@ function Professors() {
 
 
     return (
-        <MainLayout type={2}>
+        <MainLayout type={1}>
             <Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.tableTitle}>Profesores</h1>
+
+                {loading && (
+                    <div className='text-center my-5'>
+                        <Loading size={15} />
+                    </div>
+                )}
 
                 {
                     data.length
