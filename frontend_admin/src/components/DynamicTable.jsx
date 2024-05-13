@@ -230,9 +230,12 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick, isS
         <tbody>
           {currentItems.map((rowData, rowIndex) => (
             <tr key={rowIndex}>
-              {Object.values(rowData).map((cellData, cellIndex) => (
-                <td key={cellIndex}>{cellData}</td>
-              ))}
+              {Object.values(rowData).map((cellData, cellIndex) => {
+                if (cellIndex < columns.length) {
+                  return <td key={cellIndex}>{cellData}</td>;
+                }
+                return null;
+              })}
               {buttons && (
                 <td style={{ textAlign: 'right' }}>
                   {buttons.map((btn, btnIndex) => (
