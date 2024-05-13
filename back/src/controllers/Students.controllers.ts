@@ -19,9 +19,9 @@ export const getAllStudents = async (req: Request, res: Response) => {
 }
 
 export const getStudentsInGroup = async (req: Request, res: Response) => {
-    const { groupID }: { groupID: number } = req.body;
+    const groupID = Number(req.query.groupID) || null;
 
-    if (isNaN(groupID) || groupID < 0) {
+    if (!groupID || isNaN(groupID) || groupID < 0) {
         res.status(400).send({ error: "Invalid group ID provided" });
         return;
     }
