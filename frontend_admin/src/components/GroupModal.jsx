@@ -1,10 +1,25 @@
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import styles from 'src/components/Common.module.css'
 
+import TeachersService from "src/services/Teachers.service"
 
 function GroupModal({ hide, handleState, groupInfo, setGroupInfo }) {
-    
     //TODO Fetch professors
+    const [teachersList, setTeachersList] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const teacherList_data = await TeachersService.GetTeachersList();
+                setTeachersList( teacherList_data );
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        fetchData();
+    }, []);
 
     const handleChange = (e, fieldName) => {
         setGroupInfo({ ...groupInfo, [fieldName]: e.target.value });
@@ -24,9 +39,11 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo }) {
                         <Form.Group className='mb-3'>
                             <Form.Label className={`fs-5 ${styles.label}`} >Profesor:</Form.Label>
                             <Form.Select aria-label="Selecciona un profesor">
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {
+                                    teachersList.map((teacher) => (
+                                        <option key={teacher.UserID} value={teacher.UserID}>{teacher.Name}</option>
+                                    ))
+                                }
                             </Form.Select>
                         </Form.Group>
 
