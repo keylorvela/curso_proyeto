@@ -41,7 +41,7 @@ export const getAllNews = async (req: Request, res: Response) => {
         const result = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_News_ReadAll(${groupID}, @o_status)
         `);
-        const newsList: News[] = JSON.parse(JSON.stringify(result[0]));
+        const newsList: News[] = JSON.parse(JSON.stringify(result[0][0]));
 
         res.status(200).send(newsList || []);
     } catch (error) {
