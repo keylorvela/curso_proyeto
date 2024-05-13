@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 
 import RegisterRoute from "./routes/General/Register.route"
+import UserRoute from "./routes/General/User.route"
 
 import ApplicationRoute from "./routes/Applications.route"
 import CoursesRoute from "./routes/Courses.route"
@@ -21,7 +22,8 @@ app.use(express.json());
 
 // General routes
 // ---------------------------------------------
-app.use("/register", RegisterRoute)
+app.use("/register", RegisterRoute);
+app.use("/user", UserRoute);
 // ---------------------------------------------
 
 // Dedicated routes
