@@ -18,6 +18,35 @@ const CourseService = {
             console.error("Error in course service", error);
         }
     },
+
+    CreateCourse: async (Name, Description, Topics, Includes, Duration, Price, Photos, UserTarget) => {
+        try {
+            const body = { Name, Description, Topics, Includes, Duration, Price, Photos, UserTarget };
+            const response = await axios.post(`/courses`, body);
+            return response.data;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
+
+    UpdateCourse: async (courseID, Name, Description, Topics, Includes, Duration, Price, Photos, UserTarget) => {
+        try {
+            const body = { Name, Description, Topics, Includes, Duration, Price, Photos, UserTarget };
+            const response = await axios.put(`/courses/${courseID}`, body);
+            return response.data;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
+
+    DeleteCourse: async (courseID) => {
+        try {
+            const response = await axios.delete(`/courses/${courseID}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
 };
 
 export default CourseService;

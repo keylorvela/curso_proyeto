@@ -1,3 +1,5 @@
+import axios from "./utilities/Axios.service"
+
 const BASE_URL = 'https://backend-proyeto.vercel.app/';
 
 const StudentService = {
@@ -23,7 +25,37 @@ const StudentService = {
             console.error('Function error login', error);
             throw error;
         }
-    }
+    },
+
+    GetStudentsFromGroup: async (groupID) => {
+        try {
+            const params = { groupID };
+            const response = await axios.get(`students/group`, { params });
+            return response.data;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
+
+    GetStudentsInformation: async (userID) => {
+        try {
+            const params = { userID };
+            const response = await axios.get(`user`, { params });
+            return response.data;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
+
+    UpdateStudentInformation: async (personID, name, phoneNumber, email, photo) => {
+        try {
+            const body = { personID, photo, email, phoneNumber, name };
+            const response = await axios.put(`/students`, body);
+            return response.data;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
 };
 
 export default StudentService;
