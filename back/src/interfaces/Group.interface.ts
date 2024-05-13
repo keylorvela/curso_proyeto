@@ -14,6 +14,20 @@ export interface Group {
     o_status: string
 }
 
+export interface GroupInformation {
+    CourseID: number
+    GroupID: number
+    UserID: number
+    PersonID: number
+    TeacherName: string
+    TeacherEmail: string
+    TeacherPhoneNumber: string
+    Name: string
+    ScheduleDate: string
+    ScheduleHour: string
+    o_status: string
+}
+
 export interface EnrolledCourses {
     CourseID: number,
     GroupID: number,

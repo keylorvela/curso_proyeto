@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import dbConnection from "../database/dbConfig";
 import { RowDataPacket } from 'mysql2';
 import { OStatus } from "interfaces/OStatus.interface";
-import { Group, GroupBody, EnrolledCourses } from "interfaces/Group.interface";
+import { Group, GroupBody, EnrolledCourses, GroupInformation } from "interfaces/Group.interface";
 
 export const listGroupByCourse = async (req: Request, res: Response) => {
 
@@ -19,6 +19,27 @@ export const listGroupByCourse = async (req: Request, res: Response) => {
         const result: Group[] = JSON.parse(JSON.stringify(result_group[0][0]));
 
         res.status(200).send(result);
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send({ error: "Request Failed" });
+    }
+}
+
+export const getGroupInformation = async (req: Request, res: Response) => {
+
+    const groupId: number = Number(req.params.groupId);
+
+    // Verificar si courseId es un número válido
+    if (isNaN(groupId) || groupId <= 0) {
+        res.status(400).send({ error: "Invalid group ID" });
+        return;
+    }
+
+    try {
+        const result_group = await dbConnection.query<RowDataPacket[]>(`CALL SP_Group_GetGroupInformation(${groupId}, @o_status)`);
+        const result: GroupInformation[] = JSON.parse(JSON.stringify(result_group[0][0]));
+
+        res.status(200).send(result[0] || {});
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send({ error: "Request Failed" });
