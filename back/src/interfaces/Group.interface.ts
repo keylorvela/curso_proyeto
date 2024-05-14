@@ -4,6 +4,7 @@ export interface GroupBody {
     ScheduleHour: string
     Capacity: number
     CourseID: number
+    TeacherID: number
 }
 
 export interface Group {
@@ -12,6 +13,9 @@ export interface Group {
     ScheduleDate: string
     ScheduleHour: string
     Capacity: number
+    TeacherName: string
+    TeacherPhoneNumber: string
+    TeacherEmail: string
     o_status: string
 }
 

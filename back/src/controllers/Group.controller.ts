@@ -50,7 +50,7 @@ export const createGroup = async (req: Request, res: Response) => {
     const body: GroupBody = req.body;
 
     // Verificar si los parámetros requeridos están presentes
-    if (!body.StartingDate || !body.ScheduleDate || !body.ScheduleHour || !body.Capacity || !body.CourseID) {
+    if (!body.StartingDate || !body.ScheduleDate || !body.ScheduleHour || !body.Capacity || !body.CourseID || !body.TeacherID) {
         res.status(400).send({ error: "All parameters are requiered" });
         return;
     }
@@ -63,6 +63,7 @@ export const createGroup = async (req: Request, res: Response) => {
                 '${body.ScheduleHour}',
                 ${body.Capacity},
                 ${body.CourseID},
+                ${body.TeacherID},
                 @o_status)`);
 
             const result: OStatus[] = JSON.parse(JSON.stringify(result_group[0][0]));
@@ -78,7 +79,7 @@ export const updateGroup = async (req: Request, res: Response) => {
     const groupId: number = Number(req.params.groupId);
     const body: GroupBody = req.body;
 
-    if (isNaN(groupId) || groupId <= 0) {
+    if (isNaN(groupId) || groupId <= 0 || isNaN(body.TeacherID) || body.TeacherID <= 0) {
         res.status(400).send({ error: "All parameters are requiered" });
         return;
     }
@@ -91,6 +92,7 @@ export const updateGroup = async (req: Request, res: Response) => {
                 '${body.ScheduleDate}',
                 '${body.ScheduleHour}',
                 ${body.Capacity},
+                ${body.TeacherID},
                 @o_status
             )
         `);
