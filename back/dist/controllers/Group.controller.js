@@ -53,7 +53,7 @@ exports.getGroupInformation = getGroupInformation;
 const createGroup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     // Verificar si los parámetros requeridos están presentes
-    if (!body.StartingDate || !body.ScheduleDate || !body.ScheduleHour || !body.Capacity || !body.CourseID) {
+    if (!body.StartingDate || !body.ScheduleDate || !body.ScheduleHour || !body.Capacity || !body.CourseID || !body.TeacherID) {
         res.status(400).send({ error: "All parameters are requiered" });
         return;
     }
@@ -65,6 +65,7 @@ const createGroup = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 '${body.ScheduleHour}',
                 ${body.Capacity},
                 ${body.CourseID},
+                ${body.TeacherID},
                 @o_status)`);
         const result = JSON.parse(JSON.stringify(result_group[0][0]));
         res.status(200).send(result[0] || {});
@@ -78,7 +79,7 @@ exports.createGroup = createGroup;
 const updateGroup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const groupId = Number(req.params.groupId);
     const body = req.body;
-    if (isNaN(groupId) || groupId <= 0) {
+    if (isNaN(groupId) || groupId <= 0 || isNaN(body.TeacherID) || body.TeacherID <= 0) {
         res.status(400).send({ error: "All parameters are requiered" });
         return;
     }
@@ -90,6 +91,7 @@ const updateGroup = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 '${body.ScheduleDate}',
                 '${body.ScheduleHour}',
                 ${body.Capacity},
+                ${body.TeacherID},
                 @o_status
             )
         `);
