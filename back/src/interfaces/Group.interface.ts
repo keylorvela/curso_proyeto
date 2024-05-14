@@ -7,6 +7,7 @@ export interface GroupBody {
 }
 
 export interface Group {
+    GroupID: number
     StartingDate: string
     ScheduleDate: string
     ScheduleHour: string
