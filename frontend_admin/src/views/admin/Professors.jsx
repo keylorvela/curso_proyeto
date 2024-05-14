@@ -30,6 +30,9 @@ function Professors() {
                 const new_data = data_raw.map(teacher => ({
                     Nombre: teacher.Name,
                     Email: teacher.Email,
+                    UserID: teacher.UserID,
+                    Telefono: teacher.PhoneNumber,
+                    Foto: teacher.Photo
                 }))
 
                 setData(new_data);
@@ -44,7 +47,7 @@ function Professors() {
     }, []);
 
     const handleButtonEdit = (rowData) => {
-        navegate('/admin/professor/' + 1);
+        navegate(`/admin/professor/${rowData.UserID}`);
         /*navegate('/admin/professor/' + 1, {
             state: {rowData}
             });*/
@@ -104,8 +107,7 @@ function Professors() {
                         labels={[
                             { title: "Nombre", content: modalData.Nombre },
                             { title: "Email", content: modalData.Email },
-                            { title: "Teléfono", content: modalData.Nombre },
-                            { title: "Identificación", content: modalData.Email },
+                            { title: "Teléfono", content: modalData.Telefono },
                         ]}
                     />
                 )}

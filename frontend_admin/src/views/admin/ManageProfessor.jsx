@@ -17,31 +17,34 @@ function ManageProfessor() {
     //TODO Fetch teacherInformation from backend
     const { id } = useParams();
 
-    //Aquí debería solicitar info del id de curso
-    //Esta pagina sirve para agregar o modificar
     const [teacherInformation, setTeacherInformation] = useState({});
-    // if (id) {
-    //     teacherInformation = {
-    //         name: 'name1',
-    //         phoneNumber: '',
-    //         email: ''
-    //     }
-    // }
 
     useEffect(() => {
         async function fetchData() {
-            if (!id) {
-                return;
-            }
             try {
-                // Get teacher information
-                const teacher_data = await TeachersService.GetTeacherInformation(id);
+                let teacher_PersonID = '';
+                let teacher_Name = '';
+                let teacher_Photo = '';
+                let teacher_PhoneNumber = '';
+                let teacher_Email = '';
+
+                if (id) {
+                    // Get teacher information
+                    const teacher_data = await TeachersService.GetTeacherInformation(id);
+
+                    teacher_PersonID = teacher_data.PersonId;
+                    teacher_Name = teacher_data.Name;
+                    teacher_Photo = teacher_data.Photo;
+                    teacher_PhoneNumber = teacher_data.PhoneNumber;
+                    teacher_Email = teacher_data.Email;
+                }
+
                 setTeacherInformation({
-                    personID: teacher_data.PersonId,
-                    name: teacher_data.Name,
-                    photo: teacher_data.Photo,
-                    phoneNumber: teacher_data.PhoneNumber,
-                    email: teacher_data.Email,
+                    personID: teacher_PersonID,
+                    name: teacher_Name,
+                    photo: teacher_Photo,
+                    phoneNumber: teacher_PhoneNumber,
+                    email: teacher_Email,
                 });
             } catch (error) {
                 console.error('Error fetching data:', error);
