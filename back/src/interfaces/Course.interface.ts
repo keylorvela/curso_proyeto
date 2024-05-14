@@ -25,7 +25,7 @@ export interface CourseImage {
     o_status: string
 }
 
-    export interface Course {
+export interface Course {
     ID: number,
     Name: string
     Description: string
@@ -35,5 +35,6 @@ export interface CourseImage {
     Price: number
     UserTarget: string
     Photos: [ CourseImage ] | string
+    GroupsByCourse: string
     o_status: String
 }
