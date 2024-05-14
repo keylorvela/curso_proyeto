@@ -12,7 +12,7 @@ import GroupService from 'src/services/Group.service';
 function MyCourses() {
     // TODO: Obtener el id del usuario actual
     // TODO: Funcionalidad del boton de más detalles
-    const userID = 5;
+    const userID = 6;
 
     const columns = ['Curso', ];
     const [groupList, setGroupList] = useState([]);
@@ -25,7 +25,13 @@ function MyCourses() {
 
                 for (const group of listGroups_data) {
                     listGroups_formatted.push({
-                        CourseName: group.Name
+                        CourseName: group.Name,
+                        CourseID: group.CourseID,
+                        GroupID: group.GroupID,
+                        Description: group.Description,
+                        StartingDate: group.StartingDate,
+                        ScheduleDate: group.ScheduleDate,
+                        ScheduleHour: group.ScheduleHour
                     });
                 }
 

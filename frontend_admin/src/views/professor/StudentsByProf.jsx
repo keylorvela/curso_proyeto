@@ -13,7 +13,7 @@ import GroupService from 'src/services/Group.service';
 
 function StudentsByProf() {
     // TODO: Obtener el id del grupo
-    const groupID = 1;
+    const groupID = 2;
 
     const [groupInformation, setGroupInformation] = useState({});
     const [studentsList, setStudentsList] = useState([]);
@@ -27,12 +27,12 @@ function StudentsByProf() {
                 // Get students
                 const studentList_data = await StudentService.GetStudentsFromGroup( groupID );
                 const studentList_formatted = studentList_data.map(student => ({
-                    UserID: student.UserID,
-                    ID: student.PersonID,
                     Nombre: student.Name,
                     Email: student.Email,
                     Telefono: student.PhoneNumber,
-                    // Foto: student.Photo
+                    UserID: student.UserID,
+                    ID: student.PersonID,
+                    Foto: student.Photo
                 }))
 
                 // Get group information
@@ -87,7 +87,7 @@ function StudentsByProf() {
                         photo="src/assets/stock2.jpg"
                         roundedPhoto={true}
                         labels={[
-                            { title: "Estado", content: modalData.Nombre },
+                            { title: "Nombre", content: modalData.Nombre },
                             { title: "Email", content: modalData.Email },
                             { title: "Curso", content: groupInformation.Name },
                             { title: "Teléfono", content: modalData.Telefono },

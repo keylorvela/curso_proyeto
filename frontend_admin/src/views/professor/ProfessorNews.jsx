@@ -16,7 +16,7 @@ import GroupService from 'src/services/Group.service';
 function ProfessorNews() {
     // TODO: Obtener el id del grupo
     // TODO: Funcionalidad de borrar noticia
-    const groupID = 1;
+    const groupID = 2;
 
     const [modalShow, setModalShow] = useState(false);
 
@@ -45,7 +45,7 @@ function ProfessorNews() {
                 const group_data = await GroupService.GetGroupInformation( groupID );
                 setCourseName( group_data.Name );
                 setProfessor( group_data.TeacherName );
-                setSchedule( `${group_data.ScheduleDate} - ${group_data.ScheduleHour}` );
+                setSchedule( `${group_data.ScheduleDate}\n${group_data.ScheduleHour}` );
 
             } catch (error) {
                 console.error('Error fetching data:', error);

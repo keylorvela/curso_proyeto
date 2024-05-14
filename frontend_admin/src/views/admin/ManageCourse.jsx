@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation  } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 import MainLayout from 'src/components/MainLayout.jsx'
@@ -19,6 +20,7 @@ function ManageCourse() {
     // TODO: API Calls para crear y modificar un curso
     // TODO: Funcionalidad de eliminar curso
 
+    const location = useLocation();
     const { id } = useParams();
     const [hide, setHide] = useState(false);
 
@@ -27,8 +29,11 @@ function ManageCourse() {
     const [courseInfo, setCourseInfo] = useState({});
     const [groupInfo, setGroupInfo] = useState({});
 
+    const courseInformation = location.state?.courseInformation;
+
     useEffect(() => {
         async function fetchData() {
+            console.log(courseInformation);
             try {
                 // Get course information
                 let courseName = "";
@@ -38,12 +43,11 @@ function ManageCourse() {
                 let courseCapacity = "";
 
                 if (id) {
-                    const courseData = await CourseService.GetCourseInfo(id);
                     const groupData = await GroupService.GetGroupList(id);
 
-                    courseName = courseData.Name;
-                    courseDescription = courseData.Description.replace(/\//g, '\n');
-                    coursePrice = courseData.Price;
+                    courseName = courseInformation.CourseName;
+                    courseDescription = courseInformation.Description.replace(/\//g, '\n');
+                    coursePrice = courseInformation.Price;
                     courseStartingDate = ( groupData.length ) ? groupData[0].StartingDate.split('T')[0] : "";
                     courseCapacity = ( groupData.length ) ? groupData[0].Capacity : "";
                 }

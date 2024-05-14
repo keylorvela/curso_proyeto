@@ -11,8 +11,8 @@ function StudentsNews() {
     // TODO: Obtener el id del grupo
     // TODO: Obtener el id del user
     // TODO: Funcionalidad de "darse de baja"
-    const groupID = 1;
-    const userID = 1;
+    const groupID = 2;
+    const userID = 6;
 
     const [courseName, setCourseName] = useState('');
     const [news, setNews] = useState([]);

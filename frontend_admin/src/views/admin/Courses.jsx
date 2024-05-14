@@ -30,6 +30,14 @@ function Courses() {
                 const new_data = data_raw.map(course => ({
                     CourseName: course.Name,
                     CourseID: course.ID,
+                    Description: course.Description,
+                    Topics: course.Topics,
+                    Includes: course.Includes,
+                    Duration: course.Duration,
+                    Price: course.Price,
+                    UserTarget: course.UserTarget,
+                    ImageUrl: course.ImageUrl,
+                    GroupsByCourse: course.GroupsByCourse || "No hay grupos asignados"
                 }))
 
                 setData(new_data);
@@ -46,31 +54,20 @@ function Courses() {
     }, []);
 
 
-    const handleButtonEdit = (rowData) => {
-        navegate(`/admin/course/${rowData.CourseID}`);
-        /*navegate('/admin/course/' + 1, {
-            state: {rowData}
-            });*/
+    const handleButtonEdit = (courseInformation) => {
+        navegate(`/admin/course/${courseInformation.CourseID}`, {
+            state: {courseInformation}
+        });
     };
 
     const handleButtonDetails = async (rowData) => {
-        try {
-            // Get all groups in the course
-            const groupList = await GroupService.GetGroupsInACourse(rowData.CourseID);
-            const groupInformation = await GroupService.GetGroupInformation(groupList[0].GroupID);
-
-            setModalData(groupInformation);
-        } catch (error) {
-            console.error("Error al obtener los detalles del curso/grupo", error);
-            setModalData({
-                Name: rowData.CourseName,
-                GroupID: rowData.CourseName,
-                TeacherName: rowData.CourseName,
-                ScheduleDate: rowData.CourseName,
-                ScheduleHour: rowData.CourseName
-            });
-        }
-
+        setModalData({
+            CourseName: rowData.CourseName,
+            Duration: rowData.Duration,
+            Price: rowData.Price,
+            UserTarget: rowData.UserTarget,
+            Groups: rowData.GroupsByCourse.replace(/,/g, '\n')
+        })
         setShowModal(true);
     };
 
@@ -121,10 +118,11 @@ function Courses() {
                         photo="src/assets/stock2.jpg"
                         roundedPhoto={false}
                         labels={[
-                            { title: "Curso", content: modalData.Name },
-                            { title: "Grupo", content: modalData.GroupID },
-                            { title: "Profesor", content: modalData.TeacherName },
-                            { title: "Horario", content: `${modalData.ScheduleDate} - ${modalData.ScheduleHour}` },
+                            { title: "Curso", content: modalData.CourseName },
+                            { title: "Duración", content: modalData.Duration },
+                            { title: "Precio", content: modalData.Price },
+                            { title: "Público objetivo", content: modalData.UserTarget },
+                            { title: "Grupos", content: modalData.Groups },
                         ]}
                     />
                 )}
