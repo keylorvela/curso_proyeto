@@ -1,32 +1,51 @@
 @import "src/components/Common.module.css";
-.line {
-    display: flex;
-    margin-top: 1%;
-    margin-bottom: 1%;
-    margin-left: 2%;
-    width: 96%;
-    height: 0%;
-    background-color: var(--main-blue);
-  }
 
-  .title {
-    margin-right: 2%;
-    font-family: var(--font);
-    font-weight: 600;
-    color: var(--ligth-blue);
-    text-align: right;
-    margin-top: 3%; 
-    margin-bottom: -1%;
-    font-size: 4vw; 
-  }
+.horizontalLines {
+  position: relative;
+  padding: 0.8%;
+  margin-bottom: 4%;
+}
+
+.horizontalLines::before,
+.horizontalLines::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
   
-  .customButton {
-    font-weight: bold; 
-    font-size: 1.2em; 
-    font-family: var(--font);
-    padding: 10px 20px; 
-    margin-right: 2%;
-  }
+  border-top: 3px solid var(--main-blue); 
+}
+
+.horizontalLines::before {
+  top: 0;
+}
+
+.horizontalLines::after {
+  bottom: 0;
+}
+
+
+.title {
+  margin-right: 0%;
+  font-family: var(--font);
+  font-weight: 600;
+  color: var(--ligth-blue);
+  text-align: right;
+  margin-top: 3%; 
+  margin-bottom: 2%;
+  font-size: 4vw; 
+}
+
+.btnAdd {
+  font-weight: bold; 
+  font-size: 1.5vw; 
+  text-align: right;
+  font-family: var(--font);
+  padding: 0.8% 1.4%; 
+  margin-right: -0.5%;
+  background-color: var(--ligth-blue);
+  border-color: var(--ligth-blue);
+}
 
 .categoryAdd{
   padding-bottom: 2%;
@@ -48,6 +67,12 @@
   margin-right: 2%;
 }
 
+.btnHide{
+  font-family: var(--font);
+  background-color: var(--ligth-blue);
+  border-color: var(--ligth-blue);
+}
+
 .categoryTitle{
   font-family: var(--font);
   font-weight: 600;
@@ -59,9 +84,9 @@
   flex-direction: column;
   justify-content: end;
   background-color: #ffffff; 
-  padding: 20px;
-  border-radius: 10px; 
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5%;
+  border-radius: 1%; 
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   max-width: 70%; 
   width: 100%;
 }

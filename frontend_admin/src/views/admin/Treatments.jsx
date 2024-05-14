@@ -86,15 +86,17 @@ function Treatments() {
 
             <Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.title}>Tratamientos</h1>
-                <div className={styles.line}></div>
-                <div className="d-flex justify-content-end">
-                    <Button variant="primary"
-                        className={styles.customButton}
-                        onClick={handleRedirect}>
-                        Añadir Tratamiento
-                    </Button>
+            
+                <div className={styles.horizontalLines}>
+                    <div className="d-flex justify-content-end">
+                        <Button variant="primary"
+                            className={styles.btnAdd}
+                            onClick={handleRedirect}>
+                            Añadir Tratamiento
+                        </Button>
+                    </div>
                 </div>
-                <div className={styles.line}></div>
+
                 <FeaturedTreatments></FeaturedTreatments>
 
 
@@ -118,7 +120,7 @@ function Treatments() {
                     </div>
 
 
-                    <Button onClick={() => setShowTable(!showTable)}>
+                    <Button className={styles.btnHide} onClick={() => setShowTable(!showTable)}>
                         {showTable ? 'Ocultar categorías' : 'Mostrar categorías'}
                     </Button>
                     {showTable && (

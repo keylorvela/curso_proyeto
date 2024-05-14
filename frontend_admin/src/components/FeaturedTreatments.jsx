@@ -4,15 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import styles from 'src/components/FeaturedTreatments.module.css'
 
 import Treatment from 'src/components/Treatment.jsx'
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import img from 'src/assets/stock2.jpg'
 import TreatmentsService from 'src/services/Treatments.service.js';
+import Loading from 'src/components/utils/Loading.jsx';
 
 function FeaturedTreatments() {
 
+    const [loading, setLoading] = useState(true);
     const navegate = useNavigate();
     const [treatments, setTreatments] = useState([]);
 
@@ -23,6 +24,8 @@ function FeaturedTreatments() {
                 setTreatments(treatmentsData);
             } catch (error) {
                 console.error('getTreatments fail:', error);
+            } finally {
+                setLoading(false);
             }
         };
         getTreatments();
@@ -38,9 +41,14 @@ function FeaturedTreatments() {
     return (
         <>
             <main className={styles.body}>
+                {loading && (
+                    <div className='text-center my-5'>
+                        <Loading size={15} />
+                    </div>
+                )}
                 <Row>
                     {treatments?.map(tratamiento => (
-                        <Col sm={3} key={tratamiento.ID}>
+                        <Col sm={6} md={3} key={tratamiento.ID}>
                             <Treatment
                                 photo={img}
                                 treatmentInfo={tratamiento}
