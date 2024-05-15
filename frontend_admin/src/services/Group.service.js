@@ -46,6 +46,16 @@ const GroupService = {
             console.error("Error in course service", error);
         }
     },
+
+    CreateGroup: async (StartingDate, ScheduleDate, ScheduleHour, Capacity, CourseID, TeacherID) => {
+        try {
+            const body = { StartingDate, ScheduleDate, ScheduleHour, Capacity, CourseID, TeacherID }
+            const response = await axios.post(`/group`, body);
+            return response.data;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
 };
 
 export default GroupService;
