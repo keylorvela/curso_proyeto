@@ -118,9 +118,9 @@ function Treatments() {
             ) : (
               <>
                 <Row>{getFilters()}</Row>
-                <Row className='align-self-center'>
+                <Row className='d-flex align-items-center'>
                   {filteredTreatments.map((item, index) => (
-                    <Col key={index} sm={4}>
+                    <Col className = 'my-2' key={index} sm={4}>
                       <Treatment
                         title={item.Name}
                         event={() => handleClick(item.ID)}

@@ -2,8 +2,6 @@
     background-color: #FFFFFF;
     border: 2px solid #85B79D;
     border-radius: 7px;
-    padding: 5%;
-    margin: 2%;
 }
 
 .btn {
@@ -16,13 +14,4 @@
 
 .btn:hover {
     background-color: #3e5348;
-}
-
-
-
-.img {
-    width: 50%;
-    /* O ajusta el tamaño según tus necesidades */
-    height: auto;
-    /* La altura se ajusta automáticamente según el ancho */
 }

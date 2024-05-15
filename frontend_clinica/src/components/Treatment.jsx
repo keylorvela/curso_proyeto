@@ -7,6 +7,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+import Stack from 'react-bootstrap/Stack';
+
 
 function Treatment({ title, event }) {
 
@@ -14,32 +16,22 @@ function Treatment({ title, event }) {
 
         <>
             <main className={styles.body}>
-                <Container className = "text-center">
-                    <Row>
-                        <Col>
-                            <Image src={img} rounded fluid />
-                        </Col>
-                    </Row> 
-                    <Row>
-                        <Col>
-                           <h2 className="fs-2 mt-3">{title} </h2>
-                        </Col>
-                    </Row> 
-                    <Row className='my-4'>
-                        <Col >
-                            <Button variant = "outline-success btn-lg" onClick={event}>
-                                Más información
-                            </Button>
-                        </Col>
-                    </Row>
-                    <Row className='my-4'>
-                        <Col>
-                        <Button variant="success btn-lg" >
-                                <b>Realizar consulta</b>
-                        </Button>
-                        </Col>
-                    </Row>
-                </Container>
+
+                <Stack gap = {2} className = 'px-3 py-2'>
+
+                    <Image src={img} rounded fluid />
+
+                    <p className="text-center fw-medium fs-2 mt-3" >{title}</p>
+
+                    <Button className = 'my-2' variant="outline-success btn-lg" onClick={event}>
+                        Más información
+                    </Button>
+
+                    <Button className = 'my-2' variant="success btn-lg" >
+                        <b>Realizar consulta</b>
+                    </Button>
+
+                </Stack>
             </main>
 
         </>
