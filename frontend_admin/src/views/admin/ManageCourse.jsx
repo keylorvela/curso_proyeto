@@ -24,10 +24,16 @@ function ManageCourse() {
     const { id } = useParams();
     const [hide, setHide] = useState(false);
 
-    //Aquí debería solicitar info del id de curso
-    //Esta pagina sirve para agregar o modificar
     const [courseInfo, setCourseInfo] = useState({});
-    const [groupInfo, setGroupInfo] = useState({});
+    const [groupInfo, setGroupInfo] = useState(
+        {
+            Teacher: 0,
+            StartingDate: "",
+            ScheduleDate: "",
+            ScheduleHour: "",
+            Capacity: 0
+        }
+    );
 
     const courseInformation = location.state?.courseInformation;
 
@@ -35,29 +41,18 @@ function ManageCourse() {
         async function fetchData() {
             try {
                 // Get course information
-                let courseName = "";
-                let courseDescription = "";
-                let coursePrice = "";
-                let courseDuration = "";
-                let courseIncludes = "";
-                let courseTopics = "";
-                let courseUserTarget = "";
-                let courseStartingDate = "";
-                let courseCapacity = "";
-
                 if (id) {
                     // const groupData = await GroupService.GetGroupList(id);
-
-                    courseName = courseInformation.CourseName;
-                    courseDescription = courseInformation.Description.replace(/\//g, '\n');
-                    coursePrice = courseInformation.Price;
-                    courseDuration = courseInformation.Duration || "";
-                    courseIncludes = courseInformation.Includes.replace(/\//g, '\n') || "";
-                    courseTopics = courseInformation.Topics.replace(/\//g, '\n') || "";
-                    courseUserTarget = courseInformation.UserTarget.replace(/\//g, '\n') || "";
-                    // courseStartingDate = ( groupData.length ) ? groupData[0].StartingDate.split('T')[0] : "";
-                    // courseCapacity = ( groupData.length ) ? groupData[0].Capacity : "";
                 }
+
+                const courseName = courseInformation?.CourseName || "";
+                const courseDescription = courseInformation?.Description.replace(/\//g, '\n') || "";
+                const coursePrice = courseInformation?.Price || "";
+                const courseDuration = courseInformation?.Duration || "";
+                const courseIncludes = courseInformation?.Includes.replace(/\//g, '\n') || "";
+                const courseTopics = courseInformation?.Topics.replace(/\//g, '\n') || "";
+                const courseUserTarget = courseInformation?.UserTarget.replace(/\//g, '\n') || "";
+
                 setCourseInfo({
                     Name: courseName,
                     Description: courseDescription,
@@ -66,13 +61,6 @@ function ManageCourse() {
                     Topics: courseTopics,
                     UserTarget: courseUserTarget,
                     Price: coursePrice
-                    // date: courseStartingDate,
-                    // capacity: courseCapacity
-                });
-
-                setGroupInfo({
-                    startingDate: courseStartingDate,
-                    capacity: courseCapacity
                 });
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -161,6 +149,7 @@ function ManageCourse() {
             );
             alert("Curso creado!");
         }
+        // Si no := Modificar curso
         else {
             await CourseService.UpdateCourse(
                 id,
@@ -175,7 +164,6 @@ function ManageCourse() {
             );
             alert("Curso modificado!");
         }
-        // Si no := Modificar curso
     };
 
     const handleDelete = async () => {
@@ -214,6 +202,7 @@ function ManageCourse() {
                 handleState={handleModal}
                 groupInfo={groupInfo}
                 setGroupInfo={setGroupInfo}
+                courseID={id}
             />
 
             <div className={styles.page}>
