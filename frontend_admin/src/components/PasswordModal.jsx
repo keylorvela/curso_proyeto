@@ -18,23 +18,21 @@ function PasswordModal({ hide, handleState, passInfo, setPassInfo, userID }) {
         event.stopPropagation();
     }
     else if (passInfo.new_pass != passInfo.conf_pass) {
-        alert("Contraseñas nuevas not match")
+        alert("Contraseñas nuevas not match");
     }
     else {
 
         const response = await UserService.ChangePassword(userID, passInfo.og_pass, passInfo.new_pass);
+        setPassInfo({});
+
         if (response.o_status.includes("Error")) {
             alert("Contraseña no es la actual")
         }
         else {
             alert("Se cambio la contraseña!")
+            handleClose();
         }
-
-        setPassInfo({});
-        setValidated(false);
     }
-
-    setValidated(true);
 };
 
 
