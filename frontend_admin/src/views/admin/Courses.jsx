@@ -31,11 +31,11 @@ function Courses() {
                     CourseName: course.Name,
                     CourseID: course.ID,
                     Description: course.Description,
-                    Topics: course.Topics,
-                    Includes: course.Includes,
+                    Topics: course.Topics || "No hay temas definidos",
+                    Includes: course.Includes || "No hay detalles definidos",
                     Duration: course.Duration,
                     Price: course.Price,
-                    UserTarget: course.UserTarget,
+                    UserTarget: course.UserTarget || "No hay público objetivo definido",
                     ImageUrl: course.ImageUrl,
                     GroupsByCourse: course.GroupsByCourse || "No hay grupos asignados"
                 }))

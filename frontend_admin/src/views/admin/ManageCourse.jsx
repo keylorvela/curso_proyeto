@@ -33,30 +33,41 @@ function ManageCourse() {
 
     useEffect(() => {
         async function fetchData() {
-            console.log(courseInformation);
             try {
                 // Get course information
                 let courseName = "";
                 let courseDescription = "";
                 let coursePrice = "";
+                let courseDuration = "";
+                let courseIncludes = "";
+                let courseTopics = "";
+                let courseUserTarget = "";
                 let courseStartingDate = "";
                 let courseCapacity = "";
 
                 if (id) {
-                    const groupData = await GroupService.GetGroupList(id);
+                    // const groupData = await GroupService.GetGroupList(id);
 
                     courseName = courseInformation.CourseName;
                     courseDescription = courseInformation.Description.replace(/\//g, '\n');
                     coursePrice = courseInformation.Price;
-                    courseStartingDate = ( groupData.length ) ? groupData[0].StartingDate.split('T')[0] : "";
-                    courseCapacity = ( groupData.length ) ? groupData[0].Capacity : "";
+                    courseDuration = courseInformation.Duration || "";
+                    courseIncludes = courseInformation.Includes.replace(/\//g, '\n') || "";
+                    courseTopics = courseInformation.Topics.replace(/\//g, '\n') || "";
+                    courseUserTarget = courseInformation.UserTarget.replace(/\//g, '\n') || "";
+                    // courseStartingDate = ( groupData.length ) ? groupData[0].StartingDate.split('T')[0] : "";
+                    // courseCapacity = ( groupData.length ) ? groupData[0].Capacity : "";
                 }
                 setCourseInfo({
-                    name: courseName,
-                    description: courseDescription,
-                    price: coursePrice,
-                    date: courseStartingDate,
-                    capacity: courseCapacity
+                    Name: courseName,
+                    Description: courseDescription,
+                    Duration: courseDuration,
+                    Includes: courseIncludes,
+                    Topics: courseTopics,
+                    UserTarget: courseUserTarget,
+                    Price: coursePrice
+                    // date: courseStartingDate,
+                    // capacity: courseCapacity
                 });
 
                 setGroupInfo({
@@ -73,56 +84,106 @@ function ManageCourse() {
 
     const fields = [
         {
-            id: 'name',
+            id: 'Name',
             label: 'Nombre del curso:',
             type: 'text',
             placeholder: 'Ingresa el nombre del curso',
             required: true,
         },
         {
-            id: 'description',
+            id: 'Description',
             label: 'Descripción del curso:',
             type: 'textarea',
             placeholder: 'Ingresa la descripción del curso',
             required: true,
-            rows: 6
+            rows: 3
         },
         {
-            id: 'price',
+            id: 'Topics',
+            label: 'Temas del curso:',
+            type: 'textarea',
+            placeholder: 'Ingresa los temas curso',
+            required: false,
+            rows: 4
+        },
+        {
+            id: 'Includes',
+            label: 'Incluye:',
+            type: 'textarea',
+            placeholder: 'Ingresa qué incluye el curso',
+            required: false,
+            rows: 4
+        },
+        {
+            id: 'Duration',
+            label: 'Duración',
+            type: 'text',
+            placeholder: 'Ingresa la duración del curso, ex: 5 semanas',
+            required: true,
+        },
+        {
+            id: 'Price',
             label: 'Coste:',
             type: 'number',
             placeholder: 'Costo del curso',
             required: true,
         },
         {
-            id: 'date',
-            label: 'Fecha de inicio:',
-            type: 'date',
-            placeholder: 'Ingresa la fecha de inicio del curso',
-            required: true
+            id: 'UserTarget',
+            label: 'Público objetivo:',
+            type: 'text',
+            placeholder: 'Ingresa el público objetivo del curso',
+            required: false
         },
-        {
-            id: 'capacity',
-            label: 'Capacidad:',
-            type: 'number',
-            placeholder: 'Capacidad del grupo',
-            required: true,
-        }
     ];
 
     const handleModal = (state) => {
         setHide(state);
     };
+    const handleFormSubmit = async (formValues) => {
+        // Format string := Change break line for '/'
+        formValues.Description = formValues.Description.replace(/(\r\n|\n|\r)/g, "/");
+        formValues.Topics = formValues.Topics.replace(/(\r\n|\n|\r)/g, "/");
+        formValues.Includes = formValues.Includes.replace(/(\r\n|\n|\r)/g, "/");
+        formValues.UserTarget = formValues.UserTarget.replace(/(\r\n|\n|\r)/g, "/");
 
-    const handleFormSubmit = (formValues) => {
         // Si no tiene id := Crear curso
+        if (!id) {
+            await CourseService.CreateCourse(
+                formValues.Name,
+                formValues.Description,
+                formValues.Topics,
+                formValues.Includes,
+                formValues.Duration,
+                formValues.Price,
+                [],
+                formValues.UserTarget
+            );
+            alert("Curso creado!");
+        }
+        else {
+            await CourseService.UpdateCourse(
+                id,
+                formValues.Name,
+                formValues.Description,
+                formValues.Topics,
+                formValues.Includes,
+                formValues.Duration,
+                formValues.Price,
+                [],
+                formValues.UserTarget
+            );
+            alert("Curso modificado!");
+        }
         // Si no := Modificar curso
     };
 
-    const handleDelete = async (courseID) => {
+    const handleDelete = async () => {
         try {
-            // await CourseService.DeleteCourse( courseID );
-            alert("Se elimino el curso");
+            if (id) {
+                await CourseService.DeleteCourse( id );
+                alert("Se elimino el curso");
+            }
         } catch (error) {
             console.error("Error al eliminar el cursos", error);
         }
