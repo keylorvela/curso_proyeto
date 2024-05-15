@@ -7,10 +7,10 @@ import Treatment from 'src/components/Treatment.jsx'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import img from 'src/assets/stock2.jpg'
 import TreatmentsService from 'src/services/Treatments.service.js';
 import Loading from 'src/components/utils/Loading.jsx';
 import TableModal from 'src/components/utils/TableModal.jsx';
+import noImage from 'src/assets/noImage.jpg'
 
 function FeaturedTreatments() {
 
@@ -43,6 +43,7 @@ function FeaturedTreatments() {
 
     const handleButtonDetails = async (treatmentInfo) => {
         setModalData(treatmentInfo);
+        alert(JSON.stringify(treatmentInfo))
         setShowModal(true);
     };
 
@@ -63,7 +64,7 @@ function FeaturedTreatments() {
                     {treatments?.map(tratamiento => (
                         <Col sm={6} md={3} key={tratamiento.ID}>
                             <Treatment
-                                photo={img}
+                                photo={tratamiento.ImageUrl}
                                 treatmentInfo={tratamiento}
                                 event={handleEditTreatment}
                                 detailsEvent={handleButtonDetails}
@@ -77,7 +78,7 @@ function FeaturedTreatments() {
                         show={showModal}
                         onHide={handleModalClose}
                         title={modalData.Name}
-                        photo={img}
+                        photo={modalData.ImageUrl || noImage}
                         roundedPhoto={false}
                         labels={[
                             { title: "Descripción", content: modalData.Description },
