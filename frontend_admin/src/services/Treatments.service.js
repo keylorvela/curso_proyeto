@@ -33,7 +33,27 @@ const UserService = {
     }
   },
 
-  updateTreatment: async (treatmentInfo) => {
+  deleteTreatment: async (id) => {
+    const url = BASE_URL+`treatments/`+id;
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Request fail');
+      }
+
+      return response;
+    } catch (error) {
+      console.error('Function error deleteTreatment', error);
+      throw error;
+    }
+  },
+
+  updateTreatment: async (treatmentInfo,imageUrl) => {
   
     const url = BASE_URL + 'treatments'; 
     const data = {
@@ -41,8 +61,14 @@ const UserService = {
       p_name: treatmentInfo.Name,
       p_description: treatmentInfo.Description,
       p_price: treatmentInfo.Price,
+      p_includes: treatmentInfo.Includes,
+      p_procedureDuration: treatmentInfo.ProcedureDuration,
+      p_effectDuration: treatmentInfo.EffectDuration,
+      p_information: treatmentInfo.Information,
+      p_photos: [{imageID:1,url:imageUrl}],
       p_categoryID: 1,
     };
+    console.log(data)
     try {
       const response = await fetch(url, {
         method: 'PUT',

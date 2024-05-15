@@ -1,13 +1,14 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
 import Loading from 'src/components/utils/Loading.jsx'
 
-import img from 'src/assets/stock2.jpg'
 import styles from 'src/views/admin/AdminPage.module.css'
+import noImage from 'src/assets/noImage.jpg'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,10 +19,12 @@ import ImageService from 'src/services/Image.service.js'
 
 
 function ManageTreatment() {
+    const navigate = useNavigate();
     const location = useLocation();
     const [values, setValues] = useState(location.state?.treatmentInfo);
     const [loading, setLoading] = useState(true);
-    const [imageUrl, setImageUrl] = useState(img);
+    const [updatedData, setUpdatedData] = useState(false);
+    const [imageUrl, setImageUrl] = useState(location.state?.treatmentInfo?.ImageUrl || noImage);
 
 
     const { id } = useParams() || null;
@@ -30,11 +33,11 @@ function ManageTreatment() {
     //  A possible use
     useEffect(() => {
         async function fetchData() {
-
             try {
-                if (!(values ?? null) && (id ?? null)) {
+                if (updatedData || (!(values ?? null) && (id ?? null))) {
                     const data = await tServ.getTreatment(id);
                     setValues(data);
+                    setUpdatedData(false);
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -43,16 +46,17 @@ function ManageTreatment() {
             }
         }
         fetchData();
-    }, []);
+    }, [updatedData]);
 
 
     const uploadImage = async () => {
         try {
             if (imageUrl) {
                 const data = await ImageService.uploadImage(imageUrl);
-                console.log(data.data.image.url);
                 setImageUrl(data.data.image.url);
+                return data.data.image.url;
             }
+
         } catch (error) {
             console.error("ERROR: Upload Failed ", error);
         }
@@ -71,13 +75,52 @@ function ManageTreatment() {
         document.getElementById('fileInput').click();
     };
 
-    const handleDelete = (id_p) => {
-        alert(id_p);
+    const handleDelete = async (id_p) => {
+        try {
+            setLoading(true);
+            if (id) {
+                const request = await tServ.deleteTreatment(id_p);
+                if (request.status === 200)
+                    alert('Eliminacion exitosa');
+                    navigate('/admin/treatments');
+            }
+
+        } catch (error) {
+            console.error('Treatments failed:', error);
+        } finally {
+            setLoading(false);
+        }
     }
 
     const handleFormSubmit = async (formValues) => {
-        uploadImage();
-        alert(JSON.stringify(formValues))
+        try {
+            setLoading(true);
+            let imgPromise = null;
+            let imageURL = imageUrl;
+
+            if (imageUrl !== noImage) {
+                imgPromise = uploadImage();
+                await imgPromise.then(url => {
+                    imageURL = url;
+                });
+            }
+            if (!id) {
+                const request = await tServ.updateTreatment(formValues, imageURL);
+                if (request.status === 200)
+                    alert('Inserción exitosa');
+            }
+            else {
+                const request = await tServ.updateTreatment(formValues, imageURL);
+                if (request.status === 200) {
+                    setUpdatedData(true);
+                    alert('Actualización exitosa');
+                }
+            }
+        } catch (error) {
+            console.error('Treatments failed:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
 
@@ -96,6 +139,36 @@ function ManageTreatment() {
             label: 'Descripción:',
             type: 'textarea',
             placeholder: 'Ingresa la descripción del tratamiento',
+            required: true,
+            rows: 6
+        },
+        {
+            id: 'Includes',
+            label: 'Incluye:',
+            type: 'textarea',
+            placeholder: 'Ingresa las características del tratamiento',
+            required: true,
+            rows: 6
+        },
+        {
+            id: 'ProcedureDuration',
+            label: 'Duración del procedimiento:',
+            type: 'text',
+            placeholder: 'Ingresa la duración',
+            required: true,
+        },
+        {
+            id: 'EffectDuration',
+            label: 'Duración del efecto:',
+            type: 'text',
+            placeholder: 'Ingresa la duración del efecto',
+            required: true,
+        },
+        {
+            id: 'Information',
+            label: 'Información adicional:',
+            type: 'textarea',
+            placeholder: 'Ingresa información adicional del tratamiento',
             required: true,
             rows: 6
         },
@@ -148,7 +221,7 @@ function ManageTreatment() {
 
                     {loading ? (
                         <div className='text-center'>
-                            <Loading size={15} />
+                            <Loading size={11} />
                         </div>
                     ) : (
                         <Row >

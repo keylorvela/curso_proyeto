@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 
@@ -12,17 +12,23 @@ import GroupModal from 'src/components/GroupModal.jsx'
 import img from 'src/assets/stock2.jpg'
 import styles from 'src/views/professor/ProfessorPage.module.css'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
+
 import { Container, Row, Col, Image } from 'react-bootstrap'
 import TeachersService from 'src/services/Teachers.service';
 
 function ManageProfessorAccount() {
     // TODO: Obtener el userID
-    // TODO: Funcionalidad del cambio de contraseña
+    // TODO: Cargar la imagen de perfil
     const userID = 5;
+    const fileInputRef = useRef();
 
     const [passInfo, setPassInfo] = useState({});
     const [hide, setHide] = useState(false);
     const [teacherInformation, setTeacherInformation] = useState({});
+
+    const [profilePictureURL, setProfilePictureURL] = useState("https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg");
 
     useEffect(() => {
         async function fetchData() {
@@ -89,10 +95,25 @@ function ManageProfessorAccount() {
         }
     };
 
-    const handleChangePassword = () => {
-        //Debería recuperarse de la sesión
-        // ---> await UserService.ChangePassword(userID, oldPassword, newPassword);
+    const handleFileUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
 
+            reader.onload = () => {
+                const base64String = reader.result;
+
+                setProfilePictureURL(base64String);
+                setTeacherInformation({
+                    ...teacherInformation, photo: base64String
+                });
+            }
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    const handleChangePassword = () => {
         setHide(true);
     }
 
@@ -118,7 +139,17 @@ function ManageProfessorAccount() {
                     <Row>
 
                         <Col className='mt-2' xs={12} md={4}>
-                            <Image src={img} fluid rounded />
+                            {
+                                Object.keys(teacherInformation).length
+                                &&
+                                <div className={styles.image_container}>
+                                    <Image src={profilePictureURL} fluid rounded />
+                                    <span className={styles.edit_picture_span} onClick={() => { fileInputRef.current.click(); }}>
+                                        <FontAwesomeIcon icon={faPencil} />
+                                    </span>
+                                    <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileUpload} />
+                                </div>
+                            }
                         </Col>
 
                         {/*filler*/}

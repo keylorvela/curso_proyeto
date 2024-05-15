@@ -25,7 +25,7 @@ function Treatments() {
     const [modalShow, setModalShow] = useState(false);
 
     const navigate = useNavigate();
-    const handleRedirect = () => {
+    const handleAddTreatment = () => {
         navigate('/admin/treatment');
     };
 
@@ -91,7 +91,7 @@ function Treatments() {
                     <div className="d-flex justify-content-end">
                         <Button variant="primary"
                             className={styles.btnAdd}
-                            onClick={handleRedirect}>
+                            onClick={handleAddTreatment}>
                             Añadir Tratamiento
                         </Button>
                     </div>
