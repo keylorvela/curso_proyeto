@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 
 
-function Treatment({ treatmentInfo, event,photo }) {
+function Treatment({ treatmentInfo, event, detailsEvent,photo }) {
 
 
     return (
@@ -19,7 +19,7 @@ function Treatment({ treatmentInfo, event,photo }) {
             <main className={styles.body}>
                 <Image src={photo} fluid />
                 <p className={styles.font}> {treatmentInfo.Name} </p>
-                <Link to="/treatments" className={`fw-bold ${styles.font}`}>
+                <Link onClick={() => detailsEvent(treatmentInfo)} className={`fw-bold ${styles.font}`}>
                     Ver detalles
                 </Link>
                 <button className={`fw-bold ${styles.btn}`} onClick={() => event(treatmentInfo)}>

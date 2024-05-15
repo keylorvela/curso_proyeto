@@ -26,7 +26,7 @@ function Treatments() {
 
     const navigate = useNavigate();
     const handleRedirect = () => {
-        navigate('/modifyTreatment/new');
+        navigate('/admin/treatment');
     };
 
     const fields = [
@@ -38,7 +38,7 @@ function Treatments() {
             required: true,
         },
     ];
-    const buttons = [{ variant: 'primary', type: 'submit', label: 'Editar' }]
+    const buttons = [{ variant: 'primary', type: 'submit', label: 'Guardar cambios' }]
 
     const handleEditCategory = async (data) => {
         console.log(data);

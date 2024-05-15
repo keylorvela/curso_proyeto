@@ -10,12 +10,15 @@ import Col from 'react-bootstrap/Col';
 import img from 'src/assets/stock2.jpg'
 import TreatmentsService from 'src/services/Treatments.service.js';
 import Loading from 'src/components/utils/Loading.jsx';
+import TableModal from 'src/components/utils/TableModal.jsx';
 
 function FeaturedTreatments() {
 
     const [loading, setLoading] = useState(true);
     const navegate = useNavigate();
     const [treatments, setTreatments] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalData, setModalData] = useState(null);
 
     useEffect(() => {
         const getTreatments = async () => {
@@ -32,10 +35,20 @@ function FeaturedTreatments() {
     }, []);
 
 
-    const handleButton = (treatmentInfo) => {
-        navegate('/modifyTreatment/' + treatmentInfo.Name, {
+    const handleEditTreatment = (treatmentInfo) => {
+        navegate('/admin/treatment/' + treatmentInfo.ID, {
             state: { treatmentInfo }
-        });
+        }); 
+    };
+
+    const handleButtonDetails = async (treatmentInfo) => {
+        setModalData(treatmentInfo);
+        setShowModal(true);
+    };
+
+
+    const handleModalClose = () => {
+        setShowModal(false);
     };
 
     return (
@@ -52,12 +65,28 @@ function FeaturedTreatments() {
                             <Treatment
                                 photo={img}
                                 treatmentInfo={tratamiento}
-                                event={handleButton}
+                                event={handleEditTreatment}
+                                detailsEvent={handleButtonDetails}
                                 className={styles.treatment}
                             />
                         </Col>
                     ))}
                 </Row>
+                {showModal && modalData && (
+                    <TableModal
+                        show={showModal}
+                        onHide={handleModalClose}
+                        title={modalData.Name}
+                        photo={img}
+                        roundedPhoto={false}
+                        labels={[
+                            { title: "Descripción", content: modalData.Description },
+                            { title: "Precio", content: modalData.Price },
+                            { title: "Duración", content: modalData.ProcedureDuration },
+                            { title: "Información", content: modalData.Information },
+                        ]}
+                    />
+                )}
             </main>
         </>
     );
