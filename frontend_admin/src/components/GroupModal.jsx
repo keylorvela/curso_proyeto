@@ -47,6 +47,15 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo }) {
                             </Form.Select>
                         </Form.Group>
 
+                        <Form.Group className='mb-3' controlId="dateInput">
+                            <Form.Label className={`fs-5 ${styles.label}`}>Selecciona la fecha de inicio:</Form.Label>
+                            <Form.Control
+                                type="date"
+                                value={groupInfo.StartingDate}
+                                onChange={(e) => handleChange(e.target.value, 'StartingDate') }
+                            />
+                        </Form.Group>
+
 
                         <Form.Label className={`fs-5 ${styles.label}`} >Elige los días:</Form.Label>
                         <Form.Group className={'text-center mb-3'}>
@@ -70,6 +79,14 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo }) {
                             />
                         </Form.Group>
 
+                        <Form.Group className='mb-3' controlId="capacityInput">
+                            <Form.Label className={`fs-5 ${styles.label}`}>Ingrese el total de cupos disponibles:</Form.Label>
+                            <Form.Control
+                                type="number"
+                                value={groupInfo.Capacity}
+                                onChange={(e) => handleChange(e.target.value, 'Capacity') }
+                            />
+                        </Form.Group>
                     </Form>
 
                 </Modal.Body>
