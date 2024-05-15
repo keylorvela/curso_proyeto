@@ -3,8 +3,10 @@ import image from 'src/assets/Vector.svg';
 import image2 from 'src/assets/Vector(1).svg';
 import styles from 'src/views/About.module.css';
 
+import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
+import Stack from 'react-bootstrap/Stack';
 import Container from 'react-bootstrap/Container';
 
 
@@ -20,72 +22,120 @@ function About() {
 
                 <div className={styles.main}>
 
-                    <h1 className={styles.aboutTitles} style={{ fontSize: '7vw', marginLeft: '4%' }}>Sobre nosotros</h1>
 
-                    <Container className='d-flex'>
+                    <Container className={styles.content}>
+                        <Row>
+                            <h2>Sobre nosotros:</h2>
+                        </Row>
+                        <Row className = 'my-2'>
+                            <Col xs={12} md={6}>
+                                <Stack>
+                                    <h3 className='fw-bold'>Nuestra clínica:</h3>
+                                    <p>
+                                        Desde el 2016, nos hemos insertado al mercado estético buscando 2 objetivos,
+                                        tener los mejores profesionales y tratamientos del sector estético, especializandonos
+                                        en estética facial, y ser una academia estética que forme verdaderos profesionales en
+                                        la rama, a los que consideren parte de la salud, para esto, dar el conocimiento óptimo
+                                        y completo para que puedan tratar pacientes de la forma más integralmente posible.
+                                    </p>
 
-                        <Col xs={8}>
-                            <h2 className={styles.aboutTitles}>Nuestra clínica</h2>
-                            <p className={styles.aboutDescription}>
-                                Desde el 2016, nos hemos insertado al mercado estético buscando 2 objetivos, tener los mejores profesionales y
-                                tratamientos del sector estético, especializandonos en estética facial, y ser una academia estética que forme verdaderos
-                                profesionales en la rama, a los que consideren parte de la salud, para esto, dar el conocimiento óptimo y completo para que puedan tratar
-                                pacientes de la forma más integralmente posible.
-                            </p>
-                        </Col>
-                        <Col xs={8}>
-                            <Image src={img} className="img-fluid" />
-                        </Col>
+                                </Stack>
+                            </Col>
+
+                            {/*filler*/}
+                            <Col md={1}>
+                            </Col>
+                            <Col xs={12} md={5}>
+                                <Image rounded src={img} className="img-fluid" />
+                            </Col>
+                        </Row>
+
 
                     </Container>
 
-                    <div className={styles.imgDiv}>
-                        <img
-                            className={styles.img}
-                            src={image}
-                            alt="Imagen"
-                        />
+
+                    <div className={styles.svgContainer}>
+                        <img src={image} alt="Wave Graphic 1" className={styles.waveGraphic} />
                     </div>
-                    <Container className='d-flex'>
-                        <Col sm={6}>
-                            <div className={styles.centerText}>
-                                <h2 className={styles.aboutTitles} >Misión</h2>
 
-                            </div>
-                            <div className={styles.centerText}>
-                                <p className={styles.aboutDescription}>
-                                    Desde el 2016, nos hemos insertado al mercado estético buscando 2 objetivos, tener los mejores profesionales y
-                                    tratamientos del sector estético, especializandonos en estética facial, y ser una academia estética que forme verdaderos
-                                    profesionales en la rama, a los que consideren parte de la salud, para esto, dar el conocimiento óptimo y completo para que puedan tratar
-                                    pacientes de la forma más integralmente posible.
-                                </p>
-                            </div>
-                        </Col>
-                        <Col sm={6}>
-                            <div className={styles.centerText}>
-                                <h2 className={styles.aboutTitles} >Visión</h2>
-                            </div>
-                            <div className={styles.centerText}>
-                                <p className={styles.aboutDescription}>Más aquí..................................... info</p>
-                            </div>
-                        </Col>
+
+                    <Container className={styles.content}>
+                        <Row>
+                            <Col md={5} xs={12} >
+                                <Stack>
+                                    <h3 className='fw-bold text-center'>Misión:</h3>
+                                    <p>
+                                        Desde el 2016, nos hemos insertado al mercado estético buscando 2 objetivos,
+                                        tener los mejores profesionales y tratamientos del sector estético, especializandonos
+                                        en estética facial, y ser una academia estética que forme verdaderos profesionales en
+                                        la rama, a los que consideren parte de la salud, para esto, dar el conocimiento óptimo
+                                        y completo para que puedan tratar pacientes de la forma más integralmente posible.
+                                    </p>
+
+                                </Stack>
+                            </Col>
+                            <Col md={2} xs={12} ></Col>
+                            <Col md={5} xs={12} >
+                                <Stack>
+                                    <h3 className='fw-bold text-center'>Visión:</h3>
+                                    <p>
+                                        Desde el 2016, nos hemos insertado al mercado estético buscando 2 objetivos,
+                                        tener los mejores profesionales y tratamientos del sector estético, especializandonos
+                                        en estética facial, y ser una academia estética que forme verdaderos profesionales en
+                                        la rama, a los que consideren parte de la salud, para esto, dar el conocimiento óptimo
+                                        y completo para que puedan tratar pacientes de la forma más integralmente posible.
+                                    </p>
+
+                                </Stack>
+                            </Col>
+                        </Row>
+
+
                     </Container>
-                    <div className={styles.imgDiv}>
-                        <img
-                            className={styles.img}
-                            src={image2}
-                            alt="Imagen"
-                        />
+
+                    <div className={styles.svgContainer}>
+                        <img src={image} alt="Wave Graphic 2" className={styles.waveGraphic} style={{ transform: 'rotate(180deg)' }} />
                     </div>
-                    <Container className='d-flex justify-content-center'>
-                        <Col sm={6}>
-                            <Image src={img} className="img-fluid" />
-                        </Col>
-                        <Col sm={6}>
-                            <h2 className={styles.aboutTitles}>Academia</h2>
-                            <p className={styles.aboutDescription} >Más aquí......................................... info</p>
-                        </Col>
+
+
+                    <Container className={styles.content}>
+
+                        <Row>
+
+                            <Col xs={12} md={5}>
+                                <Image rounded src={img} className="img-fluid" />
+                            </Col>
+                            {/*filler*/}
+                            <Col md={1}>
+                            </Col>
+                            <Col xs={12} md={6}>
+                                <Stack>
+                                    <h3 className='fw-bold'>Nuestra Academia:</h3>
+                                    <p>
+                                        Desde el 2016, nos hemos insertado al mercado estético buscando 2 objetivos,
+                                        tener los mejores profesionales y tratamientos del sector estético, especializandonos
+                                        en estética facial, y ser una academia estética que forme verdaderos profesionales en
+                                        la rama, a los que consideren parte de la salud, para esto, dar el conocimiento óptimo
+                                        y completo para que puedan tratar pacientes de la forma más integralmente posible.
+                                    </p>
+
+                                </Stack>
+                            </Col>
+
+
+                        </Row>
+
+
                     </Container>
+
+
+
+
+
+
+
+
+
                 </div>
 
             </MainLayout>
