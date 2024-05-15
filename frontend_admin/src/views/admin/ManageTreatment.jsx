@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 
 import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
@@ -10,13 +10,18 @@ import img from 'src/assets/stock2.jpg'
 import styles from 'src/views/admin/AdminPage.module.css'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import tServ from 'src/services/Treatments.service.js'
+import ImageService from 'src/services/Image.service.js'
 
 
 function ManageTreatment() {
-    const [values, setValues] = useState({});
+    const location = useLocation();
+    const [values, setValues] = useState(location.state?.treatmentInfo);
     const [loading, setLoading] = useState(true);
+    const [imageUrl, setImageUrl] = useState(img);
 
 
     const { id } = useParams() || null;
@@ -27,7 +32,7 @@ function ManageTreatment() {
         async function fetchData() {
 
             try {
-                if (id) {
+                if (!(values ?? null) && (id ?? null)) {
                     const data = await tServ.getTreatment(id);
                     setValues(data);
                 }
@@ -41,11 +46,37 @@ function ManageTreatment() {
     }, []);
 
 
+    const uploadImage = async () => {
+        try {
+            if (imageUrl) {
+                const data = await ImageService.uploadImage(imageUrl);
+                console.log(data.data.image.url);
+                setImageUrl(data.data.image.url);
+            }
+        } catch (error) {
+            console.error("ERROR: Upload Failed ", error);
+        }
+    }
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0]
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImageUrl(reader.result);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const handleButtonFile = () => {
+        document.getElementById('fileInput').click();
+    };
+
     const handleDelete = (id_p) => {
         alert(id_p);
     }
 
-    const handleFormSubmit = (formValues) => {
+    const handleFormSubmit = async (formValues) => {
+        uploadImage();
         alert(JSON.stringify(formValues))
     };
 
@@ -70,7 +101,7 @@ function ManageTreatment() {
         },
         {
             id: 'Price',
-            label: 'Coste:',
+            label: 'Costo:',
             type: 'number',
             placeholder: 'Costo del tratamiento',
             required: true,
@@ -110,7 +141,7 @@ function ManageTreatment() {
 
 
     return (
-        <MainLayout type = {1}>
+        <MainLayout type={1}>
 
             <div className={styles.page}>
                 <Container>
@@ -121,8 +152,25 @@ function ManageTreatment() {
                         </div>
                     ) : (
                         <Row >
-                            <Col className='mt-2' xs={12} md={4}>
-                                <Image src={img} fluid rounded />
+                            <Col className='mt-2' xs={12} md={4} style={{ position: 'relative' }}>
+                                <Image
+                                    src={imageUrl}
+                                    fluid
+                                    rounded
+                                    style={{ width: '100%', height: '50%', objectFit: 'cover' }}
+                                />
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    style={{ display: 'none' }}
+                                    id="fileInput"
+                                    onChange={handleImageChange}
+                                />
+                                <button
+                                    className={`fw-bold ${styles.btnImage}`}
+                                    onClick={handleButtonFile}>
+                                    <FontAwesomeIcon icon={faEdit} style={{ fontSize: '1.5em' }} />
+                                </button>
                             </Col>
 
                             {/*filler*/}
