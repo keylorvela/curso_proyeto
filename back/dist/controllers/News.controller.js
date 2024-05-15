@@ -51,8 +51,8 @@ const getAllNews = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.getAllNews = getAllNews;
 const deleteNews = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { newsID } = req.body;
-    if (isNaN(newsID) || newsID < 0) {
+    const newsID = Number(req.params.newsID) || null;
+    if (!newsID || isNaN(newsID) || newsID < 0) {
         res.status(400).send({ error: "Invalid news ID provided" });
         return;
     }
