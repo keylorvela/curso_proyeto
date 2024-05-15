@@ -30,6 +30,16 @@ const UserService = {
         } catch (error) {
             console.error("Error in course service", error);
         }
+    },
+
+    RegisterUser: async (p_name, p_email, p_phone_number, p_photo, p_username, p_password, p_type) => {
+        try {
+            const body = { p_name, p_email, p_phone_number, p_photo, p_username, p_password, p_type };
+            const response = await axios.post(`/register`, body);
+            return response.data;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
     }
 };
 
