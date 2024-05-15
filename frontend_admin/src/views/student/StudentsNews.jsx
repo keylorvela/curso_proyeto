@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 import MainLayout from 'src/components/MainLayout.jsx';
@@ -11,8 +12,9 @@ function StudentsNews() {
     // TODO: Obtener el id del grupo
     // TODO: Obtener el id del user
     // TODO: Funcionalidad de "darse de baja"
-    const groupID = 2;
-    const userID = 6;
+
+    const location = useLocation();
+    const { userID, groupID } = location.state || {};
 
     const [courseName, setCourseName] = useState('');
     const [news, setNews] = useState([]);
@@ -27,6 +29,7 @@ function StudentsNews() {
                 const news_list = [];
                 for (const it_news of news_data) {
                     news_list.push({
+                        title: it_news.Title,
                         date: it_news.PublishedDate.split('T')[0],
                         description: it_news.Content
                     });
@@ -38,7 +41,7 @@ function StudentsNews() {
                 const group_data = await GroupService.GetGroupInformation( groupID );
                 setCourseName( group_data.Name );
                 setProfessor( group_data.TeacherName );
-                setSchedule( `${group_data.ScheduleDate} - ${group_data.ScheduleHour}` );
+                setSchedule( `${group_data.ScheduleDate}\n${group_data.ScheduleHour}` );
 
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -63,6 +66,7 @@ function StudentsNews() {
                             <Card key={index} className={styles.newsCard}>
                                 <Card.Body>
                                     <Card.Title className={styles.newsDate}>{New.date}</Card.Title>
+                                    <Card.Subtitle className={`${styles.newsDate} text-start`}>{New.title}</Card.Subtitle>
                                     <Card.Text className={styles.newsDescription}>{New.description}</Card.Text>
                                 </Card.Body>
                             </Card>

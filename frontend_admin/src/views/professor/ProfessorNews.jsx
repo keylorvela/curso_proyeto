@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +16,8 @@ import GroupService from 'src/services/Group.service';
 function ProfessorNews() {
     // TODO: Obtener el id del grupo
     // TODO: Funcionalidad de borrar noticia
-    const groupID = 2;
+    const location = useLocation();
+    const { userID, groupID } = location.state || {};
 
     const [modalShow, setModalShow] = useState(false);
 
@@ -25,34 +26,34 @@ function ProfessorNews() {
     const [professor, setProfessor] = useState('');
     const [schedule, setSchedule] = useState('');
 
+    async function fetchGroupNews() {
+        try {
+            // Get list of news
+            const news_data = await NewsService.GetNewsList( groupID );
+            const news_list = [];
+            for (const it_news of news_data) {
+                news_list.push({
+                    title: it_news.Title,
+                    date: it_news.PublishedDate.split('T')[0],
+                    description: it_news.Content
+                });
+            }
+
+            setNews( news_list );
+
+            // Get group information
+            const group_data = await GroupService.GetGroupInformation( groupID );
+            setCourseName( group_data.Name );
+            setProfessor( group_data.TeacherName );
+            setSchedule( `${group_data.ScheduleDate}\n${group_data.ScheduleHour}` );
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                // Get list of news
-                const news_data = await NewsService.GetNewsList( groupID );
-                const news_list = [];
-                for (const it_news of news_data) {
-                    news_list.push({
-                        date: it_news.PublishedDate.split('T')[0],
-                        description: it_news.Content
-                    });
-                }
-
-                setNews( news_list );
-
-                // Get group information
-                const group_data = await GroupService.GetGroupInformation( groupID );
-                setCourseName( group_data.Name );
-                setProfessor( group_data.TeacherName );
-                setSchedule( `${group_data.ScheduleDate}\n${group_data.ScheduleHour}` );
-
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
-
-        fetchData();
+        fetchGroupNews();
     }, []);
 
 
@@ -60,6 +61,10 @@ function ProfessorNews() {
     const handleFormSubmit = async (data) => {
         try {
             await NewsService.PostNews( groupID, data.title, data.content );
+            alert("Se publico la noticia");
+            setNews([]);
+            fetchGroupNews();
+            setModalShow(false);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -126,6 +131,7 @@ function ProfessorNews() {
                                         {New.date}
                                     </Card.Title>
 
+                                    <Card.Subtitle className={styles.newsDate}>{New.title}</Card.Subtitle>
                                     <Card.Text className={styles.newsDescription}>{New.description}</Card.Text>
                                 </Card.Body>
                             </Card>

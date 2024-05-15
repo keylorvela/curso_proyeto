@@ -19,6 +19,7 @@
 
 .newsDate {
     display: flex;
+    justify-content: space-between;
     font-weight: bold;
     text-align: right;
     color: var(--main-blue);
@@ -68,7 +69,7 @@
 
 .iconButton {
     padding: 0; 
-    margin-right: 80%; 
+    /* margin-right: 80%;  */
     border: none; 
     background-color: transparent; 
 }

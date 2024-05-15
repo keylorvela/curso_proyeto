@@ -31,6 +31,7 @@ function Professors() {
                     Nombre: teacher.Name,
                     Email: teacher.Email,
                     UserID: teacher.UserID,
+                    PersonID: teacher.PersonID,
                     Telefono: teacher.PhoneNumber,
                     Foto: teacher.Photo
                 }))
@@ -46,11 +47,10 @@ function Professors() {
         fetchData();
     }, []);
 
-    const handleButtonEdit = (rowData) => {
-        navegate(`/admin/professor/${rowData.UserID}`);
-        /*navegate('/admin/professor/' + 1, {
-            state: {rowData}
-            });*/
+    const handleButtonEdit = (teacherInformation) => {
+        navegate(`/admin/professor/${teacherInformation.UserID}`, {
+            state: {teacherInformation}
+        });
     };
 
     const handleButtonDetails = (rowData) => {

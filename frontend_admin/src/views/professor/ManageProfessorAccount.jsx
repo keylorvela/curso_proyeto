@@ -18,7 +18,7 @@ import TeachersService from 'src/services/Teachers.service';
 function ManageProfessorAccount() {
     // TODO: Obtener el userID
     // TODO: Funcionalidad del cambio de contraseña
-    const userID = 6;
+    const userID = 5;
 
     const [passInfo, setPassInfo] = useState({});
     const [hide, setHide] = useState(false);

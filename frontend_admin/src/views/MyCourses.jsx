@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
@@ -13,6 +14,9 @@ function MyCourses() {
     // TODO: Obtener el id del usuario actual
     // TODO: Funcionalidad del boton de más detalles
     const userID = 6;
+
+    const navigate = useNavigate();
+    const location = useLocation(); // TODO: Arreglo temporal (Para distinguir entre student | professor)
 
     const columns = ['Curso', ];
     const [groupList, setGroupList] = useState([]);
@@ -44,8 +48,11 @@ function MyCourses() {
         fetchData();
     }, []);
 
+    // Link to the group details
     const handleButtonDetails = (rowData) => {
-        alert(`Botón2 clickeado para ${rowData.Email}`);
+        const groupID = rowData.GroupID;
+        const mainRoute = location.pathname.split('/')[1];
+        navigate(`/${mainRoute}/news`, { state: { userID, groupID } });
     };
 
     const btn = [

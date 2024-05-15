@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
+import { useLocation  } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 import MainLayout from 'src/components/MainLayout.jsx'
@@ -11,33 +12,24 @@ import styles from 'src/views/admin/AdminPage.module.css'
 import { Container, Row, Col, Image } from 'react-bootstrap'
 
 import TeachersService from 'src/services/Teachers.service';
-
+import UserService from 'src/services/User.service';
 
 function ManageProfessor() {
     //TODO Fetch teacherInformation from backend
+    const location = useLocation();
     const { id } = useParams();
 
+    const teacherData = location.state?.teacherInformation;
     const [teacherInformation, setTeacherInformation] = useState({});
 
     useEffect(() => {
         async function fetchData() {
             try {
-                let teacher_PersonID = '';
-                let teacher_Name = '';
-                let teacher_Photo = '';
-                let teacher_PhoneNumber = '';
-                let teacher_Email = '';
-
-                if (id) {
-                    // Get teacher information
-                    const teacher_data = await TeachersService.GetTeacherInformation(id);
-
-                    teacher_PersonID = teacher_data.PersonId;
-                    teacher_Name = teacher_data.Name;
-                    teacher_Photo = teacher_data.Photo;
-                    teacher_PhoneNumber = teacher_data.PhoneNumber;
-                    teacher_Email = teacher_data.Email;
-                }
+                let teacher_PersonID = teacherData?.PersonID || "";
+                let teacher_Name = teacherData?.Nombre || "";
+                let teacher_Photo = teacherData?.Foto || "";
+                let teacher_PhoneNumber = teacherData?.Telefono || "";
+                let teacher_Email = teacherData?.Email || "";
 
                 setTeacherInformation({
                     personID: teacher_PersonID,
@@ -55,15 +47,32 @@ function ManageProfessor() {
     }, []);
 
     const handleFormSubmit = async (formValues) => {
+        console.log(formValues)
         try {
-            await TeachersService.UpdateTeacherInformation(
-                formValues.personID,
-                formValues.name,
-                formValues.phoneNumber,
-                formValues.email,
-                formValues.photo
-            );
-            alert("Modificación de info del profesor exitosa!");
+            // Sí hay id := Modifica el profesor
+            if (id) {
+                await TeachersService.UpdateTeacherInformation(
+                    formValues.personID,
+                    formValues.name,
+                    formValues.phoneNumber,
+                    formValues.email,
+                    formValues.photo
+                );
+                alert("Modificación de info del profesor exitosa!");
+            }
+            // Si no := Crea el profesor
+            else {
+                await UserService.RegisterUser(
+                    formValues.name,
+                    formValues.email,
+                    formValues.phoneNumber,
+                    null,
+                    formValues.email,
+                    "1234",
+                    "Profesor"
+                );
+                alert("Profesor creado");
+            }
         } catch (error) {
             console.error("Error in update teacher information", error);
         }
