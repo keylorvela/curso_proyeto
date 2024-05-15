@@ -33,6 +33,26 @@ const UserService = {
     }
   },
 
+  deleteTreatment: async (id) => {
+    const url = BASE_URL+`treatments/`+id;
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Request fail');
+      }
+
+      return response;
+    } catch (error) {
+      console.error('Function error deleteTreatment', error);
+      throw error;
+    }
+  },
+
   updateTreatment: async (treatmentInfo,imageUrl) => {
   
     const url = BASE_URL + 'treatments'; 

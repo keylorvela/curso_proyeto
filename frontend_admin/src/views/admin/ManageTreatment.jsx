@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
@@ -18,6 +19,7 @@ import ImageService from 'src/services/Image.service.js'
 
 
 function ManageTreatment() {
+    const navigate = useNavigate();
     const location = useLocation();
     const [values, setValues] = useState(location.state?.treatmentInfo);
     const [loading, setLoading] = useState(true);
@@ -73,9 +75,21 @@ function ManageTreatment() {
         document.getElementById('fileInput').click();
     };
 
-    const handleDelete = (id_p) => {
-        alert(id_p);
-        setLoading(true);
+    const handleDelete = async (id_p) => {
+        try {
+            setLoading(true);
+            if (id) {
+                const request = await tServ.deleteTreatment(id_p);
+                if (request.status === 200)
+                    alert('Eliminacion exitosa');
+                    navigate('/admin/treatments');
+            }
+
+        } catch (error) {
+            console.error('Treatments failed:', error);
+        } finally {
+            setLoading(false);
+        }
     }
 
     const handleFormSubmit = async (formValues) => {

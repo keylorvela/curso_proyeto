@@ -25,6 +25,7 @@ function FeaturedTreatments() {
             try {
                 const treatmentsData = await TreatmentsService.getTreatments();
                 setTreatments(treatmentsData);
+                console.log(treatments)
             } catch (error) {
                 console.error('getTreatments fail:', error);
             } finally {
