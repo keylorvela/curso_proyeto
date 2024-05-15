@@ -3,7 +3,7 @@ import axios from "./utilities/Axios.service"
 const CourseService = {
     GetCourseList: async () => {
         try {
-            const response = await axios.get(`/courses`);
+            const response = await axios.get(`/courses`, { params: { limit: 1000, offset: 0 } });
             return response.data;
         } catch (error) {
             console.error("Error in course service", error);
