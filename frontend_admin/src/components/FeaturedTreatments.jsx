@@ -36,7 +36,6 @@ function FeaturedTreatments() {
 
 
     const handleEditTreatment = (treatmentInfo) => {
-        //alert(JSON.stringify(treatmentInfo))
         navegate('/admin/treatment/' + treatmentInfo.ID, {
             state: { treatmentInfo }
         }); 
