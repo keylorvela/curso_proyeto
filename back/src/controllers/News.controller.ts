@@ -50,9 +50,9 @@ export const getAllNews = async (req: Request, res: Response) => {
 }
 
 export const deleteNews = async (req: Request, res: Response) => {
-    const { newsID }: { newsID: number } = req.body;
+    const newsID : number | null = Number(req.params.newsID) || null;
 
-    if (isNaN(newsID) || newsID < 0) {
+    if (!newsID || isNaN(newsID) || newsID < 0) {
         res.status(400).send({ error: "Invalid news ID provided" });
         return;
     }
