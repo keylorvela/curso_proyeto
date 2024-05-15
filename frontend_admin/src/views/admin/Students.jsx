@@ -32,6 +32,7 @@ function Students() {
                     Email: student.Email,
                     Telefono: student.PhoneNumber,
                     // Foto: student.Photo
+                    Foto: "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg"
                 }))
 
                 setData(new_data);
@@ -46,6 +47,7 @@ function Students() {
     }, []);
 
     const handleButtonDetails = (rowData) => {
+        console.log(rowData)
         setModalData(rowData);
         setShowModal(true);
     };
@@ -94,7 +96,7 @@ function Students() {
                         show={showModal}
                         onHide={handleModalClose}
                         title={modalData.Nombre}
-                        photo="src/assets/stock2.jpg"
+                        photo={modalData.Foto}
                         roundedPhoto={true}
                         labels={[
                             { title: "Nombre", content: modalData.Nombre },

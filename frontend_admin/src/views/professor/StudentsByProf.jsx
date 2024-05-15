@@ -32,7 +32,8 @@ function StudentsByProf() {
                     Telefono: student.PhoneNumber,
                     UserID: student.UserID,
                     ID: student.PersonID,
-                    Foto: student.Photo
+                    // Foto: student.Photo
+                    Foto: "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg"
                 }))
 
                 // Get group information
@@ -84,7 +85,7 @@ function StudentsByProf() {
                         show={showModal}
                         onHide={handleModalClose}
                         title={modalData.Nombre}
-                        photo="src/assets/stock2.jpg"
+                        photo={modalData.Foto}
                         roundedPhoto={true}
                         labels={[
                             { title: "Nombre", content: modalData.Nombre },
