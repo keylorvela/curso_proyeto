@@ -37,7 +37,7 @@ function ManageProfessorAccount() {
                 // Get teacher information
                 setLoading(true);
                 const teacher_data = await TeachersService.GetTeacherInformation(userID);
-                setProfilePictureURL(teacher_data.Photo);
+                if(teacher_data.Photo)setProfilePictureURL(teacher_data.Photo);
                 setTeacherInformation({
                     personID: teacher_data.PersonId,
                     name: teacher_data.Name,
@@ -160,7 +160,7 @@ function ManageProfessorAccount() {
                                     <span className={styles.edit_picture_span} onClick={() => { fileInputRef.current.click(); }}>
                                         <FontAwesomeIcon icon={faPencil} />
                                     </span>
-                                    <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileUpload} />
+                                    <input type="file"accept="image/*" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileUpload} />
                                 </div>
                             }
                         </Col>

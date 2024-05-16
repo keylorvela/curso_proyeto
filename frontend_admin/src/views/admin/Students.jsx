@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
@@ -13,7 +14,7 @@ import StudentService from 'src/services/Students.service';
 
 function Students() {
     // TODO: Funcionalidad del botón Añadir estudiante
-
+    const navegate = useNavigate ();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -57,7 +58,7 @@ function Students() {
     };
 
     const handleButtonAdd = () => {
-        alert(`BotónADD`);
+        navegate('/admin/student');
     };
 
     const btn = [
