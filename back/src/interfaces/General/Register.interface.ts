@@ -1,9 +1,9 @@
 export interface RegisterBody {
-    p_name: String,
-    p_email: String,
-    p_phone_number: String,
-    p_photo: String,
-    p_username: String,
-    p_password: String,
-    p_type: String
+    p_name: string,
+    p_email: string,
+    p_phone_number: string,
+    p_photo: string,
+    p_username: string,
+    p_password: string,
+    p_type: string
 }

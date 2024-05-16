@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { RowDataPacket } from "mysql2";
 import dbConnection from "../../database/dbConfig";
 
+import MailManager from "../../mail/Mail.controller";
+
 import { RegisterBody } from "../../interfaces/General/Register.interface"
 import { OStatus } from "interfaces/OStatus.interface";
 
@@ -23,6 +25,16 @@ export const registerUser = async (req: Request, res: Response) => {
     }
 
     try {
+        const mailManager = new MailManager();
+
+        await mailManager.sendMail_UserRegistration(
+            "testELSPrueba@gmail.com",
+            p_email,
+            "Bienvenid@ a ELS",
+            p_name,
+            p_username,
+            p_password
+        );
         const result_user = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_General_RegisterUser(
                 "${p_name}",
