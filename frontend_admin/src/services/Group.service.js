@@ -28,6 +28,15 @@ const GroupService = {
         }
     },
 
+    GetGroupsOfTeacher: async (userID) => {
+        try {
+            const response = await axios.get(`/group/teacherGroups/${userID}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
+
     DropOutGroup: async (userID, groupID) => {
         try {
             const body = { userID, groupID };
