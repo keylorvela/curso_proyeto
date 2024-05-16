@@ -8,4 +8,4 @@ function NoInformationFound({ message }) {
 }
 
 
-export default Treatment;
+export default NoInformationFound;
