@@ -1,16 +1,20 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import styles from 'src/components/Common.module.css';
 
-function DynamicForm({ fields, onSubmit, buttons = [], initialValues={} }) {
+function DynamicForm({ fields, onSubmit, buttons = [], initialValues = {}, onChangeSelect }) {
   const [formData, setFormData] = useState(initialValues);
-
+ 
   useEffect(() => {
-    setFormData(initialValues)
-}, [initialValues]);
+    if (!(Object.keys(initialValues).length === 0)) {
+      setFormData(initialValues );
+    }
+  }, [initialValues]);
 
   const handleChange = (value, fieldName) => {
     setFormData({ ...formData, [fieldName]: value });
+    if (fieldName === 'course' && onChangeSelect) 
+      onChangeSelect(value);
   };
 
   const handleSubmit = (e) => {
@@ -26,7 +30,7 @@ function DynamicForm({ fields, onSubmit, buttons = [], initialValues={} }) {
           {field.type === 'select' ? (
             <Form.Control
               as="select"
-              onChange={(e) => handleChange(e.target.value, field.id)}
+              onChange={(e) => {handleChange(e.target.value, field.id);}}
               value={formData[field.id] || ''}
               required={field.required}
             >

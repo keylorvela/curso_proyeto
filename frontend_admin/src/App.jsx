@@ -18,6 +18,7 @@ import ProfessorNews from 'src/views/professor/ProfessorNews.jsx';
 
 import ManageStudentAccount from 'src/views/student/ManageAccount.jsx';
 import StudentsNews from 'src/views/student/StudentsNews.jsx';
+import ManageStudent from 'src/views/admin/ManageStudent.jsx';
 
 import MyCourses from 'src/views/MyCourses.jsx';
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="student/profile" element={<ManageStudentAccount />} />
 
         <Route path="admin/students" element={<Students />} />
+        <Route path="admin/student" element={<ManageStudent />} />
         <Route path="admin/courses" element={<Courses />} />
         <Route path="admin/course/:id" element={<ManageCourse />} />
         <Route path="admin/course" element={<ManageCourse />} />

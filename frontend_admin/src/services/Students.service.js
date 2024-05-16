@@ -56,6 +56,16 @@ const StudentService = {
             console.error("Error in course service", error);
         }
     },
+
+    RegisterStudentInGroup: async (GroupID, UserID) => {
+        try {
+            const body = { GroupID, UserID };
+            const response = await axios.post(`/students`, body);
+            return response;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
 };
 
 export default StudentService;

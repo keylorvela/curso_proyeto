@@ -58,7 +58,7 @@ function Students() {
     };
 
     const handleButtonAdd = () => {
-        //navegate('/admin/professor');
+        navegate('/admin/student');
     };
 
     const btn = [
