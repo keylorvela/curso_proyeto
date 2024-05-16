@@ -13,7 +13,7 @@ export interface createTreatmentBody {
     p_procedureDuration: String
     p_effectDuration: String
     p_information: String
-    p_photos: [ photoBody ]
+    p_treatmentImage: string
     p_categoryID: String
 }
 
@@ -26,7 +26,7 @@ export interface updateTreatmentBody {
     p_procedureDuration: String
     p_effectDuration: String
     p_information: String
-    p_photos: [ photoBody ]
+    p_treatmentImage: string
     p_categoryID: String
 }
 
@@ -49,7 +49,7 @@ export interface Treatment {
     ProcedureDuration: String
     EffectDuration: String
     Information: String
-    Photos: [ TreatmentImage ] | string
+    TreatmentImage: string
     o_status: String
 }
 

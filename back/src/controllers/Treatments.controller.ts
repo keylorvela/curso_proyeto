@@ -20,23 +20,9 @@ export const createTreatment = async (req: Request, res: Response) => {
                 "${body.p_effectDuration}",
                 "${body.p_information}",
                 ${body.p_categoryID},
+                "${body.p_treatmentImage}"
                 @o_status)`);
         const result: TreatmentID[] = JSON.parse(JSON.stringify(result_treatment[0][0]));
-
-        if (result.length > 0 && result[0].o_treatmentID != -1) {
-            const imagesPromise = body.p_photos.map(async (photo) => {
-                await dbConnection.query<RowDataPacket[]>(`
-                    CALL SP_Image_AddTreatmentImage(
-                        "${photo.url}",
-                        ${result[0].o_treatmentID},
-                        "${photo.imageType}",
-                        @o_status
-                    )
-                `);
-            });
-
-            await Promise.all(imagesPromise);
-        }
 
         res.status(200).send(result[0] || {});
     } catch (error) {
@@ -44,7 +30,7 @@ export const createTreatment = async (req: Request, res: Response) => {
     }
 };
 
-// Delete specifi treatment
+// Delete specific treatment
 export const deleteTreatment = async (req: Request, res: Response) => {
     const str_treatmentID = req.params.treatmentID;
     const treatmentID: number | null = Number(str_treatmentID) || null;
@@ -102,9 +88,6 @@ export const getTreatmentInformation = async (req: Request, res: Response) => {
         const result_treatment = await dbConnection.query<RowDataPacket[]>(`CALL SP_Treatment_SearchFor(${treatmentID}, @o_status)`);
         const result: Treatment[] = JSON.parse(JSON.stringify(result_treatment[0][0]));
 
-        const result_images = await dbConnection.query<RowDataPacket[]>(`CALL SP_Image_ReadAllTreatment(${treatmentID}, @o_status)`);
-        result[0].Photos = JSON.parse(JSON.stringify(result_images[0][0]));
-
         res.status(200).send(result[0] || {});
     } catch (error) {
         res.status(500).send({ error: "Petition failed", error_detail: error });
@@ -136,16 +119,9 @@ export const updateTreatment = async (req: Request, res: Response) => {
                 "${body.p_effectDuration}",
                 "${body.p_information}",
                 ${categoryID},
+                "${body.p_treatmentImage}"
                 @o_status)`);
         const result: OStatus[] = JSON.parse(JSON.stringify(result_treatment[0][0]));
-
-        const imagesPromise = body.p_photos.map(async (photo) => {
-            await dbConnection.query<RowDataPacket[]>(`
-                CALL SP_Image_UpdateTreatmentImage(${photo.imageID}, "${photo.url}", @o_status)`
-            );
-        });
-
-        await Promise.all(imagesPromise);
 
         res.status(200).send(result[0] || {});
     } catch (error) {

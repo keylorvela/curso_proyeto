@@ -15,7 +15,7 @@ export interface CourseBody {
     Includes: string
     Duration: string
     Price: number
-    Photos: [ photoBody ]
+    CourseImage: string
     UserTarget: string
 }
 
@@ -34,7 +34,7 @@ export interface Course {
     Duration: string
     Price: number
     UserTarget: string
-    Photos: [ CourseImage ] | string
+    CourseImage: string
     GroupsByCourse: string
     o_status: String
 }
