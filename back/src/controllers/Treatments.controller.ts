@@ -20,7 +20,7 @@ export const createTreatment = async (req: Request, res: Response) => {
                 "${body.p_effectDuration}",
                 "${body.p_information}",
                 ${body.p_categoryID},
-                "${body.p_treatmentImage}"
+                "${body.p_treatmentImage}",
                 @o_status)`);
         const result: TreatmentID[] = JSON.parse(JSON.stringify(result_treatment[0][0]));
 
@@ -119,7 +119,7 @@ export const updateTreatment = async (req: Request, res: Response) => {
                 "${body.p_effectDuration}",
                 "${body.p_information}",
                 ${categoryID},
-                "${body.p_treatmentImage}"
+                "${body.p_treatmentImage}",
                 @o_status)`);
         const result: OStatus[] = JSON.parse(JSON.stringify(result_treatment[0][0]));
 

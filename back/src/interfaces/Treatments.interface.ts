@@ -1,10 +1,3 @@
-export interface photoBody {
-    imageID: number
-    url: string
-    imageType: string
-}
-
-
 export interface createTreatmentBody {
     p_name: String
     p_description: String
