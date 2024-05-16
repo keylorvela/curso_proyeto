@@ -102,7 +102,7 @@ function Professors() {
                         show={showModal}
                         onHide={handleModalClose}
                         title="Profesor"
-                        photo="src/assets/stock2.jpg"
+                        photo={modalData.Foto}
                         roundedPhoto={true}
                         labels={[
                             { title: "Nombre", content: modalData.Nombre },
