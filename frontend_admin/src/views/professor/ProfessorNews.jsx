@@ -33,6 +33,7 @@ function ProfessorNews() {
             const news_list = [];
             for (const it_news of news_data) {
                 news_list.push({
+                    id: it_news.ID,
                     title: it_news.Title,
                     date: it_news.PublishedDate.split('T')[0],
                     description: it_news.Content
@@ -56,20 +57,6 @@ function ProfessorNews() {
         fetchGroupNews();
     }, []);
 
-
-    //Add news
-    const handleFormSubmit = async (data) => {
-        try {
-            await NewsService.PostNews( groupID, data.title, data.content );
-            alert("Se publico la noticia");
-            setNews([]);
-            fetchGroupNews();
-            setModalShow(false);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    }
-
     const fields = [
         {
             id: 'title',
@@ -87,11 +74,32 @@ function ProfessorNews() {
             required: true,
 
         }
-
     ];
 
-    const buttons = [{ variant: 'primary', type: 'submit', label: 'Publicar' }]
+    //Add news
+    const handleFormSubmit = async (data) => {
+        try {
+            await NewsService.PostNews( groupID, data.title, data.content );
+            alert("Se publico la noticia");
+            setNews([]);
+            fetchGroupNews();
+            setModalShow(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
 
+    const handleRemoveNews = async (newsID) => {
+        try {
+            await NewsService.RemoveNews( newsID );
+            alert("Se elimino la noticia");
+            setNews( news.filter((it_news) => it_news.id != newsID) );
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    const buttons = [{ variant: 'primary', type: 'submit', label: 'Publicar' }]
 
     return (
         <MainLayout type={2}>
@@ -110,9 +118,6 @@ function ProfessorNews() {
                 </div>
             </BaseModal>
 
-
-
-
             <Container fluid style={{ width: '98%' }}>
                 <h2 className={styles.courseName}>{courseName}</h2>
                 <Row>
@@ -121,21 +126,32 @@ function ProfessorNews() {
                             <h3 className={styles.subTitle}>Noticias</h3>
                             <Button onClick={() => setModalShow(true)} variant="primary" className={styles.unsubscribeButton}>Añadir noticia</Button>
                         </div>
-                        {news.map((New, index) => (
-                            <Card key={index} className={styles.newsCard}>
-                                <Card.Body>
-                                    <Card.Title className={styles.newsDate}>
-                                        <Button variant="link" className={styles.iconButton}>
-                                            <FontAwesomeIcon icon={faTrash} className={styles.trashIcon} />
-                                        </Button>
-                                        {New.date}
-                                    </Card.Title>
 
-                                    <Card.Subtitle className={styles.newsDate}>{New.title}</Card.Subtitle>
-                                    <Card.Text className={styles.newsDescription}>{New.description}</Card.Text>
-                                </Card.Body>
-                            </Card>
-                        ))}
+                        {
+                            (news.length == 0) ?
+                            (
+                                <div className={styles.information_container}>
+                                    <span className={styles.noNews_span}>No hay noticias publicadas</span>
+                                </div>
+                            ) :
+                            (
+                                news.map((New, index) => (
+                                    <Card key={index} className={styles.newsCard}>
+                                        <Card.Body>
+                                            <Card.Title className={styles.newsDate}>
+                                                <Button variant="link" className={styles.iconButton} onClick={() => handleRemoveNews( New.id )}>
+                                                    <FontAwesomeIcon icon={faTrash} className={styles.trashIcon} />
+                                                </Button>
+                                                {New.date}
+                                            </Card.Title>
+
+                                            <Card.Subtitle className={styles.newsDate}>{New.title}</Card.Subtitle>
+                                            <Card.Text className={styles.newsDescription}>{New.description}</Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                ))
+                            )
+                        }
                     </Col>
 
                     <Col md={4} className={styles.colCustom}>
@@ -144,7 +160,7 @@ function ProfessorNews() {
                         <p className={styles.subInfo}><strong>Horarios:</strong><br />{schedule}</p>
                         <p className={styles.subInfo}>
                             <strong>Estudiantes:</strong><br />
-                            <Link className={styles.newsDate} to="/professor/students">Ver lista de estudiantes</Link>
+                            <Link className={styles.newsDate} to="/professor/students" state={{ groupID }}>Ver lista de estudiantes</Link>
                         </p>
                     </Col>
                 </Row>

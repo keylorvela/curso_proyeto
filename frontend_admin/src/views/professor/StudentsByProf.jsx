@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
@@ -13,7 +14,8 @@ import GroupService from 'src/services/Group.service';
 
 function StudentsByProf() {
     // TODO: Obtener el id del grupo
-    const groupID = 2;
+    const { state } = useLocation();
+    const groupID = state?.groupID || 0;
 
     const [groupInformation, setGroupInformation] = useState({});
     const [studentsList, setStudentsList] = useState([]);

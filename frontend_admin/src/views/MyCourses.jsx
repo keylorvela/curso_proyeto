@@ -13,7 +13,8 @@ import GroupService from 'src/services/Group.service';
 function MyCourses() {
     // TODO: Obtener el id del usuario actual
     // TODO: Funcionalidad del boton de más detalles
-    const userID = 6;
+    const userID = 8;
+    const userType = 3; // UserType: Profesor o Estudiante
 
     const navigate = useNavigate();
     const location = useLocation(); // TODO: Arreglo temporal (Para distinguir entre student | professor)
@@ -59,9 +60,8 @@ function MyCourses() {
         { button: faEye, onButtonClick: handleButtonDetails }
     ]
 
-
     return (
-        <MainLayout type={3}>
+        <MainLayout type={ userType }>
             <Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.tableTitle}>Mis Cursos</h1>
 
