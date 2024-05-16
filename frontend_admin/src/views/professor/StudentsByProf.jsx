@@ -15,7 +15,7 @@ import GroupService from 'src/services/Group.service';
 function StudentsByProf() {
     // TODO: Obtener el id del grupo
     const { state } = useLocation();
-    const groupID = state?.groupID || 0;
+    const groupID = state?.groupID || 4;
 
     const [groupInformation, setGroupInformation] = useState({});
     const [studentsList, setStudentsList] = useState([]);
@@ -28,6 +28,7 @@ function StudentsByProf() {
             try {
                 // Get students
                 const studentList_data = await StudentService.GetStudentsFromGroup( groupID );
+                console.log(studentList_data)
                 const studentList_formatted = studentList_data.map(student => ({
                     Nombre: student.Name,
                     Email: student.Email,

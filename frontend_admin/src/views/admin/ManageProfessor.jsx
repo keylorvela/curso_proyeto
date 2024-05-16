@@ -152,7 +152,7 @@ function ManageProfessor() {
                     <Row>
 
                         <Col className='mt-2' xs={12} md={4}>
-                            <Image src={noImage || teacherData.Foto} fluid rounded />
+                            <Image src={teacherData.Foto || noImage } fluid rounded />
                         </Col>
 
 

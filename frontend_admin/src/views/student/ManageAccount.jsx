@@ -7,7 +7,7 @@ import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
 import GroupModal from 'src/components/GroupModal.jsx'
 
-import img from 'src/assets/stock2.jpg'
+import Loading from 'src/components/utils/Loading.jsx';
 import styles from 'src/views/student/StudentPage.module.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +23,7 @@ function ManageAccount() {
     const userID = 8;
 
     const fileInputRef = useRef();
+    const [loading, setLoading] = useState(false);
     const [passInfo, setPassInfo] = useState({});
     const [hide, setHide] = useState(false);
     const [studentInformation, setStudentInformation] = useState({});
@@ -32,9 +33,10 @@ function ManageAccount() {
     useEffect(() => {
         async function fetchData() {
             try {
+                setLoading(true);
                 // Get student information
-                const student_data = await StudentService.GetStudentsInformation( userID );
-
+                const student_data = await StudentService.GetStudentsInformation(userID);
+                if(student_data.Photo)setProfilePictureURL(student_data.Photo);
                 setStudentInformation({
                     userID: student_data.UserId,
                     personID: student_data.PersonId,
@@ -45,6 +47,8 @@ function ManageAccount() {
                 });
             } catch (error) {
                 console.error('Error fetching data:', error);
+            } finally {
+                setLoading(false);
             }
         }
 
@@ -82,6 +86,7 @@ function ManageAccount() {
 
     const handleFormSubmit = async (formValues) => {
         try {
+            setLoading(true);
             const result = await StudentService.UpdateStudentInformation(
                 formValues.personID,
                 formValues.name,
@@ -92,6 +97,8 @@ function ManageAccount() {
             alert("Modificación de info del estudiante exitosa!");
         } catch (error) {
             console.error("Error in update teacher information", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -119,8 +126,10 @@ function ManageAccount() {
     }
 
     const buttons = [
-        { variant: 'primary', type: 'button', label: 'Cambiar contraseña',
-        onClick: () => handleChangePassword()},
+        {
+            variant: 'primary', type: 'button', label: 'Cambiar contraseña',
+            onClick: () => handleChangePassword()
+        },
         { variant: 'primary', type: 'submit', label: 'Guardar cambios' },
     ]
 
@@ -136,7 +145,11 @@ function ManageAccount() {
 
             <div className={styles.page}>
                 <Container>
-
+                    {loading && (
+                        <div className='text-center my-5'>
+                            <Loading size={11} />
+                        </div>
+                    )}
                     <Row>
                         <Col className='mt-2' xs={12} md={4}>
                             {
@@ -147,7 +160,7 @@ function ManageAccount() {
                                     <span className={styles.edit_picture_span} onClick={() => { fileInputRef.current.click(); }}>
                                         <FontAwesomeIcon icon={faPencil} />
                                     </span>
-                                    <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileUpload} />
+                                    <input type="file"accept="image/*" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileUpload} />
                                 </div>
                             }
                         </Col>
