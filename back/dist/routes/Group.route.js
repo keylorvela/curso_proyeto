@@ -10,5 +10,6 @@ router.post("/drop-out", Group_controller_1.dropOutGroup);
 router.get("/enrolled/:userID", Group_controller_1.listEnrolledGroup);
 router.get("/:courseId", Group_controller_1.listGroupByCourse);
 router.get("/information/:groupId", Group_controller_1.getGroupInformation);
+router.get("/teacherGroups/:userID", Group_controller_1.getGroupsOfTeacher);
 exports.default = router;
 //# sourceMappingURL=Group.route.js.map
