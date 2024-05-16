@@ -41,3 +41,11 @@ export interface EnrolledCourses {
     ScheduleDate: String,
     ScheduleHour: String
 }
+
+export interface TeacherGroup {
+    GroupID: number
+    CourseID: number
+    CourseName: string
+    ScheduleDate: string
+    ScheduleHour: string
+}

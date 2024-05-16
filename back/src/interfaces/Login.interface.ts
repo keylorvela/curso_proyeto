@@ -1,5 +1,6 @@
 export interface StartSession {
     ID_User: number | null
+    UserTypeID: number
 }
 
 export interface OTP_Verification {
