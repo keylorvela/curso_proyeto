@@ -67,9 +67,9 @@ function DynamicForm({ fields, onSubmit, buttons = [], initialValues = {}, onCha
               {button.label}
             </Button>
           ) : (
-            <div key={index} className='text-end'>
+            <div key={index} className='d-inline'>
               <Button
-                className='mx-2 my-4'
+                className='mr-2 my-4'
                 variant={button.variant}
                 type={button.type}
               >

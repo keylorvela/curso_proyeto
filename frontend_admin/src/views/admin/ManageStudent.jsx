@@ -139,16 +139,11 @@ function ManageStudent() {
                     )}
                     <Row>
 
-                        <Col className='mt-2' xs={12} md={4}>
+                        <Col className='mt-2' md={12} lg={5}>
                             <Image src={noImage} fluid rounded />
                         </Col>
 
-
-                        {/*filler*/}
-                        <Col md={1}>
-                        </Col>
-
-                        <Col className='mt-2' xs={12} md={7}>
+                        <Col className='mt-2' md={12} lg={7}>
                             {
                                 <DynamicForm
                                     fields={fields}
