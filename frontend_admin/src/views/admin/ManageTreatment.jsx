@@ -225,7 +225,7 @@ function ManageTreatment() {
                         </div>
                     ) : (
                         <Row >
-                            <Col className='mt-2' xs={12} md={4} style={{ position: 'relative' }}>
+                            <Col className='mt-2' xs={12} md={4} style={{ position: 'relative', height:'100%',maxHeight:'50%' }}>
                                 <Image
                                     src={imageUrl}
                                     fluid

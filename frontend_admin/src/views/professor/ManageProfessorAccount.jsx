@@ -9,7 +9,7 @@ import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
 import GroupModal from 'src/components/GroupModal.jsx'
 
-import img from 'src/assets/stock2.jpg'
+import Loading from 'src/components/utils/Loading.jsx';
 import styles from 'src/views/professor/ProfessorPage.module.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +23,7 @@ function ManageProfessorAccount() {
     // TODO: Cargar la imagen de perfil
     const userID = 7;
     const fileInputRef = useRef();
+    const [loading, setLoading] = useState(false);
 
     const [passInfo, setPassInfo] = useState({});
     const [hide, setHide] = useState(false);
@@ -34,8 +35,9 @@ function ManageProfessorAccount() {
         async function fetchData() {
             try {
                 // Get teacher information
-                const teacher_data = await TeachersService.GetTeacherInformation( userID );
-
+                setLoading(true);
+                const teacher_data = await TeachersService.GetTeacherInformation(userID);
+                setProfilePictureURL(teacher_data.Photo);
                 setTeacherInformation({
                     personID: teacher_data.PersonId,
                     name: teacher_data.Name,
@@ -46,6 +48,8 @@ function ManageProfessorAccount() {
 
             } catch (error) {
                 console.error('Error fetching data:', error);
+            } finally {
+                setLoading(false);
             }
         }
 
@@ -82,6 +86,7 @@ function ManageProfessorAccount() {
 
     const handleFormSubmit = async (formValues) => {
         try {
+            setLoading(true);
             await TeachersService.UpdateTeacherInformation(
                 formValues.personID,
                 formValues.name,
@@ -92,6 +97,8 @@ function ManageProfessorAccount() {
             alert("Modificación de info del profesor exitosa!");
         } catch (error) {
             console.error("Error in update teacher information", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -118,8 +125,10 @@ function ManageProfessorAccount() {
     }
 
     const buttons = [
-        { variant: 'primary', type: 'button', label: 'Cambiar contraseña',
-        onClick: () => handleChangePassword()},
+        {
+            variant: 'primary', type: 'button', label: 'Cambiar contraseña',
+            onClick: () => handleChangePassword()
+        },
         { variant: 'primary', type: 'submit', label: 'Guardar cambios' },
     ]
 
@@ -135,7 +144,11 @@ function ManageProfessorAccount() {
 
             <div className={styles.page}>
                 <Container>
-
+                    {loading && (
+                        <div className='text-center my-5'>
+                            <Loading size={11} />
+                        </div>
+                    )}
                     <Row>
 
                         <Col className='mt-2' xs={12} md={4}>
@@ -154,7 +167,7 @@ function ManageProfessorAccount() {
 
                         {/*filler*/}
                         <Col md={1}>
-                            </Col>
+                        </Col>
 
                         <Col className='mt-2' xs={12} md={7}>
                             {

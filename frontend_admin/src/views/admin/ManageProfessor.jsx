@@ -17,7 +17,7 @@ import UserService from 'src/services/User.service';
 function ManageProfessor() {
     //TODO Fetch teacherInformation from backend
     const location = useLocation();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const { id } = useParams();
     const navegate = useNavigate ();
 
