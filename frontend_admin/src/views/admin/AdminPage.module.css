@@ -10,12 +10,13 @@
 
 .btnImage {
     color: #FFFFFF;
-    background-color: #85B79D;
+    background-color: var(--ligth-green);
     border: 0px;
     border-radius: 50%;
     padding: 3%;
     position: absolute;
-    top: 35%; 
+    cursor: pointer;
+    top: 70%; 
     left: 80%; 
 }
 
