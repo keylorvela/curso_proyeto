@@ -26,10 +26,11 @@ function ManageProfessor() {
 
     useEffect(() => {
         async function fetchData() {
+            console.log(teacherData);
             try {
                 let teacher_PersonID = teacherData?.PersonID || "";
                 let teacher_Name = teacherData?.Nombre || "";
-                let teacher_Photo = teacherData?.Foto || "";
+                let teacher_Photo = teacherData?.Foto || "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg";
                 let teacher_PhoneNumber = teacherData?.Telefono || "";
                 let teacher_Email = teacherData?.Email || "";
 
@@ -152,7 +153,7 @@ function ManageProfessor() {
                     <Row>
 
                         <Col className='mt-2' xs={12} md={4}>
-                            <Image src={noImage || teacherData.Foto} fluid rounded />
+                            <Image src={teacherData.Foto} fluid rounded style={{ outline: "2px solid var(--main-blue)" }}/>
                         </Col>
 
 

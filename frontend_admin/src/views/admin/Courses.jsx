@@ -36,7 +36,7 @@ function Courses() {
                     Duration: course.Duration,
                     Price: course.Price,
                     UserTarget: course.UserTarget || "No hay público objetivo definido",
-                    ImageUrl: course.ImageUrl || "https://i.ibb.co/wS2c1nt/Default-Image.jpg",
+                    CourseImage: course.CourseImage || "https://i.ibb.co/wS2c1nt/Default-Image.jpg",
                     GroupsByCourse: course.GroupsByCourse || "No hay grupos asignados"
                 }))
 
@@ -67,7 +67,7 @@ function Courses() {
             Price: rowData.Price,
             UserTarget: rowData.UserTarget,
             Groups: rowData.GroupsByCourse.replace(/,/g, '\n'),
-            ImageUrl: rowData.ImageUrl
+            CourseImage: rowData.CourseImage
         })
         setShowModal(true);
     };
@@ -116,7 +116,7 @@ function Courses() {
                         show={showModal}
                         onHide={handleModalClose}
                         title="Curso"
-                        photo={modalData.ImageUrl}
+                        photo={modalData.CourseImage}
                         roundedPhoto={false}
                         labels={[
                             { title: "Curso", content: modalData.CourseName },

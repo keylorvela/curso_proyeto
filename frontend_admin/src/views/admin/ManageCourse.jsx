@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation  } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
@@ -8,6 +8,9 @@ import GroupModal from 'src/components/GroupModal.jsx'
 
 import img from 'src/assets/stock2.jpg'
 import styles from 'src/views/admin/AdminPage.module.css'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 
@@ -20,9 +23,11 @@ function ManageCourse() {
     // TODO: API Calls para crear y modificar un curso
     // TODO: Funcionalidad de eliminar curso
 
+    const fileInputRef = useRef();
     const location = useLocation();
     const { id } = useParams();
     const [hide, setHide] = useState(false);
+    const [profilePictureURL, setProfilePictureURL] = useState("");
 
     const [courseInfo, setCourseInfo] = useState({});
     const [groupInfo, setGroupInfo] = useState(
@@ -52,6 +57,9 @@ function ManageCourse() {
                 const courseIncludes = courseInformation?.Includes.replace(/\//g, '\n') || "";
                 const courseTopics = courseInformation?.Topics.replace(/\//g, '\n') || "";
                 const courseUserTarget = courseInformation?.UserTarget.replace(/\//g, '\n') || "";
+                const courseImage = courseInformation?.CourseImage || "https://i.ibb.co/wS2c1nt/Default-Image.jpg";
+
+                setProfilePictureURL(courseImage);
 
                 setCourseInfo({
                     Name: courseName,
@@ -60,7 +68,8 @@ function ManageCourse() {
                     Includes: courseIncludes,
                     Topics: courseTopics,
                     UserTarget: courseUserTarget,
-                    Price: coursePrice
+                    Price: coursePrice,
+                    CourseImage: courseImage
                 });
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -144,7 +153,7 @@ function ManageCourse() {
                 formValues.Includes,
                 formValues.Duration,
                 formValues.Price,
-                [],
+                profilePictureURL,
                 formValues.UserTarget
             );
             alert("Curso creado!");
@@ -159,7 +168,7 @@ function ManageCourse() {
                 formValues.Includes,
                 formValues.Duration,
                 formValues.Price,
-                [],
+                profilePictureURL,
                 formValues.UserTarget
             );
             alert("Curso modificado!");
@@ -174,6 +183,20 @@ function ManageCourse() {
             }
         } catch (error) {
             console.error("Error al eliminar el cursos", error);
+        }
+    }
+
+    const handleFileUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                const base64String = reader.result;
+                setProfilePictureURL(base64String);
+            }
+
+            reader.readAsDataURL(file);
         }
     }
 
@@ -213,14 +236,23 @@ function ManageCourse() {
                 <Container>
 
                     <Row>
-
                         <Col className='mt-2' xs={12} md={4}>
-                            <Image src={img} fluid rounded />
+                            {
+                                Object.keys(courseInfo).length
+                                &&
+                                <div className={styles.image_container}>
+                                    <Image src={profilePictureURL} fluid rounded />
+                                    <span className={styles.edit_picture_span} onClick={() => { fileInputRef.current.click(); }}>
+                                        <FontAwesomeIcon icon={faPencil} />
+                                    </span>
+                                    <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileUpload} />
+                                </div>
+                            }
                         </Col>
 
                         {/*filler*/}
                         <Col md={1}>
-                            </Col>
+                        </Col>
 
                         <Col className='mt-2' xs={12} md={7}>
                             {
