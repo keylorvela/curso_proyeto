@@ -9,14 +9,12 @@
     align-items: center;
     justify-content: space-around;
     background-color: var(--main-blue);
-    
-    
 }
 
 .logoDiv {
     width: 20%;
     height: 100%;
-    margin-left: 5%;
+    /* margin-left: 5%; */
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -30,25 +28,24 @@
 } 
 
 .content {
-    width: 40%;
+    /* width: 40%; */
     height: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
-    padding: 5%;
-    gap:5%
+    /* justify-content: space-evenly; */
+    /* padding: 5%; */
+    gap:20px
     
 }
 
 .navLink{
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     text-decoration: none;
     color: #FFFFFF;
     font-weight: 700;
     
     font-family: var(--font);
-
 }
 
 .navLink:hover{
@@ -59,11 +56,15 @@
 
 .mobileMenu{
     display: none;
-    margin-right: 10%;
+    /* margin-right: 10%; */
 }
 
 
-
+@media (max-width: 960px) {
+    .navLink {
+        font-size: 1.1rem;
+    }
+  }
 
 
 /* ---------- Mobile  */
