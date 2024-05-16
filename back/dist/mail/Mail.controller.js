@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const nodemailer_1 = __importDefault(require("nodemailer"));
-const Mail_template_1 = __importDefault(require("./Mail.template"));
+const Mail_template_1 = require("./Mail.template");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 class MailManager {
@@ -45,10 +45,33 @@ class MailManager {
             });
         });
     }
-    sendMail(from, to, subject, name, otp) {
+    sendMail_OTP(from, to, subject, name, otp) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
-                const html = (0, Mail_template_1.default)(otp, name);
+                const html = (0, Mail_template_1.mailTemplate_OTP)(otp, name);
+                const mail_config = {
+                    from,
+                    to,
+                    subject,
+                    html: html
+                };
+                this.transporter.sendMail(mail_config, (error, info) => {
+                    if (error) {
+                        console.error("Mensaje no enviado!:", error);
+                        reject(error);
+                    }
+                    else {
+                        console.log("Mensaje enviado con exito");
+                        resolve();
+                    }
+                });
+            });
+        });
+    }
+    sendMail_UserRegistration(from, to, subject, name, username, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                const html = (0, Mail_template_1.mailTemplate_UserRegistration)(name, username, password);
                 const mail_config = {
                     from,
                     to,

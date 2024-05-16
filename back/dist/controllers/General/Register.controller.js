@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerUser = void 0;
 const dbConfig_1 = __importDefault(require("../../database/dbConfig"));
+const Mail_controller_1 = __importDefault(require("../../mail/Mail.controller"));
 // Register a new user
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { p_name, p_email, p_phone_number, p_photo, p_username, p_password, p_type } = req.body;
@@ -22,6 +23,8 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return;
     }
     try {
+        const mailManager = new Mail_controller_1.default();
+        yield mailManager.sendMail_UserRegistration("testELSPrueba@gmail.com", p_email, "Bienvenid@ a ELS", p_name, p_username, p_password);
         const result_user = yield dbConfig_1.default.query(`
             CALL SP_General_RegisterUser(
                 "${p_name}",
