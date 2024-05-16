@@ -28,21 +28,9 @@ const createTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function
                 "${body.p_effectDuration}",
                 "${body.p_information}",
                 ${body.p_categoryID},
+                "${body.p_treatmentImage}",
                 @o_status)`);
         const result = JSON.parse(JSON.stringify(result_treatment[0][0]));
-        if (result.length > 0 && result[0].o_treatmentID != -1) {
-            const imagesPromise = body.p_photos.map((photo) => __awaiter(void 0, void 0, void 0, function* () {
-                yield dbConfig_1.default.query(`
-                    CALL SP_Image_AddTreatmentImage(
-                        "${photo.url}",
-                        ${result[0].o_treatmentID},
-                        "${photo.imageType}",
-                        @o_status
-                    )
-                `);
-            }));
-            yield Promise.all(imagesPromise);
-        }
         res.status(200).send(result[0] || {});
     }
     catch (error) {
@@ -50,7 +38,7 @@ const createTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.createTreatment = createTreatment;
-// Delete specifi treatment
+// Delete specific treatment
 const deleteTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const str_treatmentID = req.params.treatmentID;
     const treatmentID = Number(str_treatmentID) || null;
@@ -101,8 +89,6 @@ const getTreatmentInformation = (req, res) => __awaiter(void 0, void 0, void 0, 
     try {
         const result_treatment = yield dbConfig_1.default.query(`CALL SP_Treatment_SearchFor(${treatmentID}, @o_status)`);
         const result = JSON.parse(JSON.stringify(result_treatment[0][0]));
-        const result_images = yield dbConfig_1.default.query(`CALL SP_Image_ReadAllTreatment(${treatmentID}, @o_status)`);
-        result[0].Photos = JSON.parse(JSON.stringify(result_images[0][0]));
         res.status(200).send(result[0] || {});
     }
     catch (error) {
@@ -132,13 +118,9 @@ const updateTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function
                 "${body.p_effectDuration}",
                 "${body.p_information}",
                 ${categoryID},
+                "${body.p_treatmentImage}",
                 @o_status)`);
         const result = JSON.parse(JSON.stringify(result_treatment[0][0]));
-        const imagesPromise = body.p_photos.map((photo) => __awaiter(void 0, void 0, void 0, function* () {
-            yield dbConfig_1.default.query(`
-                CALL SP_Image_UpdateTreatmentImage(${photo.imageID}, "${photo.url}", @o_status)`);
-        }));
-        yield Promise.all(imagesPromise);
         res.status(200).send(result[0] || {});
     }
     catch (error) {
