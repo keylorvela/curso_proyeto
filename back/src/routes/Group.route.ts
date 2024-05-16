@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createGroup, updateGroup, listEnrolledGroup, dropOutGroup, deleteGroup, listGroupByCourse, getGroupInformation } from "../controllers/Group.controller";
+import { createGroup, updateGroup, listEnrolledGroup, dropOutGroup, deleteGroup, listGroupByCourse, getGroupInformation, getGroupsOfTeacher } from "../controllers/Group.controller";
 const router = Router();
 
 router.post("/", createGroup);
@@ -15,5 +15,7 @@ router.get("/enrolled/:userID", listEnrolledGroup);
 router.get("/:courseId", listGroupByCourse);
 
 router.get("/information/:groupId", getGroupInformation);
+
+router.get("/teacherGroups/:userID", getGroupsOfTeacher);
 
 export default router;

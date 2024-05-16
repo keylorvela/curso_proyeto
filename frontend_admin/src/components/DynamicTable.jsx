@@ -14,7 +14,7 @@ import styles from 'src/components/DynamicTable.module.css';
 function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick, isSearching, searchKey }) {
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(2);   //could be changed
+  const [itemsPerPage, setItemsPerPage] = useState(2);   //could be changed
   const [showFirstDropdown, setShowFirstDropdown] = useState(false);
   const [showSecondDropdown, setShowSecondDropdown] = useState(false);
   const [dropdownMin, setdropdownMin] = useState(2);
@@ -25,6 +25,8 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick, isS
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const [currentItems, setCurrentItems] = useState(data.slice(indexOfFirstItem, indexOfLastItem));
   const [copyItems, setCopyItems] = useState(data.slice(indexOfFirstItem, indexOfLastItem));
+
+  const options = Array.from({ length: 10 }, (_, i) => i + 1);//could be changed
 
   //Search
   const [searchTerm, setSearchTerm] = useState('');
@@ -68,7 +70,7 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick, isS
     const newCurrent = data.slice(indexOfFirstItem, indexOfLastItem)
     setCurrentItems(newCurrent);
     setCopyItems(newCurrent)
-  }, [currentPage]);
+  }, [currentPage, itemsPerPage]);
 
   useEffect(() => {
     const newSortedData = [...currentItems].sort((a, b) => {
@@ -252,13 +254,29 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick, isS
           ))}
         </tbody>
       </Table>
-      {totalPages > 1 && (
-        <div className={styles.pagination}>
-          <Button key="prev" onClick={prevPage} className={styles.movePgaeBtn} variant="light">&lt;</Button>
-          {pageNumbers}
-          <Button key="next" onClick={nextPage} className={styles.movePgaeBtn} variant="light">&gt;</Button>
+      <div className={styles.paginationContainer}>
+        {totalPages > 1 && (
+          <div className={styles.pagination}>
+            <Button key="prev" onClick={prevPage} className={styles.movePgaeBtn} variant="light">&lt;</Button>
+            {pageNumbers}
+            <Button key="next" onClick={nextPage} className={styles.movePgaeBtn} variant="light">&gt;</Button>
+          </div>
+        )}
+        <div className={styles.itemsPerPage}>
+          <span>Items por página:</span>
+          <Dropdown>
+            <Dropdown.Toggle variant="light" id="dropdown-basic">
+              {itemsPerPage}
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              {options.map((option) => (
+                <Dropdown.Item key={option} onClick={() => setItemsPerPage(option)}>{option}</Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
-      )}
+      </div>
     </div>
   );
 }

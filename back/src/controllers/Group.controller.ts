@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import dbConnection from "../database/dbConfig";
 import { RowDataPacket } from 'mysql2';
 import { OStatus } from "interfaces/OStatus.interface";
-import { Group, GroupBody, EnrolledCourses, GroupInformation } from "interfaces/Group.interface";
+import { Group, GroupBody, EnrolledCourses, GroupInformation, TeacherGroup } from "interfaces/Group.interface";
 
 export const listGroupByCourse = async (req: Request, res: Response) => {
 
@@ -118,6 +118,26 @@ export const listEnrolledGroup = async (req: Request, res: Response) => {
             CALL SP_Group_ListEnrolled(${userID})
         `);
         const result: EnrolledCourses[] = JSON.parse(JSON.stringify(result_group[0][0]));
+
+        res.status(200).send(result);
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send({ error: "Request Failed" });
+    }
+};
+
+export const getGroupsOfTeacher = async (req: Request, res: Response) => {
+    const userID: number = Number(req.params.userID);
+
+    if (isNaN(userID) || userID <= 0) {
+        res.status(400).send({ error: "Invalid user ID" });
+        return;
+    }
+    try {
+        const result_group = await dbConnection.query<RowDataPacket[]>(`
+            CALL SP_Group_ListGroupsOfTeacher(${userID})
+        `);
+        const result: TeacherGroup[] = JSON.parse(JSON.stringify(result_group[0][0]));
 
         res.status(200).send(result);
     } catch (error) {

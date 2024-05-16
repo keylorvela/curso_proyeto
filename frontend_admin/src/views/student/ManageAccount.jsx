@@ -86,6 +86,7 @@ function ManageAccount() {
 
     const handleFormSubmit = async (formValues) => {
         try {
+            console.log(studentInformation.photo);
             setLoading(true);
             const result = await StudentService.UpdateStudentInformation(
                 formValues.personID,
@@ -151,12 +152,12 @@ function ManageAccount() {
                         </div>
                     )}
                     <Row>
-                        <Col className='mt-2' xs={12} md={4}>
+                        <Col className='mt-2' md={12} lg={5}>
                             {
                                 Object.keys(studentInformation).length
                                 &&
                                 <div className={styles.image_container}>
-                                    <Image src={profilePictureURL} fluid rounded />
+                                    <Image src={profilePictureURL} className={styles.ProfilePicture} fluid rounded />
                                     <span className={styles.edit_picture_span} onClick={() => { fileInputRef.current.click(); }}>
                                         <FontAwesomeIcon icon={faPencil} />
                                     </span>
@@ -165,11 +166,7 @@ function ManageAccount() {
                             }
                         </Col>
 
-                        {/*filler*/}
-                        <Col md={1}>
-                        </Col>
-
-                        <Col className='mt-2' xs={12} md={7}>
+                        <Col className='mt-2' md={12} lg={7}>
                             {
                                 Object.keys(studentInformation).length
                                 &&

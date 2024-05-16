@@ -152,16 +152,11 @@ function ManageProfessor() {
                     )}
                     <Row>
 
-                        <Col className='mt-2' xs={12} md={4}>
-                            <Image src={teacherData.Foto} fluid rounded style={{ outline: "2px solid var(--main-blue)" }}/>
+                        <Col className={styles.image_container} md={12} lg={5} fluid>
+                            <Image src={teacherData.Foto} className={styles.ProfilePicture} fluid rounded/>
                         </Col>
 
-
-                        {/*filler*/}
-                        <Col md={1}>
-                        </Col>
-
-                        <Col className='mt-2' xs={12} md={7}>
+                        <Col className='mt-2' md={12} lg={7}>
                             {
                                 Object.keys(teacherInformation).length
                                 &&

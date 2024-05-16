@@ -1,5 +1,5 @@
 import nodemailer, { Transporter } from "nodemailer"
-import mailTemplateGenerator from "./Mail.template";
+import { mailTemplate_OTP, mailTemplate_UserRegistration } from "./Mail.template";
 import dotenv from "dotenv"
 
 dotenv.config();
@@ -37,9 +37,33 @@ export default class MailManager {
         })
     }
 
-    public async sendMail(from: string, to: string, subject: string, name: string, otp: string): Promise<void> {
+    public async sendMail_OTP(from: string, to: string, subject: string, name: string, otp: string): Promise<void> {
         return new Promise((resolve, reject) => {
-            const html = mailTemplateGenerator( otp, name );
+            const html = mailTemplate_OTP( otp, name );
+
+            const mail_config = {
+                from,
+                to,
+                subject,
+                html: html
+            };
+
+            this.transporter.sendMail(mail_config, (error, info) => {
+                if (error) {
+                    console.error("Mensaje no enviado!:", error);
+                    reject(error);
+                }
+                else {
+                    console.log("Mensaje enviado con exito");
+                    resolve();
+                }
+            });
+        })
+    }
+
+    public async sendMail_UserRegistration(from: string, to: string, subject: string, name: string, username: string, password: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const html = mailTemplate_UserRegistration( name, username, password );
 
             const mail_config = {
                 from,

@@ -46,7 +46,7 @@ export const requestEmail = async (req: Request, res: Response) => {
         const result: OTP_Verification[] = JSON.parse(JSON.stringify(result_verifyEmail[0][0]));
 
         if (result[0].IsValid) {
-            await mailManager.sendMail(
+            await mailManager.sendMail_OTP(
                 "testELSPrueba@gmail.com",
                 body.requested_email,
                 "Solicitud de cambio de contraseña",
