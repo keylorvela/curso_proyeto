@@ -10,10 +10,23 @@
 
 .image_container {
     position: relative;
+    text-align: center;
 
     outline: 2px solid var(--main-blue);
     border-radius: 10px;
 }
+
+.ProfilePicture {
+    height: 100%;
+    object-fit: contain;
+}
+
+@media (max-width: 992px) {
+    .ProfilePicture {
+        height: min-content;
+        object-fit: cover;
+    }
+  }
 
 .edit_picture_span {
     cursor: pointer;

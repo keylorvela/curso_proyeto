@@ -6,6 +6,8 @@ import MainLayout from 'src/components/MainLayout.jsx';
 import styles from 'src/components/Common.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
 
+import NoInformationFound from 'src/components/NoInformationFound.jsx';
+
 import Container from 'react-bootstrap/Container';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -28,7 +30,9 @@ function StudentsByProf() {
             try {
                 // Get students
                 const studentList_data = await StudentService.GetStudentsFromGroup( groupID );
-                console.log(studentList_data)
+                if (studentList_data[0].o_status.includes("Error")) {
+                    return;
+                }
                 const studentList_formatted = studentList_data.map(student => ({
                     Nombre: student.Name,
                     Email: student.Email,
@@ -72,15 +76,17 @@ function StudentsByProf() {
                 <h1 className={styles.tableTitle}>Lista de estudiantes</h1>
 
                 {
-                    studentsList.length
-                    &&
-                    <DynamicTable
-                        columns={columns}
-                        data={studentsList}
-                        buttons={btn}
-                        isSearching={true}
-                        searchKey='Nombre'
-                    />
+                    (studentsList.length) ? (
+                        <DynamicTable
+                            columns={columns}
+                            data={studentsList}
+                            buttons={btn}
+                            isSearching={true}
+                            searchKey='Nombre'
+                        />
+                    ) : (
+                        <NoInformationFound message={"No hay estudiantes registrados"} ></NoInformationFound>
+                    )
                 }
 
                 {showModal && modalData && (
