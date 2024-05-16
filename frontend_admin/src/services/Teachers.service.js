@@ -28,6 +28,16 @@ const TeachersService = {
             console.error("Error in course service", error);
         }
     },
+
+    DeleteTeacher: async (userID) => {
+        try {
+            const body = { userID };
+            const response = await axios.delete(`/teachers`, body);
+            return response.data;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
 };
 
 export default TeachersService;

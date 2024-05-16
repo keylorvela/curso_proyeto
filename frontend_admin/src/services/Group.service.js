@@ -56,6 +56,16 @@ const GroupService = {
             console.error("Error in course service", error);
         }
     },
+
+    DropOutCourse: async (userID, groupID) => {
+        try {
+            const body = { userID, groupID }
+            const response = await axios.post(`/group/drop-out`, body);
+            return response.data;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
 };
 
 export default GroupService;

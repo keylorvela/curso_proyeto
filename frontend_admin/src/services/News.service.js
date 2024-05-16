@@ -21,7 +21,17 @@ const NewsService = {
         } catch (error) {
             console.error("Error in course service", error);
         }
-    }
+    },
+
+    RemoveNews: async (newsID) => {
+        try {
+            const response = await axios.delete(`/news/${newsID}`);
+
+            return response.data;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
 };
 
 export default NewsService;

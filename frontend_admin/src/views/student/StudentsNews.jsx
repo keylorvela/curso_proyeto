@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 import MainLayout from 'src/components/MainLayout.jsx';
@@ -14,6 +14,7 @@ function StudentsNews() {
     // TODO: Funcionalidad de "darse de baja"
 
     const location = useLocation();
+    const navegate = useNavigate();
     const { userID, groupID } = location.state || {};
 
     const [courseName, setCourseName] = useState('');
@@ -35,6 +36,8 @@ function StudentsNews() {
                     });
                 }
 
+                console.log(userID, groupID)
+
                 setNews( news_list );
 
                 // Get group information
@@ -51,6 +54,16 @@ function StudentsNews() {
         fetchData();
     }, []);
 
+    const DropOutCourse = async () => {
+        try {
+            const result = await GroupService.DropOutCourse( userID, groupID );
+            console.log(result);
+            alert("El usuario se dio de baja del grupo");
+            navegate(`/student/courses`);
+        } catch (error) {
+            console.error("Error al dar de baja:", error);
+        }
+    }
 
     return (
         <MainLayout type={3}>
@@ -60,17 +73,27 @@ function StudentsNews() {
                     <Col md={7} className={styles.colCustom}>
                         <div className={styles.newsHeader}>
                             <h3 className={styles.subTitle}>Noticias</h3>
-                            <Button variant="danger" className={styles.unsubscribeButton}>Darse de baja</Button>
+                            <Button variant="danger" className={styles.unsubscribeButton} onClick={DropOutCourse}>Darse de baja</Button>
                         </div>
-                        {news.map((New, index) => (
-                            <Card key={index} className={styles.newsCard}>
-                                <Card.Body>
-                                    <Card.Title className={styles.newsDate}>{New.date}</Card.Title>
-                                    <Card.Subtitle className={`${styles.newsDate} text-start`}>{New.title}</Card.Subtitle>
-                                    <Card.Text className={styles.newsDescription}>{New.description}</Card.Text>
-                                </Card.Body>
-                            </Card>
-                        ))}
+                        {
+                            (news.length == 0) ?
+                            (
+                                <div className={styles.information_container}>
+                                    <span className={styles.noNews_span}>No hay noticias publicadas</span>
+                                </div>
+                            ) :
+                            (
+                                news.map((New, index) => (
+                                    <Card key={index} className={styles.newsCard}>
+                                        <Card.Body>
+                                            <Card.Title className={styles.newsDate}>{New.date}</Card.Title>
+                                            <Card.Subtitle className={`${styles.newsDate} text-start`}>{New.title}</Card.Subtitle>
+                                            <Card.Text className={styles.newsDescription}>{New.description}</Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                ))
+                            )
+                        }
                     </Col>
 
                     <Col md={4} className={styles.colCustom}>

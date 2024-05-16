@@ -78,3 +78,12 @@
     font-size: large;
     color: var(--main-blue);
 }
+
+.information_container {
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+}
+.noNews_span {
+    color: #6d6d6d;
+}

@@ -29,11 +29,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-
-        
-        <Route path="mycourses" element={<MyCourses />} />
-
-
         <Route path="professor/courses" element={<MyCourses />} />
         <Route path="professor/news" element={<ProfessorNews />} />
         <Route path="professor/profile" element={<ManageProfessorAccount />} />

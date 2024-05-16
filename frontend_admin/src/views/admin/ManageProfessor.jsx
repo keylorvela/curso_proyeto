@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { useLocation  } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate  } from 'react-router-dom';
 
 import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
@@ -18,6 +17,7 @@ function ManageProfessor() {
     //TODO Fetch teacherInformation from backend
     const location = useLocation();
     const { id } = useParams();
+    const navegate = useNavigate ();
 
     const teacherData = location.state?.teacherInformation;
     const [teacherInformation, setTeacherInformation] = useState({});
@@ -47,7 +47,6 @@ function ManageProfessor() {
     }, []);
 
     const handleFormSubmit = async (formValues) => {
-        console.log(formValues)
         try {
             // Sí hay id := Modifica el profesor
             if (id) {
@@ -110,8 +109,14 @@ function ManageProfessor() {
         }
     ];
 
-    const handleDelete = (id_p) => {
-        alert(id_p);
+    const handleDeleteTeacher = async (id_p) => {
+        try {
+            // await TeachersService.DeleteTeacher(id_p);
+            alert("Se elimino el profesor (Actualizar API del profesor)");
+            navegate('/admin/professors');
+        } catch (error) {
+            console.error("Error al eliminar profesor", error);
+        }
     }
 
     const buttons = [
@@ -123,7 +128,7 @@ function ManageProfessor() {
                 variant: 'danger',
                 type: 'button',
                 label: 'Eliminar profesor',
-                onClick: (id) => handleDelete(id),
+                onClick: (id) => handleDeleteTeacher(id),
                 parameter: id
             }
         )

@@ -20,7 +20,7 @@ import StudentService from 'src/services/Students.service';
 function ManageAccount() {
     // TODO: Obtener el userID
     // TODO: Display user profile picture
-    const userID = 6;
+    const userID = 8;
 
     const fileInputRef = useRef();
     const [passInfo, setPassInfo] = useState({});
@@ -89,7 +89,6 @@ function ManageAccount() {
                 formValues.email,
                 studentInformation.photo
             );
-            console.log(result)
             alert("Modificación de info del estudiante exitosa!");
         } catch (error) {
             console.error("Error in update teacher information", error);

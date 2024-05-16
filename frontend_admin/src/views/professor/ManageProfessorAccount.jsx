@@ -21,7 +21,7 @@ import TeachersService from 'src/services/Teachers.service';
 function ManageProfessorAccount() {
     // TODO: Obtener el userID
     // TODO: Cargar la imagen de perfil
-    const userID = 5;
+    const userID = 7;
     const fileInputRef = useRef();
 
     const [passInfo, setPassInfo] = useState({});
