@@ -5,8 +5,9 @@ import { useLocation, useParams, useNavigate  } from 'react-router-dom';
 import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
 
-import img from 'src/assets/stock2.jpg'
+import noImage from 'src/assets/noImage.jpg'
 import styles from 'src/views/admin/AdminPage.module.css'
+import Loading from 'src/components/utils/Loading.jsx';
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 
@@ -16,6 +17,7 @@ import UserService from 'src/services/User.service';
 function ManageProfessor() {
     //TODO Fetch teacherInformation from backend
     const location = useLocation();
+    const [loading, setLoading] = useState(true);
     const { id } = useParams();
     const navegate = useNavigate ();
 
@@ -49,6 +51,7 @@ function ManageProfessor() {
     const handleFormSubmit = async (formValues) => {
         try {
             // Sí hay id := Modifica el profesor
+            setLoading(true);
             if (id) {
                 await TeachersService.UpdateTeacherInformation(
                     formValues.personID,
@@ -74,6 +77,8 @@ function ManageProfessor() {
             }
         } catch (error) {
             console.error("Error in update teacher information", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -135,15 +140,19 @@ function ManageProfessor() {
     }
 
     return (
-        <MainLayout type = {1}>
+        <MainLayout type={1}>
 
             <div className={styles.page}>
                 <Container>
-
+                    {loading && (
+                        <div className='text-center my-5'>
+                            <Loading size={11} />
+                        </div>
+                    )}
                     <Row>
 
                         <Col className='mt-2' xs={12} md={4}>
-                            <Image src={img} fluid rounded />
+                            <Image src={noImage || teacherData.Foto} fluid rounded />
                         </Col>
 
 
