@@ -3,6 +3,7 @@ import { RowDataPacket } from "mysql2";
 import dbConnection from "../database/dbConfig";
 import { OStatus } from "../interfaces/OStatus.interface";
 import { Application, ApplicationBody } from "../interfaces/Application.interface";
+import fs from 'fs';
 
 
 export const getAllApplications = async (req: Request, res: Response) => {
@@ -69,3 +70,29 @@ export const sendApplication = async (req: Request, res: Response) => {
     }
 }
 
+
+
+
+export const testReceive = async (req: Request, res: Response) => {
+    if (!req.file || typeof(req.file) == 'undefined') {
+      res.status(400).send('No file uploaded.');
+    }
+    console.log("in", req.file)
+    const {path, buffer} = req.file;
+    try {
+        // Use parameterized query to prevent SQL injection
+        const result_application = await dbConnection.query<RowDataPacket[]>(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`, ["Test name", fs.readFileSync(path), "email@email.com", 123123, 2]);
+        
+        // Parse the result
+        const result: OStatus[] = JSON.parse(JSON.stringify(result_application[0][0]));
+
+        // Send the response
+        res.status(200).send(result[0] || {});
+    } catch (error) {
+        // Handle errors
+        console.log("ERROR")
+
+        console.log(error.message)
+        res.status(400).send({ error: "Request Failed", info: error.message });
+    }
+  };
