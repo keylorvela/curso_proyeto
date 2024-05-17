@@ -118,9 +118,9 @@ function Treatments() {
             ) : (
               <>
                 <Row>{getFilters()}</Row>
-                <Row className='d-flex align-items-center'>
+                <Row className={styles.cardsContainer}>
                   {filteredTreatments.map((item, index) => (
-                    <Col className = 'my-2' key={index} sm={4}>
+                    <Col className={styles.cardTreatment} key={index}>
                       <Treatment
                         title={item.Name}
                         event={() => handleClick(item.ID)}

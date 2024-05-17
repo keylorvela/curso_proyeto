@@ -17,19 +17,20 @@ function Treatment({ title, event }) {
         <>
             <main className={styles.body}>
 
-                <Stack gap = {2} className = 'px-3 py-2'>
+                <Stack className='px-3 py-2 h-100 justify-content-between'>
+                    <div>
+                        <Image src={img} rounded fluid />
+                        <p className="text-center fw-medium fs-2 mt-3" >{title}</p>
+                    </div>
 
-                    <Image src={img} rounded fluid />
-
-                    <p className="text-center fw-medium fs-2 mt-3" >{title}</p>
-
-                    <Button className = 'my-2' variant="outline-success btn-lg" onClick={event}>
-                        Más información
-                    </Button>
-
-                    <Button className = 'my-2' variant="success btn-lg" >
-                        <b>Realizar consulta</b>
-                    </Button>
+                    <div>
+                        <Button className = 'my-2 w-100' variant="outline-success btn-lg" onClick={event}>
+                            Más información
+                        </Button>
+                        <Button className = 'my-2 w-100' variant="success btn-lg" >
+                            <b>Realizar consulta</b>
+                        </Button>
+                    </div>
 
                 </Stack>
             </main>
