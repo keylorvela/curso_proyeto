@@ -33,12 +33,18 @@ function CardsInformation({ titles, contents }) {
                                 </Col>
                             </Row>
                         </Col>
-                        <hr className={styles.divider}></hr>
                     </>
                 )
             )
             }
         </Row>
+        {
+            (contents[0]) ? (
+                <hr className={styles.divider}></hr>
+            ) : (
+                <></>
+            )
+        }
         </>
     )
 }
