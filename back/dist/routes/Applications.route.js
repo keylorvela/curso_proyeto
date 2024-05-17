@@ -23,7 +23,7 @@ router.put("/", Application_controller_1.respondToApplication);
 router.post("/", upload.single('file'), Application_controller_1.sendApplication);
 router.get("/file/:idApplication", Application_controller_1.getApplicationFile);
 router.get('/test', (req, res) => {
-    res.send("HOLA");
+    res.send("aaHOLA");
 });
 exports.default = router;
 //# sourceMappingURL=Applications.route.js.map
