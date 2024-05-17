@@ -18,6 +18,8 @@ import { FaWhatsapp } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { getCourse } from 'src/services/coursesService.js';
 
+import { downloadPaymentReceipt } from 'src/services/applicationService.js';
+
 function CourseView() {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
@@ -28,14 +30,20 @@ function CourseView() {
       try {
         const result = await getCourse(id);
         setCourse(result);
-        setLoading(false);
+
       } catch (error) {
         console.error('Error fetching course:', error);
-        setLoading(false); // Aquí debes manejar el error adecuadamente según tu caso de uso
+      } finally {
+
+        setLoading(false);
+
       }
     }
     fetchData();
   }, [id]);
+
+
+
 
   return (
     <MainLayout>
@@ -48,7 +56,7 @@ function CourseView() {
           ) : (
             /* En caso de que no se encuentre el curso */
             Object.keys(course).length === 0 ? (
-              
+
               <Alert key='warning' variant='warning'>
                 No se encontró el curso.
               </Alert>
@@ -93,8 +101,9 @@ function CourseView() {
                     <Image src={transferencia} width={125} height={125} />
                   </Col>
                 </Row>
-                <Row className='d-flex text-center justify-content-center my-3'>
-                  <Col>
+                <Row className='d-flex justify-content-center'>
+                  <Col md={6} className={`rounded ${styles.form}`}>
+                    <CourseForm />
                   </Col>
                 </Row>
               </>

@@ -1,6 +1,6 @@
 export interface ApplicationBody {
     name: String,
-    payment_receipt: String,
+    payment_receipt: JSON,
     email: String,
     phone_number: String,
     groupID: number
@@ -8,7 +8,7 @@ export interface ApplicationBody {
 export interface Application {
     ID: string;
     StudentName: string;
-    PaymentReceipt: string;
+    PaymentReceipt: JSON;
     Date: string;
     StartingDate: string;
     CourseName: string;

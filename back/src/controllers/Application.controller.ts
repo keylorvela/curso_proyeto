@@ -3,7 +3,17 @@ import { RowDataPacket } from "mysql2";
 import dbConnection from "../database/dbConfig";
 import { OStatus } from "../interfaces/OStatus.interface";
 import { Application, ApplicationBody } from "../interfaces/Application.interface";
+
+//File handling
+import path from 'path';
 import fs from 'fs';
+import { promisify } from 'util';
+const unlinkAsync = promisify(fs.unlink);
+
+
+
+
+
 
 
 export const getAllApplications = async (req: Request, res: Response) => {
@@ -13,7 +23,7 @@ export const getAllApplications = async (req: Request, res: Response) => {
         `);
         const applicationsList: Application[] = JSON.parse(JSON.stringify(result[0][0]));
 
-   
+
         res.status(200).send(applicationsList || []);
     } catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
@@ -48,51 +58,57 @@ export const respondToApplication = async (req: Request, res: Response) => {
 
 
 export const sendApplication = async (req: Request, res: Response) => {
-    const body: ApplicationBody = req.body;
-
-    if (body.email == "" || body.name == "" || body.payment_receipt == "" || body.phone_number == "" || isNaN(body.groupID) || body.groupID <= 0) {
-        res.status(400).send({ error: "All fields are necessary" });
-        return;
-    }
-
+    
+    const { path, buffer } = req.file;
     try {
         // Use parameterized query to prevent SQL injection
-        const result_application = await dbConnection.query<RowDataPacket[]>(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`, [body.name, body.payment_receipt, body.email, body.phone_number, body.groupID]);
-        
-        // Parse the result
+        const result_application = await dbConnection.query<RowDataPacket[]>(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`,[req.body.nombre, fs.readFileSync(path), req.body.correo, req.body.telefono, 2]);
+
         const result: OStatus[] = JSON.parse(JSON.stringify(result_application[0][0]));
 
+
+        //Delete file
+        const resultDelete = await unlinkAsync(path);
         // Send the response
         res.status(200).send(result[0] || {});
     } catch (error) {
-        // Handle errors
-        res.status(400).send({ error: "Request Failed", info: error });
+        res.status(400).send({ error: "Request Failed", info: error.message });
     }
 }
 
 
 
 
-export const testReceive = async (req: Request, res: Response) => {
-    if (!req.file || typeof(req.file) == 'undefined') {
-      res.status(400).send('No file uploaded.');
-    }
-    console.log("in", req.file)
-    const {path, buffer} = req.file;
+
+export const getApplicationFile = async (req: Request, res: Response) => {
+    const { idApplication } = req.params;
+
+
+
     try {
-        // Use parameterized query to prevent SQL injection
-        const result_application = await dbConnection.query<RowDataPacket[]>(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`, ["Test name", fs.readFileSync(path), "email@email.com", 123123, 2]);
-        
-        // Parse the result
-        const result: OStatus[] = JSON.parse(JSON.stringify(result_application[0][0]));
+        const result = await dbConnection.query<RowDataPacket[]>(`
+            CALL SP_GetPaymentReceiptByID(?)
+        `, [idApplication]);
 
-        // Send the response
-        res.status(200).send(result[0] || {});
+
+
+        // Verifica que haya un resultado válido y que contenga el campo PaymentReceipt
+        if (result[0][0][0]["PaymentReceipt"]) {
+            const paymentReceipt: Buffer = result[0][0][0]["PaymentReceipt"];
+
+            // Configura los encabezados de la respuesta para forzar la descarga del archivo
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=payment_receipt_${idApplication}.pdf`);
+            res.send(paymentReceipt);
+        } else {
+            return res.status(404).send('Payment receipt not found.');
+        }
     } catch (error) {
-        // Handle errors
-        console.log("ERROR")
-
-        console.log(error.message)
-        res.status(400).send({ error: "Request Failed", info: error.message });
+        res.status(500).send({ error: 'Request Failed', info: error.message });
     }
-  };
+}
+
+
+
+
+

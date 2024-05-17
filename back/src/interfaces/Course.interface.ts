@@ -17,6 +17,7 @@ export interface CourseBody {
     Price: number
     CourseImage: string
     UserTarget: string
+    Photo: photoBody
 }
 
 export interface CourseImage {
