@@ -11,7 +11,7 @@ import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import Alert from 'react-bootstrap/Alert';
 
-import styles from 'src/views/Treatments.module.css'
+import styles from 'src/views/Treatments.module.css';
 
 
 function Courses() {
@@ -61,24 +61,6 @@ function Courses() {
           </Form.Group>
         </Col>
       </Row>
-      {/* Cursos no tiene categorias */}
-      {/* <Row className='d-flex align-items-center mb-3'>
-        <Stack direction="horizontal" gap={3}>
-          <p className='fs-6'>Filtros disponibles:</p>
-          <Form.Select aria-label="Default select example">
-            <option>Categorías</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </Form.Select>
-          <Form.Select aria-label="Default select example">
-            <option>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </Form.Select>
-        </Stack>
-      </Row> */}
     </Form>
   );
 
@@ -104,9 +86,9 @@ function Courses() {
             ) : (
               <>
                 <Row>{getFilters()}</Row>
-                <Row className='d-flex align-items-center'>
+                <Row className={styles.cardsContainer}>
                   {filteredCourses.map((item, index) => (
-                    <Col className = 'my-2' key={index} sm={4}>
+                    <Col className = {styles.cardTreatment} key={index}>
                       <Treatment
                         title={item.Name}
                         event={() => handleClick(item.ID)}

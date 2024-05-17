@@ -22,7 +22,7 @@ function MainNavbar() {
                 {/* Options */}
                 <div className={styles.mobileMenu}><MobileMenu /></div>
                 <div class={styles.content}>
-                    <Stack direction="horizontal" gap={3}>
+                    <Stack direction="horizontal" gap={4}>
 
                         <Link to="/about" className={styles.navLink}>Quienes Somos</Link>
 
