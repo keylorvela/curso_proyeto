@@ -12,14 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendApplication = exports.respondToApplication = exports.getAllApplications = void 0;
+exports.getApplicationFile = exports.sendApplication = exports.respondToApplication = exports.getAllApplications = void 0;
 const dbConfig_1 = __importDefault(require("../database/dbConfig"));
+const fs_1 = __importDefault(require("fs"));
+const util_1 = require("util");
+const unlinkAsync = (0, util_1.promisify)(fs_1.default.unlink);
 const getAllApplications = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield dbConfig_1.default.query(`
             CALL SP_Application_ReadAll()
         `);
         const applicationsList = JSON.parse(JSON.stringify(result[0][0]));
+        console.log(applicationsList);
         res.status(200).send(applicationsList || []);
     }
     catch (error) {
@@ -49,23 +53,42 @@ const respondToApplication = (req, res) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.respondToApplication = respondToApplication;
 const sendApplication = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const body = req.body;
-    if (body.email == "" || body.name == "" || body.payment_receipt == "" || body.phone_number == "" || isNaN(body.groupID) || body.groupID <= 0) {
-        res.status(400).send({ error: "All fields are necessary" });
-        return;
-    }
+    const { path, buffer } = req.file;
     try {
         // Use parameterized query to prevent SQL injection
-        const result_application = yield dbConfig_1.default.query(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`, [body.name, body.payment_receipt, body.email, body.phone_number, body.groupID]);
-        // Parse the result
+        const result_application = yield dbConfig_1.default.query(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`, [req.body.nombre, fs_1.default.readFileSync(path), req.body.correo, req.body.telefono, 2]);
         const result = JSON.parse(JSON.stringify(result_application[0][0]));
+        //Delete file
+        const resultDelete = yield unlinkAsync(path);
         // Send the response
         res.status(200).send(result[0] || {});
     }
     catch (error) {
-        // Handle errors
-        res.status(400).send({ error: "Request Failed", info: error });
+        res.status(400).send({ error: "Request Failed", info: error.message });
     }
 });
 exports.sendApplication = sendApplication;
+const getApplicationFile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idApplication } = req.params;
+    try {
+        const result = yield dbConfig_1.default.query(`
+            CALL SP_GetPaymentReceiptByID(?)
+        `, [idApplication]);
+        // Verifica que haya un resultado válido y que contenga el campo PaymentReceipt
+        if (result[0][0][0]["PaymentReceipt"]) {
+            const paymentReceipt = result[0][0][0]["PaymentReceipt"];
+            // Configura los encabezados de la respuesta para forzar la descarga del archivo
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename=payment_receipt_${idApplication}.pdf`);
+            res.send(paymentReceipt);
+        }
+        else {
+            return res.status(404).send('Payment receipt not found.');
+        }
+    }
+    catch (error) {
+        res.status(500).send({ error: 'Request Failed', info: error.message });
+    }
+});
+exports.getApplicationFile = getApplicationFile;
 //# sourceMappingURL=Application.controller.js.map
