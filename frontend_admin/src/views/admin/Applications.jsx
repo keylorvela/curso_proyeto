@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
 import Loading from 'src/components/utils/Loading.jsx';
@@ -8,25 +8,31 @@ import Container from 'react-bootstrap/Container';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import ApplicationsService from 'src/services/Applications.service.js'
 
-
 function Applications() {
     const [loading, setLoading] = useState(false);
-    const columns = ['ID', 'Nombre', 'Email']; 
-    const data = [
-        {ID: '284283749', Nombre: 'Juan', Email: 'juan@example.com' },
-        {ID: '284283749', Nombre: 'María', Email: 'maria@example.com' },
-        {ID: '284283749', Nombre: 'Pedro', Email: 'pedro@example.com' },
-        {ID: '284283749', Nombre: 'Juan', Email: 'juan@example.com' },
-        {ID: '284283749', Nombre: 'Juan', Email: 'juan@example.com' },
-        {ID: '284283749', Nombre: 'Juan', Email: 'juan@example.com' },
-        {ID: '284283749', Nombre: 'Juan', Email: 'juan@example.com' },
-        {ID: '284283749', Nombre: 'Juan', Email: 'juan@example.com' },
-        {ID: '284283749', Nombre: 'Juan', Email: 'juan@example.com' },
-        {ID: '284283749', Nombre: 'Juan', Email: 'juan@example.com' },
-        {ID: '284283749', Nombre: 'Juan', Email: 'juan@example.com' },
-        {ID: '284283749', Nombre: 'Juan', Email: 'juan@example.com' },
-    ];
+    const columns = ['ID', 'StudentName', 'Email'];
+    const [data, setData] = useState([]);
 
+
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                // Get courses
+                const data_raw = await ApplicationsService.getApplications();
+                console.log(data_raw)
+                setData(data_raw);
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+            finally {
+                setLoading(false);
+            }
+        }
+
+        fetchData();
+    }, []);
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState(null);
 
@@ -40,27 +46,26 @@ function Applications() {
     };
 
     const handleReject = () => {
-        alert(`Rechazado... ${modalData.Nombre}`);
+        alert(`Rechazado... ${modalData.ID}`);
     };
 
     const handleAccept = () => {
-        alert(`Aceptado... ${modalData.Nombre}`);
+        alert(`Aceptado... ${modalData.ID}`);
     };
 
     const handleDownloadDocument = async (id) => {
         //TODO Better the handling and give better feedback
         try {
-          alert(id);
-          const success = await ApplicationsService.downloadPaymentReceipt(1);
-          if (!success) {
-            console.error('Failed to download payment receipt');
-          }else{
-            alert("Descargado")
-          }
+            const success = await ApplicationsService.downloadPaymentReceipt(modalData.ID);
+            if (!success) {
+                console.error('Failed to download payment receipt');
+            } else {
+                alert("Descargando", id);
+            }
         } catch (error) {
-          console.error('Error downloading payment receipt:', error);
+            console.error('Error downloading payment receipt:', error);
         }
-      };
+    };
 
     const btn = [
         { button: faCirclePlus, onButtonClick: handleButtonDetails }
@@ -90,9 +95,9 @@ function Applications() {
                         linkText="Ver comprobante"
                         linkFunction={() => handleDownloadDocument(modalData.ID)}
                         acceptButton={{ text: "Aceptar", onClick: handleAccept }}
-                        rejectButton={{ text: "Rechazar", onClick:  handleReject}}
+                        rejectButton={{ text: "Rechazar", onClick: handleReject }}
                         labels={[
-                            { title: "Nombre", content: modalData.Nombre },
+                            { title: "Nombre", content: modalData.StudentName },
                             { title: "Email", content: modalData.Email },
                             { title: "Curso", content: modalData.ID },
                             { title: "Fecha", content: "12/12/2000" },

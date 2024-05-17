@@ -23,6 +23,8 @@ export const getAllApplications = async (req: Request, res: Response) => {
         `);
         const applicationsList: Application[] = JSON.parse(JSON.stringify(result[0][0]));
 
+        
+        console.log(applicationsList);
 
         res.status(200).send(applicationsList || []);
     } catch (error) {

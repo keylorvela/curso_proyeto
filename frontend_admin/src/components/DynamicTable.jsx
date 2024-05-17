@@ -26,7 +26,7 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick, isS
   const [currentItems, setCurrentItems] = useState(data.slice(indexOfFirstItem, indexOfLastItem));
   const [copyItems, setCopyItems] = useState(data.slice(indexOfFirstItem, indexOfLastItem));
 
-  const options = Array.from({ length: 10 }, (_, i) => i + 1);//could be changed
+  const options = Array.from({ length: 10 }, (_, i) => i+1);//could be changed
 
   //Search
   const [searchTerm, setSearchTerm] = useState('');

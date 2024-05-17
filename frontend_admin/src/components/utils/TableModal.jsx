@@ -12,7 +12,7 @@ function TablemModal({ show, onHide, title, photo, roundedPhoto, linkText, linkF
         </span>
       );
     return (
-        <Modal show={show} onHide={onHide} size="lg">
+        <Modal show={show} onHide={onHide} size="lg" centered animation = {false}>
             <Modal.Header closeButton>
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>

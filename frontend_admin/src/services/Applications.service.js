@@ -1,6 +1,18 @@
 import axios from "./utilities/Axios.service"
 
 const CourseService = {
+
+    getApplications: async () => {
+        try {
+            const response = await axios.get(`/applications`);
+            return response.data;
+            
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
+
+
     downloadPaymentReceipt: async (idApplication) => {
         try {
             const response = await axios.get(`/applications/file/${idApplication}`, {
