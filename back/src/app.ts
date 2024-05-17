@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 
+
 import RegisterRoute from "./routes/General/Register.route"
 import UserRoute from "./routes/General/User.route"
 
