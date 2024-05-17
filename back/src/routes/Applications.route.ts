@@ -32,6 +32,10 @@ router.post("/",  upload.single('file'), sendApplication);
 
 router.get("/file/:idApplication", getApplicationFile);
 
+router.get('/test', (req,res) => {
+    res.send("HOLA");
+} )
+
 
 
 export default router;
