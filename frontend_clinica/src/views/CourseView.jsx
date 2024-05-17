@@ -32,22 +32,22 @@ function CourseView() {
     const [course, setCourse] = useState(null);
     const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getCourse(id);
-        setCourse(result);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await getCourse(id);
+                setCourse(result);
 
-      } catch (error) {
-        console.error('Error fetching course:', error);
-      } finally {
+            } catch (error) {
+                console.error('Error fetching course:', error);
+            } finally {
 
-        setLoading(false);
+                setLoading(false);
 
-      }
-    }
-    fetchData();
-  }, [id]);
+            }
+        }
+        fetchData();
+    }, [id]);
 
 
 
@@ -109,6 +109,11 @@ function CourseView() {
                                     </Col>
                                     <Col xs={6} sm={6} lg={3}>
                                         <Image src={transferencia} fluid />
+                                    </Col>
+                                </Row>
+                                <Row className='d-flex justify-content-center'>
+                                    <Col md={6} className={`rounded ${styles.form}`}>
+                                        <CourseForm />
                                     </Col>
                                 </Row>
                             </>
