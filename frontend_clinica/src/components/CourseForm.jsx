@@ -3,50 +3,63 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import axios from 'axios';
+import {sendApplication} from 'src/services/applicationService.js'
 
 function CourseForm() {
-    const [validated, setValidated] = useState(false);
     const [form, setForm] = useState({
         nombre: '',
         telefono: '',
         correo: '',
         horario: '',
-        comprobante: null
-    });
+        file: null
+      });
+      const [validated, setValidated] = useState(false);
 
-    const handleSubmit = (event) => {
+      const handleChange = (event) => {
+        const { name, value, files } = event.target;
+        setForm({ ...form, [name]: files ? files[0] : value });
+      };
+    
+      
+    
+      const handleSubmit = async (event) => {
         event.preventDefault();
         const formVal = event.currentTarget;
+    
         if (formVal.checkValidity() === false) {
-            event.stopPropagation();
+          event.stopPropagation();
+          setValidated(true);
         } else {
+          const formData = new FormData();
+          Object.entries(form).forEach(([key, value]) => {
+            formData.append(key, value);
+          });
+    
+          try {
+            const result = await sendApplication(formData);
             alert('¡El formulario se envió correctamente!');
-            console.log(JSON.stringify(form));
             setForm({
-                nombre: '',
-                telefono: '',
-                correo: '',
-                horario: '',
-                comprobante: null
+              nombre: '',
+              telefono: '',
+              correo: '',
+              horario: '',
+              file: null
             });
             setValidated(false);
+          } catch (error) {
+            console.error('Error:', error);
+            alert('Error al enviar el formulario');
+          }
         }
+      };
 
-        setValidated(true);
-    };
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setForm(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
+    
 
     return (
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form className='px-2 py-3' noValidate validated={validated} onSubmit={handleSubmit}>
             <Row>
-                <p className='fs-3 fw-semibold mt-5'>Ya pagaste? Inicia tu matrícula:</p>
+                <p className='fs-3 fw-semibold'>Ya pagaste? Inicia tu matrícula:</p>
             </Row>
             <Row className="mb-3">
                 <Form.Group as={Col} controlId="validationCustom01">
@@ -123,7 +136,7 @@ function CourseForm() {
                     <Form.Label>Comprobante:</Form.Label>
                     <Form.Control
                         required
-                        name="comprobante"
+                        name="file"
                         onChange={handleChange}
                         type="file"
                         placeholder="Elegir archivo..."

@@ -25,24 +25,32 @@ import { FaWhatsapp } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { getCourse } from 'src/services/coursesService.js';
 
+import { downloadPaymentReceipt } from 'src/services/applicationService.js';
+
 function CourseView() {
     const { id } = useParams();
     const [course, setCourse] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const result = await getCourse(id);
-                setCourse(result);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching course:', error);
-                setLoading(false); // Aquí debes manejar el error adecuadamente según tu caso de uso
-            }
-        }
-        fetchData();
-    }, [id]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getCourse(id);
+        setCourse(result);
+
+      } catch (error) {
+        console.error('Error fetching course:', error);
+      } finally {
+
+        setLoading(false);
+
+      }
+    }
+    fetchData();
+  }, [id]);
+
+
+
 
     return (
         <MainLayout>

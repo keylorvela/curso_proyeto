@@ -4,7 +4,7 @@ import multer from 'multer';
 
 
 
-import { getAllApplications, testReceive, respondToApplication, sendApplication } from "../controllers/Application.controller";
+import { getAllApplications, respondToApplication, sendApplication, getApplicationFile } from "../controllers/Application.controller";
 const router = express.Router();
 
 // Configuración de multer para guardar archivos
@@ -24,17 +24,13 @@ const upload = multer({ storage });
 
 //Endpoints
 
-router.post("/test", upload.single('file'), testReceive);
-
-
 router.get("/", getAllApplications);
 
 router.put("/", respondToApplication);
 
-router.post("/", sendApplication);
+router.post("/",  upload.single('file'), sendApplication);
 
-
-
+router.get("/file/:idApplication", getApplicationFile);
 
 
 

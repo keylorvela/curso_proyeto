@@ -6,6 +6,8 @@ import styles from 'src/components/Common.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
 import Container from 'react-bootstrap/Container';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import ApplicationsService from 'src/services/Applications.service.js'
+
 
 function Applications() {
     const [loading, setLoading] = useState(false);
@@ -45,9 +47,20 @@ function Applications() {
         alert(`Aceptado... ${modalData.Nombre}`);
     };
 
-    const handleDownloadDocument = () => {
-        alert(`Descargando...${modalData.Nombre}`);
-    };
+    const handleDownloadDocument = async (id) => {
+        //TODO Better the handling and give better feedback
+        try {
+          alert(id);
+          const success = await ApplicationsService.downloadPaymentReceipt(1);
+          if (!success) {
+            console.error('Failed to download payment receipt');
+          }else{
+            alert("Descargado")
+          }
+        } catch (error) {
+          console.error('Error downloading payment receipt:', error);
+        }
+      };
 
     const btn = [
         { button: faCirclePlus, onButtonClick: handleButtonDetails }
@@ -75,7 +88,7 @@ function Applications() {
                         onHide={handleModalClose}
                         title="Solicitud"
                         linkText="Ver comprobante"
-                        linkFunction={handleDownloadDocument}
+                        linkFunction={() => handleDownloadDocument(modalData.ID)}
                         acceptButton={{ text: "Aceptar", onClick: handleAccept }}
                         rejectButton={{ text: "Rechazar", onClick:  handleReject}}
                         labels={[
