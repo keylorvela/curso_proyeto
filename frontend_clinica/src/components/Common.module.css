@@ -24,6 +24,7 @@
   background-color: #33BA47;
   color: #FFFFFF;
   border: 0px;
+  width: 100%;
 }
 
 .wtsButton:hover{
@@ -34,8 +35,19 @@
   background-color: #FEA734;
   color:#FFFFFF;
   border: 0px;
+  width: 100%;
 }
 
 .bpButton:hover{
   background-color: #b87c2d;
+}
+
+/* ---------- Mobile  */
+@media (max-width: 544px) {
+  .wtsButton{
+    font-size: 18px;
+  }
+  .bpButton{
+    font-size: 18px;
+  }
 }

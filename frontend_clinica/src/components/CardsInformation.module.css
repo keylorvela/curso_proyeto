@@ -1,0 +1,20 @@
+.cardsMainContainer {
+    display: flex;
+}
+
+.informationCard {
+    border-radius: 5px;
+    transition: all 0.3s;
+    margin: 5px;
+}
+
+.informationCard:hover {
+    box-shadow: 0 0 5px #000000;
+    outline: 2px solid var(--main-blue);
+    transform: scale(1.02);
+}
+
+.divider {
+    border-top: 3px solid var(--main-blue);
+    border-radius: 5px;
+}
