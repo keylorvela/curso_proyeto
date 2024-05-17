@@ -24,8 +24,6 @@ const upload = multer({ storage });
 
 //Endpoints
 
-
-
 router.get("/", getAllApplications);
 
 router.put("/", respondToApplication);
