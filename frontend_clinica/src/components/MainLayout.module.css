@@ -17,14 +17,18 @@
 
 .floatingButton {
   position: fixed;
-  bottom: 20%;
+  bottom: 20px;
   right: 35px;
   z-index: 1000;
+
+  color: #25d366;
+  transition: all 0.5s;
 }
 
 
 .floatingButton:hover {
-  color: #25D366;
+  color: #1faf54;
+  transform: scale(1.05);
 }
 
 

@@ -24,12 +24,8 @@ function MainLayout({ children }) {
         </nav>
 
         <main className={styles.main}>
-          
-          
-          
           {children}
 
-          
           <AlertModal
                   title="Atención"
                   message="Whatsapp."
@@ -41,10 +37,10 @@ function MainLayout({ children }) {
           <div className={styles.floatingButton}>
             <OverlayTrigger
               placement="left"
-              overlay={<Tooltip><p className='fs-3 px-2'>Ir a whatsapp</p></Tooltip>}
+              overlay={<Tooltip><span className='fs-5 px-2'>Ir a whatsapp</span></Tooltip>}
             >
               <div>
-                <PiWhatsappLogoBold size={100} onClick={() => { setShowAlert(true) }} />
+                <PiWhatsappLogoBold size={95} onClick={() => { window.open('https://www.google.com', '_blank'); }} />
               </div>
             </OverlayTrigger>
           </div>
