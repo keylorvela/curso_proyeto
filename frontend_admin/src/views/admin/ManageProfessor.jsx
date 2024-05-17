@@ -13,6 +13,7 @@ import { Container, Row, Col, Image } from 'react-bootstrap'
 
 import TeachersService from 'src/services/Teachers.service';
 import UserService from 'src/services/User.service';
+import { PasswordManager } from '../util/PasswordManager';
 
 function ManageProfessor() {
     //TODO Fetch teacherInformation from backend
@@ -24,9 +25,10 @@ function ManageProfessor() {
     const teacherData = location.state?.teacherInformation;
     const [teacherInformation, setTeacherInformation] = useState({});
 
+    const passwordManager = new PasswordManager();
+
     useEffect(() => {
         async function fetchData() {
-            console.log(teacherData);
             try {
                 let teacher_PersonID = teacherData?.PersonID || "";
                 let teacher_Name = teacherData?.Nombre || "";
@@ -65,13 +67,14 @@ function ManageProfessor() {
             }
             // Si no := Crea el profesor
             else {
+                const tempPassword = passwordManager.generatePassword();
                 await UserService.RegisterUser(
                     formValues.name,
                     formValues.email,
                     formValues.phoneNumber,
                     null,
                     formValues.email,
-                    "1234",
+                    tempPassword,
                     "Profesor"
                 );
                 alert("Profesor creado");

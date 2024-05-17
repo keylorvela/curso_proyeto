@@ -15,10 +15,14 @@ import UserService from 'src/services/User.service';
 import GroupService from 'src/services/Group.service';
 import CourseService from "src/services/Courses.service"
 
+import { PasswordManager } from '../util/PasswordManager';
+
 function ManageStudent() {
     const [loading, setLoading] = useState(false);
     const [groupList, setGroupList] = useState([]);
     const [courseList, setCourseList] = useState([]);
+
+    const passwordManager = new PasswordManager();
 
     useEffect(() => {
         async function fetchData() {
@@ -45,13 +49,14 @@ function ManageStudent() {
     const handleFormSubmit = async (formValues) => {
         try {
             setLoading(true);
+            const tempPassword = passwordManager.generatePassword();
             await UserService.RegisterUser(
                 formValues.name,
                 formValues.email,
                 formValues.phoneNumber,
                 null,
                 formValues.email,
-                "1234",
+                tempPassword,
                 "Estudiante"
             );
             const data_raw = await StudentService.GetStudentList();
