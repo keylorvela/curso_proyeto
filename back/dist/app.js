@@ -18,17 +18,13 @@ const Teachers_route_1 = __importDefault(require("./routes/Teachers.route"));
 const Treatments_route_1 = __importDefault(require("./routes/Treatments.route"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
-const corsOptions = {
-    origin: '*', // Cambia '*' por la URL de tu front-end en producción por razones de seguridad
-    methods: 'GET, POST, PUT, DELETE, OPTIONS',
-    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
-};
-app.use((0, cors_1.default)(corsOptions));
+app.use((0, cors_1.default)());
 app.use(express_1.default.json({ limit: "15mb" }));
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5174');
+    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5174');
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     // Request headers you wish to allow
