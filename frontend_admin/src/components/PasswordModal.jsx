@@ -56,7 +56,7 @@ function PasswordModal({ hide, handleState, passInfo, setPassInfo, userID }) {
                                 <Form.Label  className={`fs-5 ${styles.label}`}>Contraseña actual</Form.Label>
                                 <Form.Control
                                     required
-                                    type="text"
+                                    type="password"
                                     placeholder="Digite su contraseña actual"
                                     onChange = {(e) => handleChange(e, 'og_pass')}
                                 />
@@ -65,7 +65,7 @@ function PasswordModal({ hide, handleState, passInfo, setPassInfo, userID }) {
                                 <Form.Label  className={`fs-5 ${styles.label}`}>Nueva contraseña</Form.Label>
                                 <Form.Control
                                     required
-                                    type="text"
+                                    type="password"
                                     placeholder="Digite su nueva contraseña"
                                     onChange = {(e) => handleChange(e, 'new_pass')}
                                 />
@@ -74,7 +74,7 @@ function PasswordModal({ hide, handleState, passInfo, setPassInfo, userID }) {
                                 <Form.Label  className={`fs-5 ${styles.label}`}>Repetir contraseña</Form.Label>
                                 <Form.Control
                                     required
-                                    type="text"
+                                    type="password"
                                     placeholder="Digite la contraseña nuevamente"
                                     onChange = {(e) => handleChange(e, 'conf_pass')}
                                 />
