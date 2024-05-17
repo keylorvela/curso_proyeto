@@ -21,6 +21,12 @@ const port = process.env.PORT || 3000;
 app.use((0, cors_1.default)());
 app.use(express_1.default.json({ limit: "15mb" }));
 app.use(express_1.default.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // Permite solicitudes desde cualquier origen
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    next();
+});
 // General routes
 // ---------------------------------------------
 app.use("/register", Register_route_1.default);
