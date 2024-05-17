@@ -5,7 +5,6 @@ BEGIN
     SELECT
         SA.ID,
         SA.StudentName,
-        SA.PaymentReceipt,
         SA.Date,
         G.StartingDate,
         C.Name AS CourseName
