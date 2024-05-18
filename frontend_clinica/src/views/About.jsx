@@ -24,13 +24,13 @@ function About() {
 
 
                     <Container className={styles.content}>
-                        <Row>
-                            <h2>Sobre nosotros:</h2>
+                        <Row className='mt-4 mb-3'>
+                            <h2 className='fs-1 fw-bold' style={{ color: "var(--main-blue)" }}>Sobre nosotros</h2>
                         </Row>
                         <Row className = 'my-2'>
                             <Col xs={12} md={6}>
                                 <Stack>
-                                    <h3 className='fw-bold'>Nuestra clínica:</h3>
+                                    <h3 className='fw-bold' style={{ color: "var(--main-blue)" }}>Nuestra clínica</h3>
                                     <p>
                                         Desde el 2016, nos hemos insertado al mercado estético buscando 2 objetivos,
                                         tener los mejores profesionales y tratamientos del sector estético, especializandonos
@@ -63,7 +63,7 @@ function About() {
                         <Row>
                             <Col md={5} xs={12} >
                                 <Stack>
-                                    <h3 className='fw-bold text-center'>Misión:</h3>
+                                    <h3 className='fw-bold text-center' style={{ color: "var(--main-blue)" }}>Misión</h3>
                                     <p>
                                         Desde el 2016, nos hemos insertado al mercado estético buscando 2 objetivos,
                                         tener los mejores profesionales y tratamientos del sector estético, especializandonos
@@ -77,7 +77,7 @@ function About() {
                             <Col md={2} xs={12} ></Col>
                             <Col md={5} xs={12} >
                                 <Stack>
-                                    <h3 className='fw-bold text-center'>Visión:</h3>
+                                    <h3 className='fw-bold text-center' style={{ color: "var(--main-blue)" }}>Visión</h3>
                                     <p>
                                         Desde el 2016, nos hemos insertado al mercado estético buscando 2 objetivos,
                                         tener los mejores profesionales y tratamientos del sector estético, especializandonos
@@ -110,7 +110,7 @@ function About() {
                             </Col>
                             <Col xs={12} md={6}>
                                 <Stack>
-                                    <h3 className='fw-bold'>Nuestra Academia:</h3>
+                                    <h3 className='fw-bold' style={{ color: "var(--main-blue)" }}>Nuestra Academia</h3>
                                     <p>
                                         Desde el 2016, nos hemos insertado al mercado estético buscando 2 objetivos,
                                         tener los mejores profesionales y tratamientos del sector estético, especializandonos
