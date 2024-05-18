@@ -49,6 +49,17 @@ function TreatmentView() {
         }).format(value);
     }
 
+    const formatDescription = (description) => {
+        const paragraphs = description.split("/");
+        return (paragraphs) ? (
+            paragraphs.map((paragraph, index) => (
+                <p key={index} className="fs-3">{paragraph}</p>
+            ))
+        ) : (
+            <></>
+        )
+    }
+
     return (
         <MainLayout>
             <div className={styles.page}>
@@ -79,7 +90,7 @@ function TreatmentView() {
                                         <Image src={img || treatment.TreatmentImage} fluid />
                                     </Col>
                                     <Col xs={12} md={8}>
-                                        <p className="fs-3">{treatment?.Description}</p>
+                                        { formatDescription(treatment?.Description) }
                                     </Col>
                                 </Row>
 

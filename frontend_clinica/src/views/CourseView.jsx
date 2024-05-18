@@ -8,7 +8,7 @@ import styles from 'src/views/CourseView.module.css';
 import commonStyles from 'src/components/Common.module.css';
 
 import MainLayout from 'src/components/MainLayout.jsx';
-// import CourseForm from 'src/components/CourseForm.jsx';
+import CourseForm from 'src/components/CourseForm.jsx';
 
 import sinpe from 'src/assets/Sinpe.svg';
 import transferencia from 'src/assets/Transferencia.svg';
@@ -37,9 +37,6 @@ function CourseView() {
         const fetchData = async () => {
             try {
                 const result = await getCourse(id);
-
-                console.log(result)
-
                 setCourse(result);
             } catch (error) {
                 console.error('Error fetching course:', error);
@@ -52,8 +49,16 @@ function CourseView() {
         fetchData();
     }, [id]);
 
-
-
+    const formatDescription = (description) => {
+        const paragraphs = description.split("/");
+        return (paragraphs) ? (
+            paragraphs.map((paragraph, index) => (
+                <p key={index} className="fs-3">{paragraph}</p>
+            ))
+        ) : (
+            <></>
+        )
+    }
 
     return (
         <MainLayout>
@@ -72,17 +77,17 @@ function CourseView() {
                             </Alert>
                         ) : (
                             <>
-                                <Row className="pb-5 mb-5">
+                                <Row className="pb-5">
                                     <Col className={styles.title} xs={12}>
                                         <h2 className={`text-center fs-1 fw-semibold my-3`}>{course?.Name}</h2>
                                     </Col>
                                 </Row>
-                                <Row className='mt-5'>
+                                <Row>
                                     <Col className="align-self-center" xs={12} md={4}>
                                         <Image src={img} fluid />
                                     </Col>
                                     <Col xs={12} md={8}>
-                                        <p className="fs-3">{course?.Description}</p>
+                                        { formatDescription(course?.Description) }
                                     </Col>
                                 </Row>
 
@@ -127,7 +132,7 @@ function CourseView() {
                                 </Row>
                                 <Row className='d-flex justify-content-center'>
                                     <Col md={6} className={`rounded ${styles.form}`}>
-                                        {/* <CourseForm /> */}
+                                        <CourseForm />
                                     </Col>
                                 </Row>
                             </>
