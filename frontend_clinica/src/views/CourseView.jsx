@@ -8,7 +8,7 @@ import styles from 'src/views/CourseView.module.css';
 import commonStyles from 'src/components/Common.module.css';
 
 import MainLayout from 'src/components/MainLayout.jsx';
-import CourseForm from 'src/components/CourseForm.jsx';
+// import CourseForm from 'src/components/CourseForm.jsx';
 
 import sinpe from 'src/assets/Sinpe.svg';
 import transferencia from 'src/assets/Transferencia.svg';
@@ -25,7 +25,8 @@ import { FaWhatsapp } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { getCourse } from 'src/services/coursesService.js';
 
-import { downloadPaymentReceipt } from 'src/services/applicationService.js';
+// import { downloadPaymentReceipt } from 'src/services/applicationService.js';
+import CardsInformation from "../components/CardsInformation";
 
 function CourseView() {
     const { id } = useParams();
@@ -36,8 +37,10 @@ function CourseView() {
         const fetchData = async () => {
             try {
                 const result = await getCourse(id);
-                setCourse(result);
 
+                console.log(result)
+
+                setCourse(result);
             } catch (error) {
                 console.error('Error fetching course:', error);
             } finally {
@@ -62,7 +65,7 @@ function CourseView() {
                         </div>
                     ) : (
                         /* En caso de que no se encuentre el curso */
-                        Object.keys(course).length === 0 ? (
+                        (!course || Object.keys(course).length === 0) ? (
 
                             <Alert key='warning' variant='warning'>
                                 No se encontró el curso.
@@ -79,11 +82,22 @@ function CourseView() {
                                         <Image src={img} fluid />
                                     </Col>
                                     <Col xs={12} md={8}>
-                                        <p className="fs-3">{course?.explicacion}</p>
                                         <p className="fs-3">{course?.Description}</p>
-                                        <p className="fs-3">{course?.Information}</p>
                                     </Col>
                                 </Row>
+
+                                <CardsInformation
+                                    titles={["Duracion:", "Dirigido a:"]}
+                                    contents={[course?.Duration, course?.UserTarget]}
+                                />
+                                <CardsInformation
+                                    titles={["Precio:"]}
+                                    contents={[course?.Price]}
+                                />
+                                <CardsInformation
+                                    titles={["Incluye:", "Temas:"]}
+                                    contents={[course?.Includes, course?.Topics]}
+                                />
 
                                 <Row className="mt-3">
                                     <Col className="my-5" xs={12}>
@@ -113,7 +127,7 @@ function CourseView() {
                                 </Row>
                                 <Row className='d-flex justify-content-center'>
                                     <Col md={6} className={`rounded ${styles.form}`}>
-                                        <CourseForm />
+                                        {/* <CourseForm /> */}
                                     </Col>
                                 </Row>
                             </>
