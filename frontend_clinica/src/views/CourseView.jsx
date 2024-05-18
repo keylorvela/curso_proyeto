@@ -49,6 +49,13 @@ function CourseView() {
         fetchData();
     }, [id]);
 
+    const formatCurrency = (value) => {
+        return Intl.NumberFormat('es-CR', {
+            style: "currency",
+            currency: "CRC"
+        }).format(value);
+    }
+
     const formatDescription = (description) => {
         const paragraphs = description.split("/");
         return (paragraphs) ? (
@@ -97,7 +104,7 @@ function CourseView() {
                                 />
                                 <CardsInformation
                                     titles={["Precio:"]}
-                                    contents={[course?.Price]}
+                                    contents={[`${formatCurrency(course?.Price)}`]}
                                 />
                                 <CardsInformation
                                     titles={["Incluye:", "Temas:"]}
