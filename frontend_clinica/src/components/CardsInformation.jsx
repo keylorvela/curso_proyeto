@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from 'src/components/CardsInformation.module.css';
 
 import Row from 'react-bootstrap/Row';
@@ -12,8 +13,8 @@ function CardsInformation({ titles, contents }) {
                 (title, index) => (
                     contents[index]
                     &&
-                    <>
-                        <Col key={index} className={styles.informationCard}>
+                    <React.Fragment key={index}>
+                        <Col className={styles.informationCard}>
                             <Row>
                                 <Col>
                                     <h3 className="fs-2 fw-semibold my-3" style={{ color: "var(--main-blue)" }}>{title}</h3>
@@ -33,7 +34,7 @@ function CardsInformation({ titles, contents }) {
                                 </Col>
                             </Row>
                         </Col>
-                    </>
+                    </React.Fragment>
                 )
             )
             }
