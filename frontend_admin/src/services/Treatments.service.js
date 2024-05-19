@@ -1,7 +1,7 @@
 
 const BASE_URL = 'https://backend-proyeto.vercel.app/';
 
-const UserService = {
+const TreatmentService = {
 
   getTreatments: async () => {
     const url = BASE_URL+`treatments`;
@@ -65,10 +65,9 @@ const UserService = {
       p_procedureDuration: treatmentInfo.ProcedureDuration,
       p_effectDuration: treatmentInfo.EffectDuration,
       p_information: treatmentInfo.Information,
-      p_photos: [{imageID:1,url:imageUrl}],
-      p_categoryID: 1,
+      p_treatmentImage: imageUrl,
+      p_categoryID: treatmentInfo.category,
     };
-    console.log(data)
     try {
       const response = await fetch(url, {
         method: 'PUT',
@@ -86,8 +85,54 @@ const UserService = {
     }
   },
 
+  createTreatment: async (treatmentInfo,imageUrl) => {
+  
+    const url = BASE_URL + 'treatments'; 
+    const data = {
+      p_name: treatmentInfo.Name,
+      p_description: treatmentInfo.Description,
+      p_price: treatmentInfo.Price,
+      p_includes: treatmentInfo.Includes,
+      p_procedureDuration: treatmentInfo.ProcedureDuration,
+      p_effectDuration: treatmentInfo.EffectDuration,
+      p_information: treatmentInfo.Information,
+      p_treatmentImage: imageUrl,
+      p_categoryID: treatmentInfo.category,
+    };
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if(response)
+        return response;
+  
+    } catch (error) {
+      console.error('Function error updateTreatment:', error);
+      throw error;
+    }
+  },
+
+  getCategories: async () => {
+    const url = BASE_URL+`treatments/categories`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Request fail');
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error('Function error getTreatments', error);
+      throw error;
+    }
+  },
+
 
 
 };
 
-export default UserService;
+export default TreatmentService;
