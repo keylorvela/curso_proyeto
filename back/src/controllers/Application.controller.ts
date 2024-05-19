@@ -62,9 +62,12 @@ export const respondToApplication = async (req: Request, res: Response) => {
 export const sendApplication = async (req: Request, res: Response) => {
     
     const { path, buffer } = req.file;
+
+
     try {
         // Use parameterized query to prevent SQL injection
-        const result_application = await dbConnection.query<RowDataPacket[]>(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`,[req.body.nombre, fs.readFileSync(path), req.body.correo, req.body.telefono, 2]);
+        const result_application = await dbConnection.query<RowDataPacket[]>(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`
+        ,[req.body.nombre, fs.readFileSync(path), req.body.correo, req.body.telefono, 2]);
 
         const result: OStatus[] = JSON.parse(JSON.stringify(result_application[0][0]));
 
