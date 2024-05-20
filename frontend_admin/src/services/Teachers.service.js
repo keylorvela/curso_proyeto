@@ -31,8 +31,7 @@ const TeachersService = {
 
     DeleteTeacher: async (userID) => {
         try {
-            const body = { userID };
-            const response = await axios.delete(`/teachers`, body);
+            const response = await axios.delete(`/teachers`, { data: { userID } });
             return response.data;
         } catch (error) {
             console.error("Error in course service", error);

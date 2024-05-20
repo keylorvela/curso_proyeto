@@ -95,13 +95,6 @@ function ManageProfessor() {
             placeholder: 'Ingresa el nombre del profesor',
             required: true,
         },
-        // {
-        //     id: 'id_prof',
-        //     label: 'Identificación:',
-        //     type: 'text',
-        //     placeholder: 'Ingresa la identificación del profesor',
-        //     required: true,
-        // },
         {
             id: 'phoneNumber',
             label: 'Número telefónico del profesor:',
@@ -120,7 +113,14 @@ function ManageProfessor() {
 
     const handleDeleteTeacher = async (id_p) => {
         try {
-            // await TeachersService.DeleteTeacher(id_p);
+            const numID = Number( id_p );
+            const result = await TeachersService.DeleteTeacher( numID );
+
+            if (result.o_status.includes("Error")) {
+                alert(`No se elimino el profesor: ${result.o_status}`)
+                return;
+            }
+
             alert("Se elimino el profesor (Actualizar API del profesor)");
             navegate('/admin/professors');
         } catch (error) {
