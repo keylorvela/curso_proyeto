@@ -6,6 +6,7 @@ import MailManager from "../../mail/Mail.controller";
 
 import { RegisterBody } from "../../interfaces/General/Register.interface"
 import { OStatus } from "interfaces/OStatus.interface";
+import { UserRegistration } from "mail/Main.interface";
 
 // Register a new user
 export const registerUser = async (req: Request, res: Response) => {
@@ -26,14 +27,13 @@ export const registerUser = async (req: Request, res: Response) => {
 
     try {
         const mailManager = new MailManager();
+        const mailContent: UserRegistration = { name: p_name, username: p_username, password: p_password };
 
         await mailManager.sendMail_UserRegistration(
             "testELSPrueba@gmail.com",
             p_email,
             "Bienvenid@ a ELS",
-            p_name,
-            p_username,
-            p_password
+            mailContent
         );
         const result_user = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_General_RegisterUser(

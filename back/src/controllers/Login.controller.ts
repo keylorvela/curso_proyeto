@@ -6,6 +6,7 @@ import MailManager from "../mail/Mail.controller";
 
 import { StartSession, ForgetPasswordBody, OTP_Verification, OTP_Body, OTP_Response, OTP_PasswordResetBody } from "../interfaces/Login.interface"
 import { OStatus } from "interfaces/OStatus.interface";
+import { OTP_EmailBody } from "mail/Main.interface";
 
 // Login action
 export const startSession = async (req: Request, res: Response) => {
@@ -45,13 +46,14 @@ export const requestEmail = async (req: Request, res: Response) => {
         const result_verifyEmail = await dbConnection.query<RowDataPacket[]>(`CALL SP_Login_Verify_Email("${body.requested_email}", ${otp}, @o_status)`);
         const result: OTP_Verification[] = JSON.parse(JSON.stringify(result_verifyEmail[0][0]));
 
+        const mailContent: OTP_EmailBody = { otp: otp, name: result[0].Name }
+
         if (result[0].IsValid) {
             await mailManager.sendMail_OTP(
                 "testELSPrueba@gmail.com",
                 body.requested_email,
                 "Solicitud de cambio de contraseña",
-                result[0].Name,
-                otp
+                mailContent
             );
             res.status(200).send({ message: "Password reset email sent successfully" });
         }

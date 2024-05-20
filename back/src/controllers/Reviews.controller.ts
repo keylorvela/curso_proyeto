@@ -36,7 +36,7 @@ export const addReview = async (req: Request, res: Response) => {
 }
 
 export const removeReview = async (req: Request, res: Response) => {
-    const { id }: removeReviewBody = req.body;
+    const id: number | null = Number( req.query.id ) || null;
 
     if (isNaN(id) || id <= 0) {
         res.status(400).send({ error: "Id enter is not valid" });
@@ -54,7 +54,7 @@ export const removeReview = async (req: Request, res: Response) => {
 }
 
 export const listReviewsOfTreatment = async (req: Request, res: Response) => {
-    const { treatment_id }: TreatmentIDBody = req.body;
+    const treatment_id: number | null = Number( req.query.treatment_id ) || null;
 
     if (isNaN(treatment_id) || treatment_id <= 0) {
         res.status(400).send({ error: "Id enter is not valid" });
