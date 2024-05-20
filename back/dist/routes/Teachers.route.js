@@ -8,7 +8,7 @@ const Teachers_controller_1 = require("../controllers/Teachers.controller");
 const router = express_1.default.Router();
 router.get("/", Teachers_controller_1.getAllProfessors);
 router.put("/", Teachers_controller_1.updateProfessor);
-router.delete("/:userID", Teachers_controller_1.deleteProfessor);
+router.delete("/", Teachers_controller_1.deleteProfessor);
 router.get("/:userID", Teachers_controller_1.getProfessorInformation);
 exports.default = router;
 //# sourceMappingURL=Teachers.route.js.map

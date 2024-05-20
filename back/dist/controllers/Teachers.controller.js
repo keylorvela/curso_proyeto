@@ -52,15 +52,11 @@ const updateProfessor = (req, res) => __awaiter(void 0, void 0, void 0, function
         return;
     }
     try {
-        yield dbConfig_1.default.query(`
+        const result_teacher = yield dbConfig_1.default.query(`
             CALL SP_Professors_Update(${personID}, "${photo}", "${email}", "${phoneNumber}", "${name}", @o_status)
         `);
-        const result = yield dbConfig_1.default.query(`
-            SELECT @o_status AS o_status
-        `);
-        const resultStatus = JSON.parse(JSON.stringify(result[0]));
-        const professorInfo = result[0][0];
-        res.status(200).send(professorInfo || {});
+        const result = JSON.parse(JSON.stringify(result_teacher[0][0]));
+        res.status(200).send(result[0] || {});
     }
     catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
@@ -74,14 +70,11 @@ const deleteProfessor = (req, res) => __awaiter(void 0, void 0, void 0, function
         return;
     }
     try {
-        yield dbConfig_1.default.query(`
+        const result_teacher = yield dbConfig_1.default.query(`
             CALL SP_Professors_Delete(${userID}, @o_status)
         `);
-        const result = yield dbConfig_1.default.query(`
-            SELECT @o_status AS o_status
-        `);
-        const resultStatus = JSON.parse(JSON.stringify(result[0]));
-        res.status(200).send(resultStatus[0] || {});
+        const result = JSON.parse(JSON.stringify(result_teacher[0][0]));
+        res.status(200).send(result[0] || {});
     }
     catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
