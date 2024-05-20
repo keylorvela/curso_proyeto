@@ -27,6 +27,7 @@ function ManageCourse() {
     const location = useLocation();
     const { id } = useParams();
     const [hide, setHide] = useState(false);
+    const [isModifyGroup, setIsModifyGroup] = useState(false);
     const [profilePictureURL, setProfilePictureURL] = useState("");
     const [loading, setLoading] = useState(true);
 
@@ -138,7 +139,8 @@ function ManageCourse() {
         },
     ];
 
-    const handleModal = (state) => {
+    const handleModal = (state,isModifyGroup) => {
+        setIsModifyGroup(isModifyGroup);
         setHide(state);
     };
 
@@ -253,7 +255,13 @@ function ManageCourse() {
                 variant: 'primary',
                 type: 'button',
                 label: 'Asignar grupo',
-                onClick: () => handleModal(true),
+                onClick: () => handleModal(true,false),
+            },
+            {
+                variant: 'secondary',
+                type: 'button',
+                label: 'Modificar grupos',
+                onClick: () => handleModal(true,true),
             }
         )
     }
@@ -267,6 +275,7 @@ function ManageCourse() {
                 groupInfo={groupInfo}
                 setGroupInfo={setGroupInfo}
                 courseID={id}
+                isModify={isModifyGroup}
             />
             {loading && (
                         <div className='text-center my-5'>

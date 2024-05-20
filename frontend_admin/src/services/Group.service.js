@@ -66,6 +66,16 @@ const GroupService = {
         }
     },
 
+    UpdateGroup: async (StartingDate, ScheduleDate, ScheduleHour, Capacity, groupId, TeacherID) => {
+        try {
+            const body = { StartingDate, ScheduleDate, ScheduleHour, Capacity, TeacherID }
+            const response = await axios.put(`/group/${groupId}`, body);
+            return response.data;
+        } catch (error) {
+            console.error("Error in course service", error);
+        }
+    },
+
     DropOutCourse: async (userID, groupID) => {
         try {
             const body = { userID, groupID }

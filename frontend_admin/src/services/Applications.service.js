@@ -8,7 +8,7 @@ const CourseService = {
             return response.data;
             
         } catch (error) {
-            console.error("Error in course service", error);
+            console.error("Error in course aplication", error);
         }
     },
 
