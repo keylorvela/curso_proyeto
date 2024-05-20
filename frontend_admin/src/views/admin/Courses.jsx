@@ -11,7 +11,6 @@ import Container from 'react-bootstrap/Container';
 import { faPen, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 import CourseService from "src/services/Courses.service"
-import GroupService from "src/services/Group.service"
 
 function Courses() {
     const [loading, setLoading] = useState(true);

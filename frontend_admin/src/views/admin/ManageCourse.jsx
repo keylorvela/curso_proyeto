@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation  } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
 import GroupModal from 'src/components/GroupModal.jsx'
 
-import img from 'src/assets/stock2.jpg'
+import Loading from 'src/components/utils/Loading.jsx'
 import styles from 'src/views/admin/AdminPage.module.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +15,7 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { Container, Row, Col, Image } from 'react-bootstrap'
 
 import CourseService from "src/services/Courses.service"
-import GroupService from "src/services/Group.service"
+import ImageService from 'src/services/Image.service.js'
 
 
 function ManageCourse() {
@@ -27,7 +27,9 @@ function ManageCourse() {
     const location = useLocation();
     const { id } = useParams();
     const [hide, setHide] = useState(false);
+    const [isModifyGroup, setIsModifyGroup] = useState(false);
     const [profilePictureURL, setProfilePictureURL] = useState("");
+    const [loading, setLoading] = useState(true);
 
     const [courseInfo, setCourseInfo] = useState({});
     const [groupInfo, setGroupInfo] = useState(
@@ -73,6 +75,9 @@ function ManageCourse() {
                 });
             } catch (error) {
                 console.error('Error fetching data:', error);
+            }
+            finally {
+                setLoading(false);
             }
         }
 
@@ -120,7 +125,7 @@ function ManageCourse() {
         },
         {
             id: 'Price',
-            label: 'Coste:',
+            label: 'Costo:',
             type: 'number',
             placeholder: 'Costo del curso',
             required: true,
@@ -134,55 +139,89 @@ function ManageCourse() {
         },
     ];
 
-    const handleModal = (state) => {
+    const handleModal = (state,isModifyGroup) => {
+        setIsModifyGroup(isModifyGroup);
         setHide(state);
     };
+
+    const uploadImage = async () => {
+        try {
+            if (profilePictureURL) {
+                const data = await ImageService.uploadImage(profilePictureURL);
+                setProfilePictureURL(data.data.image.url);
+                return data.data.image.url;
+            }
+
+        } catch (error) {
+            console.error("ERROR: Upload Failed ", error);
+        }
+    }
+
     const handleFormSubmit = async (formValues) => {
         // Format string := Change break line for '/'
-        formValues.Description = formValues.Description.replace(/(\r\n|\n|\r)/g, "/");
-        formValues.Topics = formValues.Topics.replace(/(\r\n|\n|\r)/g, "/");
-        formValues.Includes = formValues.Includes.replace(/(\r\n|\n|\r)/g, "/");
-        formValues.UserTarget = formValues.UserTarget.replace(/(\r\n|\n|\r)/g, "/");
+        try {
+            setLoading(true);
+            formValues.Description = formValues.Description.replace(/(\r\n|\n|\r)/g, "/");
+            formValues.Topics = formValues.Topics.replace(/(\r\n|\n|\r)/g, "/");
+            formValues.Includes = formValues.Includes.replace(/(\r\n|\n|\r)/g, "/");
+            formValues.UserTarget = formValues.UserTarget.replace(/(\r\n|\n|\r)/g, "/");
+            let imgPromise = null;
+            let imageURL = profilePictureURL;
 
-        // Si no tiene id := Crear curso
-        if (!id) {
-            await CourseService.CreateCourse(
-                formValues.Name,
-                formValues.Description,
-                formValues.Topics,
-                formValues.Includes,
-                formValues.Duration,
-                formValues.Price,
-                profilePictureURL,
-                formValues.UserTarget
-            );
-            alert("Curso creado!");
-        }
-        // Si no := Modificar curso
-        else {
-            await CourseService.UpdateCourse(
-                id,
-                formValues.Name,
-                formValues.Description,
-                formValues.Topics,
-                formValues.Includes,
-                formValues.Duration,
-                formValues.Price,
-                profilePictureURL,
-                formValues.UserTarget
-            );
-            alert("Curso modificado!");
+            if (profilePictureURL !== "https://i.ibb.co/wS2c1nt/Default-Image.jpg") {
+                imgPromise = uploadImage();
+                await imgPromise.then(url => {
+                    imageURL = url;
+                });
+            }
+
+            // Si no tiene id := Crear curso
+            if (!id) {
+                await CourseService.CreateCourse(
+                    formValues.Name,
+                    formValues.Description,
+                    formValues.Topics,
+                    formValues.Includes,
+                    formValues.Duration,
+                    formValues.Price,
+                    imageURL,
+                    formValues.UserTarget
+                );
+                alert("Curso creado!");
+            }
+            // Si no := Modificar curso
+            else {
+                await CourseService.UpdateCourse(
+                    id,
+                    formValues.Name,
+                    formValues.Description,
+                    formValues.Topics,
+                    formValues.Includes,
+                    formValues.Duration,
+                    formValues.Price,
+                    imageURL,
+                    formValues.UserTarget
+                );
+                alert("Curso modificado!");
+            }
+        } catch (error) {
+            console.error("Error al editar o agregar el cursos", error);
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleDelete = async () => {
         try {
+            setLoading(true);
             if (id) {
-                await CourseService.DeleteCourse( id );
+                await CourseService.DeleteCourse(id);
                 alert("Se elimino el curso");
             }
         } catch (error) {
             console.error("Error al eliminar el cursos", error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -210,13 +249,19 @@ function ManageCourse() {
                 type: 'button',
                 label: 'Eliminar curso',
                 onClick: (id) => handleDelete(id),
-                parameter:id
+                parameter: id
             },
             {
                 variant: 'primary',
                 type: 'button',
                 label: 'Asignar grupo',
-                onClick: () => handleModal(true),
+                onClick: () => handleModal(true,false),
+            },
+            {
+                variant: 'secondary',
+                type: 'button',
+                label: 'Modificar grupos',
+                onClick: () => handleModal(true,true),
             }
         )
     }
@@ -230,7 +275,13 @@ function ManageCourse() {
                 groupInfo={groupInfo}
                 setGroupInfo={setGroupInfo}
                 courseID={id}
+                isModify={isModifyGroup}
             />
+            {loading && (
+                        <div className='text-center my-5'>
+                            <Loading size={11} />
+                        </div>
+                    )}
 
             <div className={styles.page}>
                 <Container>
@@ -245,7 +296,7 @@ function ManageCourse() {
                                     <span className={styles.edit_picture_span} onClick={() => { fileInputRef.current.click(); }}>
                                         <FontAwesomeIcon icon={faPencil} />
                                     </span>
-                                    <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileUpload} />
+                                    <input type="file" accept="image/*" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileUpload} />
                                 </div>
                             }
                         </Col>

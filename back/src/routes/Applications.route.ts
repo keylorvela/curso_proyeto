@@ -7,10 +7,9 @@ import multer from 'multer';
 import { getAllApplications, respondToApplication, sendApplication, getApplicationFile } from "../controllers/Application.controller";
 const router = express.Router();
 
-// Configuración de multer para guardar archivos
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, '/tmp');  // Directorio temporal
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
@@ -20,6 +19,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 
+router.post("/",  upload.single('file'), sendApplication);
+
 
 
 //Endpoints
@@ -28,7 +29,6 @@ router.get("/", getAllApplications);
 
 router.put("/", respondToApplication);
 
-router.post("/",  upload.single('file'), sendApplication);
 
 router.get("/file/:idApplication", getApplicationFile);
 
@@ -38,7 +38,7 @@ router.get("/file/:idApplication", getApplicationFile);
 
 
 router.get('/test', (req,res) => {
-    res.send("HOLA");
+    res.send("aaHOLA");
 } )
 
 

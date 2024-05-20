@@ -21,10 +21,12 @@ import ImageService from 'src/services/Image.service.js'
 function ManageTreatment() {
     const navigate = useNavigate();
     const location = useLocation();
+
+    const [categoryList, setCategoryList] = useState([]);
     const [values, setValues] = useState(location.state?.treatmentInfo);
     const [loading, setLoading] = useState(true);
     const [updatedData, setUpdatedData] = useState(false);
-    const [imageUrl, setImageUrl] = useState(location.state?.treatmentInfo?.ImageUrl || noImage);
+    const [imageUrl, setImageUrl] = useState(location.state?.treatmentInfo?.TreatmentImage || noImage);
 
 
     const { id } = useParams() || null;
@@ -34,6 +36,12 @@ function ManageTreatment() {
     useEffect(() => {
         async function fetchData() {
             try {
+                const data_raw = await tServ.getCategories();
+                const new_data = data_raw.map(category => ({
+                    label: category.CategoryName,
+                    value: category.ID,
+                }))
+                setCategoryList(new_data);
                 if (updatedData || (!(values ?? null) && (id ?? null))) {
                     const data = await tServ.getTreatment(id);
                     setValues(data);
@@ -82,7 +90,7 @@ function ManageTreatment() {
                 const request = await tServ.deleteTreatment(id_p);
                 if (request.status === 200)
                     alert('Eliminacion exitosa');
-                    navigate('/admin/treatments');
+                navigate('/admin/treatments');
             }
 
         } catch (error) {
@@ -96,7 +104,7 @@ function ManageTreatment() {
         try {
             setLoading(true);
             let imgPromise = null;
-            let imageURL = imageUrl;
+            let imageURL = (imageUrl === noImage) ? '' : imageUrl;
 
             if (imageUrl !== noImage) {
                 imgPromise = uploadImage();
@@ -105,9 +113,11 @@ function ManageTreatment() {
                 });
             }
             if (!id) {
-                const request = await tServ.updateTreatment(formValues, imageURL);
-                if (request.status === 200)
+                const request = await tServ.createTreatment(formValues, imageURL);
+                if (request.status === 200) {
                     alert('Inserción exitosa');
+                    setImageUrl(noImage);
+                }
             }
             else {
                 const request = await tServ.updateTreatment(formValues, imageURL);
@@ -180,15 +190,11 @@ function ManageTreatment() {
             required: true,
         },
         {
-            id: 'categoria',
+            id: 'category',
             label: 'Categoría',
             type: 'select',
             placeholder: 'Selecciona la categoría',
-            options: [
-                { value: 'male', label: 'Male' },
-                { value: 'female', label: 'Female' },
-                { value: 'other', label: 'Other' },
-            ],
+            options: categoryList,
             required: true,
         }
     ];
@@ -219,48 +225,47 @@ function ManageTreatment() {
             <div className={styles.page}>
                 <Container>
 
-                    {loading ? (
-                        <div className='text-center'>
+                    {loading && (
+                        <div className='text-center my-5'>
                             <Loading size={11} />
                         </div>
-                    ) : (
-                        <Row >
-                            <Col className='mt-2' xs={12} md={4} style={{ position: 'relative', height:'100%',maxHeight:'50%' }}>
-                                <Image
-                                    src={imageUrl}
-                                    fluid
-                                    rounded
-                                    style={{ width: '100%', height: '50%', objectFit: 'cover' }}
-                                />
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    style={{ display: 'none' }}
-                                    id="fileInput"
-                                    onChange={handleImageChange}
-                                />
-                                <button
-                                    className={`fw-bold ${styles.btnImage}`}
-                                    onClick={handleButtonFile}>
-                                    <FontAwesomeIcon icon={faEdit} style={{ fontSize: '1.5em' }} />
-                                </button>
-                            </Col>
-
-                            {/*filler*/}
-                            <Col md={1}>
-                            </Col>
-
-                            <Col className='mt-2' xs={12} md={7}>
-                                <DynamicForm
-                                    fields={fields}
-                                    onSubmit={handleFormSubmit}
-                                    buttons={buttons}
-                                    initialValues={values}
-                                />
-
-                            </Col>
-                        </Row>
                     )}
+                    <Row >
+                        <Col className='mt-2' xs={12} md={4} style={{ position: 'relative', height: '100%', maxHeight: '50%' }}>
+                            <Image
+                                src={imageUrl}
+                                fluid
+                                rounded
+                                style={{ width: '100%', height: '50%', objectFit: 'cover' }}
+                            />
+                            <input
+                                type="file"
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                                id="fileInput"
+                                onChange={handleImageChange}
+                            />
+                            <button
+                                className={`fw-bold ${styles.btnImage}`}
+                                onClick={handleButtonFile}>
+                                <FontAwesomeIcon icon={faEdit} style={{ fontSize: '1.5em' }} />
+                            </button>
+                        </Col>
+
+                        {/*filler*/}
+                        <Col md={1}>
+                        </Col>
+
+                        <Col className='mt-2' xs={12} md={7}>
+                            <DynamicForm
+                                fields={fields}
+                                onSubmit={handleFormSubmit}
+                                buttons={buttons}
+                                initialValues={values}
+                            />
+
+                        </Col>
+                    </Row>
 
                 </Container>
             </div>

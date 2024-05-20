@@ -69,7 +69,7 @@ function DynamicForm({ fields, onSubmit, buttons = [], initialValues = {}, onCha
           ) : (
             <div key={index} className='d-inline'>
               <Button
-                className='mr-2 my-4'
+                className='mx-2 mr-2 my-4'
                 variant={button.variant}
                 type={button.type}
               >

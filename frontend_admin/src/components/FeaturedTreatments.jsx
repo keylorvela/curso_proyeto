@@ -25,7 +25,6 @@ function FeaturedTreatments() {
             try {
                 const treatmentsData = await TreatmentsService.getTreatments();
                 setTreatments(treatmentsData);
-                console.log(treatments)
             } catch (error) {
                 console.error('getTreatments fail:', error);
             } finally {
@@ -44,7 +43,6 @@ function FeaturedTreatments() {
 
     const handleButtonDetails = async (treatmentInfo) => {
         setModalData(treatmentInfo);
-        alert(JSON.stringify(treatmentInfo))
         setShowModal(true);
     };
 
@@ -65,7 +63,7 @@ function FeaturedTreatments() {
                     {treatments?.map(tratamiento => (
                         <Col sm={6} md={3} key={tratamiento.ID}>
                             <Treatment
-                                photo={tratamiento.ImageUrl}
+                                photo={tratamiento.TreatmentImage}
                                 treatmentInfo={tratamiento}
                                 event={handleEditTreatment}
                                 detailsEvent={handleButtonDetails}
@@ -79,7 +77,7 @@ function FeaturedTreatments() {
                         show={showModal}
                         onHide={handleModalClose}
                         title={modalData.Name}
-                        photo={modalData.ImageUrl || noImage}
+                        photo={modalData.TreatmentImage || noImage}
                         roundedPhoto={false}
                         labels={[
                             { title: "Descripción", content: modalData.Description },
