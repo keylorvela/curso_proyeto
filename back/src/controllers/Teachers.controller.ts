@@ -48,18 +48,12 @@ export const updateProfessor = async (req: Request, res: Response) => {
     }
 
     try {
-        await dbConnection.query<RowDataPacket[]>(`
+        const result_teacher = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Professors_Update(${personID}, "${photo}", "${email}", "${phoneNumber}", "${name}", @o_status)
         `);
+        const result: OStatus[] = JSON.parse(JSON.stringify(result_teacher[0][0]));
 
-        const result = await dbConnection.query<RowDataPacket[]>(`
-            SELECT @o_status AS o_status
-        `);
-
-        const resultStatus: OStatus[] = JSON.parse(JSON.stringify(result[0]));
-        const professorInfo = result[0][0];
-
-        res.status(200).send(professorInfo || {});
+        res.status(200).send(result[0] || {});
     } catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
     }
@@ -75,16 +69,12 @@ export const deleteProfessor = async (req: Request, res: Response) => {
     }
 
     try {
-        await dbConnection.query<RowDataPacket[]>(`
+        const result_teacher = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Professors_Delete(${userID}, @o_status)
         `);
+        const result: OStatus[] = JSON.parse(JSON.stringify(result_teacher[0][0]));
 
-        const result = await dbConnection.query<RowDataPacket[]>(`
-            SELECT @o_status AS o_status
-        `);
-
-        const resultStatus: OStatus[] = JSON.parse(JSON.stringify(result[0]));
-        res.status(200).send(resultStatus[0] || {});
+        res.status(200).send(result[0] || {});
     } catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
     }
