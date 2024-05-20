@@ -38,7 +38,7 @@ const addReview = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.addReview = addReview;
 const removeReview = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.body;
+    const id = Number(req.query.id) || null;
     if (isNaN(id) || id <= 0) {
         res.status(400).send({ error: "Id enter is not valid" });
         return;
@@ -54,7 +54,7 @@ const removeReview = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.removeReview = removeReview;
 const listReviewsOfTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { treatment_id } = req.body;
+    const treatment_id = Number(req.query.treatment_id) || null;
     if (isNaN(treatment_id) || treatment_id <= 0) {
         res.status(400).send({ error: "Id enter is not valid" });
         return;

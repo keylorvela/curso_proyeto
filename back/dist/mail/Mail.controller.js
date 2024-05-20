@@ -45,10 +45,10 @@ class MailManager {
             });
         });
     }
-    sendMail_OTP(from, to, subject, name, otp) {
+    sendMail_OTP(from, to, subject, mailContent) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
-                const html = (0, Mail_template_1.mailTemplate_OTP)(otp, name);
+                const html = (0, Mail_template_1.mailTemplate_OTP)(mailContent.otp, mailContent.name);
                 const mail_config = {
                     from,
                     to,
@@ -68,10 +68,33 @@ class MailManager {
             });
         });
     }
-    sendMail_UserRegistration(from, to, subject, name, username, password) {
+    sendMail_UserRegistration(from, to, subject, mailContent) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
-                const html = (0, Mail_template_1.mailTemplate_UserRegistration)(name, username, password);
+                const html = (0, Mail_template_1.mailTemplate_UserRegistration)(mailContent.name, mailContent.username, mailContent.password);
+                const mail_config = {
+                    from,
+                    to,
+                    subject,
+                    html: html
+                };
+                this.transporter.sendMail(mail_config, (error, info) => {
+                    if (error) {
+                        console.error("Mensaje no enviado!:", error);
+                        reject(error);
+                    }
+                    else {
+                        console.log("Mensaje enviado con exito");
+                        resolve();
+                    }
+                });
+            });
+        });
+    }
+    sendMail_FormVerification(from, to, subject, mailContent) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                const html = (0, Mail_template_1.mailTemplate_FormVerification)(mailContent.name, mailContent.phoneNumber, mailContent.email, mailContent.courseName, mailContent.courseSchedule);
                 const mail_config = {
                     from,
                     to,

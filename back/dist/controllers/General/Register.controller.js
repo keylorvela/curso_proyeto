@@ -24,7 +24,8 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     try {
         const mailManager = new Mail_controller_1.default();
-        yield mailManager.sendMail_UserRegistration("testELSPrueba@gmail.com", p_email, "Bienvenid@ a ELS", p_name, p_username, p_password);
+        const mailContent = { name: p_name, username: p_username, password: p_password };
+        yield mailManager.sendMail_UserRegistration("testELSPrueba@gmail.com", p_email, "Bienvenid@ a ELS", mailContent);
         const result_user = yield dbConfig_1.default.query(`
             CALL SP_General_RegisterUser(
                 "${p_name}",

@@ -16,6 +16,7 @@ exports.getApplicationFile = exports.sendApplication = exports.respondToApplicat
 const dbConfig_1 = __importDefault(require("../database/dbConfig"));
 const fs_1 = __importDefault(require("fs"));
 const util_1 = require("util");
+const Mail_controller_1 = __importDefault(require("../mail/Mail.controller"));
 const unlinkAsync = (0, util_1.promisify)(fs_1.default.unlink);
 const getAllApplications = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -54,10 +55,16 @@ const respondToApplication = (req, res) => __awaiter(void 0, void 0, void 0, fun
 exports.respondToApplication = respondToApplication;
 const sendApplication = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { path, buffer } = req.file;
+    const mailManager = new Mail_controller_1.default();
+    const mailContent = { name: "", phoneNumber: "", email: "", courseName: "", courseSchedule: "" };
     try {
         // Use parameterized query to prevent SQL injection
         const result_application = yield dbConfig_1.default.query(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`, [req.body.nombre, fs_1.default.readFileSync(path), req.body.correo, req.body.telefono, 2]);
         const result = JSON.parse(JSON.stringify(result_application[0][0]));
+        // TODO: Verificar que el result si haya sido exitoso (Si se guardo la solicitud)
+        if (false) {
+            yield mailManager.sendMail_FormVerification("testELSPrueba@gmail.com", mailContent.email, "Verificacion de formulario", mailContent);
+        }
         //Delete file
         const resultDelete = yield unlinkAsync(path);
         // Send the response

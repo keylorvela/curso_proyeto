@@ -49,8 +49,9 @@ const requestEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const otp = mailManager.generateOTP();
         const result_verifyEmail = yield dbConfig_1.default.query(`CALL SP_Login_Verify_Email("${body.requested_email}", ${otp}, @o_status)`);
         const result = JSON.parse(JSON.stringify(result_verifyEmail[0][0]));
+        const mailContent = { otp: otp, name: result[0].Name };
         if (result[0].IsValid) {
-            yield mailManager.sendMail_OTP("testELSPrueba@gmail.com", body.requested_email, "Solicitud de cambio de contraseña", result[0].Name, otp);
+            yield mailManager.sendMail_OTP("testELSPrueba@gmail.com", body.requested_email, "Solicitud de cambio de contraseña", mailContent);
             res.status(200).send({ message: "Password reset email sent successfully" });
         }
         else {
