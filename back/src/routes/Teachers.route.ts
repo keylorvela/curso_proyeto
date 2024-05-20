@@ -7,7 +7,7 @@ router.get("/", getAllProfessors);
 
 router.put("/", updateProfessor);
 
-router.delete("/:userID", deleteProfessor);
+router.delete("/", deleteProfessor);
 
 router.get("/:userID", getProfessorInformation);
 
