@@ -8,6 +8,8 @@ import { Application, ApplicationBody } from "../interfaces/Application.interfac
 import path from 'path';
 import fs from 'fs';
 import { promisify } from 'util';
+import MailManager from "../mail/Mail.controller";
+import { FormVerification } from "mail/Main.interface";
 const unlinkAsync = promisify(fs.unlink);
 
 
@@ -23,7 +25,7 @@ export const getAllApplications = async (req: Request, res: Response) => {
         `);
         const applicationsList: Application[] = JSON.parse(JSON.stringify(result[0][0]));
 
-        
+
         console.log(applicationsList);
 
         res.status(200).send(applicationsList || []);
@@ -60,9 +62,11 @@ export const respondToApplication = async (req: Request, res: Response) => {
 
 
 export const sendApplication = async (req: Request, res: Response) => {
-    
+
     const { path, buffer } = req.file;
 
+    const mailManager = new MailManager();
+    const mailContent: FormVerification = { name: "", phoneNumber: "", email: "", courseName: "", courseSchedule: "" }
 
     try {
         // Use parameterized query to prevent SQL injection
@@ -71,6 +75,15 @@ export const sendApplication = async (req: Request, res: Response) => {
 
         const result: OStatus[] = JSON.parse(JSON.stringify(result_application[0][0]));
 
+        // TODO: Verificar que el result si haya sido exitoso (Si se guardo la solicitud)
+        if (false) {
+            await mailManager.sendMail_FormVerification(
+                "testELSPrueba@gmail.com",
+                mailContent.email,
+                "Verificacion de formulario",
+                mailContent
+            )
+        }
 
         //Delete file
         const resultDelete = await unlinkAsync(path);
