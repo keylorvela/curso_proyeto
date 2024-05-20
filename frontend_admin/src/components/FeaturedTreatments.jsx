@@ -41,6 +41,14 @@ function FeaturedTreatments() {
         }); 
     };
 
+    const handleTreatmentReview = () => {
+        const treatmentInfo = modalData;
+        navegate('/admin/treatmentreview/' + modalData.ID, {
+            state: {treatmentInfo}
+        }); 
+    };
+    
+
     const handleButtonDetails = async (treatmentInfo) => {
         setModalData(treatmentInfo);
         setShowModal(true);
@@ -79,6 +87,7 @@ function FeaturedTreatments() {
                         title={modalData.Name}
                         photo={modalData.TreatmentImage || noImage}
                         roundedPhoto={false}
+                        reviewButton={{ text: "Ver reseñas", onClick: handleTreatmentReview }}
                         labels={[
                             { title: "Descripción", content: modalData.Description },
                             { title: "Precio", content: modalData.Price },
