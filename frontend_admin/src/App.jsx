@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
+import TreatmentReview from 'src/views/admin/TreatmentReview.jsx';
 import Treatments from 'src/views/admin/Treatments.jsx';
 import Professors from 'src/views/admin/Professors.jsx';
 import Applications from 'src/views/admin/Applications.jsx';
@@ -49,6 +50,7 @@ function App() {
         <Route path="admin/professor" element={<ManageProfessor />} />
         <Route path="admin/treatments" element={<Treatments />} />
         <Route path="admin/treatment/:id" element={<ManageTreatment />} />
+        <Route path="admin/treatmentreview/:id" element={<TreatmentReview />} />
         <Route path="admin/treatment" element={<ManageTreatment />} />
         <Route path="admin/applications" element={<Applications />} />
 

@@ -4,7 +4,7 @@ import { Modal, Button, Row, Col, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 
-function TablemModal({ show, onHide, title, photo, roundedPhoto, linkText, linkFunction, acceptButton, rejectButton, labels }) {
+function TablemModal({ show, onHide, title, photo, roundedPhoto, linkText, linkFunction, acceptButton, rejectButton,reviewButton, labels }) {
 
     const linkTextWithArrow = (
         <span>
@@ -58,6 +58,7 @@ function TablemModal({ show, onHide, title, photo, roundedPhoto, linkText, linkF
             <Modal.Footer>
                 {rejectButton && <Button variant="danger" onClick={rejectButton.onClick}>{rejectButton.text}</Button>}
                 {acceptButton && <Button variant="success" onClick={acceptButton.onClick}>{acceptButton.text}</Button>}
+                {reviewButton && <Button variant="secondary" onClick={reviewButton.onClick}>{reviewButton.text}</Button>}
             </Modal.Footer>
         </Modal>
     );
