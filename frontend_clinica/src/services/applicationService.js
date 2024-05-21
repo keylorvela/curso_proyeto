@@ -22,7 +22,7 @@ export async function sendApplication(formData) {
 
 export async function downloadPaymentReceipt(idApplication) {
     try {
-        const response = await axios.get(`${API_BASE_URL}applications/file/${idApplication}`, {
+        const response = await axios.get(`${API_BASE_URL}/applications/file/${idApplication}`, {
             responseType: 'blob', 
         });
 
