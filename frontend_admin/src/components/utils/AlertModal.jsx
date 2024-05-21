@@ -20,17 +20,22 @@ import Stack from 'react-bootstrap/Stack';
  *
  * @example
  *   const [showAlert, setShowAlert] = useState(false);
+ * 
+    const [alert, setAlert] = useState({ type: '', title: '', msg: '' });
 
   setShowAlert(true);
+  
+    setAlert({..., msg : 'mensaje'});
 
   
- <AlertModal
-                  type="primary"
-                  title="Atención"
-                  message="No se encontraron tratamientos."
-                  showAlert={showAlert}
-                  setShowAlert={setShowAlert}
-                />
+    
+   <AlertModal
+                    type={alert.type}
+                    title={alert.title}
+                    message={alert.msg}
+                    showAlert={showAlert}
+                    setShowAlert={setShowAlert}
+                  />
    
 * */
 

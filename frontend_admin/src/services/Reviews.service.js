@@ -26,7 +26,6 @@ const ReviewsService = {
     RemoveReview: async (id) => {
         try {
             const params = { id }
-            console.log(params)
             const response = await axios.delete(`/reviews`,{ data: { id } });
 
             return response.data;

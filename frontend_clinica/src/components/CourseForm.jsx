@@ -17,8 +17,8 @@ function CourseForm() {
     //For modals to give feedback
     const [load, setLoad] = useState(false)
     const [showAlert, setShowAlert] = useState(false);
-    const [alertMsg, setAlertMsg] = useState('');
-
+    const [alertMsg, setAlertMsg] = useState('');    
+   
 
 
 
@@ -75,7 +75,7 @@ function CourseForm() {
             } catch (error) {
                 console.error('Error:', error);
                 setAlertMsg('Error al enviar el formulario');
-
+                
             } finally {
                 setLoad(false);
                 setShowAlert(true);
@@ -87,16 +87,16 @@ function CourseForm() {
 
     return (
         <Form className='px-2 py-3' noValidate validated={validated} onSubmit={handleSubmit}>
-
+            
             {/* For feedback */}
-            <LoadModal pshow={load} msg="Enviando formulario..." />
+            <LoadModal pshow={load} msg = "Enviando formulario..."/>
 
             <AlertModal
-                type='info'
-                title="Atención"
-                message={alertMsg}
-                showAlert={showAlert}
-                setShowAlert={setShowAlert}
+                    type='info'
+                    title="Atención"
+                    message={alertMsg}
+                    showAlert={showAlert}
+                    setShowAlert={setShowAlert}
             />
 
 
