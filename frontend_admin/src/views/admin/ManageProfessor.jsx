@@ -67,6 +67,7 @@ function ManageProfessor() {
             }
             // Si no := Crea el profesor
             else {
+                console.log("AQUII")
                 const tempPassword = passwordManager.generatePassword();
                 await UserService.RegisterUser(
                     formValues.name,
@@ -156,7 +157,7 @@ function ManageProfessor() {
                     <Row>
 
                         <Col className={styles.image_container} md={12} lg={5} fluid>
-                            <Image src={teacherData.Foto} className={styles.ProfilePicture} fluid rounded/>
+                            <Image src={teacherInformation.Foto} className={styles.ProfilePicture} fluid rounded/>
                         </Col>
 
                         <Col className='mt-2' md={12} lg={7}>

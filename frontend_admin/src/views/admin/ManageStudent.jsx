@@ -114,7 +114,7 @@ function ManageStudent() {
             id: 'course',
             label: 'Curso',
             type: 'select',
-            placeholder: 'Selecciona el curos',
+            placeholder: 'Selecciona el curso',
             options: courseList,
             required: true,
         },
