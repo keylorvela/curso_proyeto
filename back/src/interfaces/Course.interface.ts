@@ -2,12 +2,6 @@ export interface CourseID {
     o_courseID: number
 }
 
-export interface photoBody {
-    imageID: number
-    url: string
-    imageType: string
-}
-
 export interface CourseBody {
     Name: string
     Description: string
@@ -17,7 +11,7 @@ export interface CourseBody {
     Price: number
     CourseImage: string
     UserTarget: string
-    Photo: photoBody
+    PayLink: string
 }
 
 export interface CourseImage {
@@ -36,6 +30,7 @@ export interface Course {
     Price: number
     UserTarget: string
     CourseImage: string
+    PayLink: string
     GroupsByCourse: string
     o_status: String
 }

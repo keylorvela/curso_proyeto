@@ -2,7 +2,7 @@ import { Request, Response } from "express"
 import dbConnection from "../database/dbConfig";
 import { RowDataPacket } from "mysql2";
 
-import { Treatment, TreatmentID, createTreatmentBody, updateTreatmentBody, Categories } from "../interfaces/Treatments.interface";
+import { Treatment, TreatmentID, createTreatmentBody, updateTreatmentBody } from "../interfaces/Treatments.interface";
 import { OStatus } from "../interfaces/OStatus.interface";
 
 // Create new treatment
@@ -21,6 +21,7 @@ export const createTreatment = async (req: Request, res: Response) => {
                 "${body.p_information}",
                 ${body.p_categoryID},
                 "${body.p_treatmentImage}",
+                "${body.p_payLink}",
                 @o_status)`);
         const result: TreatmentID[] = JSON.parse(JSON.stringify(result_treatment[0][0]));
 
@@ -120,25 +121,11 @@ export const updateTreatment = async (req: Request, res: Response) => {
                 "${body.p_information}",
                 ${categoryID},
                 "${body.p_treatmentImage}",
+                "${body.p_payLink}",
                 @o_status)`);
         const result: OStatus[] = JSON.parse(JSON.stringify(result_treatment[0][0]));
 
         res.status(200).send(result[0] || {});
-    } catch (error) {
-        res.status(500).send({ error: "Petition failed", error_detail: error });
-    }
-};
-
-// Get all treatment categories
-export const getTreatmentCategories = async (req: Request, res: Response) => {
-
-    try {
-        const result_categories = await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_General_GetAllTreatmentCategories()`);
-        const result: Categories[] = JSON.parse(JSON.stringify(result_categories[0][0]));
-
-
-        res.status(200).send(result);
     } catch (error) {
         res.status(500).send({ error: "Petition failed", error_detail: error });
     }

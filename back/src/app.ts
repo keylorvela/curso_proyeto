@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 
-
 import RegisterRoute from "./routes/General/Register.route"
 import UserRoute from "./routes/General/User.route"
 
@@ -14,6 +13,7 @@ import ReviewsRoute from "./routes/Reviews.route"
 import StudentsRoute from "./routes/Students.route"
 import TeachersRoute from "./routes/Teachers.route"
 import TreatmentsRoute from "./routes/Treatments.route"
+import CategoriesRoute from "./routes/Categories.route"
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -44,6 +44,7 @@ app.use("/reviews", ReviewsRoute);
 app.use("/students", StudentsRoute);
 app.use("/teachers", TeachersRoute);
 app.use("/treatments", TreatmentsRoute);
+app.use("/categories", CategoriesRoute);
 // ---------------------------------------------
 
 app.listen(port, () => {

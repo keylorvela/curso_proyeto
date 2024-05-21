@@ -8,6 +8,7 @@ export interface createTreatmentBody {
     p_information: String
     p_treatmentImage: string
     p_categoryID: String
+    p_payLink: string
 }
 
 export interface updateTreatmentBody {
@@ -21,6 +22,7 @@ export interface updateTreatmentBody {
     p_information: String
     p_treatmentImage: string
     p_categoryID: String
+    p_payLink: string
 }
 
 export interface TreatmentID {
@@ -43,10 +45,6 @@ export interface Treatment {
     EffectDuration: String
     Information: String
     TreatmentImage: string
+    PayLink: string
     o_status: String
-}
-
-export interface Categories {
-    ID: number,
-    CategoryName: string
 }

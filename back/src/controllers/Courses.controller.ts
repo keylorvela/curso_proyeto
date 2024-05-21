@@ -44,6 +44,7 @@ export const createCourse = async (req: Request, res: Response) => {
                 ${body.Price},
                 '${body.CourseImage}',
                 '${body.UserTarget}',
+                '${body.PayLink}',
                 @o_status)`);
 
         const result: CourseID[] = JSON.parse(JSON.stringify(result_course[0][0]));
@@ -71,6 +72,7 @@ export const updateCourse = async (req: Request, res: Response) => {
                 ${body.Price},
                 '${body.CourseImage}',
                 '${body.UserTarget}',
+                '${body.PayLink}',
                 @o_status
             )
         `);
