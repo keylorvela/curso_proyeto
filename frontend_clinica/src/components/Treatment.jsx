@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 
 
-function Treatment({ title, event }) {
+function Treatment({ title, event, image }) {
 
     return (
 
@@ -19,7 +19,7 @@ function Treatment({ title, event }) {
 
                 <Stack className='px-3 py-2 h-100 justify-content-between'>
                     <div>
-                        <Image src={img} rounded fluid />
+                        <Image src={image} rounded fluid />
                         <p className="text-center fw-medium fs-2 mt-3" >{title}</p>
                     </div>
 

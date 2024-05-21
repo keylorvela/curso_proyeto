@@ -91,6 +91,7 @@ function Courses() {
                     <Col className = {styles.cardTreatment} key={index}>
                       <Treatment
                         title={item.Name}
+                        image={item.CourseImage || "https://i.ibb.co/wS2c1nt/Default-Image.jpg"}
                         event={() => handleClick(item.ID)}
                       />
                     </Col>
