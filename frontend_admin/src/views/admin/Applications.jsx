@@ -1,38 +1,45 @@
 import React, { useState, useEffect } from 'react';
+
 import DynamicTable from 'src/components/DynamicTable.jsx';
 import MainLayout from 'src/components/MainLayout.jsx';
 import Loading from 'src/components/utils/Loading.jsx';
 import styles from 'src/components/Common.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
+import YesNoModal from 'src/components/utils/YesNoModal.jsx';
+import LoadModal from 'src/components/utils/LoadModal.jsx';
+
 import Container from 'react-bootstrap/Container';
+
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import applicationsService from 'src/services/Applications.service.js'
+
+import applicationsService from 'src/services/Applications.service.js';
 
 function Applications() {
-    const [loading, setLoading] = useState(false);
+    // For feedback
+    const [loading, setLoading] = useState(true);
+    const [showYN, setYN] = useState(false);
+    const [load, setLoad] = useState(false);
+
     const columns = ['ID', 'StudentName', 'Email'];
     const [data, setData] = useState([]);
-
-
 
     useEffect(() => {
         async function fetchData() {
             try {
                 // Get courses
                 const data_raw = await applicationsService.getApplications();
-                console.log(data_raw)
+                console.log(data_raw);
                 setData(data_raw);
-
             } catch (error) {
                 console.error('Error fetching data:', error);
-            }
-            finally {
+            } finally {
                 setLoading(false);
             }
         }
 
         fetchData();
     }, []);
+
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState(null);
 
@@ -46,33 +53,32 @@ function Applications() {
     };
 
     const handleReject = async () => {
-        const result = await applicationsService.respondApplication(modalData.ID, 'Rechazado')
+        const result = await applicationsService.respondApplication(modalData.ID, 'Rechazado');
         if (result) {
-            alert("Aplicación rechazada");
-            showModal(false);
-
+            setShowModal(false);
+            setYN(false);
         }
+    };
+
+    const handleRejectButton = () => {
+        setYN(true);
     };
 
     const handleAccept = async () => {
-        const result = await applicationsService.respondApplication(modalData.ID, "Aceptado")
+        const result = await applicationsService.respondApplication(modalData.ID, 'Aceptado');
         if (result) {
-            alert("Aplicación aceptada");
-            showModal(false);
+            setShowModal(false);
         }
     };
 
-    const handleDownloadDocument = async (id) => {
-        //TODO Better the handling and give better feedback
+    const handleDownloadDocument = async () => {
         try {
-            const success = await applicationsService.downloadPaymentReceipt(modalData.ID);
-            if (!success) {
-                console.error('Failed to download payment receipt');
-            } else {
-                alert("Descargando", id);
-            }
+            setLoad(true);
+            await applicationsService.downloadPaymentReceipt(modalData.ID);
         } catch (error) {
-            console.error('Error downloading payment receipt:', error);
+            alert('Error descargando el archivo');
+        } finally {
+            setLoad(false);
         }
     };
 
@@ -82,38 +88,51 @@ function Applications() {
 
     return (
         <MainLayout type={1}>
-            <Container fluid style={{ width: '98%' }}>
+
+
+            <LoadModal pshow={load} msg="Descargando archivo..." />
+
+            <YesNoModal
+                question="Está seguro que se desea continuar?"
+                showAlert={showYN}
+                setShowAlert={setYN}
+                handleYes={handleReject}
+            /><Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.tableTitle}>Solicitudes de matrícula</h1>
 
-                {loading && (
+                {loading ? (
                     <div className='text-center my-5'>
                         <Loading size={15} />
                     </div>
-                )}
+                ) : (
+                    <>
+                        <DynamicTable
+                            columns={columns}
+                            data={data}
+                            buttons={btn}
+                        />
 
-                <DynamicTable
-                    columns={columns}
-                    data={data}
-                    buttons={btn}
-                />
-                {showModal && modalData && (
-                    <TableModal
-                        show={showModal}
-                        onHide={handleModalClose}
-                        title="Solicitud"
-                        linkText="Ver comprobante"
-                        linkFunction={() => handleDownloadDocument(modalData.ID)}
-                        acceptButton={{ text: "Aceptar", onClick: handleAccept }}
-                        rejectButton={{ text: "Rechazar", onClick: handleReject }}
-                        labels={[
-                            { title: "Nombre", content: modalData.StudentName },
-                            { title: "Email", content: modalData.Email },
-                            { title: "Curso", content: modalData.ID },
-                            { title: "Fecha", content: "12/12/2000" },
-                        ]}
-                    />
+                        {showModal && modalData && (
+                            <TableModal
+                                show={showModal}
+                                onHide={handleModalClose}
+                                title="Solicitud"
+                                linkText="Ver comprobante"
+                                linkFunction={handleDownloadDocument}
+                                acceptButton={{ text: 'Aceptar', onClick: handleAccept }}
+                                rejectButton={{ text: 'Rechazar', onClick: handleRejectButton }}
+                                labels={[
+                                    { title: 'Nombre', content: modalData.StudentName },
+                                    { title: 'Email', content: modalData.Email },
+                                    { title: 'Curso', content: modalData.ID },
+                                    { title: 'Fecha', content: '12/12/2000' },
+                                ]}
+                            />
+                        )}
+                    </>
                 )}
             </Container>
+
         </MainLayout>
     );
 }
