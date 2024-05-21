@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getTreatment } from 'src/services/treatmentsService.js';
+import ReviewsService from 'src/services/ReviewsService.js';
 
 import sinpe from 'src/assets/Sinpe.svg'
 import transferencia from 'src/assets/Transferencia.svg'
@@ -11,15 +12,12 @@ import { FiShoppingCart } from "react-icons/fi";
 
 import MainLayout from 'src/components/MainLayout.jsx';
 import Loading from 'src/components/utils/Loading.jsx';
+import BaseModal from 'src/components/utils/BaseModal.jsx';
 
 import styles from 'src/views/TreatmentView.module.css';
 import commonStyles from 'src/components/Common.module.css';
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Image from 'react-bootstrap/Image';
-import Alert from 'react-bootstrap/Alert';
+import { Container, Row, Col, Card, Button, Image, Alert, Form } from 'react-bootstrap';
 
 import CardsInformation from "../components/CardsInformation";
 
@@ -27,12 +25,54 @@ function TreatmentView() {
     const { id } = useParams();
     const [treatment, setTreatment] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [reviews, setReviews] = useState([]);
+    const [modalShow, setModalShow] = useState(false);
+
+    const [formData, setFormData] = useState({
+        name: '',
+        reviewContent: '',
+        rating: 0
+    });
+
+    const formatDate = (isoString) => {
+        const date = new Date(isoString);
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        };
+
+        return date.toLocaleDateString('es-ES', options);
+    };
+
+    async function fetchDataReviews() {
+        try {
+            const data_raw = await ReviewsService.ListReviewsOfTreatment(id);
+            const new_data = data_raw.map(review => ({
+                ID: review.ID,
+                Nombre: review.Name,
+                Resena: review.ReviewContent,
+                Fecha: formatDate(review.PublishedDate),
+                Estrellas: review.Stars,
+                Respuesta: review.Response,
+            }))
+            setReviews(new_data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const data = await getTreatment(id);
                 setTreatment(data);
+                fetchDataReviews();
+
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
@@ -60,8 +100,74 @@ function TreatmentView() {
         )
     }
 
+    const handleSubmit  = async (event) => {
+        event.preventDefault();
+        try {
+            await ReviewsService.AddReview(
+                formData.name, 
+                formData.reviewContent, 
+                formData.rating,id);
+            fetchDataReviews()
+            setFormData({
+                name: '',
+                reviewContent: '',
+                rating: 0
+            });
+            setModalShow(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    const handleChange = (event) => {
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value
+        });
+    };
+
+    const handleStarClick = (star) => {
+        setFormData({
+            ...formData,
+            rating: star
+        });
+    };
+
     return (
         <MainLayout>
+            <BaseModal pshow={modalShow} setShow={setModalShow}>
+                <div className='px-3'>
+                    <h5 className="fs-2 mb-3" style={{ color: "var(--main-blue)" }}>Publicar Reseña</h5>
+                    <Form onSubmit={handleSubmit} style={{ marginBottom: "15px" }}>
+                        <Form.Group className={styles.formGroup} controlId="nameInput">
+                            <Form.Label >Nombre:</Form.Label>
+                            <Form.Control type="text" name="name" value={formData.name} onChange={handleChange} required />
+                        </Form.Group>
+
+                        <Form.Group className={styles.formGroup} controlId="reviewInput">
+                            <Form.Label>Comentario:</Form.Label>
+                            <Form.Control as="textarea" rows={3} name="reviewContent" value={formData.reviewContent} onChange={handleChange} required />
+                        </Form.Group>
+
+                        <Form.Group className={styles.formGroup} controlId="ratingInput">
+                            <Form.Label>Calificación:</Form.Label>
+                            <div className="d-flex align-items-center">
+                                {[1, 2, 3, 4, 5].map((star, index) => (
+                                    <span
+                                        key={index}
+                                        className={star <= formData.rating ? styles.starSelected : styles.star}
+                                        onClick={() => handleStarClick(star)}
+                                    >
+                                        {star <= formData.rating ? '⭐' : '☆'}
+                                    </span>
+                                ))}
+                            </div>
+                        </Form.Group>
+
+                        <Button variant="primary" className={styles.btnPublicar} type="submit">Publicar</Button>
+                    </Form>
+                </div>
+            </BaseModal>
             <div className={styles.page}>
                 <Container>
                     {loading ? (
@@ -90,7 +196,7 @@ function TreatmentView() {
                                         <Image src={img || treatment.TreatmentImage} fluid />
                                     </Col>
                                     <Col xs={12} md={8}>
-                                        { formatDescription(treatment?.Description) }
+                                        {formatDescription(treatment?.Description)}
                                     </Col>
                                 </Row>
 
@@ -119,12 +225,12 @@ function TreatmentView() {
                                 <Row className="mb-4">
                                     <Col xs={12} sm={6} lg={3}>
                                         <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.wtsButton}`}>
-                                            <FaWhatsapp/><b className="text-nowrap"> Agenda tu cita </b>
+                                            <FaWhatsapp /><b className="text-nowrap"> Agenda tu cita </b>
                                         </button>
                                     </Col>
                                     <Col xs={12} sm={6} lg={3}>
                                         <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.bpButton}`}>
-                                            <FiShoppingCart/><b className="text-nowrap"> Conexión BP</b>
+                                            <FiShoppingCart /><b className="text-nowrap"> Conexión BP</b>
                                         </button>
                                     </Col>
                                     <Col xs={6} sm={6} lg={3}>
@@ -134,6 +240,58 @@ function TreatmentView() {
                                         <Image src={transferencia} fluid />
                                     </Col>
                                 </Row>
+
+
+                                {/* Review Section */}
+
+                                <Row className={styles.fixedRow}>
+                                    <Col md={12} className={styles.colCustom}>
+                                        <div className={styles.reviewHeader}>
+                                            <h3 className={styles.subTitle}>Reseñas</h3>
+                                        </div>
+
+                                        {
+                                            (reviews.length == 0) ?
+                                                (
+                                                    <div className={styles.information_container}>
+                                                        <span className={styles.noReview_span}>No hay reseñas publicadas</span>
+                                                    </div>
+                                                ) :
+                                                (
+                                                    reviews.map((review, index) => (
+                                                        <Card key={index} className={styles.reviewCard}>
+                                                            <Card.Body>
+                                                                <Card.Title className={styles.reviewDate}>
+                                                                    {review.Fecha}
+                                                                    <span className={styles.starContainer}>
+                                                                        {Array.from({ length: review.Estrellas }, (_, i) => (
+                                                                            <span key={i} className={styles.starIcon}>⭐</span>
+                                                                        ))}
+                                                                    </span>
+
+                                                                </Card.Title>
+
+                                                                <Card.Subtitle className={styles.reviewDate} style={{ textDecoration: 'underline' }}>{review.Nombre}</Card.Subtitle>
+                                                                <Card.Text className={styles.reviewDescription}>{review.Resena}</Card.Text>
+
+                                                                <Card.Title className={styles.reviewDate}>
+                                                                    Respuesta:
+                                                                </Card.Title>
+
+                                                                <Card.Subtitle className={styles.reviewDate} style={{ textDecoration: 'underline' }}>Clínica</Card.Subtitle>
+                                                                <Card.Text className={styles.reviewDescription}>{review.Respuesta || 'No hay respuesta'} </Card.Text>
+                                                            </Card.Body>
+                                                        </Card>
+                                                    ))
+                                                )
+                                        }
+
+                                    </Col>
+
+                                </Row>
+                                <Button variant="primary" className={styles.btnPublicar} onClick={() => { setModalShow(true) }}>
+                                    Publicar reseña
+                                </Button>
                             </>
                         )
                     )}
