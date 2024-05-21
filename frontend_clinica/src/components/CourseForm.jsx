@@ -1,63 +1,106 @@
 import { useState } from 'react';
+
+
+import LoadModal from 'src/components/utils/LoadModal.jsx'
+import AlertModal from 'src/components/utils/AlertModal.jsx'
+
+
+
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import axios from 'axios';
-import {sendApplication} from 'src/services/applicationService.js'
+
+import { sendApplication } from 'src/services/applicationService.js'
 
 function CourseForm() {
+    //For modals to give feedback
+    const [load, setLoad] = useState(false)
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMsg, setAlertMsg] = useState('');
+
+
+
+
+
+
+
+    //Form and form validation
     const [form, setForm] = useState({
         nombre: '',
         telefono: '',
         correo: '',
         horario: '',
         file: null
-      });
-      const [validated, setValidated] = useState(false);
+    });
+    const [validated, setValidated] = useState(false);
 
-      const handleChange = (event) => {
+
+
+
+    const handleChange = (event) => {
         const { name, value, files } = event.target;
         setForm({ ...form, [name]: files ? files[0] : value });
-      };
-    
-      
-    
-      const handleSubmit = async (event) => {
+    };
+
+
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const formVal = event.currentTarget;
-    
-        if (formVal.checkValidity() === false) {
-          event.stopPropagation();
-          setValidated(true);
-        } else {
-          const formData = new FormData();
-          Object.entries(form).forEach(([key, value]) => {
-            formData.append(key, value);
-          });
-    
-          try {
-            const result = await sendApplication(formData);
-            alert('¡El formulario se envió correctamente!');
-            setForm({
-              nombre: '',
-              telefono: '',
-              correo: '',
-              horario: '',
-              file: null
-            });
-            setValidated(false);
-          } catch (error) {
-            console.error('Error:', error);
-            alert('Error al enviar el formulario');
-          }
-        }
-      };
 
-    
+        if (formVal.checkValidity() === false) {
+            event.stopPropagation();
+            setValidated(true);
+        } else {
+            const formData = new FormData();
+            Object.entries(form).forEach(([key, value]) => {
+                formData.append(key, value);
+            });
+
+            try {
+                setLoad(true);
+                const result = await sendApplication(formData);
+                setForm({
+                    nombre: '',
+                    telefono: '',
+                    correo: '',
+                    horario: '',
+                    file: null
+                });
+                if (result) {
+                    setAlertMsg('Formulario enviado exitosamente');
+                }
+                setValidated(false);
+            } catch (error) {
+                console.error('Error:', error);
+                setAlertMsg('Error al enviar el formulario');
+
+            } finally {
+                setLoad(false);
+                setShowAlert(true);
+            }
+        }
+    };
+
+
 
     return (
         <Form className='px-2 py-3' noValidate validated={validated} onSubmit={handleSubmit}>
+
+            {/* For feedback */}
+            <LoadModal pshow={load} msg="Enviando formulario..." />
+
+            <AlertModal
+                type='info'
+                title="Atención"
+                message={alertMsg}
+                showAlert={showAlert}
+                setShowAlert={setShowAlert}
+            />
+
+
+
             <Row>
                 <p className='fs-3 fw-semibold'>Ya pagaste? Inicia tu matrícula:</p>
             </Row>

@@ -6,7 +6,7 @@ import styles from 'src/components/Common.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
 import Container from 'react-bootstrap/Container';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import ApplicationsService from 'src/services/Applications.service.js'
+import applicationsService from 'src/services/Applications.service.js'
 
 function Applications() {
     const [loading, setLoading] = useState(false);
@@ -19,7 +19,7 @@ function Applications() {
         async function fetchData() {
             try {
                 // Get courses
-                const data_raw = await ApplicationsService.getApplications();
+                const data_raw = await applicationsService.getApplications();
                 console.log(data_raw)
                 setData(data_raw);
 
@@ -45,18 +45,27 @@ function Applications() {
         setShowModal(false);
     };
 
-    const handleReject = () => {
-        alert(`Rechazado... ${modalData.ID}`);
+    const handleReject = async () => {
+        const result = await applicationsService.respondApplication(modalData.ID, 'Rechazado')
+        if (result) {
+            alert("Aplicación rechazada");
+            showModal(false);
+
+        }
     };
 
-    const handleAccept = () => {
-        alert(`Aceptado... ${modalData.ID}`);
+    const handleAccept = async () => {
+        const result = await applicationsService.respondApplication(modalData.ID, "Aceptado")
+        if (result) {
+            alert("Aplicación aceptada");
+            showModal(false);
+        }
     };
 
     const handleDownloadDocument = async (id) => {
         //TODO Better the handling and give better feedback
         try {
-            const success = await ApplicationsService.downloadPaymentReceipt(modalData.ID);
+            const success = await applicationsService.downloadPaymentReceipt(modalData.ID);
             if (!success) {
                 console.error('Failed to download payment receipt');
             } else {
