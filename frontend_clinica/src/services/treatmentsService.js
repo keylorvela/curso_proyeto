@@ -37,17 +37,3 @@ export async function getTreatment(id_treatment) {
     return null;
   }
 }
-
-/**
- * Obtiene un tratamiento específico desde la API.
- * @returns {Promise} Una promesa que resuelve con las categories de los tratamientos o null si hay un error.
- */
-export async function getCategories() {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/treatments/categories`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return null;
-  }
-}

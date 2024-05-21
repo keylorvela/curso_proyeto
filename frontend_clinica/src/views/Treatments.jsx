@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { getTreatments, getCategories } from 'src/services/treatmentsService.js';
+import { getTreatments } from 'src/services/treatmentsService.js';
+import { getCategories } from 'src/services/categoriesService';
 import MainLayout from 'src/components/MainLayout.jsx';
 import Treatment from 'src/components/Treatment.jsx';
 

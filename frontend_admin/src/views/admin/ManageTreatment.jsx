@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import tServ from 'src/services/Treatments.service.js'
+import CategoriesService from 'src/services/Categories.service';
 import ImageService from 'src/services/Image.service.js'
 
 
@@ -36,7 +37,7 @@ function ManageTreatment() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const data_raw = await tServ.getCategories();
+                const data_raw = await CategoriesService.getCategories();
                 const new_data = data_raw.map(category => ({
                     label: category.CategoryName,
                     value: category.ID,

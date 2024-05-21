@@ -115,24 +115,6 @@ const TreatmentService = {
       throw error;
     }
   },
-
-  getCategories: async () => {
-    const url = BASE_URL+`treatments/categories`;
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('Request fail');
-      }
-
-      return response.json();
-    } catch (error) {
-      console.error('Function error getTreatments', error);
-      throw error;
-    }
-  },
-
-
-
 };
 
 export default TreatmentService;
