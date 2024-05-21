@@ -89,10 +89,10 @@ function FeaturedTreatments() {
                         roundedPhoto={false}
                         reviewButton={{ text: "Ver reseñas", onClick: handleTreatmentReview }}
                         labels={[
-                            { title: "Descripción", content: modalData.Description },
-                            { title: "Precio", content: modalData.Price },
-                            { title: "Duración", content: modalData.ProcedureDuration },
-                            { title: "Información", content: modalData.Information },
+                            { title: "Descripción", content: modalData.Description || "No se especifico una descripción" },
+                            { title: "Precio", content: modalData.Price || "No se coloco el precio" },
+                            { title: "Duración", content: modalData.ProcedureDuration || "No se coloco la duración" },
+                            { title: "Información", content: modalData.Information || "No se especifico información" },
                         ]}
                     />
                 )}
