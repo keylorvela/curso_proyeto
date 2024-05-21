@@ -24,7 +24,6 @@ const getAllApplications = (req, res) => __awaiter(void 0, void 0, void 0, funct
             CALL SP_Application_ReadAll()
         `);
         const applicationsList = JSON.parse(JSON.stringify(result[0][0]));
-        console.log(applicationsList);
         res.status(200).send(applicationsList || []);
     }
     catch (error) {

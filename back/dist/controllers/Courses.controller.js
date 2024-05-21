@@ -50,6 +50,7 @@ const createCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 ${body.Price},
                 '${body.CourseImage}',
                 '${body.UserTarget}',
+                '${body.PayLink}',
                 @o_status)`);
         const result = JSON.parse(JSON.stringify(result_course[0][0]));
         res.status(200).send(result[0] || {});
@@ -75,6 +76,7 @@ const updateCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 ${body.Price},
                 '${body.CourseImage}',
                 '${body.UserTarget}',
+                '${body.PayLink}',
                 @o_status
             )
         `);

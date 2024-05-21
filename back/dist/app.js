@@ -16,6 +16,7 @@ const Reviews_route_1 = __importDefault(require("./routes/Reviews.route"));
 const Students_route_1 = __importDefault(require("./routes/Students.route"));
 const Teachers_route_1 = __importDefault(require("./routes/Teachers.route"));
 const Treatments_route_1 = __importDefault(require("./routes/Treatments.route"));
+const Categories_route_1 = __importDefault(require("./routes/Categories.route"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 app.use((0, cors_1.default)({
@@ -40,6 +41,7 @@ app.use("/reviews", Reviews_route_1.default);
 app.use("/students", Students_route_1.default);
 app.use("/teachers", Teachers_route_1.default);
 app.use("/treatments", Treatments_route_1.default);
+app.use("/categories", Categories_route_1.default);
 // ---------------------------------------------
 app.listen(port, () => {
     console.clear();

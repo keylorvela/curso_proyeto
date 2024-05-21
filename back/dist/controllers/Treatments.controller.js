@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTreatmentCategories = exports.updateTreatment = exports.getTreatmentInformation = exports.getTreatmentList = exports.deleteTreatment = exports.createTreatment = void 0;
+exports.updateTreatment = exports.getTreatmentInformation = exports.getTreatmentList = exports.deleteTreatment = exports.createTreatment = void 0;
 const dbConfig_1 = __importDefault(require("../database/dbConfig"));
 // Create new treatment
 const createTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -29,6 +29,7 @@ const createTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function
                 "${body.p_information}",
                 ${body.p_categoryID},
                 "${body.p_treatmentImage}",
+                "${body.p_payLink}",
                 @o_status)`);
         const result = JSON.parse(JSON.stringify(result_treatment[0][0]));
         res.status(200).send(result[0] || {});
@@ -119,6 +120,7 @@ const updateTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function
                 "${body.p_information}",
                 ${categoryID},
                 "${body.p_treatmentImage}",
+                "${body.p_payLink}",
                 @o_status)`);
         const result = JSON.parse(JSON.stringify(result_treatment[0][0]));
         res.status(200).send(result[0] || {});
@@ -128,17 +130,4 @@ const updateTreatment = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.updateTreatment = updateTreatment;
-// Get all treatment categories
-const getTreatmentCategories = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const result_categories = yield dbConfig_1.default.query(`
-            CALL SP_General_GetAllTreatmentCategories()`);
-        const result = JSON.parse(JSON.stringify(result_categories[0][0]));
-        res.status(200).send(result);
-    }
-    catch (error) {
-        res.status(500).send({ error: "Petition failed", error_detail: error });
-    }
-});
-exports.getTreatmentCategories = getTreatmentCategories;
 //# sourceMappingURL=Treatments.controller.js.map
