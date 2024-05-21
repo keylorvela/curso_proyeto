@@ -133,9 +133,8 @@ function ManageTreatment() {
         }
     };
 
-
-
     //TODO Workaround categories
+    // No todos los campos son necesarios
     const fields = [
         {
             id: 'Name',
@@ -157,7 +156,7 @@ function ManageTreatment() {
             label: 'Incluye:',
             type: 'textarea',
             placeholder: 'Ingresa las características del tratamiento',
-            required: true,
+            required: false,
             rows: 6
         },
         {
@@ -165,21 +164,21 @@ function ManageTreatment() {
             label: 'Duración del procedimiento:',
             type: 'text',
             placeholder: 'Ingresa la duración',
-            required: true,
+            required: false,
         },
         {
             id: 'EffectDuration',
             label: 'Duración del efecto:',
             type: 'text',
             placeholder: 'Ingresa la duración del efecto',
-            required: true,
+            required: false,
         },
         {
             id: 'Information',
             label: 'Información adicional:',
             type: 'textarea',
             placeholder: 'Ingresa información adicional del tratamiento',
-            required: true,
+            required: false,
             rows: 6
         },
         {
