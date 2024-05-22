@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import FeaturedTreatments from 'src/components/FeaturedTreatments.jsx';
 import styles from 'src/views/admin/Treatments.module.css';
 import BaseModal from 'src/components/utils/BaseModal.jsx';
 import DynamicForm from 'src/components/DynamicForm.jsx';
+import CategoriesService from 'src/services/Categories.service';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -24,6 +25,22 @@ function Treatments() {
     const [showTable, setShowTable] = useState(false);
     const [modalShow, setModalShow] = useState(false);
 
+
+    async function fetchData() {
+        try {
+            // Get all categories
+            const data_categories = await CategoriesService.getCategories();
+            setCategories(data_categories)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     const navigate = useNavigate();
     const handleAddTreatment = () => {
         navigate('/admin/treatment');
@@ -31,7 +48,7 @@ function Treatments() {
 
     const fields = [
         {
-            id: 'name',
+            id: 'CategoryName',
             label: 'Nombre de categoría:',
             type: 'text',
             placeholder: 'Ingresa el nombre de categoría',
@@ -41,29 +58,39 @@ function Treatments() {
     const buttons = [{ variant: 'primary', type: 'submit', label: 'Guardar cambios' }]
 
     const handleEditCategory = async (data) => {
-        console.log(data);
         setModalShow(false);
         const updatedCategories = [...categories];
         updatedCategories.forEach(category => {
             if (category.ID === data.ID) {
-                category.name = data.name;
+                category.CategoryName = data.CategoryName;
             }
         });
         setCategories(updatedCategories);
     }
 
-    const handleAddCategory = () => {
+    const handleAddCategory = async () => {
         if (newCategoryName.trim() !== '') {
-            console.log(newCategoryName);
-            setCategories([...categories, { ID: categories.length + 1, name: newCategoryName }]);
-            setNewCategoryName('');
+            try {
+                await CategoriesService.createCategory(newCategoryName);
+                fetchData();
+                setNewCategoryName('');
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            } finally {
+            }
         }
     };
 
-    const handleDeleteCategory = (index) => {
-        console.log(index);
-        const updatedCategories = categories.filter(category => category.ID !== index);
-        setCategories(updatedCategories);
+    const handleDeleteCategory = async (index) => {
+        try {
+            await CategoriesService.deleteCategory(index);
+            const updatedCategories = categories.filter(category => category.ID !== index);
+            setCategories(updatedCategories);
+            setNewCategoryName('');
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+        }
     };
 
     return (
@@ -86,7 +113,7 @@ function Treatments() {
 
             <Container fluid style={{ width: '98%' }}>
                 <h1 className={styles.title}>Tratamientos</h1>
-            
+
                 <div className={styles.horizontalLines}>
                     <div className="d-flex justify-content-end">
                         <Button variant="primary"
@@ -133,7 +160,7 @@ function Treatments() {
                             <tbody>
                                 {categories.map((category, index) => (
                                     <tr key={index}>
-                                        <td>{category.name}</td>
+                                        <td>{category.CategoryName}</td>
                                         <td>
                                             <Button className={styles.btn}
                                                 variant="outline-primary"
