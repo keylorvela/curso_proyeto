@@ -24,6 +24,7 @@ function ManageProfessor() {
 
     const teacherData = location.state?.teacherInformation;
     const [teacherInformation, setTeacherInformation] = useState({});
+    const defaultPhoto = "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg";
 
     const passwordManager = new PasswordManager();
 
@@ -32,10 +33,9 @@ function ManageProfessor() {
             try {
                 let teacher_PersonID = teacherData?.PersonID || "";
                 let teacher_Name = teacherData?.Nombre || "";
-                let teacher_Photo = teacherData?.Foto || "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg";
+                let teacher_Photo = (teacherData?.Foto === 'null' || !id) ? defaultPhoto : teacherData?.Foto;
                 let teacher_PhoneNumber = teacherData?.Telefono || "";
                 let teacher_Email = teacherData?.Email || "";
-
                 setTeacherInformation({
                     personID: teacher_PersonID,
                     name: teacher_Name,
@@ -67,9 +67,8 @@ function ManageProfessor() {
             }
             // Si no := Crea el profesor
             else {
-                console.log("AQUII")
                 const tempPassword = passwordManager.generatePassword();
-                await UserService.RegisterUser(
+                const request = await UserService.RegisterUser(
                     formValues.name,
                     formValues.email,
                     formValues.phoneNumber,
@@ -78,7 +77,9 @@ function ManageProfessor() {
                     tempPassword,
                     "Profesor"
                 );
-                alert("Profesor creado");
+                if(request.o_status === 'Error: Failed insertion')
+                    alert("Hay un profesor con ese numero o correo")
+                else alert("Profesor creado")
             }
         } catch (error) {
             console.error("Error in update teacher information", error);
@@ -157,7 +158,7 @@ function ManageProfessor() {
                     <Row>
 
                         <Col className={styles.image_container} md={12} lg={5} fluid>
-                            <Image src={teacherInformation.Foto} className={styles.ProfilePicture} fluid rounded/>
+                            <Image src={teacherInformation.photo} className={styles.ProfilePicture} fluid rounded/>
                         </Col>
 
                         <Col className='mt-2' md={12} lg={7}>

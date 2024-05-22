@@ -33,7 +33,7 @@ BEGIN
             WHERE ID = p_userID;
 
         DELETE FROM Person
-            WHERE ID = v_personID;
+            WHERE ID = @v_personID;
 
         SET o_status = "Success: User / person deleted";
         SET v_transactionStatus = 1;
