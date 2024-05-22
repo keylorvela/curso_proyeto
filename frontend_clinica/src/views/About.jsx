@@ -13,6 +13,7 @@ import Container from 'react-bootstrap/Container';
 import MainLayout from 'src/components/MainLayout.jsx';
 
 import img from 'src/assets/stock2.jpg'
+import Acatemyimg from 'src/assets/stock3.jpg'
 
 function About() {
     return (
@@ -103,7 +104,7 @@ function About() {
                         <Row>
 
                             <Col xs={12} md={5}>
-                                <Image rounded src={img} className="img-fluid" />
+                                <Image rounded src={Acatemyimg} className="img-fluid" />
                             </Col>
                             {/*filler*/}
                             <Col md={1}>

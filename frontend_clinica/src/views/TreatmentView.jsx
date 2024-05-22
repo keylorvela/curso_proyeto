@@ -193,7 +193,7 @@ function TreatmentView() {
                                 </Row>
                                 <Row className='my-5'>
                                     <Col className="align-self-center" xs={12} md={4}>
-                                        <Image src={img || treatment.TreatmentImage} fluid />
+                                        <Image src={treatment?.TreatmentImage || img} fluid />
                                     </Col>
                                     <Col xs={12} md={8}>
                                         {formatDescription(treatment?.Description)}

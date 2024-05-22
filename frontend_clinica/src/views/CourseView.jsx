@@ -91,7 +91,7 @@ function CourseView() {
                                 </Row>
                                 <Row>
                                     <Col className="align-self-center" xs={12} md={4}>
-                                        <Image src={img} fluid />
+                                        <Image src={course?.CourseImage || img} fluid />
                                     </Col>
                                     <Col xs={12} md={8}>
                                         { formatDescription(course?.Description) }
