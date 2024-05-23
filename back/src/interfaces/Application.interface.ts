@@ -13,3 +13,9 @@ export interface Application {
     StartingDate: string;
     CourseName: string;
 }
+
+export interface ApplicationRespond {
+    ApplicantName: string | null
+    ApplicantEmail: string | null
+    o_status: string
+}

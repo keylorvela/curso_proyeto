@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { RowDataPacket } from "mysql2";
 import dbConnection from "../database/dbConfig";
 import { OStatus } from "../interfaces/OStatus.interface";
-import { Application, ApplicationBody } from "../interfaces/Application.interface";
+import { Application, ApplicationBody, ApplicationRespond } from "../interfaces/Application.interface";
 import { generateRandomPassword } from "../utilities/PasswordGenerator";
 
 //File handling
@@ -11,6 +11,7 @@ import fs from 'fs';
 import { promisify } from 'util';
 import MailManager from "../mail/Mail.controller";
 import { FormVerification } from "mail/Main.interface";
+import { UserRegistration } from '../mail/Main.interface';
 const unlinkAsync = promisify(fs.unlink);
 
 
@@ -39,17 +40,30 @@ export const respondToApplication = async (req: Request, res: Response) => {
     try {
         const tempPassword = generateRandomPassword();
 
-        await dbConnection.query<RowDataPacket[]>(`
+        const result_application = await dbConnection.query<RowDataPacket[]>(`
             CALL SP_Application_Respond(?, ?, ?, @o_status)
         `, [applicationID, status, tempPassword]);
 
-        const result = await dbConnection.query<RowDataPacket[]>(`
-            SELECT @o_status AS o_statusS
-        `);
+        const result: ApplicationRespond[] = JSON.parse(JSON.stringify(result_application[0][0]));
 
-        const resultStatus: OStatus[] = JSON.parse(JSON.stringify(result[0]));
+        // Send email if user was accepted
+        if (result[0].o_status.includes("Success")) {
+            const mailManager = new MailManager();
+            const mailContent: UserRegistration = {
+                name: result[0].ApplicantName,
+                username: result[0].ApplicantEmail,
+                password: tempPassword
+            }
 
-        res.status(200).send(resultStatus[0] || {});
+            await mailManager.sendMail_UserRegistration(
+                "testELSPrueba@gmail.com",
+                result[0].ApplicantEmail,
+                "Bienvenid@ a ELS",
+                mailContent
+            );
+        }
+
+        res.status(200).send(result[0] || {});
     } catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
     }
