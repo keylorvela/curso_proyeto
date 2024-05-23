@@ -40,14 +40,21 @@ const respondToApplication = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
     try {
         const tempPassword = (0, PasswordGenerator_1.generateRandomPassword)();
-        yield dbConfig_1.default.query(`
+        const result_application = yield dbConfig_1.default.query(`
             CALL SP_Application_Respond(?, ?, ?, @o_status)
         `, [applicationID, status, tempPassword]);
-        const result = yield dbConfig_1.default.query(`
-            SELECT @o_status AS o_statusS
-        `);
-        const resultStatus = JSON.parse(JSON.stringify(result[0]));
-        res.status(200).send(resultStatus[0] || {});
+        const result = JSON.parse(JSON.stringify(result_application[0][0]));
+        // Send email if user was accepted
+        if (result[0].o_status.includes("Success")) {
+            const mailManager = new Mail_controller_1.default();
+            const mailContent = {
+                name: result[0].ApplicantName,
+                username: result[0].ApplicantEmail,
+                password: tempPassword
+            };
+            yield mailManager.sendMail_UserRegistration("testELSPrueba@gmail.com", result[0].ApplicantEmail, "Bienvenid@ a ELS", mailContent);
+        }
+        res.status(200).send(result[0] || {});
     }
     catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
