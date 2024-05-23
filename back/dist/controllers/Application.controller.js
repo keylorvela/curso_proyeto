@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getApplicationFile = exports.sendApplication = exports.respondToApplication = exports.getAllApplications = void 0;
 const dbConfig_1 = __importDefault(require("../database/dbConfig"));
+const PasswordGenerator_1 = require("../utilities/PasswordGenerator");
 const fs_1 = __importDefault(require("fs"));
 const util_1 = require("util");
 const Mail_controller_1 = __importDefault(require("../mail/Mail.controller"));
@@ -38,9 +39,10 @@ const respondToApplication = (req, res) => __awaiter(void 0, void 0, void 0, fun
         return;
     }
     try {
+        const tempPassword = (0, PasswordGenerator_1.generateRandomPassword)();
         yield dbConfig_1.default.query(`
-            CALL SP_Application_Respond(?, ?, @o_status)
-        `, [applicationID, status]);
+            CALL SP_Application_Respond(?, ?, ?, @o_status)
+        `, [applicationID, status, tempPassword]);
         const result = yield dbConfig_1.default.query(`
             SELECT @o_status AS o_statusS
         `);
