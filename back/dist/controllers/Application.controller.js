@@ -58,11 +58,18 @@ const sendApplication = (req, res) => __awaiter(void 0, void 0, void 0, function
     const mailContent = { name: "", phoneNumber: "", email: "", courseName: "", courseSchedule: "" };
     try {
         // Use parameterized query to prevent SQL injection
-        const result_application = yield dbConfig_1.default.query(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`, [req.body.nombre, fs_1.default.readFileSync(path), req.body.correo, req.body.telefono, 2]);
+        const result_application = yield dbConfig_1.default.query(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`, [req.body.nombre, fs_1.default.readFileSync(path), req.body.correo, req.body.telefono, req.body.idCurso]);
         const result = JSON.parse(JSON.stringify(result_application[0][0]));
-        // TODO: Verificar que el result si haya sido exitoso (Si se guardo la solicitud)
-        if (false) {
-            yield mailManager.sendMail_FormVerification("testELSPrueba@gmail.com", mailContent.email, "Verificacion de formulario", mailContent);
+        //TODO Fix schedules
+        const content = {
+            name: req.body.nombre,
+            phoneNumber: req.body.telefono,
+            email: req.body.correo,
+            courseName: req.body.curso,
+            courseSchedule: 'N/A'
+        };
+        if (result) {
+            yield mailManager.sendMail_FormVerification("testELSPrueba@gmail.com", req.body.correo, "Verificacion de formulario", content);
         }
         //Delete file
         const resultDelete = yield unlinkAsync(path);

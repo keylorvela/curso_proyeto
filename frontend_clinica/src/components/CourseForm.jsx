@@ -13,7 +13,7 @@ import Row from 'react-bootstrap/Row';
 
 import { sendApplication } from 'src/services/applicationService.js'
 
-function CourseForm() {
+function CourseForm({course}) {
     //For modals to give feedback
     const [load, setLoad] = useState(false)
     const [showAlert, setShowAlert] = useState(false);
@@ -30,11 +30,11 @@ function CourseForm() {
         nombre: '',
         telefono: '',
         correo: '',
-        horario: '',
+        idCurso: '',
+        curso: '',
         file: null
     });
     const [validated, setValidated] = useState(false);
-
 
 
 
@@ -55,6 +55,9 @@ function CourseForm() {
         } else {
             const formData = new FormData();
             Object.entries(form).forEach(([key, value]) => {
+                if(key == 'curso')
+                    formData.append(key, course?.Name);
+
                 formData.append(key, value);
             });
 
@@ -157,8 +160,8 @@ function CourseForm() {
                     <Form.Label>Horario:</Form.Label>
                     <Form.Control
                         required
-                        name="horario"
-                        value={form.horario}
+                        name="idCurso"
+                        value={form.idCurso}
                         onChange={handleChange}
                         as="select"
                         aria-label="Default select example"

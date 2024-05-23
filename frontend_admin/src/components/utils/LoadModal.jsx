@@ -26,3 +26,8 @@ function BaseModal({ pshow = false, msg }) {
 }
 
 export default BaseModal;
+
+
+	
+
+
