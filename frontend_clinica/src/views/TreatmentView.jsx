@@ -251,12 +251,12 @@ function TreatmentView() {
                                     <Col xs={12} sm={6} lg={3}>
                                         <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.wtsButton}`}
                                             onClick={handleButtonWhats}>
-                                            <FaWhatsapp /><b className="text-nowrap"> Agenda tu cita </b>
+                                            <FaWhatsapp size={30} /><b className="text-nowrap mx-2">Agenda tu cita </b>
                                         </button>
                                     </Col>
                                     <Col xs={12} sm={6} lg={3}>
                                         <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.bpButton}`}>
-                                            <FiShoppingCart /><b className="text-nowrap"> Conexión BP</b>
+                                            <FiShoppingCart size={30} /><b className="text-nowrap mx-2">Conexión BP</b>
                                         </button>
                                     </Col>
                                     <Col xs={6} sm={6} lg={3}>
@@ -275,7 +275,6 @@ function TreatmentView() {
 
 
                                 {/* Review Section */}
-
                                 <Row className={styles.fixedRow}>
                                     <Col md={12} className={styles.colCustom}>
                                         <div className={styles.reviewHeader}>
