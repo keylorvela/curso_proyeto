@@ -23,7 +23,9 @@ import Badge from 'react-bootstrap/Badge';
 
 import { FaWhatsapp } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
+
 import { getCourse } from 'src/services/coursesService.js';
+import { getGroupsInCourse } from "../services/groupService";
 
 // import { downloadPaymentReceipt } from 'src/services/applicationService.js';
 import CardsInformation from "../components/CardsInformation";
@@ -31,13 +33,17 @@ import CardsInformation from "../components/CardsInformation";
 function CourseView() {
     const { id } = useParams();
     const [course, setCourse] = useState(null);
+    const [groupsInCourse, setGroupsInCourse] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const result = await getCourse(id);
+                const groups = await getGroupsInCourse(id);
+
                 setCourse(result);
+                setGroupsInCourse(groups);
             } catch (error) {
                 console.error('Error fetching course:', error);
             } finally {
@@ -65,6 +71,17 @@ function CourseView() {
         ) : (
             <></>
         )
+    }
+
+    const formatDate = (dateStr) => {
+        const date = new Date(dateStr);
+        const options = {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        };
+
+        return date.toLocaleDateString('es-ES', options);
     }
 
     return (
@@ -111,6 +128,28 @@ function CourseView() {
                                     contents={[course?.Includes, course?.Topics]}
                                 />
 
+                                {/* Display available groups */}
+                                {
+                                    (groupsInCourse.length) ? (
+                                        <div>
+                                            <span className="fs-2 fw-semibold d-block mb-4" style={{ color: "var(--main-blue)" }}>Grupos disponibles</span>
+                                            <div className={`d-flex flex-wrap ${(groupsInCourse.length > 3) ? "justify-content-around" : ""} gap-3`}>
+                                                {
+                                                    groupsInCourse.map((group) => (
+                                                        <Badge className={`${styles.groupSchedule_Badge}`}>
+                                                            <p className="fs-6" style={{ margin: "10px 5px" }}>{`Inicia el ${formatDate(group.StartingDate)}`}</p>
+                                                            <p className="fs-6" style={{ margin: "10px 5px" }}>{`Horario:`}</p>
+                                                            <p className="fs-6" style={{ margin: "10px 5px" }}>{`${group.ScheduleDate} - ${group.ScheduleHour}`}</p>
+                                                        </Badge>
+                                                    ))
+                                                }
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <Alert variant="warning" className="text-center">No hay grupos disponibles en este momento</Alert>
+                                    )
+                                }
+
                                 <Row className="mt-3">
                                     <Col className="my-5" xs={12}>
                                         <h3 className="fs-1 mb-3" style={{ color: "var(--main-blue)" }}>Métodos de pago:</h3>
@@ -139,7 +178,10 @@ function CourseView() {
                                 </Row>
                                 <Row className='d-flex justify-content-center'>
                                     <Col md={6} className={`rounded ${styles.form}`}>
-                                        <CourseForm course = {course}/>
+                                        <CourseForm
+                                            course = {course}
+                                            groupsInCourse={ groupsInCourse }
+                                        />
                                     </Col>
                                 </Row>
                             </>

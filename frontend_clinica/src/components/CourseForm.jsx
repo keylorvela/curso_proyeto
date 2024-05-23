@@ -13,17 +13,11 @@ import Row from 'react-bootstrap/Row';
 
 import { sendApplication } from 'src/services/applicationService.js'
 
-function CourseForm({course}) {
+function CourseForm({course, groupsInCourse}) {
     //For modals to give feedback
     const [load, setLoad] = useState(false)
     const [showAlert, setShowAlert] = useState(false);
-    const [alertMsg, setAlertMsg] = useState('');    
-   
-
-
-
-
-
+    const [alertMsg, setAlertMsg] = useState('');
 
     //Form and form validation
     const [form, setForm] = useState({
@@ -36,14 +30,10 @@ function CourseForm({course}) {
     });
     const [validated, setValidated] = useState(false);
 
-
-
     const handleChange = (event) => {
         const { name, value, files } = event.target;
         setForm({ ...form, [name]: files ? files[0] : value });
     };
-
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -78,7 +68,7 @@ function CourseForm({course}) {
             } catch (error) {
                 console.error('Error:', error);
                 setAlertMsg('Error al enviar el formulario');
-                
+
             } finally {
                 setLoad(false);
                 setShowAlert(true);
@@ -90,7 +80,7 @@ function CourseForm({course}) {
 
     return (
         <Form className='px-2 py-3' noValidate validated={validated} onSubmit={handleSubmit}>
-            
+
             {/* For feedback */}
             <LoadModal pshow={load} msg = "Enviando formulario..."/>
 
@@ -101,8 +91,6 @@ function CourseForm({course}) {
                     showAlert={showAlert}
                     setShowAlert={setShowAlert}
             />
-
-
 
             <Row>
                 <p className='fs-3 fw-semibold'>Ya pagaste? Inicia tu matrícula:</p>
@@ -168,9 +156,11 @@ function CourseForm({course}) {
                         defaultValue=""
                     >
                         <option value="">Selecciona un horario</option>
-                        <option value="1">Horario 1</option>
-                        <option value="2">Horario 2</option>
-                        <option value="3">Horario 3</option>
+                        {
+                            groupsInCourse.map((group) => (
+                                <option key={group.GroupID} value={group.GroupID}>{`${group.ScheduleDate} - ${group.ScheduleHour}`}</option>
+                            ))
+                        }
                     </Form.Control>
                     <Form.Control.Feedback type="invalid">
                         Se requiere seleccionar un horario
@@ -186,7 +176,7 @@ function CourseForm({course}) {
                         onChange={handleChange}
                         type="file"
                         placeholder="Elegir archivo..."
-                        accept=".pdf" 
+                        accept=".pdf"
                     />
                     <Form.Control.Feedback type="invalid">
                         Se requiere un comprobante
