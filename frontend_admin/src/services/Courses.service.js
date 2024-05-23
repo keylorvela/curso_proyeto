@@ -19,9 +19,9 @@ const CourseService = {
         }
     },
 
-    CreateCourse: async (Name, Description, Topics, Includes, Duration, Price, CourseImage, UserTarget) => {
+    CreateCourse: async (Name, Description, Topics, Includes, Duration, Price, CourseImage, UserTarget,PayLink) => {
         try {
-            const body = { Name, Description, Topics, Includes, Duration, Price, CourseImage, UserTarget };
+            const body = { Name, Description, Topics, Includes, Duration, Price, CourseImage, UserTarget,PayLink };
             const response = await axios.post(`/courses`, body);
             return response.data;
         } catch (error) {
@@ -29,9 +29,9 @@ const CourseService = {
         }
     },
 
-    UpdateCourse: async (courseID, Name, Description, Topics, Includes, Duration, Price, CourseImage, UserTarget) => {
+    UpdateCourse: async (courseID, Name, Description, Topics, Includes, Duration, Price, CourseImage, UserTarget,PayLink) => {
         try {
-            const body = { Name, Description, Topics, Includes, Duration, Price, CourseImage, UserTarget };
+            const body = { Name, Description, Topics, Includes, Duration, Price, CourseImage, UserTarget,PayLink };
             const response = await axios.put(`/courses/${courseID}`, body);
             return response.data;
         } catch (error) {

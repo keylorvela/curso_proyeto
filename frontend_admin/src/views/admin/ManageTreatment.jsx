@@ -43,11 +43,11 @@ function ManageTreatment() {
                     value: category.ID,
                 }))
                 setCategoryList(new_data);
-                if (updatedData || (!(values ?? null) && (id ?? null))) {
-                    const data = await tServ.getTreatment(id);
-                    setValues(data);
-                    setUpdatedData(false);
-                }
+                //if (updatedData || (!(values ?? null) && (id ?? null))) {
+                const data = await tServ.getTreatment(id);
+                setValues(data);
+                setUpdatedData(false);
+                //}
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
@@ -187,6 +187,13 @@ function ManageTreatment() {
             label: 'Costo:',
             type: 'number',
             placeholder: 'Costo del tratamiento',
+            required: true,
+        },
+        {
+            id: 'PayLink',
+            label: 'Link de pago:',
+            type: 'text',
+            placeholder: 'Ingrese la url para el pago en linea',
             required: true,
         },
         {

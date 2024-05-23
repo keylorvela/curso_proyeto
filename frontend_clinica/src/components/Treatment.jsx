@@ -26,7 +26,7 @@ function Treatment({ title, event, image, isTreatment = true }) {
                     </div>
                     <p className="text-center fw-medium fs-4 mt-3" >{title}</p>
                     <div>
-                        <Button className = 'my-2 w-100' variant="outline-success btn-lg" onClick={event}>
+                        <Button className='my-2 w-100' variant="outline-success btn-lg" onClick={event}>
                             Más información
                         </Button>
                         <Button className = 'my-2 w-100' variant="success btn-lg" onClick={() => handleAskForProduct()}>

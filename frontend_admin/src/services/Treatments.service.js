@@ -67,6 +67,7 @@ const TreatmentService = {
       p_information: treatmentInfo.Information,
       p_treatmentImage: imageUrl,
       p_categoryID: treatmentInfo.category,
+      p_payLink: treatmentInfo.PayLink,
     };
     try {
       const response = await fetch(url, {
@@ -98,6 +99,7 @@ const TreatmentService = {
       p_information: treatmentInfo.Information,
       p_treatmentImage: imageUrl,
       p_categoryID: treatmentInfo.category,
+      p_payLink: treatmentInfo.PayLink,
     };
     try {
       const response = await fetch(url, {

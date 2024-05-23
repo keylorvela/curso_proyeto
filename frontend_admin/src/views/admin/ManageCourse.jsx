@@ -49,9 +49,10 @@ function ManageCourse() {
             try {
                 // Get course information
                 if (id) {
-                    // const groupData = await GroupService.GetGroupList(id);
+                    //const groupData = await CourseService.GetCourseInfo(id);
                 }
 
+                const payLink = courseInformation?.PayLink || "";
                 const courseName = courseInformation?.CourseName || "";
                 const courseDescription = courseInformation?.Description.replace(/\//g, '\n') || "";
                 const coursePrice = courseInformation?.Price || "";
@@ -71,7 +72,8 @@ function ManageCourse() {
                     Topics: courseTopics,
                     UserTarget: courseUserTarget,
                     Price: coursePrice,
-                    CourseImage: courseImage
+                    CourseImage: courseImage,
+                    PayLink: payLink
                 });
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -131,6 +133,13 @@ function ManageCourse() {
             required: true,
         },
         {
+            id: 'PayLink',
+            label: 'Link de pago:',
+            type: 'text',
+            placeholder: 'Ingrese la url para el pago en linea',
+            required: true,
+        },
+        {
             id: 'UserTarget',
             label: 'Público objetivo:',
             type: 'text',
@@ -185,7 +194,8 @@ function ManageCourse() {
                     formValues.Duration,
                     formValues.Price,
                     imageURL,
-                    formValues.UserTarget
+                    formValues.UserTarget,
+                    formValues.PayLink
                 );
                 alert("Curso creado!");
             }
@@ -200,7 +210,8 @@ function ManageCourse() {
                     formValues.Duration,
                     formValues.Price,
                     imageURL,
-                    formValues.UserTarget
+                    formValues.UserTarget,
+                    formValues.PayLink
                 );
                 alert("Curso modificado!");
             }
@@ -245,13 +256,6 @@ function ManageCourse() {
     if (id) {
         buttons.push(
             {
-                variant: 'danger',
-                type: 'button',
-                label: 'Eliminar curso',
-                onClick: (id) => handleDelete(id),
-                parameter: id
-            },
-            {
                 variant: 'primary',
                 type: 'button',
                 label: 'Asignar grupo',
@@ -262,7 +266,14 @@ function ManageCourse() {
                 type: 'button',
                 label: 'Modificar grupos',
                 onClick: () => handleModal(true,true),
-            }
+            },
+            {
+                variant: 'danger',
+                type: 'button',
+                label: 'Eliminar curso',
+                onClick: (id) => handleDelete(id),
+                parameter: id
+            },
         )
     }
 
