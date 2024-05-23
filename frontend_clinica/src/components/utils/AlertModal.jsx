@@ -58,7 +58,6 @@ function AlertModal({ type, title, message, showAlert = false, setShowAlert }) {
                 </Modal >
             )
             }
-            
         </>
     );
 }

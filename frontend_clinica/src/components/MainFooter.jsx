@@ -34,9 +34,7 @@ function MainFooter() {
 
                             <Stack gap={2}>
                                 <p className='fs-5 fw-bold'>Contactos</p>
-                                <p className='fs-6'>nombre@dominio.com</p>
-                                <p className='fs-6'>+506 8123-1234</p>
-
+                                <p className='fs-6'>Clínica: +506 7053-1476</p>
                             </Stack>
 
                         </Col>
