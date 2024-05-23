@@ -5,19 +5,17 @@
     color: #FFFFFF;
     padding: 2%;
     display: flex;
-    flex-direction: row;
 }
 
 .content {
     height: 100%;
-    width: 80%;
+    width: 100%;
 
 }
 
 .logo {
     height: 100%;
     width: 20%;
-
 }
 
 .link {
@@ -28,26 +26,30 @@
 
 .icon {
     font-size: 32px;
+    color: #FFFFFF;
 }
 
 .line {
     background-color: #FFFFFF;
     height: 100%;
-    width: 3px; 
-  }
-  
+    width: 3px;
+}
 .logoDiv {
-    width: 20%;
     height: 100%;
-    margin-left: 5%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
 
 }
-
 .logoImg {
     width: 75px;
     height: 75px;
+}
+
+/* ---------- Mobile  */
+@media (max-width: 992px) {
+    .line {
+        display: none;
+    }
 }
