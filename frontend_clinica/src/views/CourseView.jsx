@@ -84,6 +84,29 @@ function CourseView() {
         return date.toLocaleDateString('es-ES', options);
     }
 
+    const handleImageTransferencia = () => {
+        const textToCopy = "CR13080338200852736531";
+        navigator.clipboard.writeText(textToCopy)
+    };
+
+    const handleImageSinpe = () => {
+        const textToCopy = "70531476";
+        navigator.clipboard.writeText(textToCopy)
+    };
+
+
+    const handleButtonPay = () => {
+        const url = course?.PayLink
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            window.location.href = url;
+        } else {
+            window.open(url, '_blank');
+        }
+
+    };
+
     return (
         <MainLayout>
             <div className={styles.page}>
@@ -165,15 +188,20 @@ function CourseView() {
                                         </button>
                                         </Col>**/}
                                     <Col xs={12} sm={6} lg={3}>
-                                        <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.bpButton}`}>
+                                        <button onClick={handleButtonPay} className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.bpButton}`}>
                                             <FiShoppingCart /><b className="text-nowrap"> Conexión BP</b>
                                         </button>
                                     </Col>
                                     <Col xs={6} sm={6} lg={3}>
-                                        <Image src={sinpe} fluid />
+                                        <div onClick={handleImageSinpe} style={{ cursor: 'pointer' }}>
+                                            <Image src={sinpe} fluid />
+                                        </div>
                                     </Col>
+
                                     <Col xs={6} sm={6} lg={3}>
-                                        <Image src={transferencia} fluid />
+                                        <div onClick={handleImageTransferencia} style={{ cursor: 'pointer' }}>
+                                            <Image src={transferencia} fluid />
+                                        </div>
                                     </Col>
                                 </Row>
                                 <Row className='d-flex justify-content-center'>
