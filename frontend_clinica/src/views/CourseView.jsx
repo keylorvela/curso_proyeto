@@ -40,7 +40,9 @@ function CourseView() {
         const fetchData = async () => {
             try {
                 const result = await getCourse(id);
-                const groups = await getGroupsInCourse(id);
+                let groups = await getGroupsInCourse(id);
+
+                groups = groups.filter((group) => group.Capacity > 0);
 
                 setCourse(result);
                 setGroupsInCourse(groups);
