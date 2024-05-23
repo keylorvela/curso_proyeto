@@ -125,7 +125,7 @@ function Applications() {
                                     { title: 'Nombre', content: modalData.StudentName },
                                     { title: 'Email', content: modalData.Email },
                                     { title: 'Curso', content: modalData.CourseName },
-                                    { title: 'Fecha', content: '12/12/2000' },
+                                    { title: 'Fecha', content: modalData.Date},
                                 ]}
                             />
                         )}
