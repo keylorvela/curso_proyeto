@@ -69,7 +69,7 @@ function TreatmentView() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const data = await getTreatment(id);
+                const data = await getTreatment(id);//
                 setTreatment(data);
                 fetchDataReviews();
 
@@ -136,6 +136,18 @@ function TreatmentView() {
     const handleButtonWhats = () => {
         const message = `¡Hola! Quisiera agendar una cita de ${treatment?.Name}`;
         const url = `https://wa.me/50670531476/?text=${encodeURIComponent(message)}`;
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            window.location.href = url;
+        } else {
+            window.open(url, '_blank');
+        }
+
+    };
+
+    const handleButtonPay = () => {
+        const url = treatment?.PayLink
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
         if (isMobile) {
@@ -253,7 +265,7 @@ function TreatmentView() {
                                         </button>
                                     </Col>
                                     <Col xs={12} sm={6} lg={3}>
-                                        <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.bpButton}`}>
+                                        <button onClick={handleButtonPay} className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.bpButton}`}>
                                             <FiShoppingCart /><b className="text-nowrap"> Conexión BP</b>
                                         </button>
                                     </Col>
