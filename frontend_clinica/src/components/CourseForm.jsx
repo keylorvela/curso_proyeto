@@ -186,6 +186,7 @@ function CourseForm({course}) {
                         onChange={handleChange}
                         type="file"
                         placeholder="Elegir archivo..."
+                        accept=".pdf" 
                     />
                     <Form.Control.Feedback type="invalid">
                         Se requiere un comprobante
