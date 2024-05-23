@@ -8,6 +8,7 @@ import styles from 'src/components/Common.module.css';
 import TableModal from 'src/components/utils/TableModal.jsx';
 
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 import { faPen, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 import TeachersService from 'src/services/Teachers.service';
@@ -74,8 +75,10 @@ function Professors() {
 
     return (
         <MainLayout type={1}>
-            <Container fluid style={{ width: '98%' }}>
-                <h1 className={styles.tableTitle}>Profesores</h1>
+            <Container fluid>
+                <Row>
+                    <h1 className={styles.tableTitle}>Profesores</h1>
+                </Row>
 
                 {loading && (
                     <div className='text-center my-5'>

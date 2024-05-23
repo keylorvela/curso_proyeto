@@ -188,13 +188,13 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick, isS
         <div >
           <Form>
             <Row>
-              <Col md={3} sm={3}>
+              <Col xs={12} sm={8} md={6} lg={4}>
                 <Form.Group controlId="formSearch">
                   <div className={styles.searchContainer}>
                     <Form.Control
                       className={styles.inputSearch}
                       type="text"
-                      placeholder="Buscar..."
+                      placeholder="Buscar en resultados"
                       value={searchTerm}
                       onChange={handleSearchChange}
                     />

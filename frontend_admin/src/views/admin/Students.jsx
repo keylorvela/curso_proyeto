@@ -68,7 +68,7 @@ function Students() {
 
     return (
         <MainLayout type={1}>
-            <Container fluid style={{ width: '98%' }}>
+            <Container fluid>
                 <h1 className={styles.tableTitle}>Lista de estudiantes</h1>
 
                 {loading && (

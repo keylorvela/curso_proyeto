@@ -149,19 +149,20 @@ function ManageProfessor() {
         <MainLayout type={1}>
 
             <div className={styles.page}>
-                <Container>
+                <Container fluid>
                     {loading && (
                         <div className='text-center my-5'>
                             <Loading size={11} />
                         </div>
                     )}
-                    <Row>
-
-                        <Col className={styles.image_container} md={12} lg={5} fluid>
-                            <Image src={teacherInformation.photo} className={styles.ProfilePicture} fluid rounded/>
+                    <Row className='d-flex flex-wrap'>
+                        <Col className='mt-2 flex-grow-1 d-flex justify-content-center' sm={12} lg={5}>
+                            <div className={styles.image_container}>
+                                <Image src={teacherInformation.photo} className={styles.ProfilePicture} fluid rounded/>
+                            </div>
                         </Col>
 
-                        <Col className='mt-2' md={12} lg={7}>
+                        <Col className='mt-2 flex-grow-1' sm={12} lg={7}>
                             {
                                 Object.keys(teacherInformation).length
                                 &&

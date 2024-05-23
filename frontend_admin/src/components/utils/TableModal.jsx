@@ -19,11 +19,11 @@ function TablemModal({ show, onHide, title, photo, roundedPhoto, linkText, linkF
             <Modal.Body>
                 <Row>
                     {photo && (
-                        <Col xs={12} md={4}>
-                            <Image src={photo} className={roundedPhoto ? 'rounded-circle' : ''} fluid />
+                        <Col xs={12} md={12} lg={4} className='mb-3'>
+                            <Image src={photo} className={roundedPhoto ? '' : ''} fluid />
                         </Col>
                     )}
-                    <Col xs={12} md={photo ? 4 : 6}>
+                    <Col xs={12} md={6} lg={(photo) ? 4 : 6}>
                         {labels.map((label, index) => {
                             if (index <= 1) {
                                 return (
@@ -40,7 +40,7 @@ function TablemModal({ show, onHide, title, photo, roundedPhoto, linkText, linkF
                             </p>
                         )}
                     </Col>
-                    <Col xs={12} md={photo ? 4 : 6}>
+                    <Col xs={12} md={6} lg={(photo) ? 4 : 6}>
                         {labels.map((label, index) => {
                             if (index > 1) {
                                 return (

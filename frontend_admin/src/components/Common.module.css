@@ -4,6 +4,7 @@
   --main-blue: #1D2D8C;
   --ligth-blue: #3F8EFC;
   --ligth-green: #85B79D;
+  --dark-green: #518168;
   --font:  "Montserrat", sans-serif;
 }
 
@@ -28,7 +29,17 @@
   color: var(--ligth-blue);
   text-align: right;
   margin-top: 3%; 
-  margin-bottom: -1%;
-  font-size: 4vw; 
+  margin-bottom: 10px;
+  font-size: 48px; 
 }
-  
+
+@media (max-width: 907px) {
+  .tableTitle {
+    font-size: 36px; 
+  }
+}
+@media (max-width: 515px) {
+  .tableTitle {
+    font-size: 28px; 
+  }
+}

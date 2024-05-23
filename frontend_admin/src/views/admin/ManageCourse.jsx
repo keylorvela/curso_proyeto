@@ -295,10 +295,10 @@ function ManageCourse() {
                     )}
 
             <div className={styles.page}>
-                <Container>
+                <Container fluid>
 
-                    <Row>
-                        <Col className='mt-2' md={12} lg={5}>
+                    <Row className='d-flex flex-wrap'>
+                        <Col className='mt-2 flex-grow-1 d-flex justify-content-center' sm={12} lg={5}>
                             {
                                 Object.keys(courseInfo).length
                                 &&
@@ -312,7 +312,7 @@ function ManageCourse() {
                             }
                         </Col>
 
-                        <Col className='mt-2' md={12} lg={7}>
+                        <Col className='mt-2 flex-grow-1' sm={12} lg={7}>
                             {
                                 Object.keys(courseInfo).length !== 0
                                 &&

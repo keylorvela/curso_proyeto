@@ -33,18 +33,36 @@
   text-align: right;
   margin-top: 3%; 
   margin-bottom: 2%;
-  font-size: 4vw; 
+  font-size: 48px; 
 }
 
 .btnAdd {
   font-weight: bold; 
-  font-size: 1.5vw; 
+  font-size: 24px; 
   text-align: right;
   font-family: var(--font);
   padding: 0.8% 1.4%; 
   margin-right: -0.5%;
   background-color: var(--ligth-blue);
   border-color: var(--ligth-blue);
+}
+
+@media (max-width: 907px) {
+  .btnAdd {
+    font-size: 20px;
+    margin: 5px 0;
+  }
+  .title {
+    font-size: 36px;
+  }
+}
+@media (max-width: 515px) {
+  .btnAdd {
+    font-size: 16px;
+  }
+  .title {
+    font-size: 28px;
+  }
 }
 
 .categoryAdd{

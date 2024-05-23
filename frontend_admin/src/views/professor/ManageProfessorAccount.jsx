@@ -143,20 +143,20 @@ function ManageProfessorAccount() {
             />
 
             <div className={styles.page}>
-                <Container>
+                <Container fluid>
                     {loading && (
                         <div className='text-center my-5'>
                             <Loading size={11} />
                         </div>
                     )}
-                    <Row>
+                    <Row className='d-flex flex-wrap'>
 
-                        <Col className='mt-2' xs={12} md={4}>
+                        <Col className='mt-2 flex-grow-1 d-flex justify-content-center' sm={12} lg={5}>
                             {
                                 Object.keys(teacherInformation).length
                                 &&
                                 <div className={styles.image_container}>
-                                    <Image src={profilePictureURL} fluid rounded />
+                                    <Image src={profilePictureURL} className={styles.ProfilePicture} fluid rounded />
                                     <span className={styles.edit_picture_span} onClick={() => { fileInputRef.current.click(); }}>
                                         <FontAwesomeIcon icon={faPencil} />
                                     </span>
@@ -165,11 +165,7 @@ function ManageProfessorAccount() {
                             }
                         </Col>
 
-                        {/*filler*/}
-                        <Col md={1}>
-                        </Col>
-
-                        <Col className='mt-2' xs={12} md={7}>
+                        <Col className='mt-2 flex-grow-1' sm={12} lg={7}>
                             {
                                 Object.keys(teacherInformation).length
                                 &&

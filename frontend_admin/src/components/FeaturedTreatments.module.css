@@ -25,3 +25,10 @@
     margin-bottom: 5%;
     font-family: var(--font);
 }
+
+.cardsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-gap: 1rem;
+    justify-content: space-between;
+}

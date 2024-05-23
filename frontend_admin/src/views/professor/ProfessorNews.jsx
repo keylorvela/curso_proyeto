@@ -118,7 +118,7 @@ function ProfessorNews() {
                 </div>
             </BaseModal>
 
-            <Container fluid style={{ width: '98%' }}>
+            <Container fluid>
                 <h2 className={styles.courseName}>{courseName}</h2>
                 <Row>
                     <Col md={7} className={styles.colCustom}>

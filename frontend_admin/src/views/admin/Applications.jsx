@@ -97,7 +97,7 @@ function Applications() {
                 showAlert={showYN}
                 setShowAlert={setYN}
                 handleYes={handleReject}
-            /><Container fluid style={{ width: '98%' }}>
+            /><Container fluid>
                 <h1 className={styles.tableTitle}>Solicitudes de matrícula</h1>
 
                 {loading ? (

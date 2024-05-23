@@ -116,7 +116,7 @@ function TreatmentReview() {
                 </div>
             </BaseModal>
 
-            <Container fluid style={{ width: '98%' }}>
+            <Container fluid>
                 <h2 className={styles.TreatmentName}>{values.Name}</h2>
                 {loading && (
                     <div className='text-center my-5'>

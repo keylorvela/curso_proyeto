@@ -111,7 +111,7 @@ function Treatments() {
             </BaseModal>
 
 
-            <Container fluid style={{ width: '98%' }}>
+            <Container fluid>
                 <h1 className={styles.title}>Tratamientos</h1>
 
                 <div className={styles.horizontalLines}>

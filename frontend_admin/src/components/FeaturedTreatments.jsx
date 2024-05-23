@@ -67,15 +67,14 @@ function FeaturedTreatments() {
                         <Loading size={15} />
                     </div>
                 )}
-                <Row>
+                <Row className={styles.cardsContainer}>
                     {treatments?.map(tratamiento => (
-                        <Col sm={6} md={3} key={tratamiento.ID}>
+                        <Col className={styles.cardTreatment} key={tratamiento.ID}>
                             <Treatment
                                 photo={tratamiento.TreatmentImage}
                                 treatmentInfo={tratamiento}
                                 event={handleEditTreatment}
                                 detailsEvent={handleButtonDetails}
-                                className={styles.treatment}
                             />
                         </Col>
                     ))}

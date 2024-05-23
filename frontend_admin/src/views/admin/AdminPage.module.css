@@ -16,28 +16,50 @@
     padding: 3%;
     position: absolute;
     cursor: pointer;
-    top: 70%; 
-    left: 80%; 
+
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    bottom: 20px;
+    right: 20px;
+}
+.btnImage:hover {
+    background-color: var(--dark-green);
 }
 
 .image_container {
+    width: 100%;
+    height: 525px;
     position: relative;
-    text-align: center;
 
+    outline: 2px solid var(--main-blue);
     border-radius: 10px;
 }
 
 .ProfilePicture {
     height: 100%;
+    width: 100%;
     object-fit: contain;
-    padding: 10px;
-    outline: 2px solid var(--main-blue);
+    object-position: center;
 }
 
+@media (max-width: 1200px) {
+    .image_container {
+        height: 400px;
+    }
+  }
+
 @media (max-width: 992px) {
-    .ProfilePicture {
-        height: min-content;
-        object-fit: cover;
+    .image_container {
+        width: 50%;
+    }
+  }
+@media (max-width: 750px) {
+    .image_container {
+        width: 100%;
     }
   }
 

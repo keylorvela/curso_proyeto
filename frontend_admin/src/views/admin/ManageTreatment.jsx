@@ -230,40 +230,36 @@ function ManageTreatment() {
         <MainLayout type={1}>
 
             <div className={styles.page}>
-                <Container>
+                <Container fluid>
 
                     {loading && (
                         <div className='text-center my-5'>
                             <Loading size={11} />
                         </div>
                     )}
-                    <Row >
-                        <Col className='mt-2' xs={12} md={4} style={{ position: 'relative', height: '100%', maxHeight: '50%' }}>
-                            <Image
-                                src={imageUrl}
-                                fluid
-                                rounded
-                                style={{ width: '100%', height: '50%', objectFit: 'cover' }}
-                            />
-                            <input
-                                type="file"
-                                accept="image/*"
-                                style={{ display: 'none' }}
-                                id="fileInput"
-                                onChange={handleImageChange}
-                            />
-                            <button
-                                className={`fw-bold ${styles.btnImage}`}
-                                onClick={handleButtonFile}>
-                                <FontAwesomeIcon icon={faEdit} style={{ fontSize: '1.5em' }} />
-                            </button>
+                    <Row className='d-flex flex-wrap'>
+                        <Col className='mt-2 flex-grow-1 d-flex justify-content-center' sm={12} lg={5}>
+
+                            <div className={styles.image_container}>
+                                <Image src={imageUrl} className={styles.ProfilePicture} fluid rounded/>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    style={{ display: 'none' }}
+                                    id="fileInput"
+                                    onChange={handleImageChange}
+                                />
+                                <button
+                                    className={`fw-bold ${styles.btnImage}`}
+                                    onClick={handleButtonFile}>
+                                    <FontAwesomeIcon icon={faEdit} style={{ fontSize: '1.5em' }} />
+                                </button>
+
+                            </div>
+
                         </Col>
 
-                        {/*filler*/}
-                        <Col md={1}>
-                        </Col>
-
-                        <Col className='mt-2' xs={12} md={7}>
+                        <Col className='mt-2 flex-grow-1' sm={12} lg={7}>
                             <DynamicForm
                                 fields={fields}
                                 onSubmit={handleFormSubmit}
