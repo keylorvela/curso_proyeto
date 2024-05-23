@@ -6,7 +6,6 @@ import Alert from 'react-bootstrap/Alert';
 
 import Stack from 'react-bootstrap/Stack';
 
-
 /**
  * Component to render an alert
  *
@@ -20,23 +19,21 @@ import Stack from 'react-bootstrap/Stack';
  *
  * @example
  *   const [showAlert, setShowAlert] = useState(false);
- * 
+ *
     const [alert, setAlert] = useState({ type: '', title: '', msg: '' });
 
-  setShowAlert(true);
-  
+    setShowAlert(true);
+
     setAlert({..., msg : 'mensaje'});
 
-  
-    
-   <AlertModal
-                    type={alert.type}
-                    title={alert.title}
-                    message={alert.msg}
-                    showAlert={showAlert}
-                    setShowAlert={setShowAlert}
-                  />
-   
+    <AlertModal
+        type={alert.type}
+        title={alert.title}
+        message={alert.msg}
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
+    />
+
 * */
 
 
@@ -52,9 +49,9 @@ function AlertModal({ type, title, message, showAlert = false, setShowAlert }) {
 
                             <Stack gap={3}>
                                 <h3 className='fs-3 fw-bold'> {title} </h3>
-                                <p className = 'fs-5' >{message}</p>
+                                <p className = 'fs-5 text-center' >{message}</p>
                                 <div className='d-flex flex-row-reverse'>
-                                    <Button onClick = {handleClose} className = 'px-4 mx-2' size="lg" variant="warning">Ok</Button>
+                                    <Button onClick = {handleClose} className = 'px-4 mx-2' size="lg" variant="success">Ok</Button>
                                 </div>
                             </Stack>
                         </Alert>
@@ -63,7 +60,6 @@ function AlertModal({ type, title, message, showAlert = false, setShowAlert }) {
                 </Modal >
             )
             }
-            
         </>
     );
 }
