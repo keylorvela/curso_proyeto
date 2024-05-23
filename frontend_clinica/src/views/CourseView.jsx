@@ -139,7 +139,7 @@ function CourseView() {
                                 </Row>
                                 <Row className='d-flex justify-content-center'>
                                     <Col md={6} className={`rounded ${styles.form}`}>
-                                        <CourseForm />
+                                        <CourseForm course = {course}/>
                                     </Col>
                                 </Row>
                             </>

@@ -10,41 +10,34 @@ import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 
 
-function Treatment({ title, event, image }) {
+function Treatment({ title, event, image, isTreatment = true }) {
 
-    const handleButtonClick = () => {
-        const message = `¡Hola! Quisiera saber más sobre ${title}`;
-        const url = `https://wa.me/50670531476/?text=${encodeURIComponent(message)}`;
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const handleAskForProduct = () => {
+        const whatsappLink = (isTreatment) ? "https://wa.me/50670531476" : "https://wa.me/50661286160";
+        const defaultMessage = (isTreatment) ?
+            `Hola! Me gustaría más información sobre el tratamiento ${title}.`
+            :
+            `Hola! Me gustaría más información sobre el curso ${title}.`;
 
-        if (isMobile) {
-            window.location.href = url; 
-        } else {
-            window.open(url, '_blank'); 
-        }
-
-    };
+        window.open(`${whatsappLink}?text=${defaultMessage}`, `_blank`);
+    }
 
     return (
-
         <>
             <main className={styles.body}>
-
                 <Stack className='px-3 py-2 h-100 justify-content-between'>
-                    <div>
-                        <Image src={image} rounded fluid />
-                        <p className="text-center fw-medium fs-2 mt-3" >{title}</p>
+                    <div style={{ height: "300px", width: "100%" }}>
+                        <Image src={image} rounded style={{ height: "100%", width: "100%", objectFit: "cover"  }}/>
                     </div>
-
+                    <p className="text-center fw-medium fs-4 mt-3" >{title}</p>
                     <div>
                         <Button className='my-2 w-100' variant="outline-success btn-lg" onClick={event}>
                             Más información
                         </Button>
-                        <Button className='my-2 w-100' variant="success btn-lg" onClick={handleButtonClick}>
+                        <Button className = 'my-2 w-100' variant="success btn-lg" onClick={() => handleAskForProduct()}>
                             <b>Realizar consulta</b>
                         </Button>
                     </div>
-
                 </Stack>
             </main>
 

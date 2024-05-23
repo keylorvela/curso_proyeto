@@ -4,7 +4,6 @@ import Modal from 'react-bootstrap/Modal';
 function BaseModal({ pshow = false, setShow, children }) {
     const handleClose = () => setShow(false);
 
-
     return (
         <Modal
             animation={false}

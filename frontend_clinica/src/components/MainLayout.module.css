@@ -43,7 +43,16 @@
   opacity: 0.25;
 }
 
+/* Whatsapp contact modal styles */
+.contactBadge {
+  outline: 2px solid #199145;
+  padding: 4px 10px;
+  border-radius: 5px;
+}
 
+.whatsapp_link:hover {
+  text-decoration: underline;
+}
 
 /* ---------- Mobile  */
 @media (max-width: 768px) {

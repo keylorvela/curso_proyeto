@@ -10,23 +10,16 @@ import Col from 'react-bootstrap/Col';
 
 function ContentTable({ title, handler, children }) {
 
-
-
-
-
-
     return (
         <>
-            <Container>
+            <Container fluid="xl">
                 <Row>
                     <Col className='d-flex justify-content-center text-center' sm={12}>
                         <h2 className={commonStyles.title}>  {title} </h2>
                     </Col>
                 </Row>
-                
                 <Row >
                     {children}
-
                 </Row>
             </Container>
 
