@@ -256,13 +256,6 @@ function ManageCourse() {
     if (id) {
         buttons.push(
             {
-                variant: 'danger',
-                type: 'button',
-                label: 'Eliminar curso',
-                onClick: (id) => handleDelete(id),
-                parameter: id
-            },
-            {
                 variant: 'primary',
                 type: 'button',
                 label: 'Asignar grupo',
@@ -273,7 +266,14 @@ function ManageCourse() {
                 type: 'button',
                 label: 'Modificar grupos',
                 onClick: () => handleModal(true,true),
-            }
+            },
+            {
+                variant: 'danger',
+                type: 'button',
+                label: 'Eliminar curso',
+                onClick: (id) => handleDelete(id),
+                parameter: id
+            },
         )
     }
 
