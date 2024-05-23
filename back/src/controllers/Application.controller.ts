@@ -70,17 +70,23 @@ export const sendApplication = async (req: Request, res: Response) => {
     try {
         // Use parameterized query to prevent SQL injection
         const result_application = await dbConnection.query<RowDataPacket[]>(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`
-        ,[req.body.nombre, fs.readFileSync(path), req.body.correo, req.body.telefono, 2]);
+            , [req.body.nombre, fs.readFileSync(path), req.body.correo, req.body.telefono, req.body.idCurso]);
 
         const result: OStatus[] = JSON.parse(JSON.stringify(result_application[0][0]));
 
-        // TODO: Verificar que el result si haya sido exitoso (Si se guardo la solicitud)
-        if (false) {
+        //TODO Fix schedules
+        const content: FormVerification = {
+            name: req.body.nombre,
+            phoneNumber : req.body.telefono,
+            email: req.body.correo,
+            courseName: req.body.curso,
+            courseSchedule: 'N/A'};
+        if (result) {
             await mailManager.sendMail_FormVerification(
                 "testELSPrueba@gmail.com",
-                mailContent.email,
+                req.body.correo,
                 "Verificacion de formulario",
-                mailContent
+                content
             )
         }
 
