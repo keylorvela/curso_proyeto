@@ -5,7 +5,7 @@ import ReviewsService from 'src/services/ReviewsService.js';
 
 import sinpe from 'src/assets/Sinpe.svg'
 import transferencia from 'src/assets/Transferencia.svg'
-import img from 'src/assets/stock2.jpg'
+import img from 'src/assets/Default-Image.jpg'
 
 import { FaWhatsapp } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
@@ -168,6 +168,8 @@ function TreatmentView() {
                     </Form>
                 </div>
             </BaseModal>
+
+            {/* Content */}
             <div className={styles.page}>
                 <Container>
                     {loading ? (
