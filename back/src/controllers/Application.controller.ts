@@ -3,6 +3,7 @@ import { RowDataPacket } from "mysql2";
 import dbConnection from "../database/dbConfig";
 import { OStatus } from "../interfaces/OStatus.interface";
 import { Application, ApplicationBody } from "../interfaces/Application.interface";
+import { generateRandomPassword } from "../utilities/PasswordGenerator";
 
 //File handling
 import path from 'path';
@@ -11,11 +12,6 @@ import { promisify } from 'util';
 import MailManager from "../mail/Mail.controller";
 import { FormVerification } from "mail/Main.interface";
 const unlinkAsync = promisify(fs.unlink);
-
-
-
-
-
 
 
 export const getAllApplications = async (req: Request, res: Response) => {
@@ -32,8 +28,6 @@ export const getAllApplications = async (req: Request, res: Response) => {
     }
 }
 
-
-
 export const respondToApplication = async (req: Request, res: Response) => {
     const { applicationID, status }: { applicationID: number; status: string } = req.body;
 
@@ -43,9 +37,11 @@ export const respondToApplication = async (req: Request, res: Response) => {
     }
 
     try {
+        const tempPassword = generateRandomPassword();
+
         await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_Application_Respond(?, ?, @o_status)
-        `, [applicationID, status]);
+            CALL SP_Application_Respond(?, ?, ?, @o_status)
+        `, [applicationID, status, tempPassword]);
 
         const result = await dbConnection.query<RowDataPacket[]>(`
             SELECT @o_status AS o_statusS
