@@ -16,13 +16,11 @@ function Treatment({ title, event, image }) {
 
         <>
             <main className={styles.body}>
-
                 <Stack className='px-3 py-2 h-100 justify-content-between'>
-                    <div>
-                        <Image src={image} rounded fluid />
-                        <p className="text-center fw-medium fs-2 mt-3" >{title}</p>
+                    <div style={{ height: "300px", width: "100%" }}>
+                        <Image src={image} rounded style={{ height: "100%", width: "100%", objectFit: "cover"  }}/>
                     </div>
-
+                    <p className="text-center fw-medium fs-4 mt-3" >{title}</p>
                     <div>
                         <Button className = 'my-2 w-100' variant="outline-success btn-lg" onClick={event}>
                             Más información

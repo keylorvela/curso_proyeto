@@ -60,6 +60,7 @@ function Treatments() {
   }
 
   const getFilters = () => (
+    <Col>
     <Form>
       <Row className='d-flex align-items-center mb-5'>
         <Col>
@@ -75,7 +76,7 @@ function Treatments() {
         </Col>
       </Row>
       <Row className='d-flex align-items-center mb-3'>
-        <Stack direction="horizontal" gap={3}>
+        <Stack direction="horizontal" >
           <p className='fs-6'>Filtros disponibles:</p>
           <Form.Select aria-label="Default select example" onChange={(e) => handleCategoryFilter(e)}>
             <option key={0} value={0}>Todos</option>
@@ -88,6 +89,7 @@ function Treatments() {
         </Stack>
       </Row>
     </Form>
+    </Col>
   );
 
   const filteredTreatments = treatments.filter(treatment =>
@@ -113,7 +115,7 @@ function Treatments() {
                 <Row>{getFilters()}</Row>
                 <Row className={styles.cardsContainer}>
                   {filteredTreatments.map((item, index) => (
-                    <Col className={styles.cardTreatment} key={index}>
+                    <Col className={styles.cardTreatment} key={index} >
                       <Treatment
                         title={item.Name}
                         image={item.TreatmentImage || "https://i.ibb.co/wS2c1nt/Default-Image.jpg"}
@@ -127,7 +129,6 @@ function Treatments() {
                     </Alert>
                   )}
                 </Row>
-               
               </>
             )}
           </ContentTable>
