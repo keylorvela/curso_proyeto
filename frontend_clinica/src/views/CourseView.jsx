@@ -184,36 +184,43 @@ function CourseView() {
                                 </Row>
 
                                 <Row className="mb-4">
-                                    {/**<Col xs={12} sm={6} lg={3}>
-                                        <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.wtsButton}`}>
-                                            <FaWhatsapp /><b className="text-nowrap"> Agenda tu cita </b>
-                                        </button>
-                                        </Col>**/}
-                                    <Col xs={12} sm={6} lg={3}>
-                                        <button onClick={handleButtonPay} className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.bpButton}`}>
-                                            <FiShoppingCart /><b className="text-nowrap"> Conexión BP</b>
-                                        </button>
+                                    <Col md={6} lg={6}>
+                                        <Row fluid>
+                                            <Col xs={12} md={12} lg={12} className="pb-2 ">
+                                                {/* <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.wtsButton}`}>
+                                                    <FaWhatsapp size={30}/><b className="text-nowrap"> Agenda tu cita </b>
+                                                </button> */}
+                                                <button onClick={handleButtonPay} className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.bpButton}`}>
+                                                    <FiShoppingCart size={30}/><b className="text-nowrap"> Conexión BP</b>
+                                                </button>
+                                            </Col>
+                                            <Col xs={6} md={12} lg={6} className="py-2">
+                                                <div onClick={handleImageSinpe} style={{ cursor: 'pointer' }}>
+                                                    <Image src={sinpe} fluid />
+                                                </div>
+                                            </Col>
+                                            <Col xs={6} md={12} lg={6} className="py-2">
+                                                <div onClick={handleImageTransferencia} style={{ cursor: 'pointer' }}>
+                                                    <Image src={transferencia} fluid />
+                                                </div>
+                                            </Col>
+                                        </Row>
                                     </Col>
-                                    <Col xs={6} sm={6} lg={3}>
-                                        <div onClick={handleImageSinpe} style={{ cursor: 'pointer' }}>
-                                            <Image src={sinpe} fluid />
-                                        </div>
-                                    </Col>
-
-                                    <Col xs={6} sm={6} lg={3}>
-                                        <div onClick={handleImageTransferencia} style={{ cursor: 'pointer' }}>
-                                            <Image src={transferencia} fluid />
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row className='d-flex justify-content-center'>
-                                    <Col md={6} className={`rounded ${styles.form}`}>
+                                    <Col md={6} lg={6} className={`rounded ${styles.form}`}>
                                         <CourseForm
                                             course = {course}
                                             groupsInCourse={ groupsInCourse }
                                         />
                                     </Col>
                                 </Row>
+                                {/* <Row className='d-flex justify-content-center'>
+                                    <Col md={6} className={`rounded ${styles.form}`}>
+                                        <CourseForm
+                                            course = {course}
+                                            groupsInCourse={ groupsInCourse }
+                                        />
+                                    </Col>
+                                </Row> */}
                             </>
                         )
                     )}
