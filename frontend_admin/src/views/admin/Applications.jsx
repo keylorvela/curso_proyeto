@@ -124,7 +124,7 @@ function Applications() {
                                 labels={[
                                     { title: 'Nombre', content: modalData.StudentName },
                                     { title: 'Email', content: modalData.Email },
-                                    { title: 'Curso', content: modalData.ID },
+                                    { title: 'Curso', content: modalData.CourseName },
                                     { title: 'Fecha', content: '12/12/2000' },
                                 ]}
                             />
