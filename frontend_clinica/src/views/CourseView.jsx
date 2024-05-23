@@ -94,7 +94,7 @@ function CourseView() {
                                         <Image src={course?.CourseImage || img} fluid />
                                     </Col>
                                     <Col xs={12} md={8}>
-                                        { formatDescription(course?.Description) }
+                                        {formatDescription(course?.Description)}
                                     </Col>
                                 </Row>
 
@@ -120,11 +120,11 @@ function CourseView() {
                                 </Row>
 
                                 <Row className="mb-4">
-                                    <Col xs={12} sm={6} lg={3}>
+                                    {/**<Col xs={12} sm={6} lg={3}>
                                         <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.wtsButton}`}>
                                             <FaWhatsapp /><b className="text-nowrap"> Agenda tu cita </b>
                                         </button>
-                                    </Col>
+                                        </Col>**/}
                                     <Col xs={12} sm={6} lg={3}>
                                         <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.bpButton}`}>
                                             <FiShoppingCart /><b className="text-nowrap"> Conexión BP</b>

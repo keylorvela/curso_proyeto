@@ -100,13 +100,13 @@ function TreatmentView() {
         )
     }
 
-    const handleSubmit  = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         try {
             await ReviewsService.AddReview(
-                formData.name, 
-                formData.reviewContent, 
-                formData.rating,id);
+                formData.name,
+                formData.reviewContent,
+                formData.rating, id);
             fetchDataReviews()
             setFormData({
                 name: '',
@@ -131,6 +131,29 @@ function TreatmentView() {
             ...formData,
             rating: star
         });
+    };
+
+    const handleButtonWhats = () => {
+        const message = `¡Hola! Quisiera agendar una cita de ${treatment?.Name}`;
+        const url = `https://wa.me/50670531476/?text=${encodeURIComponent(message)}`;
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            window.location.href = url;
+        } else {
+            window.open(url, '_blank');
+        }
+
+    };
+
+    const handleImageTransferencia = () => {
+        const textToCopy = "CR13080338200852736531";
+        navigator.clipboard.writeText(textToCopy)
+    };
+
+    const handleImageSinpe = () => {
+        const textToCopy = "70531476";
+        navigator.clipboard.writeText(textToCopy)
     };
 
     return (
@@ -224,7 +247,8 @@ function TreatmentView() {
 
                                 <Row className="mb-4">
                                     <Col xs={12} sm={6} lg={3}>
-                                        <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.wtsButton}`}>
+                                        <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.wtsButton}`}
+                                            onClick={handleButtonWhats}>
                                             <FaWhatsapp /><b className="text-nowrap"> Agenda tu cita </b>
                                         </button>
                                     </Col>
@@ -234,11 +258,17 @@ function TreatmentView() {
                                         </button>
                                     </Col>
                                     <Col xs={6} sm={6} lg={3}>
-                                        <Image src={sinpe} fluid />
+                                        <div onClick={handleImageSinpe} style={{ cursor: 'pointer' }}>
+                                            <Image src={sinpe} fluid />
+                                        </div>
                                     </Col>
+
                                     <Col xs={6} sm={6} lg={3}>
-                                        <Image src={transferencia} fluid />
+                                        <div onClick={handleImageTransferencia} style={{ cursor: 'pointer' }}>
+                                            <Image src={transferencia} fluid />
+                                        </div>
                                     </Col>
+
                                 </Row>
 
 

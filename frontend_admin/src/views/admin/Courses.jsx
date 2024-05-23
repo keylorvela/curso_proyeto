@@ -36,7 +36,8 @@ function Courses() {
                     Price: course.Price,
                     UserTarget: course.UserTarget || "No hay público objetivo definido",
                     CourseImage: course.CourseImage || "https://i.ibb.co/wS2c1nt/Default-Image.jpg",
-                    GroupsByCourse: course.GroupsByCourse || "No hay grupos asignados"
+                    GroupsByCourse: course.GroupsByCourse || "No hay grupos asignados",
+                    PayLink: course.PayLink
                 }))
 
                 setData(new_data);
