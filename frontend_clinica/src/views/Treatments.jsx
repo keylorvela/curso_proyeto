@@ -120,6 +120,7 @@ function Treatments() {
                         title={item.Name}
                         image={item.TreatmentImage || "https://i.ibb.co/wS2c1nt/Default-Image.jpg"}
                         event={() => handleClick(item.ID)}
+                        isTreatment={true}
                       />
                     </Col>
                   ))}

@@ -10,10 +10,19 @@ import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 
 
-function Treatment({ title, event, image }) {
+function Treatment({ title, event, image, isTreatment = true }) {
+
+    const handleAskForProduct = () => {
+        const whatsappLink = (isTreatment) ? "https://wa.me/50670531476" : "https://wa.me/50661286160";
+        const defaultMessage = (isTreatment) ?
+            `Hola! Me gustaría más información sobre el tratamiento ${title}.`
+            :
+            `Hola! Me gustaría más información sobre el curso ${title}.`;
+
+        window.open(`${whatsappLink}?text=${defaultMessage}`, `_blank`);
+    }
 
     return (
-
         <>
             <main className={styles.body}>
                 <Stack className='px-3 py-2 h-100 justify-content-between'>
@@ -25,11 +34,10 @@ function Treatment({ title, event, image }) {
                         <Button className = 'my-2 w-100' variant="outline-success btn-lg" onClick={event}>
                             Más información
                         </Button>
-                        <Button className = 'my-2 w-100' variant="success btn-lg" >
+                        <Button className = 'my-2 w-100' variant="success btn-lg" onClick={() => handleAskForProduct()}>
                             <b>Realizar consulta</b>
                         </Button>
                     </div>
-
                 </Stack>
             </main>
 
