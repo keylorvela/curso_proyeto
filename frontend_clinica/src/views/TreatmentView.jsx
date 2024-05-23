@@ -5,7 +5,7 @@ import ReviewsService from 'src/services/ReviewsService.js';
 
 import sinpe from 'src/assets/Sinpe.svg'
 import transferencia from 'src/assets/Transferencia.svg'
-import img from 'src/assets/stock2.jpg'
+import img from 'src/assets/Default-Image.jpg'
 
 import { FaWhatsapp } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
@@ -203,6 +203,8 @@ function TreatmentView() {
                     </Form>
                 </div>
             </BaseModal>
+
+            {/* Content */}
             <div className={styles.page}>
                 <Container>
                     {loading ? (
@@ -261,7 +263,7 @@ function TreatmentView() {
                                     <Col xs={12} sm={6} lg={3}>
                                         <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.wtsButton}`}
                                             onClick={handleButtonWhats}>
-                                            <FaWhatsapp /><b className="text-nowrap"> Agenda tu cita </b>
+                                            <FaWhatsapp size={30} /><b className="text-nowrap mx-2">Agenda tu cita </b>
                                         </button>
                                     </Col>
                                     <Col xs={12} sm={6} lg={3}>
@@ -285,7 +287,6 @@ function TreatmentView() {
 
 
                                 {/* Review Section */}
-
                                 <Row className={styles.fixedRow}>
                                     <Col md={12} className={styles.colCustom}>
                                         <div className={styles.reviewHeader}>

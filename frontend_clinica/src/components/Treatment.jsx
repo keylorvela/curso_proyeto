@@ -1,11 +1,6 @@
 import styles from 'src/components/Treatment.module.css'
 import Image from 'react-bootstrap/Image';
-import img from 'src/assets/stock2.jpg';
 import Button from 'react-bootstrap/Button';
-
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 import Stack from 'react-bootstrap/Stack';
 

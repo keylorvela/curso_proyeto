@@ -12,7 +12,7 @@ import CourseForm from 'src/components/CourseForm.jsx';
 
 import sinpe from 'src/assets/Sinpe.svg';
 import transferencia from 'src/assets/Transferencia.svg';
-import img from 'src/assets/stock2.jpg';
+import img from 'src/assets/Default-Image.jpg';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
