@@ -4,8 +4,12 @@ CREATE PROCEDURE SP_Application_ReadAll()
 BEGIN
     SELECT
         SA.ID,
-        SA.StudentName,
-        SA.Date,
+        SA.StudentName,    
+        SA.Date,    
+        SA.Email,    
+        SA.PhoneNumber,    
+        SA.StatusID,    
+        SA.GroupID,    
         G.StartingDate,
         C.Name AS CourseName
     FROM StudentApplication AS SA
