@@ -11,7 +11,7 @@ import UserService from 'src/services/User.service';
 function PasswordModal({ hide, handleState, passInfo, setPassInfo, userID }) {
 
     const [validated, setValidated] = useState(false);
-    const [showInfoPasswordChange, setShowInfoPasswordChange] = useState(true);
+    const [showInfoPasswordChange, setShowInfoPasswordChange] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
 
     const handleSubmit = async (event) => {

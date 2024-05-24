@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 import MainLayout from 'src/components/MainLayout.jsx';
+import YesNoModal from 'src/components/utils/YesNoModal.jsx'
+
 import styles from 'src/views/student/StudentsNews.module.css';
 
 import NewsService from 'src/services/News.service';
@@ -16,6 +18,8 @@ function StudentsNews() {
     const location = useLocation();
     const navegate = useNavigate();
     const { userID, groupID } = location.state || {};
+
+    const [showAlertDropOut, setShowAlertDropOut] = useState(false);
 
     const [courseName, setCourseName] = useState('');
     const [news, setNews] = useState([]);
@@ -36,8 +40,6 @@ function StudentsNews() {
                     });
                 }
 
-                console.log(userID, groupID)
-
                 setNews( news_list );
 
                 // Get group information
@@ -56,9 +58,7 @@ function StudentsNews() {
 
     const DropOutCourse = async () => {
         try {
-            const result = await GroupService.DropOutCourse( userID, groupID );
-            console.log(result);
-            alert("El usuario se dio de baja del grupo");
+            await GroupService.DropOutCourse( userID, groupID );
             navegate(`/student/courses`);
         } catch (error) {
             console.error("Error al dar de baja:", error);
@@ -67,13 +67,21 @@ function StudentsNews() {
 
     return (
         <MainLayout type={3}>
+            <YesNoModal
+                question={"¿Estás seguro que deseas continuar con esta acción?"}
+                message={"Está acción es irreversible y perdarás completo acceso a este grupo"}
+                showAlert={showAlertDropOut}
+                setShowAlert={setShowAlertDropOut}
+                handleYes={DropOutCourse}
+            />
+
             <Container fluid>
                 <h2 className={styles.courseName}>{courseName}</h2>
                 <Row>
                     <Col md={7} className={styles.colCustom}>
                         <div className={styles.newsHeader}>
                             <h3 className={styles.subTitle}>Noticias</h3>
-                            <Button variant="danger" className={styles.unsubscribeButton} onClick={DropOutCourse}>Darse de baja</Button>
+                            <Button variant="danger" className={styles.unsubscribeButton} onClick={() => setShowAlertDropOut(true)}>Darse de baja</Button>
                         </div>
                         {
                             (news.length == 0) ?

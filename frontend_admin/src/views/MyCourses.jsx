@@ -15,8 +15,8 @@ import GroupService from 'src/services/Group.service';
 function MyCourses() {
     // TODO: Obtener el id del usuario actual
     // TODO: Funcionalidad del boton de más detalles
-    const userID = 1;
-    const userType = 1; // UserType: (2)Profesor o (3)Estudiante
+    const userID = 6;
+    const userType = 3; // UserType: (2)Profesor o (3)Estudiante
 
     const navigate = useNavigate();
     const location = useLocation(); // TODO: Arreglo temporal (Para distinguir entre student | professor)

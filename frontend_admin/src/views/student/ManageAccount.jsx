@@ -1,11 +1,10 @@
 import { React, useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
 
 import PasswordModal from 'src/components/PasswordModal.jsx'
+import AlertModal from 'src/components/utils/AlertModal.jsx'
 
 import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
-import GroupModal from 'src/components/GroupModal.jsx'
 
 import Loading from 'src/components/utils/Loading.jsx';
 import styles from 'src/views/student/StudentPage.module.css'
@@ -14,13 +13,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
-import Form from 'react-bootstrap/Form';
 import StudentService from 'src/services/Students.service';
 
 function ManageAccount() {
     // TODO: Obtener el userID
     // TODO: Display user profile picture
     const userID = 8;
+    const [showAlertUpdateInfo, setShowAlertUpdateInfo] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
 
     const fileInputRef = useRef();
     const [loading, setLoading] = useState(false);
@@ -86,7 +86,6 @@ function ManageAccount() {
 
     const handleFormSubmit = async (formValues) => {
         try {
-            console.log(studentInformation.photo);
             setLoading(true);
             const result = await StudentService.UpdateStudentInformation(
                 formValues.personID,
@@ -95,7 +94,8 @@ function ManageAccount() {
                 formValues.email,
                 studentInformation.photo
             );
-            alert("Modificación de info del estudiante exitosa!");
+            setAlertMessage("Se actualizaron los datos exitosamente");
+            setShowAlertUpdateInfo(true);
         } catch (error) {
             console.error("Error in update teacher information", error);
         } finally {
@@ -142,6 +142,13 @@ function ManageAccount() {
                 passInfo={passInfo}
                 setPassInfo={setPassInfo}
                 userID={userID}
+            />
+            <AlertModal
+                type="light"
+                title="Información"
+                message={alertMessage}
+                showAlert={showAlertUpdateInfo}
+                setShowAlert={setShowAlertUpdateInfo}
             />
 
             <div className={styles.page}>
