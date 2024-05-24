@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +8,9 @@ import Loading from 'src/components/utils/Loading.jsx'
 
 import styles from 'src/views/admin/AdminPage.module.css'
 import noImage from 'src/assets/noImage.jpg'
+
+import AlertModal from 'src/components/utils/AlertModal.jsx'
+import YesNoModal from 'src/components/utils/YesNoModal.jsx'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,15 +25,17 @@ function ManageTreatment() {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const [alertMessage, setAlertMessage] = useState("");
+    const [showAlertTreatment, setShowAlertTreatment] = useState(false);
+    const [showAlertDeleteTreatment, setShowAlertDeleteTreatment] = useState(false);
+
     const [categoryList, setCategoryList] = useState([]);
     const [values, setValues] = useState(location.state?.treatmentInfo);
     const [loading, setLoading] = useState(true);
     const [updatedData, setUpdatedData] = useState(false);
     const [imageUrl, setImageUrl] = useState(location.state?.treatmentInfo?.TreatmentImage || noImage);
 
-
     const { id } = useParams() || null;
-
 
     //  A possible use
     useEffect(() => {
@@ -56,7 +60,6 @@ function ManageTreatment() {
         }
         fetchData();
     }, [updatedData]);
-
 
     const uploadImage = async () => {
         try {
@@ -84,13 +87,13 @@ function ManageTreatment() {
         document.getElementById('fileInput').click();
     };
 
-    const handleDelete = async (id_p) => {
+    const handleDelete = async () => {
         try {
             setLoading(true);
             if (id) {
-                const request = await tServ.deleteTreatment(id_p);
+                const request = await tServ.deleteTreatment( id );
                 if (request.status === 200)
-                    alert('Eliminacion exitosa');
+                    setShowAlertDeleteTreatment(false);
                 navigate('/admin/treatments');
             }
 
@@ -116,17 +119,18 @@ function ManageTreatment() {
             if (!id) {
                 const request = await tServ.createTreatment(formValues, imageURL);
                 if (request.status === 200) {
-                    alert('Inserción exitosa');
+                    setAlertMessage("Se registro el tratamiento con éxito.");
                     setImageUrl(noImage);
                 }
             }
             else {
                 const request = await tServ.updateTreatment(formValues, imageURL);
                 if (request.status === 200) {
+                    setAlertMessage("Se modifico el tratamiento con éxito.");
                     setUpdatedData(true);
-                    alert('Actualización exitosa');
                 }
             }
+            setShowAlertTreatment(true);
         } catch (error) {
             console.error('Treatments failed:', error);
         } finally {
@@ -206,8 +210,6 @@ function ManageTreatment() {
         }
     ];
 
-
-
     const buttons = []
     if (id) {
         buttons.push(
@@ -215,19 +217,31 @@ function ManageTreatment() {
                 variant: 'danger',
                 type: 'button',
                 label: 'Eliminar tratamiento',
-                onClick: (id) => handleDelete(id),
+                onClick: () => setShowAlertDeleteTreatment(true),
                 parameter: id
             }
         )
     }
 
-
     //Always at the end
     buttons.push({ variant: 'primary', type: 'submit', label: 'Guardar cambios' });
 
-
     return (
         <MainLayout type={1}>
+            <AlertModal
+                type="light"
+                title="Información"
+                message={alertMessage}
+                showAlert={showAlertTreatment}
+                setShowAlert={setShowAlertTreatment}
+            />
+            <YesNoModal
+                question={"¿Estás seguro que deseas continuar con esta acción?"}
+                message={"Se eliminará el tratamiento permanentemente."}
+                showAlert={showAlertDeleteTreatment}
+                setShowAlert={setShowAlertDeleteTreatment}
+                handleYes={handleDelete}
+            />
 
             <div className={styles.page}>
                 <Container fluid>

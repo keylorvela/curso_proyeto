@@ -46,11 +46,11 @@ function YesNoModal({ question, message, showAlert = false, setShowAlert, handle
                         <Alert className = 'px-3 py-3 mx-0 my-0' key="info" variant="ligth" >
 
                             <Stack gap={3}>
-                                <h3 className='fs-3 fw-bold text-center'> {question} </h3>
+                                <h3 className='fs-4 fw-bold text-center'> {question} </h3>
                                 <p className = 'fs-5 text-center' >{message}</p>
                                 <div className='d-flex flex-row-reverse'>
-                                    <Button onClick = {handleYes} className = 'px-4 mx-2' size="lg" variant="success" >Continuar</Button>
-                                    <Button onClick = {handleClose} className = 'px-4 mx-2' size="lg" variant="danger">Cancelar</Button>
+                                    <Button onClick = {handleYes} className = 'px-4 mx-2' size="md" variant="success" >Continuar</Button>
+                                    <Button onClick = {handleClose} className = 'px-4 mx-2' size="md" variant="danger">Cancelar</Button>
                                 </div>
                             </Stack>
                         </Alert>
