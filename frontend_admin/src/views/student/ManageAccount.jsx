@@ -154,7 +154,7 @@ function ManageAccount() {
             <div className={styles.page}>
                 <Container fluid>
                     {loading && (
-                        <div className='text-center my-5'>
+                        <div className='text-center my-5 position-absolute w-100'>
                             <Loading size={11} />
                         </div>
                     )}

@@ -72,9 +72,9 @@ function Students() {
                 <h1 className={styles.tableTitle}>Lista de estudiantes</h1>
 
                 {loading && (
-                    <div className='text-center my-5'>
-                        <Loading size={15} />
-                    </div>
+                    <div className='text-center my-5 position-absolute w-100'>
+                            <Loading size={11} />
+                        </div>
                 )}
 
 

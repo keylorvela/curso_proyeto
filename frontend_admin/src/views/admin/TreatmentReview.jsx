@@ -119,9 +119,9 @@ function TreatmentReview() {
             <Container fluid>
                 <h2 className={styles.TreatmentName}>{values.Name}</h2>
                 {loading && (
-                    <div className='text-center my-5'>
-                        <Loading size={15} />
-                    </div>
+                    <div className='text-center my-5 position-absolute w-100'>
+                            <Loading size={11} />
+                        </div>
                 )}
                 <Row>
                     <Col md={11} className={styles.colCustom}>

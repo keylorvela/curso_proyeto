@@ -1,13 +1,14 @@
-
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams, useNavigate  } from 'react-router-dom';
 
 import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
 
-import noImage from 'src/assets/noImage.jpg'
 import styles from 'src/views/admin/AdminPage.module.css'
 import Loading from 'src/components/utils/Loading.jsx';
+
+import AlertModal from 'src/components/utils/AlertModal.jsx'
+import YesNoModal from 'src/components/utils/YesNoModal.jsx'
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 
@@ -21,6 +22,11 @@ function ManageProfessor() {
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
     const navegate = useNavigate ();
+
+    // Modals control
+    const [alertMessage, setAlertMessage] = useState("");
+    const [showAlertTeacher, setShowAlertTeacher] = useState(false);
+    const [showAlertDeleteTeacher, setShowDeleteTeacher] = useState(false);
 
     const teacherData = location.state?.teacherInformation;
     const [teacherInformation, setTeacherInformation] = useState({});
@@ -63,7 +69,7 @@ function ManageProfessor() {
                     formValues.email,
                     formValues.photo
                 );
-                alert("Modificación de info del profesor exitosa!");
+                setAlertMessage("Se modifico la información del profesor correctamente.");
             }
             // Si no := Crea el profesor
             else {
@@ -78,16 +84,17 @@ function ManageProfessor() {
                     "Profesor"
                 );
                 if(request.o_status === 'Error: Failed insertion')
-                    alert("Hay un profesor con ese numero o correo")
-                else alert("Profesor creado")
+                    setAlertMessage("La información de número o correo electrónico ya se encuentra registrada.");
+                else
+                    setAlertMessage("Se registro el profesor correctamente.");
             }
+            setShowAlertTeacher(true);
         } catch (error) {
             console.error("Error in update teacher information", error);
         } finally {
             setLoading(false);
         }
     };
-
 
     const fields = [
         {
@@ -113,17 +120,19 @@ function ManageProfessor() {
         }
     ];
 
-    const handleDeleteTeacher = async (id_p) => {
+    const handleDeleteTeacher = async () => {
         try {
-            const numID = Number( id_p );
+            const numID = Number( id );
             const result = await TeachersService.DeleteTeacher( numID );
 
+            setShowDeleteTeacher(false);
+
             if (result.o_status.includes("Error")) {
-                alert(`No se elimino el profesor: ${result.o_status}`)
+                setAlertMessage("Hubo un error al intentar eliminar al profesor");
+                setShowAlertTeacher(true);
                 return;
             }
 
-            alert("Se elimino el profesor (Actualizar API del profesor)");
             navegate('/admin/professors');
         } catch (error) {
             console.error("Error al eliminar profesor", error);
@@ -139,7 +148,7 @@ function ManageProfessor() {
                 variant: 'danger',
                 type: 'button',
                 label: 'Eliminar profesor',
-                onClick: (id) => handleDeleteTeacher(id),
+                onClick: () => setShowDeleteTeacher(true),
                 parameter: id
             }
         )
@@ -147,11 +156,25 @@ function ManageProfessor() {
 
     return (
         <MainLayout type={1}>
+            <AlertModal
+                type="light"
+                title="Información"
+                message={alertMessage}
+                showAlert={showAlertTeacher}
+                setShowAlert={setShowAlertTeacher}
+            />
+            <YesNoModal
+                question={"¿Estás seguro que deseas continuar con esta acción?"}
+                message={"Se eliminará el profesor permanentemente."}
+                showAlert={showAlertDeleteTeacher}
+                setShowAlert={setShowDeleteTeacher}
+                handleYes={handleDeleteTeacher}
+            />
 
             <div className={styles.page}>
                 <Container fluid>
                     {loading && (
-                        <div className='text-center my-5'>
+                        <div className='text-center my-5 position-absolute w-100'>
                             <Loading size={11} />
                         </div>
                     )}
