@@ -47,26 +47,13 @@
   border-color: var(--ligth-blue);
 }
 
-@media (max-width: 907px) {
-  .btnAdd {
-    font-size: 20px;
-    margin: 5px 0;
-  }
-  .title {
-    font-size: 36px;
-  }
-}
-@media (max-width: 515px) {
-  .btnAdd {
-    font-size: 16px;
-  }
-  .title {
-    font-size: 28px;
-  }
-}
-
 .categoryAdd{
   padding-bottom: 2%;
+
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .input{
@@ -82,7 +69,6 @@
 
 .btn{
   color: var(--ligth-blue);
-  margin-right: 2%;
 }
 
 .btnHide{
@@ -105,8 +91,30 @@
   padding: 1.5%;
   border-radius: 1%; 
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  max-width: 70%; 
   width: 100%;
 }
 
-  
+.inputAddCategory {
+  width: 50%;
+}
+
+@media (max-width: 907px) {
+  .btnAdd {
+    font-size: 20px;
+    margin: 5px 0;
+  }
+  .title {
+    font-size: 36px;
+  }
+}
+@media (max-width: 515px) {
+  .btnAdd {
+    font-size: 16px;
+  }
+  .title {
+    font-size: 28px;
+  }
+  .btnAddCategory, .inputAddCategory {
+    width: 100%;
+  }
+}

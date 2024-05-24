@@ -124,67 +124,74 @@ function Treatments() {
                     </div>
                 </div>
 
-                <FeaturedTreatments></FeaturedTreatments>
-
-
                 {/* Category Section */}
-                <div className={styles.categorySection}>
-                    <h2 className={styles.categoryTitle}>Gestionar Categorías</h2>
+                <div className='mx-2'>
+                    <div className={styles.categorySection}>
+                        <h2 className={styles.categoryTitle}>Gestionar Categorías</h2>
 
-                    <div className={styles.categoryAdd} >
-                        <input
-                            className={styles.input}
-                            type="text" value={newCategoryName}
-                            onChange={(e) => setNewCategoryName(e.target.value)}
-                            placeholder="Nueva categoría"
-                        />
-                        <Button className={styles.btn}
-                            variant="outline-primary"
-                            onClick={handleAddCategory}>
-                            <FontAwesomeIcon icon={faPlus} />
-                            Agregar
+                        <div className={styles.categoryAdd} >
+                            <input
+                                className={`${styles.input} ${styles.inputAddCategory}`}
+                                type="text" value={newCategoryName}
+                                onChange={(e) => setNewCategoryName(e.target.value)}
+                                placeholder="Nueva categoría"
+                            />
+                            <Button className={`${styles.btn} ${styles.btnAddCategory}`}
+                                variant="outline-primary"
+                                onClick={handleAddCategory}>
+                                <FontAwesomeIcon icon={faPlus} />
+                                Agregar categoría
+                            </Button>
+                        </div>
+
+
+                        <Button className={styles.btnHide} onClick={() => setShowTable(!showTable)}>
+                            {showTable ? 'Ocultar categorías' : 'Mostrar categorías'}
                         </Button>
+                        {showTable && (
+                            <Table striped hover responsive borderless >
+                                <thead>
+                                    <tr>
+                                        <th>Categoría</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {categories.map((category, index) => (
+                                        <tr key={index}>
+                                            <td>{category.CategoryName}</td>
+                                            <td className='text-end'>
+                                                <Button className={`${styles.btn} my-1`}
+                                                    variant="outline-primary"
+                                                    size="sm"
+                                                    onClick={() => {
+                                                        setEditedategory(category);
+                                                        setModalShow(true);
+                                                    }}
+                                                    style={{ minWidth: "95px" }}
+                                                >
+                                                    <FontAwesomeIcon icon={faEdit} />
+                                                    Editar
+                                                </Button>
+                                                <Button variant="outline-danger"
+                                                    size="sm"
+                                                    onClick={() => handleDeleteCategory(category.ID)}
+                                                    className='ms-2 my-1'
+                                                    style={{ minWidth: "95px" }}
+                                                >
+                                                    <FontAwesomeIcon icon={faTrash} />
+                                                    Eliminar
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        )}
                     </div>
 
-
-                    <Button className={styles.btnHide} onClick={() => setShowTable(!showTable)}>
-                        {showTable ? 'Ocultar categorías' : 'Mostrar categorías'}
-                    </Button>
-                    {showTable && (
-                        <Table striped hover responsive borderless >
-                            <thead>
-                                <tr>
-                                    <th>Categoría</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {categories.map((category, index) => (
-                                    <tr key={index}>
-                                        <td>{category.CategoryName}</td>
-                                        <td>
-                                            <Button className={styles.btn}
-                                                variant="outline-primary"
-                                                size="sm"
-                                                onClick={() => {
-                                                    setEditedategory(category);
-                                                    setModalShow(true);
-                                                }} >
-                                                <FontAwesomeIcon icon={faEdit} />
-                                                Editar
-                                            </Button>
-                                            <Button variant="outline-danger"
-                                                size="sm"
-                                                onClick={() => handleDeleteCategory(category.ID)}>
-                                                <FontAwesomeIcon icon={faTrash} />
-                                                Eliminar
-                                            </Button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </Table>
-                    )}
+                    <FeaturedTreatments></FeaturedTreatments>
                 </div>
+
             </Container>
         </MainLayout>
     );
