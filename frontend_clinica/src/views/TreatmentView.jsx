@@ -93,7 +93,7 @@ function TreatmentView() {
         const paragraphs = description.split("/");
         return (paragraphs) ? (
             paragraphs.map((paragraph, index) => (
-                <p key={index} className="fs-3">{paragraph}</p>
+                <p key={index} className="fs-4">{paragraph}</p>
             ))
         ) : (
             <></>
