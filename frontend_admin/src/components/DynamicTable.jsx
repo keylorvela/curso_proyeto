@@ -14,7 +14,7 @@ import styles from 'src/components/DynamicTable.module.css';
 function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick, isSearching, searchKey }) {
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(2);   //could be changed
+  const [itemsPerPage, setItemsPerPage] = useState(5);   //could be changed
   const [showFirstDropdown, setShowFirstDropdown] = useState(false);
   const [showSecondDropdown, setShowSecondDropdown] = useState(false);
   const [dropdownMin, setdropdownMin] = useState(2);
