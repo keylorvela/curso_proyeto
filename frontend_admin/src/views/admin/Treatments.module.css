@@ -78,6 +78,7 @@
 }
 
 .categoryTitle{
+  color: var(--main-blue);
   font-family: var(--font);
   font-weight: 600;
 }
