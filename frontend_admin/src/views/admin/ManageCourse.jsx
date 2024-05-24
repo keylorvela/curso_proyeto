@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 
 import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
 import GroupModal from 'src/components/GroupModal.jsx'
+
+import AlertModal from 'src/components/utils/AlertModal.jsx'
+import YesNoModal from 'src/components/utils/YesNoModal.jsx'
 
 import Loading from 'src/components/utils/Loading.jsx'
 import styles from 'src/views/admin/AdminPage.module.css'
@@ -26,10 +28,17 @@ function ManageCourse() {
     const fileInputRef = useRef();
     const location = useLocation();
     const { id } = useParams();
+    const navegate = useNavigate();
+
     const [hide, setHide] = useState(false);
     const [isModifyGroup, setIsModifyGroup] = useState(false);
     const [profilePictureURL, setProfilePictureURL] = useState("");
     const [loading, setLoading] = useState(true);
+
+    // Modals control
+    const [alertMessage, setAlertMessage] = useState("");
+    const [showAlertCourse, setShowAlertCourse] = useState(false);
+    const [showAlertDeleteCourse, setShowDeleteCourse] = useState(false);
 
     const [courseInfo, setCourseInfo] = useState({});
     const [groupInfo, setGroupInfo] = useState(
@@ -170,10 +179,10 @@ function ManageCourse() {
         // Format string := Change break line for '/'
         try {
             setLoading(true);
-            formValues.Description = formValues.Description.replace(/(\r\n|\n|\r)/g, "/");
-            formValues.Topics = formValues.Topics.replace(/(\r\n|\n|\r)/g, "/");
-            formValues.Includes = formValues.Includes.replace(/(\r\n|\n|\r)/g, "/");
-            formValues.UserTarget = formValues.UserTarget.replace(/(\r\n|\n|\r)/g, "/");
+            const v_Description = formValues.Description.replace(/(\r\n|\n|\r)/g, "/");
+            const v_Topics = formValues.Topics.replace(/(\r\n|\n|\r)/g, "/");
+            const v_Includes = formValues.Includes.replace(/(\r\n|\n|\r)/g, "/");
+            const v_UserTarget = formValues.UserTarget.replace(/(\r\n|\n|\r)/g, "/");
             let imgPromise = null;
             let imageURL = profilePictureURL;
 
@@ -188,33 +197,34 @@ function ManageCourse() {
             if (!id) {
                 await CourseService.CreateCourse(
                     formValues.Name,
-                    formValues.Description,
-                    formValues.Topics,
-                    formValues.Includes,
+                    v_Description,
+                    v_Topics,
+                    v_Includes,
                     formValues.Duration,
                     formValues.Price,
                     imageURL,
-                    formValues.UserTarget,
+                    v_UserTarget,
                     formValues.PayLink
                 );
-                alert("Curso creado!");
+                setAlertMessage("El curso se creo correctamente.");
             }
             // Si no := Modificar curso
             else {
                 await CourseService.UpdateCourse(
                     id,
                     formValues.Name,
-                    formValues.Description,
-                    formValues.Topics,
-                    formValues.Includes,
+                    v_Description,
+                    v_Topics,
+                    v_Includes,
                     formValues.Duration,
                     formValues.Price,
                     imageURL,
-                    formValues.UserTarget,
+                    v_UserTarget,
                     formValues.PayLink
                 );
-                alert("Curso modificado!");
+                setAlertMessage("El curso se modifico correctamente.");
             }
+            setShowAlertCourse(true);
         } catch (error) {
             console.error("Error al editar o agregar el cursos", error);
         } finally {
@@ -227,7 +237,9 @@ function ManageCourse() {
             setLoading(true);
             if (id) {
                 await CourseService.DeleteCourse(id);
-                alert("Se elimino el curso");
+
+                setShowDeleteCourse(false);
+                navegate("/admin/courses");
             }
         } catch (error) {
             console.error("Error al eliminar el cursos", error);
@@ -271,7 +283,7 @@ function ManageCourse() {
                 variant: 'danger',
                 type: 'button',
                 label: 'Eliminar curso',
-                onClick: (id) => handleDelete(id),
+                onClick: () => setShowDeleteCourse(true),
                 parameter: id
             },
         )
@@ -288,6 +300,22 @@ function ManageCourse() {
                 courseID={id}
                 isModify={isModifyGroup}
             />
+            <AlertModal
+                type="light"
+                title="Información"
+                message={alertMessage}
+                showAlert={showAlertCourse}
+                setShowAlert={setShowAlertCourse}
+            />
+            <YesNoModal
+                question={"¿Estás seguro que deseas continuar con esta acción?"}
+                message={"Se eliminará el curso permanentemente."}
+                showAlert={showAlertDeleteCourse}
+                setShowAlert={setShowDeleteCourse}
+                handleYes={handleDelete}
+            />
+
+
             {loading && (
                         <div className='text-center my-5'>
                             <Loading size={11} />

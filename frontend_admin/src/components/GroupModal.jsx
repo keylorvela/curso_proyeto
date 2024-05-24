@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import styles from 'src/components/Common.module.css'
 
+import AlertModal from 'src/components/utils/AlertModal.jsx'
+
 import TeachersService from "src/services/Teachers.service"
 import GroupService from "src/services/Group.service"
 
@@ -19,6 +21,9 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isMo
         Sábado: false,
         Domingo: false,
     });
+
+    const [alertMessage, setAlertMessage] = useState("");
+    const [showAlertGroup, setShowAlertGroup] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -94,10 +99,9 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isMo
                     groupID,
                     groupInfo.Teacher
                 );
-                alert(`Se Modificó un grupo al curso ${courseID}`);
+                setAlertMessage("Se modifico el grupo correctamente.");
             }
             else {
-                
                 await GroupService.CreateGroup(
                     groupInfo.StartingDate,
                     ScheduleDate,
@@ -106,9 +110,9 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isMo
                     courseID,
                     groupInfo.Teacher
                 );
-                alert(`Se asigno un grupo al curso ${courseID}`);
+                setAlertMessage("Se agrego el grupo al curso correctamente.");
             }
-
+            setShowAlertGroup(true);
         } catch (error) {
             console.error("Error al asignar grupo al curso:", error);
         } finally {
@@ -118,6 +122,14 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isMo
 
     return (
         <>
+            <AlertModal
+                type="light"
+                title="Información"
+                message={alertMessage}
+                showAlert={showAlertGroup}
+                setShowAlert={setShowAlertGroup}
+            />
+
             <Modal show={hide} onHide={handleClose} animation={false} centered backdrop='static'>
                 <Modal.Header closeButton>
                     <Modal.Title className={styles.label}>Definir grupo</Modal.Title>
