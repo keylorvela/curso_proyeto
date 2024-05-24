@@ -85,6 +85,12 @@ function Courses() {
         { button: faCirclePlus, onButtonClick: handleButtonDetails }
     ]
 
+    const formatCurrency = (value) => {
+        return Intl.NumberFormat('es-CR', {
+            style: "currency",
+            currency: "CRC"
+        }).format(value);
+    }
 
     return (
         <MainLayout type={1}>
@@ -121,7 +127,7 @@ function Courses() {
                         labels={[
                             { title: "Curso", content: modalData.CourseName },
                             { title: "Duración", content: modalData.Duration },
-                            { title: "Precio", content: modalData.Price },
+                            { title: "Precio", content: formatCurrency( modalData.Price ) },
                             { title: "Público objetivo", content: modalData.UserTarget },
                             { title: "Grupos", content: modalData.Groups },
                         ]}
