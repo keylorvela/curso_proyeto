@@ -1,13 +1,10 @@
 import { React, useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-
 
 import PasswordModal from 'src/components/PasswordModal.jsx'
-
+import AlertModal from 'src/components/utils/AlertModal.jsx'
 
 import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
-import GroupModal from 'src/components/GroupModal.jsx'
 
 import Loading from 'src/components/utils/Loading.jsx';
 import styles from 'src/views/professor/ProfessorPage.module.css'
@@ -24,6 +21,9 @@ function ManageProfessorAccount() {
     const userID = 7;
     const fileInputRef = useRef();
     const [loading, setLoading] = useState(false);
+
+    const [showAlertUpdateInfo, setShowAlertUpdateInfo] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
 
     const [passInfo, setPassInfo] = useState({});
     const [hide, setHide] = useState(false);
@@ -94,7 +94,8 @@ function ManageProfessorAccount() {
                 formValues.email,
                 formValues.photo
             );
-            alert("Modificación de info del profesor exitosa!");
+            setAlertMessage("Se actualizaron los datos exitosamente");
+            setShowAlertUpdateInfo(true);
         } catch (error) {
             console.error("Error in update teacher information", error);
         } finally {
@@ -140,6 +141,13 @@ function ManageProfessorAccount() {
                 passInfo={passInfo}
                 setPassInfo={setPassInfo}
                 userID={userID}
+            />
+            <AlertModal
+                type="light"
+                title="Información"
+                message={alertMessage}
+                showAlert={showAlertUpdateInfo}
+                setShowAlert={setShowAlertUpdateInfo}
             />
 
             <div className={styles.page}>

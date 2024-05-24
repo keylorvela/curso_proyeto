@@ -5,6 +5,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import YesNoModal from 'src/components/utils/YesNoModal.jsx'
+import AlertModal from 'src/components/utils/AlertModal.jsx'
+
 import MainLayout from 'src/components/MainLayout.jsx';
 import DynamicForm from 'src/components/DynamicForm.jsx';
 import BaseModal from 'src/components/utils/BaseModal.jsx';
@@ -20,6 +23,10 @@ function ProfessorNews() {
     const { userID, groupID } = location.state || {};
 
     const [modalShow, setModalShow] = useState(false);
+
+    const [showAlertCreateNews, setShowAlertCreateNews] = useState(false);
+    const [showAlertDeleteNews, setShowDeleteNews] = useState(false);
+    const [selectedNews, setSelectedNews] = useState('');
 
     const [courseName, setCourseName] = useState('');
     const [news, setNews] = useState([]);
@@ -80,7 +87,9 @@ function ProfessorNews() {
     const handleFormSubmit = async (data) => {
         try {
             await NewsService.PostNews( groupID, data.title, data.content );
-            alert("Se publico la noticia");
+
+            setShowAlertCreateNews(true);
+
             setNews([]);
             fetchGroupNews();
             setModalShow(false);
@@ -89,11 +98,11 @@ function ProfessorNews() {
         }
     }
 
-    const handleRemoveNews = async (newsID) => {
+    const handleRemoveNews = async () => {
         try {
-            await NewsService.RemoveNews( newsID );
-            alert("Se elimino la noticia");
-            setNews( news.filter((it_news) => it_news.id != newsID) );
+            await NewsService.RemoveNews( selectedNews );
+            setShowDeleteNews(false);
+            setNews( news.filter((it_news) => it_news.id != selectedNews) );
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -117,6 +126,20 @@ function ProfessorNews() {
                     />
                 </div>
             </BaseModal>
+            <AlertModal
+                type="light"
+                title="Información"
+                message={"Se publico la noticia correctamente."}
+                showAlert={showAlertCreateNews}
+                setShowAlert={setShowAlertCreateNews}
+            />
+            <YesNoModal
+                question={"¿Estás seguro que deseas continuar con esta acción?"}
+                message={"Está acción es irreversible."}
+                showAlert={showAlertDeleteNews}
+                setShowAlert={setShowDeleteNews}
+                handleYes={handleRemoveNews}
+            />
 
             <Container fluid>
                 <h2 className={styles.courseName}>{courseName}</h2>
@@ -139,7 +162,10 @@ function ProfessorNews() {
                                     <Card key={index} className={styles.newsCard}>
                                         <Card.Body>
                                             <Card.Title className={styles.newsDate}>
-                                                <Button variant="link" className={styles.iconButton} onClick={() => handleRemoveNews( New.id )}>
+                                                <Button variant="link" className={styles.iconButton} onClick={() => {
+                                                    setSelectedNews(New.id);
+                                                    setShowDeleteNews(true);
+                                                }}>
                                                     <FontAwesomeIcon icon={faTrash} className={styles.trashIcon} />
                                                 </Button>
                                                 {New.date}
