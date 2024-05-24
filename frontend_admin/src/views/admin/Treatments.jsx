@@ -4,6 +4,9 @@ import Container from 'react-bootstrap/Container';
 import { useNavigate } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 
+import AlertModal from 'src/components/utils/AlertModal.jsx'
+import YesNoModal from 'src/components/utils/YesNoModal.jsx'
+
 import MainLayout from 'src/components/MainLayout.jsx';
 import FeaturedTreatments from 'src/components/FeaturedTreatments.jsx';
 import styles from 'src/views/admin/Treatments.module.css';
@@ -25,6 +28,12 @@ function Treatments() {
     const [showTable, setShowTable] = useState(false);
     const [modalShow, setModalShow] = useState(false);
 
+    const [selectedCategory, setSelectedCategory] = useState('');
+
+    // Modals control
+    const [alertMessage, setAlertMessage] = useState("");
+    const [showAlertCategory, setShowAlertCategory] = useState(false);
+    const [showAlertDeleteCategory, setShowDeleteCategory] = useState(false);
 
     async function fetchData() {
         try {
@@ -65,6 +74,9 @@ function Treatments() {
                 category.CategoryName = data.CategoryName;
             }
         });
+
+        setAlertMessage("Se modifico la categoría seleccionada.");
+        setShowAlertCategory(true);
         setCategories(updatedCategories);
     }
 
@@ -72,8 +84,12 @@ function Treatments() {
         if (newCategoryName.trim() !== '') {
             try {
                 await CategoriesService.createCategory(newCategoryName);
+
                 fetchData();
                 setNewCategoryName('');
+
+                setAlertMessage("Se registro la nueva categoría.");
+                setShowAlertCategory(true);
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
@@ -81,10 +97,18 @@ function Treatments() {
         }
     };
 
-    const handleDeleteCategory = async (index) => {
+    const handleDeleteCategory = async () => {
         try {
-            await CategoriesService.deleteCategory(index);
-            const updatedCategories = categories.filter(category => category.ID !== index);
+            const result = await CategoriesService.deleteCategory( selectedCategory );
+
+            setShowDeleteCategory(false);
+            if (result.o_status.includes("Error")) {
+                setAlertMessage("No se puede eliminar una categoría que se encuentre asignada en al menos 1 tratamiento. Actualice los tratamientos y luego elimine la categoría.");
+                setShowAlertCategory(true);
+                return;
+            }
+
+            const updatedCategories = categories.filter(category => category.ID !== selectedCategory);
             setCategories(updatedCategories);
             setNewCategoryName('');
         } catch (error) {
@@ -95,6 +119,20 @@ function Treatments() {
 
     return (
         <MainLayout type={1}>
+            <AlertModal
+                type="light"
+                title="Información"
+                message={alertMessage}
+                showAlert={showAlertCategory}
+                setShowAlert={setShowAlertCategory}
+            />
+            <YesNoModal
+                question={"¿Estás seguro que deseas continuar con esta acción?"}
+                message={"Se eliminará el categoría permanentemente."}
+                showAlert={showAlertDeleteCategory}
+                setShowAlert={setShowDeleteCategory}
+                handleYes={handleDeleteCategory}
+            />
 
             <BaseModal
                 pshow={modalShow}
@@ -174,7 +212,10 @@ function Treatments() {
                                                 </Button>
                                                 <Button variant="outline-danger"
                                                     size="sm"
-                                                    onClick={() => handleDeleteCategory(category.ID)}
+                                                    onClick={() => {
+                                                        setSelectedCategory(category.ID);
+                                                        setShowDeleteCategory(true);
+                                                    }}
                                                     className='ms-2 my-1'
                                                     style={{ minWidth: "95px" }}
                                                 >
