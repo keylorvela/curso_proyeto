@@ -1,8 +1,9 @@
-
 import React, { useEffect, useState } from 'react';
 
 import MainLayout from 'src/components/MainLayout.jsx'
 import DynamicForm from 'src/components/DynamicForm.jsx'
+
+import AlertModal from 'src/components/utils/AlertModal.jsx'
 
 import noImage from 'src/assets/noImage.jpg'
 import styles from 'src/views/admin/AdminPage.module.css'
@@ -21,6 +22,10 @@ function ManageStudent() {
     const [loading, setLoading] = useState(false);
     const [groupList, setGroupList] = useState([]);
     const [courseList, setCourseList] = useState([]);
+
+    // Modals control
+    const [alertMessage, setAlertMessage] = useState("");
+    const [showAlertStudent, setShowAlertStudent] = useState(false);
 
     const passwordManager = new PasswordManager();
 
@@ -64,7 +69,8 @@ function ManageStudent() {
 
             const response = await StudentService.RegisterStudentInGroup(formValues.group,userId);
             if(response.status === 200){
-                alert("Estudiante agregado")
+                setAlertMessage("El estudiante se registro correctamente");
+                setShowAlertStudent(true);
             }
 
         } catch (error) {
@@ -73,7 +79,7 @@ function ManageStudent() {
             setLoading(false);
         }
     };
-    const getGrupsbyCourse = async (idCourse) => {
+    const getGroupsByCourse = async (idCourse) => {
         try {
             const groupData = await GroupService.GetGroupList(idCourse);
             const new_data_group = groupData.map(group => ({
@@ -134,6 +140,13 @@ function ManageStudent() {
 
     return (
         <MainLayout type={1}>
+            <AlertModal
+                type="light"
+                title="Información"
+                message={alertMessage}
+                showAlert={showAlertStudent}
+                setShowAlert={setShowAlertStudent}
+            />
 
             <div className={styles.page}>
                 <Container fluid>
@@ -157,7 +170,7 @@ function ManageStudent() {
                                     onSubmit={handleFormSubmit}
                                     buttons={buttons}
                                     initialValues={{}}
-                                    onChangeSelect={getGrupsbyCourse}
+                                    onChangeSelect={getGroupsByCourse}
 
                                 />
                             }
