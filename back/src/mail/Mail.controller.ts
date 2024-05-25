@@ -1,7 +1,7 @@
 import nodemailer, { Transporter } from "nodemailer"
-import { mailTemplate_FormVerification, mailTemplate_OTP, mailTemplate_UserRegistration } from "./Mail.template";
+import { mailTemplate_FormVerification, mailTemplate_OTP, mailTemplate_UserRegistration, mailTemplate_ApplicationRejected } from "./Mail.template";
 import dotenv from "dotenv"
-import { FormVerification, OTP_EmailBody, UserRegistration } from "./Main.interface";
+import { FormVerification, OTP_EmailBody, UserRegistration, ApplicationRejected } from "./Main.interface";
 
 dotenv.config();
 
@@ -98,6 +98,32 @@ export default class MailManager {
                 mailContent.email,
                 mailContent.courseName,
                 mailContent.courseSchedule
+            );
+
+            const mail_config = {
+                from,
+                to,
+                subject,
+                html: html
+            };
+
+            this.transporter.sendMail(mail_config, (error, info) => {
+                if (error) {
+                    console.error("Mensaje no enviado!:", error);
+                    reject(error);
+                }
+                else {
+                    console.log("Mensaje enviado con exito");
+                    resolve();
+                }
+            });
+        })
+    }
+
+    public async sendMail_ApplicationRejected(from: string, to: string, subject: string, mailContent: ApplicationRejected): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const html = mailTemplate_ApplicationRejected(
+                mailContent.name
             );
 
             const mail_config = {

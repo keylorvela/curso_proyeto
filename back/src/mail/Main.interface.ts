@@ -16,3 +16,7 @@ export interface FormVerification {
     courseName: string
     courseSchedule: string
 }
+
+export interface ApplicationRejected {
+    name: string
+}

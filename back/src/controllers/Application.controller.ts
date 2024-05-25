@@ -10,7 +10,7 @@ import path from 'path';
 import fs from 'fs';
 import { promisify } from 'util';
 import MailManager from "../mail/Mail.controller";
-import { FormVerification } from "mail/Main.interface";
+import { ApplicationRejected, FormVerification } from "mail/Main.interface";
 import { UserRegistration } from '../mail/Main.interface';
 const unlinkAsync = promisify(fs.unlink);
 
@@ -38,6 +38,7 @@ export const respondToApplication = async (req: Request, res: Response) => {
     }
 
     try {
+        const mailManager = new MailManager();
         const tempPassword = generateRandomPassword();
 
         const result_application = await dbConnection.query<RowDataPacket[]>(`
@@ -48,7 +49,6 @@ export const respondToApplication = async (req: Request, res: Response) => {
 
         // Send email if user was accepted
         if (result[0].o_status.includes("Success")) {
-            const mailManager = new MailManager();
             const mailContent: UserRegistration = {
                 name: result[0].ApplicantName,
                 username: result[0].ApplicantEmail,
@@ -61,6 +61,19 @@ export const respondToApplication = async (req: Request, res: Response) => {
                 "Bienvenid@ a ELS",
                 mailContent
             );
+        }
+        // Send mail if user was rejected
+        else if (result[0].o_status.includes("Info")) {
+            const mailContent: ApplicationRejected = {
+                name: result[0].ApplicantName
+            }
+
+            await mailManager.sendMail_ApplicationRejected(
+                "testELSPrueba@gmail.com",
+                result[0].ApplicantEmail,
+                "Estado de la solicitud",
+                mailContent
+            )
         }
 
         res.status(200).send(result[0] || {});
