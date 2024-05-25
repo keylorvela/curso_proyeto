@@ -1,20 +1,17 @@
 import axios from "./utilities/Axios.service"
 
-const BASE_URL = 'https://backend-proyeto.vercel.app/';
 
 const UserService = {
     login: async (email, pass) => {
-        const url = BASE_URL + `treatments`;
         try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error('Request fail');
-            }
-
-            return response.json();
+            const body = {
+                p_username: email,
+                p_password: pass
+            };
+            const response = await axios.post(`/login`, body);
+            return response.data;
         } catch (error) {
-            console.error('Function error login', error);
-            throw error;
+            console.error("Error in course service", error);
         }
     },
 

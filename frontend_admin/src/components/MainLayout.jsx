@@ -27,14 +27,17 @@ function getLinks(type) {
       break;
     case 2:
       links = [
+        { to: '/professor/students', label: 'Estudiantes' },
         { to: '/professor/courses', label: 'Mis Cursos' },
         { to: '/professor/profile', label: 'Mi Perfil' },
+        { to: '/professor/news', label: 'Noticias' }
       ];
       break;
     case 3:
       links = [
         { to: '/student/courses', label: 'Mis Cursos' },
-        { to: '/student/profile', label: 'Mi Perfil' }
+        { to: '/student/profile', label: 'Mi Perfil' },
+        { to: '/professor/profile', label: 'Noticias' }
       ];
       break;
 
