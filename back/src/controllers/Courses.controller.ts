@@ -5,7 +5,7 @@ import { Course, CourseBody, CourseID } from "interfaces/Course.interface";
 import { OStatus } from "interfaces/OStatus.interface";
 
 export const getCourseList = async (req: Request, res: Response) => {
-    const limit: number = Number(req.query.limit) || 10;
+    const limit: number = Number(req.query.limit) || 1000;
     const offset: number = Number(req.query.offset) || 0;
 
     if (isNaN(limit) || isNaN(offset) || limit <= 0 || offset < 0) {

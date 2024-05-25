@@ -61,7 +61,7 @@ exports.deleteTreatment = deleteTreatment;
 // Get treatment list => CategoryID is optional
 const getTreatmentList = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const categoryID = Number(req.query.categoryID) || null;
-    const limit = Number(req.query.limit) || 10;
+    const limit = Number(req.query.limit) || 1000;
     const offset = Number(req.query.offset) || 0;
     // Check if limit and offset are valid input
     if (limit === null || offset === null) {

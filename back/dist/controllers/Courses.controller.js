@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchCourse = exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getCourseList = void 0;
 const dbConfig_1 = __importDefault(require("../database/dbConfig"));
 const getCourseList = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const limit = Number(req.query.limit) || 10;
+    const limit = Number(req.query.limit) || 1000;
     const offset = Number(req.query.offset) || 0;
     if (isNaN(limit) || isNaN(offset) || limit <= 0 || offset < 0) {
         res.status(400).send({ error: "Limit and offset must be valid positive numbers" });
