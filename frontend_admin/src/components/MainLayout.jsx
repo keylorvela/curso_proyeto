@@ -37,7 +37,7 @@ function getLinks(type) {
       links = [
         { to: '/student/courses', label: 'Mis Cursos' },
         { to: '/student/profile', label: 'Mi Perfil' },
-        { to: '/professor/profile', label: 'Noticias' }
+        { to: '/student/profile', label: 'Noticias' }
       ];
       break;
 
