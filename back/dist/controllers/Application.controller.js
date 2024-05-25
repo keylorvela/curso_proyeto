@@ -39,6 +39,7 @@ const respondToApplication = (req, res) => __awaiter(void 0, void 0, void 0, fun
         return;
     }
     try {
+        const mailManager = new Mail_controller_1.default();
         const tempPassword = (0, PasswordGenerator_1.generateRandomPassword)();
         const result_application = yield dbConfig_1.default.query(`
             CALL SP_Application_Respond(?, ?, ?, @o_status)
@@ -46,13 +47,19 @@ const respondToApplication = (req, res) => __awaiter(void 0, void 0, void 0, fun
         const result = JSON.parse(JSON.stringify(result_application[0][0]));
         // Send email if user was accepted
         if (result[0].o_status.includes("Success")) {
-            const mailManager = new Mail_controller_1.default();
             const mailContent = {
                 name: result[0].ApplicantName,
                 username: result[0].ApplicantEmail,
                 password: tempPassword
             };
             yield mailManager.sendMail_UserRegistration("testELSPrueba@gmail.com", result[0].ApplicantEmail, "Bienvenid@ a ELS", mailContent);
+        }
+        // Send mail if user was rejected
+        else if (result[0].o_status.includes("Info")) {
+            const mailContent = {
+                name: result[0].ApplicantName
+            };
+            yield mailManager.sendMail_ApplicationRejected("testELSPrueba@gmail.com", result[0].ApplicantEmail, "Estado de la solicitud", mailContent);
         }
         res.status(200).send(result[0] || {});
     }
