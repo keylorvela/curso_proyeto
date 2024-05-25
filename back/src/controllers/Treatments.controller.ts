@@ -55,7 +55,7 @@ export const deleteTreatment = async (req: Request, res: Response) => {
 // Get treatment list => CategoryID is optional
 export const getTreatmentList = async (req: Request, res: Response) => {
     const categoryID: number | null = Number(req.query.categoryID) || null;
-    const limit: number | null = Number(req.query.limit) || 10;
+    const limit: number | null = Number(req.query.limit) || 1000;
     const offset: number | null = Number(req.query.offset) || 0;
 
     // Check if limit and offset are valid input
