@@ -3,6 +3,7 @@ import { Table, Button, Dropdown } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
@@ -26,7 +27,7 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick, isS
   const [currentItems, setCurrentItems] = useState(data.slice(indexOfFirstItem, indexOfLastItem));
   const [copyItems, setCopyItems] = useState(data.slice(indexOfFirstItem, indexOfLastItem));
 
-  const options = Array.from({ length: 10 }, (_, i) => i+1);//could be changed
+  const options = Array.from({ length: 10 }, (_, i) => i + 1);//could be changed
 
   //Search
   const [searchTerm, setSearchTerm] = useState('');
@@ -184,6 +185,11 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick, isS
 
   return (
     <div>
+      {data.length == 0 && (
+        <div className='mb-5'>
+          <Alert variant="warning"> No hay datos para mostrar </Alert>
+        </div>
+      )}
       {isSearching && (
         <div >
           <Form>
