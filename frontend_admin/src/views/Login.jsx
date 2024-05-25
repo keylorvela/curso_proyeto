@@ -78,7 +78,7 @@ function Login() {
             <Form onSubmit={handleLogin}>
               <Form.Group controlId="formEmail">
                 <Form.Label style={{ marginTop: '5%', marginBottom: '4%' }}>Usuario</Form.Label>
-                <Form.Control type="email" required className={styles.inputField} value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Form.Control type="text" required className={styles.inputField} value={email} onChange={(e) => setEmail(e.target.value)} />
               </Form.Group>
 
               <Form.Group controlId="formPassword">
