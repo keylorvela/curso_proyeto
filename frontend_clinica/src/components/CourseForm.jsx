@@ -25,7 +25,8 @@ function CourseForm({course, groupsInCourse}) {
         telefono: '',
         correo: '',
         idCurso: '',
-        curso: '',
+        courseId: '',
+        groupId: '',
         file: null
     });
     const [validated, setValidated] = useState(false);
@@ -46,7 +47,7 @@ function CourseForm({course, groupsInCourse}) {
             const formData = new FormData();
             Object.entries(form).forEach(([key, value]) => {
                 if(key == 'curso')
-                    formData.append(key, course?.Name);
+                    formData.append(key, course?.ID);
 
                 formData.append(key, value);
             });
@@ -59,6 +60,8 @@ function CourseForm({course, groupsInCourse}) {
                     telefono: '',
                     correo: '',
                     horario: '',
+                    courseId:'',
+                    groupId: '',
                     file: null
                 });
                 if (result) {
@@ -148,8 +151,8 @@ function CourseForm({course, groupsInCourse}) {
                     <Form.Label>Horario:</Form.Label>
                     <Form.Control
                         required
-                        name="idCurso"
-                        value={form.idCurso}
+                        name="groupId"
+                        value={form.groupId}
                         onChange={handleChange}
                         as="select"
                         aria-label="Default select example"

@@ -36,6 +36,7 @@ export const respondToApplication = async (req: Request, res: Response) => {
         res.status(400).send({ error: "Invalid input provided" });
         return;
     }
+    console.log(JSON.stringify(req.body));
 
     try {
         const mailManager = new MailManager();
@@ -45,38 +46,44 @@ export const respondToApplication = async (req: Request, res: Response) => {
             CALL SP_Application_Respond(?, ?, ?, @o_status)
         `, [applicationID, status, tempPassword]);
 
-        const result: ApplicationRespond[] = JSON.parse(JSON.stringify(result_application[0][0]));
+
+        const result = result_application[0][1][0];
+        console.log(result_application[0]);
+
+        
 
         // Send email if user was accepted
-        if (result[0].o_status.includes("Success")) {
+        if (result.o_status?.includes("Success")) {
+
+            
             const mailContent: UserRegistration = {
-                name: result[0].ApplicantName,
-                username: result[0].ApplicantEmail,
+                name: result.ApplicantName,
+                username: result.ApplicantEmail,
                 password: tempPassword
             }
 
             await mailManager.sendMail_UserRegistration(
                 "testELSPrueba@gmail.com",
-                result[0].ApplicantEmail,
+                result.ApplicantEmail,
                 "Bienvenid@ a ELS",
                 mailContent
             );
         }
         // Send mail if user was rejected
-        else if (result[0].o_status.includes("Info")) {
+        else if (result.o_status?.includes("Info")) {
             const mailContent: ApplicationRejected = {
-                name: result[0].ApplicantName
+                name: result.ApplicantName
             }
 
             await mailManager.sendMail_ApplicationRejected(
                 "testELSPrueba@gmail.com",
-                result[0].ApplicantEmail,
+                result.ApplicantEmail,
                 "Estado de la solicitud",
                 mailContent
             )
         }
 
-        res.status(200).send(result[0] || {});
+        res.status(200).send(result.o_status || {});
     } catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
     }
@@ -93,8 +100,10 @@ export const sendApplication = async (req: Request, res: Response) => {
     try {
         // Use parameterized query to prevent SQL injection
         const result_application = await dbConnection.query<RowDataPacket[]>(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`
-            , [req.body.nombre, fs.readFileSync(path), req.body.correo, req.body.telefono, req.body.idCurso]);
+            , [req.body.nombre, fs.readFileSync(path), req.body.correo, req.body.telefono, req.body.groupId]);
 
+
+        console.log(result_application[0]);
         const result: OStatus[] = JSON.parse(JSON.stringify(result_application[0][0]));
 
         //TODO Fix schedules
@@ -103,7 +112,7 @@ export const sendApplication = async (req: Request, res: Response) => {
             phoneNumber : req.body.telefono,
             email: req.body.correo,
             courseName: req.body.curso,
-            courseSchedule: 'N/A'};
+            courseSchedule: req.body.idCurso};
         if (result) {
             await mailManager.sendMail_FormVerification(
                 "testELSPrueba@gmail.com",
