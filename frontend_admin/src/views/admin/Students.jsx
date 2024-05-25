@@ -14,7 +14,7 @@ import StudentService from 'src/services/Students.service';
 
 function Students() {
     // TODO: Funcionalidad del botón Añadir estudiante
-    const navegate = useNavigate ();
+    const navegate = useNavigate();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -39,7 +39,7 @@ function Students() {
                 setData(new_data);
             } catch (error) {
                 console.error('Error fetching data:', error);
-            }finally{
+            } finally {
                 setLoading(false)
             }
         }
@@ -73,25 +73,22 @@ function Students() {
 
                 {loading && (
                     <div className='text-center my-5 position-absolute w-100'>
-                            <Loading size={11} />
-                        </div>
+                        <Loading size={11} />
+                    </div>
                 )}
 
 
-                {
-                    data.length
-                    &&
-                    <DynamicTable
-                        columns={columns}
-                        data={data}
-                        buttons={btn}
-                        mainButton='Añadir Estudiante'
-                        mainButtonClick={handleButtonAdd}
-                        isSearching={true}
-                        searchKey='Nombre'
-                    />
 
-                }
+                <DynamicTable
+                    columns={columns}
+                    data={data}
+                    buttons={btn}
+                    mainButton='Añadir Estudiante'
+                    mainButtonClick={handleButtonAdd}
+                    isSearching={true}
+                    searchKey='Nombre'
+                />
+
                 {showModal && modalData && (
                     <TableModal
                         show={showModal}

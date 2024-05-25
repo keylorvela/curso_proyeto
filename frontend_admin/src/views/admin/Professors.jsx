@@ -18,7 +18,7 @@ function Professors() {
 
 
     const columns = ['Nombre', 'Email'];
-    const navegate = useNavigate ();
+    const navegate = useNavigate();
     const [data, setData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState(null);
@@ -40,7 +40,7 @@ function Professors() {
                 setData(new_data);
             } catch (error) {
                 console.error('Error fetching data:', error);
-            }finally{
+            } finally {
                 setLoading(false);
             }
         }
@@ -50,7 +50,7 @@ function Professors() {
 
     const handleButtonEdit = (teacherInformation) => {
         navegate(`/admin/professor/${teacherInformation.UserID}`, {
-            state: {teacherInformation}
+            state: { teacherInformation }
         });
     };
 
@@ -82,24 +82,19 @@ function Professors() {
 
                 {loading && (
                     <div className='text-center my-5 position-absolute w-100'>
-                            <Loading size={11} />
-                        </div>
+                        <Loading size={11} />
+                    </div>
                 )}
 
-                {
-                    data.length
-                    &&
-                    <DynamicTable
-                        columns={columns}
-                        data={data}
-                        buttons={btn}
-                        mainButton='Añadir Profesor'
-                        mainButtonClick={handleButtonAdd}
-                        isSearching={true}
-                        searchKey='Nombre'
-                    />
-                }
-
+                <DynamicTable
+                    columns={columns}
+                    data={data}
+                    buttons={btn}
+                    mainButton='Añadir Profesor'
+                    mainButtonClick={handleButtonAdd}
+                    isSearching={true}
+                    searchKey='Nombre'
+                />
                 {showModal && modalData && (
                     <TableModal
                         show={showModal}
@@ -116,7 +111,7 @@ function Professors() {
                 )}
 
             </Container>
-        </MainLayout>
+        </MainLayout >
     );
 }
 
