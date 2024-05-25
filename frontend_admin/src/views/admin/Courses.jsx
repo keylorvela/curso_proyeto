@@ -12,7 +12,10 @@ import { faPen, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 import CourseService from "src/services/Courses.service"
 
+
+
 function Courses() {
+
     const [loading, setLoading] = useState(true);
 
     const columns = ['Curso'];
@@ -20,6 +23,7 @@ function Courses() {
     const [data, setData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState(null);
+
 
     useEffect(() => {
         async function fetchData() {

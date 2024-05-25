@@ -12,11 +12,12 @@ import { faEye  } from '@fortawesome/free-solid-svg-icons';
 
 import GroupService from 'src/services/Group.service';
 
+import useAuth from 'src/components/utils/AuthContext.jsx';
+
 function MyCourses() {
-    // TODO: Obtener el id del usuario actual
     // TODO: Funcionalidad del boton de más detalles
-    const userID = 1;
-    const userType = 1; // UserType: (2)Profesor o (3)Estudiante
+
+    const { getUser } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation(); // TODO: Arreglo temporal (Para distinguir entre student | professor)
@@ -27,9 +28,11 @@ function MyCourses() {
     useEffect(() => {
         async function fetchData() {
             try {
+
+
                 let listGroups_data = [];
 
-                listGroups_data = (userType == 3) ? await GroupService.GetEnrolledGroups( userID ) : await GroupService.GetGroupsOfTeacher( userID );
+                listGroups_data = (getUser().UserTypeID == 3) ? await GroupService.GetEnrolledGroups( getUser().ID ) : await GroupService.GetGroupsOfTeacher(  getUser().ID  );
 
                 const listGroups_formatted = [];
 
@@ -58,7 +61,7 @@ function MyCourses() {
     const handleButtonDetails = (rowData) => {
         const groupID = rowData.GroupID;
         const mainRoute = location.pathname.split('/')[1];
-        navigate(`/${mainRoute}/news`, { state: { userID, groupID } });
+        navigate(`/${mainRoute}/news`, { state: { groupID } });
     };
 
     const btn = [
@@ -66,7 +69,7 @@ function MyCourses() {
     ]
 
     return (
-        <MainLayout type={ userType }>
+        <MainLayout type={getUser().UserTypeID}>
             <Container fluid>
                 <h1 className={styles.tableTitle}>Mis Cursos</h1>
 

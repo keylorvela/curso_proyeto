@@ -10,14 +10,19 @@ import styles from 'src/views/student/StudentsNews.module.css';
 import NewsService from 'src/services/News.service';
 import GroupService from 'src/services/Group.service';
 
+
+import useAuth from 'src/components/utils/AuthContext.jsx'
+
 function StudentsNews() {
     // TODO: Obtener el id del grupo
     // TODO: Obtener el id del user
     // TODO: Funcionalidad de "darse de baja"
+    
+    const { getUser } = useAuth();
 
     const location = useLocation();
     const navegate = useNavigate();
-    const { userID, groupID } = location.state || {};
+    const { groupID } = location.state || {};
 
     const [showAlertDropOut, setShowAlertDropOut] = useState(false);
 
@@ -58,7 +63,7 @@ function StudentsNews() {
 
     const DropOutCourse = async () => {
         try {
-            await GroupService.DropOutCourse( userID, groupID );
+            await GroupService.DropOutCourse( getUser().ID, groupID );
             navegate(`/student/courses`);
         } catch (error) {
             console.error("Error al dar de baja:", error);
