@@ -81,7 +81,7 @@ function TreatmentReview() {
             await ReviewsService.AddReviewRespond(idReview, data.content);
             setReviews([]);
             fetchData();
-            alert("Se publico la respuesta");
+
             setModalShow(false);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -91,7 +91,7 @@ function TreatmentReview() {
     const handleRemoveNews = async (reviewID) => {
         try {
             await ReviewsService.RemoveReview(reviewID);
-            alert("Se elimino la reseña");
+
             setReviews(reviews.filter((it_review) => it_review.ID != reviewID));
         } catch (error) {
             console.error('Error fetching data:', error);

@@ -8,6 +8,8 @@ import TableModal from 'src/components/utils/TableModal.jsx';
 import YesNoModal from 'src/components/utils/YesNoModal.jsx';
 import LoadModal from 'src/components/utils/LoadModal.jsx';
 
+import AlertModal from 'src/components/utils/AlertModal.jsx'
+
 import Container from 'react-bootstrap/Container';
 
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
@@ -22,6 +24,9 @@ function Applications() {
 
     const columns = ['ID', 'StudentName', 'Email'];
     const [data, setData] = useState([]);
+
+    const [alertMessage, setAlertMessage] = useState("");
+    const [showAlertApplications, setShowAlertApplications] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -76,7 +81,8 @@ function Applications() {
             setLoad(true);
             await applicationsService.downloadPaymentReceipt(modalData.ID);
         } catch (error) {
-            alert('Error descargando el archivo');
+            setAlertMessage("Error al descargar el archivo");
+            setShowAlertApplications(true);
         } finally {
             setLoad(false);
         }
@@ -88,9 +94,14 @@ function Applications() {
 
     return (
         <MainLayout type={1}>
-
-
             <LoadModal pshow={load} msg="Descargando archivo..." />
+            <AlertModal
+                type="light"
+                title="Información"
+                message={alertMessage}
+                showAlert={showAlertApplications}
+                setShowAlert={setShowAlertApplications}
+            />
 
             <YesNoModal
                 question="Está seguro que se desea continuar?"

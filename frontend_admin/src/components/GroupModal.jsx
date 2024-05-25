@@ -83,7 +83,8 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isMo
         event.preventDefault(); 
         const ScheduleDate = Object.keys(selectedDays).filter(day => selectedDays[day]).join('/');
         if (ScheduleDate == "") {
-            alert("Debe seleccionar un fecha")
+            setAlertMessage("Debe seleccionar una fecha.");
+            setShowAlertGroup(true);
             return;
         }
         setGroupInfo({ ...groupInfo, ["ScheduleDate"]: ScheduleDate });

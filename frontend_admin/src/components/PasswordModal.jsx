@@ -22,7 +22,8 @@ function PasswordModal({ hide, handleState, passInfo, setPassInfo, userID }) {
             event.stopPropagation();
         }
         else if (passInfo.new_pass != passInfo.conf_pass) {
-            alert("Contraseñas nuevas not match");
+            setAlertMessage("La contraseñas no coinciden");
+            setShowInfoPasswordChange(true);
         }
         else {
 
@@ -30,7 +31,8 @@ function PasswordModal({ hide, handleState, passInfo, setPassInfo, userID }) {
             setPassInfo({});
 
             if (response.o_status.includes("Error")) {
-                alert("Contraseña no es la actual")
+                setAlertMessage("La contraseña no coincide con la actual");
+                setShowInfoPasswordChange(true);
             }
             else {
                 handleClose();
