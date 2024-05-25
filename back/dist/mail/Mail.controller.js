@@ -114,6 +114,29 @@ class MailManager {
             });
         });
     }
+    sendMail_ApplicationRejected(from, to, subject, mailContent) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                const html = (0, Mail_template_1.mailTemplate_ApplicationRejected)(mailContent.name);
+                const mail_config = {
+                    from,
+                    to,
+                    subject,
+                    html: html
+                };
+                this.transporter.sendMail(mail_config, (error, info) => {
+                    if (error) {
+                        console.error("Mensaje no enviado!:", error);
+                        reject(error);
+                    }
+                    else {
+                        console.log("Mensaje enviado con exito");
+                        resolve();
+                    }
+                });
+            });
+        });
+    }
 }
 exports.default = MailManager;
 //# sourceMappingURL=Mail.controller.js.map
