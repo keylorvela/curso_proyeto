@@ -139,7 +139,7 @@ const mailTemplate_OTP = (OTP, name) => {
                 Es importante que no compartas este código con nadie, ya que está diseñado para ser utilizado solo una vez y garantizar la seguridad de tu cuenta. Si no has solicitado esta acción, puedes ignorar este mensaje.
             </p>
             <p class="montserrat-text p_content">
-                Si tienes alguna pregunta o necesitas ayuda, no dudes en ponerte en contacto con nuestro equipo de soporte a través del <a href="http://https://wa.me/50661286160" target="_blank" rel="noopener noreferrer">Whatsapp de la Academia</a> o el número de teléfono +506 6128-6160.
+                Si tienes alguna pregunta o necesitas ayuda, no dudes en ponerte en contacto con nuestro equipo de soporte a través del <a href="https://wa.me/50661286160" target="_blank" rel="noopener noreferrer">Whatsapp de la Academia</a> o el número de teléfono +506 6128-6160.
             </p>
             <p class="montserrat-text p_content">
                 Saludos cordiales.
@@ -291,7 +291,7 @@ const mailTemplate_UserRegistration = (name, username, password) => {
             <span class="montserrat-text span_code">Usuario: ${username}</span>
             <span class="montserrat-text span_code">Contraseña: ${password}</span>
             <p class="montserrat-text p_content">
-                Si tienes alguna pregunta o necesitas ayuda, no dudes en ponerte en contacto con nuestro equipo de soporte a través del <a href="http://https://wa.me/50661286160" target="_blank" rel="noopener noreferrer">Whatsapp de la Academia</a> o el número de teléfono +506 6128-6160.
+                Si tienes alguna pregunta o necesitas ayuda, no dudes en ponerte en contacto con nuestro equipo de soporte a través del <a href="https://wa.me/50661286160" target="_blank" rel="noopener noreferrer">Whatsapp de la Academia</a> o el número de teléfono +506 6128-6160.
             </p>
             <p class="montserrat-text p_content">
                 Saludos cordiales.
@@ -451,7 +451,7 @@ const mailTemplate_FormVerification = (name, phoneNumber, email, courseName, cou
             <span class="montserrat-text span_formInformation">Curso seleccionado: ${courseName}</span>
             <span class="montserrat-text span_formInformation">Horario seleccionado: ${courseSchedule}</span>
             <p class="montserrat-text p_content">
-                Si tienes alguna pregunta o necesitas ayuda, no dudes en ponerte en contacto con nuestro equipo de soporte a través del <a href="http://https://wa.me/50661286160" target="_blank" rel="noopener noreferrer">Whatsapp de la Academia</a> o el número de teléfono +506 6128-6160.
+                Si tienes alguna pregunta o necesitas ayuda, no dudes en ponerte en contacto con nuestro equipo de soporte a través del <a href="https://wa.me/50661286160" target="_blank" rel="noopener noreferrer">Whatsapp de la Academia</a> o el número de teléfono +506 6128-6160.
             </p>
             <p class="montserrat-text p_content">
                 Saludos cordiales.
@@ -600,7 +600,7 @@ const mailTemplate_ApplicationRejected = (name) => {
                 Hemos detectado un inconveniente con el comprobante de pago proporcionado, y por lo tanto, su solicitud no pudo ser aceptada. En caso de existir algun error, porfavor comunicarse con la academia para darle seguimiento al caso.
             </p>
             <p class="montserrat-text p_content">
-                Si tienes alguna pregunta o necesitas ayuda, no dudes en ponerte en contacto con nuestro equipo de soporte a través del <a href="http://https://wa.me/50661286160" target="_blank" rel="noopener noreferrer">Whatsapp de la Academia</a> o el número de teléfono +506 6128-6160.
+                Si tienes alguna pregunta o necesitas ayuda, no dudes en ponerte en contacto con nuestro equipo de soporte a través del <a href="https://wa.me/50661286160" target="_blank" rel="noopener noreferrer">Whatsapp de la Academia</a> o el número de teléfono +506 6128-6160.
             </p>
             <p class="montserrat-text p_warning">
                 *** Este mensaje fue generado automáticamente. Por favor, no responder este mensaje***
