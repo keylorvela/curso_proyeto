@@ -59,7 +59,7 @@ function ManageStudent() {
                 formValues.name,
                 formValues.email,
                 formValues.phoneNumber,
-                null,
+                "",
                 formValues.email,
                 tempPassword,
                 "Estudiante"
