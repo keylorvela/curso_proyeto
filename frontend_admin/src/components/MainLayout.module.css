@@ -39,15 +39,19 @@
   text-shadow: 6px 5px 6px rgba(0,0,0,0.50);
 }
 
+
 .button:hover {
   width: 500px;
-  transition: width 0.05s;
+  transition: width 0.5s ease-in;
 }
 
 .button:hover span {
-  opacity: 1;
+  display: contents;
 }
 
+.button span {
+  display: none;
+}
 
 /* ---------- Mobile  */
 @media (max-width: 768px) {
