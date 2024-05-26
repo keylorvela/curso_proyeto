@@ -34,8 +34,6 @@ function Login() {
 
         try {
 
-<<<<<<< HEAD
-      
       setShow(true);
       const userData = await UserService.login(email, password);
 
