@@ -267,7 +267,7 @@ function TreatmentView() {
                                         </button>
                                     </Col>
                                     <Col xs={12} sm={6} lg={3}>
-                                        <button onClick={handleButtonPay} className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.bpButton}`}>
+                                        <button onClick={handleButtonPay} disabled={!treatment.PayLink} className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-lg ${commonStyles.bpButton}`}>
                                             <FiShoppingCart /><b className="text-nowrap"> Conexión BP</b>
                                         </button>
                                     </Col>

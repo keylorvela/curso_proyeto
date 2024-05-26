@@ -98,7 +98,7 @@ function CourseView() {
 
 
     const handleButtonPay = () => {
-        const url = course?.PayLink
+        const url = course?.PayLink;
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
         if (isMobile) {
@@ -106,7 +106,17 @@ function CourseView() {
         } else {
             window.open(url, '_blank');
         }
+    };
 
+    const handleAppointmentButton = () => {
+        const url = `https://wa.me/50661286160?text=Hola! Me gustaría más información sobre el curso ${course.Name}`;
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            window.location.href = url;
+        } else {
+            window.open(url, '_blank');
+        }
     };
 
     return (
@@ -187,10 +197,10 @@ function CourseView() {
                                     <Col md={6} lg={6}>
                                         <Row fluid>
                                             <Col xs={12} md={12} lg={12} className="pb-2 ">
-                                                {/* <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.wtsButton}`}>
+                                                <button onClick={handleAppointmentButton} className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.wtsButton}`}>
                                                     <FaWhatsapp size={30}/><b className="text-nowrap"> Agenda tu cita </b>
-                                                </button> */}
-                                                <button onClick={handleButtonPay} className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.bpButton}`}>
+                                                </button>
+                                                <button onClick={handleButtonPay} disabled={!course.PayLink} className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-lg ${commonStyles.bpButton}`}>
                                                     <FiShoppingCart size={30}/><b className="text-nowrap"> Conexión BP</b>
                                                 </button>
                                             </Col>

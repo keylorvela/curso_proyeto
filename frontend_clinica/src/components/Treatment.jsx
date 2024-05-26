@@ -14,7 +14,14 @@ function Treatment({ title, event, image, isTreatment = true }) {
             :
             `Hola! Me gustaría más información sobre el curso ${title}.`;
 
-        window.open(`${whatsappLink}?text=${defaultMessage}`, `_blank`);
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const url = `${whatsappLink}?text=${defaultMessage}`;
+
+        if (isMobile) {
+            window.location.href = url;
+        } else {
+            window.open(url, '_blank');
+        }
     }
 
     return (
