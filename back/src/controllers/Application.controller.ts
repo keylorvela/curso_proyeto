@@ -45,8 +45,6 @@ export const respondToApplication = async (req: Request, res: Response) => {
         CALL SP_Application_Respond(?, ?, ?, @o_status)
         `, [applicationID, status, tempPassword]);
 
-        console.log(result_application[0]);
-
         const result: ApplicantInformation[] = JSON.parse(JSON.stringify(result_application[0][2]));
         const result_registration: OStatus[] = JSON.parse(JSON.stringify(result_application[0][0]));
 
