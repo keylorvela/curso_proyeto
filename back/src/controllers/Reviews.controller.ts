@@ -36,7 +36,7 @@ export const addReview = async (req: Request, res: Response) => {
 }
 
 export const removeReview = async (req: Request, res: Response) => {
-    const id: number | null = Number( req.query.id ) || null;
+    const id: number | null = Number( req.body.id ) || null;
 
     if (isNaN(id) || id <= 0) {
         res.status(400).send({ error: "Id enter is not valid" });
