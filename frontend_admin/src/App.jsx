@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Login from 'src/views/Login.jsx';
+import OTP_Manager from '../src/views/auth/OTP_Manager'
 
 import TreatmentReview from 'src/views/admin/TreatmentReview.jsx';
 import Treatments from 'src/views/admin/Treatments.jsx';
@@ -88,6 +89,7 @@ function App() {
         ) : (
 
           <>
+            <Route path="change_password" element={<OTP_Manager />} />
             <Route path="" element={<Login />} />
             <Route path="login" element={<Login />} />
             <Route path="*" element={<Login />} />

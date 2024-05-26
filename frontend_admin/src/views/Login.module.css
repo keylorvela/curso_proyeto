@@ -1,75 +1,103 @@
 @import "src/components/Common.module.css";
 
 .loginContainer {
-    background: linear-gradient(to bottom, var(--main-blue), var(--ligth-blue)); 
-    height: 100vh; 
-  }
-  
-  .logoColumn {
+    background: linear-gradient(to bottom, var(--main-blue), var(--ligth-blue));
+    height: 100vh;
+}
+
+.logoColumn {
     text-align: center;
-  }
-  
-  .logo {
-    max-width: 80%; 
-  }
-  
-  .formColumn {
-    background-color: #D3E5FF; 
-    border-radius: 10px; 
-    padding: 4%;
-  }
-  
-  .loginForm {
+}
+
+.logo {
+    width: 100%;
+    height: 100%;
+    max-width: 80%;
+}
+
+.formColumn {
+    display: flex;
+    justify-content: center;
+}
+
+.loginForm {
     text-align: left;
     color: var(--main-blue);
     font-size: larger;
     font-family: var(--font);
-  }
-  
-  .button {
+
+    background-color: #D3E5FF;
+    border-radius: 10px;
+    padding: 30px 25px;
+
+    display: flex;
+    flex-direction: column;
+
+    max-width: 80%;
+    width: 100%;
+}
+
+.button {
     display: block;
-    margin: 0 auto; 
+    margin: 0 auto;
     padding-left: 25%;
     padding-right: 25%;
     padding-top: 2%;
     padding-bottom: 2%;
     font-weight: bold;
     font-family: var(--font);
-  }
+}
 
-  .title {
+.title {
     color: var(--main-blue);
     font-weight: bold;
     margin-bottom: 5%;
     font-family: var(--font);
-  }
-  
-  .forgotPassword {
+}
+
+.forgotPassword {
     margin-top: 3.5%;
     margin-bottom: 3.5%;
     text-align: right;
-  }
-  
-  .forgotPassword a {
-    color: #2c3e50; 
-  }
-  
-  .forgotPassword a:hover {
-    color: #2980b9; 
-  }
 
-  .inputField {
-    background-color: #D3E5FF; 
-    border: none; 
+    font-size: 18px;
+}
+
+.forgotPassword a {
+    color: #2c3e50;
+}
+
+.forgotPassword a:hover {
+    color: #2980b9;
+}
+
+.inputField {
+    background-color: #D3E5FF;
+    border: none;
     border-bottom: 2px solid var(--main-blue);
     border-radius: 0;
     margin-top: -3%;
     padding-bottom: 0%;
-  }
+}
 
-  .inputField:focus {
-    background-color: #D3E5FF; 
-    outline: 4px solid #D3E5FF; 
+.inputField:focus {
+    background-color: #D3E5FF;
+    outline: 4px solid #D3E5FF;
     border-bottom-color: var(--main-blue);
+}
+
+@media (max-width: 768px) {
+    .logo {
+        width: 50%;
+        min-width: 300px;
+    }
+    .logoColumn {
+        height: 50%;
+    }
+    .formColumn {
+        height: 50%;
+    }
+    .loginForm {
+        height: min-content;
+    }
   }
-  
