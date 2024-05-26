@@ -1,6 +1,10 @@
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure SP_News_ReadAll
+-- -----------------------------------------------------
 
-CREATE PROCEDURE SP_News_ReadAll(
+DELIMITER $$
+USE `bqhd9nbafrpsvzpzrgvc`$$
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_News_ReadAll`(
     IN p_groupID INT,
 
     OUT o_status VARCHAR(32)
@@ -27,6 +31,6 @@ BEGIN
 			FROM News AS N
             WHERE N.GroupID = p_groupID;
 	END IF;
-END //
+END$$
 
 DELIMITER ;

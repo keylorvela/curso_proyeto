@@ -1,6 +1,10 @@
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure SP_Login_Start_Session
+-- -----------------------------------------------------
 
-CREATE PROCEDURE SP_Login_Start_Session(
+DELIMITER $$
+USE `bqhd9nbafrpsvzpzrgvc`$$
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_Login_Start_Session`(
     IN p_user VARCHAR(64),
     IN p_password VARCHAR(64)
 )
@@ -44,6 +48,6 @@ BEGIN
             NULL AS UserTypeID;
     END IF;
 
-END //
+END$$
 
 DELIMITER ;

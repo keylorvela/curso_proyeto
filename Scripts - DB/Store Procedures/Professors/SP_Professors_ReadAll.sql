@@ -1,30 +1,30 @@
 -- -----------------------------------------------------
--- procedure SP_Students_ReadAll
+-- procedure SP_Professors_ReadAll
 -- -----------------------------------------------------
 
 DELIMITER $$
 USE `bqhd9nbafrpsvzpzrgvc`$$
-CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_Students_ReadAll`(
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_Professors_ReadAll`(
     OUT o_status VARCHAR(32)
 )
 BEGIN
-    -- Control variables
+	-- Declare control variable
     DECLARE v_userTypeID INT;
 
-    -- Set the userType ID
-    SELECT UT.ID
-        INTO @v_userTypeID
+    -- Check if the group exists
+	SELECT UT.ID
+		INTO @v_userTypeID
         FROM UserType AS UT
-        WHERE UT.TypeName = "Estudiante";
+        WHERE UT.TypeName = "Profesor";
 
-    -- Verify correct user type
+    -- Verify if group exists
     IF @v_userTypeID IS NULL THEN
-        SET o_status = "Error: UserType NOT found";
+        SET o_status = "Error: Profesor NOT found";
 		SELECT o_status;
     ELSE
-		SET o_status = "Success: Students found";
+		SET o_status = "Success: Profesor found";
 
-        SELECT
+		SELECT
             U.ID AS UserID,
             P.ID AS PersonID,
             P.Photo,

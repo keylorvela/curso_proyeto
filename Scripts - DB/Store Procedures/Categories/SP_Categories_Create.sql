@@ -1,6 +1,10 @@
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure SP_Categories_Create
+-- -----------------------------------------------------
 
-CREATE PROCEDURE SP_Categories_Create(
+DELIMITER $$
+USE `bqhd9nbafrpsvzpzrgvc`$$
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_Categories_Create`(
     IN p_categoryName VARCHAR(128),
 
     OUT o_status VARCHAR(32)
@@ -27,6 +31,6 @@ BEGIN
     END IF;
 
 	SELECT o_status;
-END //
+END$$
 
 DELIMITER ;

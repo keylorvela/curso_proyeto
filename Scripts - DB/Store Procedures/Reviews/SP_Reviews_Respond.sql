@@ -1,6 +1,10 @@
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure SP_Reviews_Respond
+-- -----------------------------------------------------
 
-CREATE PROCEDURE SP_Reviews_Respond(
+DELIMITER $$
+USE `bqhd9nbafrpsvzpzrgvc`$$
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_Reviews_Respond`(
     IN p_reviewID INT,
     IN p_response text,
 
@@ -41,6 +45,6 @@ BEGIN
     END IF;
 
     SELECT o_status;
-END //
+END$$
 
 DELIMITER ;

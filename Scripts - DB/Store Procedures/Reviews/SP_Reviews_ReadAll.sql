@@ -1,6 +1,10 @@
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure SP_Reviews_ReadAll
+-- -----------------------------------------------------
 
-CREATE PROCEDURE SP_Reviews_ReadAll(
+DELIMITER $$
+USE `bqhd9nbafrpsvzpzrgvc`$$
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_Reviews_ReadAll`(
     IN p_treatmentID INT,
 
     OUT o_status VARCHAR(32)
@@ -47,6 +51,6 @@ BEGIN
         ROLLBACK;
     END IF;
 
-END //
+END$$
 
 DELIMITER ;

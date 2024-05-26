@@ -1,6 +1,10 @@
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure SP_General_GetUserInformation
+-- -----------------------------------------------------
 
-CREATE PROCEDURE SP_General_GetUserInformation(
+DELIMITER $$
+USE `bqhd9nbafrpsvzpzrgvc`$$
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_General_GetUserInformation`(
 	IN p_userID INT,
     OUT o_status VARCHAR(32)
 )
@@ -23,6 +27,8 @@ BEGIN
         SET o_status = "Success: User found";
 
         SELECT
+			U.ID AS UserId,
+			P.ID AS PersonId,
             P.Name AS Name,
             P.Photo AS Photo,
             P.PhoneNumber AS PhoneNumber,
@@ -40,6 +46,6 @@ BEGIN
         SET o_status = "Error: Failed insertion";
         SELECT o_status;
     END IF;
-END //
+END$$
 
 DELIMITER ;

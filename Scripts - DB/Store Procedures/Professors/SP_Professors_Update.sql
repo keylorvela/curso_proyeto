@@ -1,10 +1,10 @@
 -- -----------------------------------------------------
--- procedure SP_Students_Update
+-- procedure SP_Professors_Update
 -- -----------------------------------------------------
 
 DELIMITER $$
 USE `bqhd9nbafrpsvzpzrgvc`$$
-CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_Students_Update`(
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_Professors_Update`(
     IN p_personID INT,
     IN p_photo MEDIUMTEXT,
     IN p_email VARCHAR(64),

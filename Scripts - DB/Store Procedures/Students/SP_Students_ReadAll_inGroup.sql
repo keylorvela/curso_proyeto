@@ -1,6 +1,10 @@
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure SP_Students_ReadAll_inGroup
+-- -----------------------------------------------------
 
-CREATE PROCEDURE SP_Students_ReadAll_inGroup(
+DELIMITER $$
+USE `bqhd9nbafrpsvzpzrgvc`$$
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_Students_ReadAll_inGroup`(
     IN p_groupID INT,
 
     OUT o_status VARCHAR(32)
@@ -35,9 +39,9 @@ BEGIN
             ON GbU.UserID = U.ID
         INNER JOIN Person AS P
             ON U.PersonID = P.ID
-        WHERE GbU.GroupID = p_groupID;
+        WHERE GbU.GroupID = p_groupID AND GbU.isActive = true;
 
 	END IF;
-END //
+END$$
 
 DELIMITER ;

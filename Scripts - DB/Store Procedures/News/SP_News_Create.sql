@@ -1,6 +1,10 @@
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure SP_News_Create
+-- -----------------------------------------------------
 
-CREATE PROCEDURE SP_News_Create(
+DELIMITER $$
+USE `bqhd9nbafrpsvzpzrgvc`$$
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_News_Create`(
     IN p_title VARCHAR(64),
     IN p_content TEXT,
     IN p_groupID INT,
@@ -25,7 +29,7 @@ BEGIN
 	ELSE
 		-- Insert news
 		INSERT INTO News (Title, Content, PublishedDate, GroupID)
-			VALUES (p_title, p_content, CURRENT_DATE(), p_groupID);
+			VALUES (p_title, p_content, NOW(), p_groupID);
 
 		SET o_status = "Success: News created";
         SET v_transactionStatus = 1;
@@ -39,6 +43,6 @@ BEGIN
     END IF;
 
     SELECT o_status;
-END //
+END$$
 
 DELIMITER ;

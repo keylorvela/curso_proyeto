@@ -1,6 +1,10 @@
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure SP_News_Update
+-- -----------------------------------------------------
 
-CREATE PROCEDURE SP_News_Update(
+DELIMITER $$
+USE `bqhd9nbafrpsvzpzrgvc`$$
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_News_Update`(
     IN p_newsID INT,
     IN p_title VARCHAR(64),
     IN p_content TEXT,
@@ -30,7 +34,7 @@ BEGIN
             SET
                 Title = p_title,
                 Content = p_content,
-                PublishedDate = CURRENT_DATE()
+                PublishedDate = NOW()
             WHERE ID = p_newsID;
 
         SET o_status = "Success: News updated";
@@ -45,6 +49,6 @@ BEGIN
     END IF;
 
     SELECT o_status;
-END //
+END$$
 
 DELIMITER ;

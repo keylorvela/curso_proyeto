@@ -1,38 +1,42 @@
 -- -----------------------------------------------------
--- procedure SP_Reviews_Remove_Review
+-- procedure SP_Image_ReadAllCourse
 -- -----------------------------------------------------
 
 DELIMITER $$
 USE `bqhd9nbafrpsvzpzrgvc`$$
-CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_Reviews_Remove_Review`(
-    IN p_reviewID VARCHAR(64),
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_Image_ReadAllCourse`(
+    IN p_courseID INT,
 
     OUT o_status VARCHAR(32)
 )
 BEGIN
     -- Declare control variables
-    DECLARE v_reviewCount INT;
+    DECLARE v_courseCount INT;
     DECLARE v_transactionStatus INT;
 
     SELECT COUNT(*)
-        INTO @v_reviewCount
-        FROM Review AS R
-        WHERE R.ID = p_reviewID;
+        INTO @v_courseCount
+        FROM Course AS C
+        WHERE C.ID = p_courseID;
 
     -- Start transaction
     START TRANSACTION;
 
     -- If no review with that ID
-    IF @v_reviewCount <= 0 THEN
-        SET o_status = "Error: Review NOT found";
+    IF @v_courseCount <= 0 THEN
+        SET o_status = "Error: Course NOT found";
         SET v_transactionStatus = 0;
     ELSE
-        -- Delete the selected review
-        DELETE
-            FROM Review
-            WHERE Review.ID = p_reviewID;
+        SET o_status = "Success: Images found";
 
-        SET o_status = "Success: Review deleted";
+        -- Select response
+        SELECT
+                CI.ID,
+                CI.ImageUrl,
+                o_status
+            FROM CourseImage AS CI
+            WHERE CI.CourseID = p_courseID;
+
         SET v_transactionStatus = 1;
     END IF;
 
@@ -43,7 +47,6 @@ BEGIN
         ROLLBACK;
     END IF;
 
-    SELECT o_status;
 END$$
 
 DELIMITER ;

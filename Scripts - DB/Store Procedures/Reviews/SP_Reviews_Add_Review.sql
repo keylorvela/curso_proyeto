@@ -1,6 +1,10 @@
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure SP_Reviews_Add_Review
+-- -----------------------------------------------------
 
-CREATE PROCEDURE SP_Reviews_Add_Review(
+DELIMITER $$
+USE `bqhd9nbafrpsvzpzrgvc`$$
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_Reviews_Add_Review`(
     IN p_name VARCHAR(64),
     IN p_reviewContent text,
     IN p_stars INT,
@@ -21,14 +25,14 @@ BEGIN
     -- Start transaction
     START TRANSACTION;
 
-    -- If no treatment with that ID
+    -- If no treatment with that ID -> remove it
     IF @v_treatmentCount <= 0 THEN
         SET o_status = "Error: Treatment NOT found";
         SET v_transactionStatus = 0;
     ELSE
         -- Insert the new review
         INSERT INTO Review(Name, ReviewContent, PublishedDate, Stars, Response, TreatmentID)
-            VALUES(p_name, p_reviewContent, CURRENT_DATE(), p_stars, "", p_treatmentID);
+            VALUES(p_name, p_reviewContent, NOW(), p_stars, "", p_treatmentID);
 
         SET o_status = "Success: Review added";
         SET v_transactionStatus = 1;
@@ -42,6 +46,6 @@ BEGIN
     END IF;
 
     SELECT o_status;
-END //
+END$$
 
 DELIMITER ;

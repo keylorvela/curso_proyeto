@@ -1,6 +1,10 @@
-DELIMITER //
+-- -----------------------------------------------------
+-- procedure SP_Students_AddStudentToGroup
+-- -----------------------------------------------------
 
-CREATE PROCEDURE SP_Students_AddStudentToGroup(
+DELIMITER $$
+USE `bqhd9nbafrpsvzpzrgvc`$$
+CREATE DEFINER=`ukxp0bgvknoxjle0`@`%` PROCEDURE `SP_Students_AddStudentToGroup`(
     IN p_userID INT,
     IN p_groupID INT,
 
@@ -36,7 +40,7 @@ BEGIN
     SELECT COUNT(*)
         INTO @v_registerCount
         FROM GroupsByUser AS GBU
-        WHERE GBU.UserID = p_userID AND GBU.GroupID = p_groupID;
+        WHERE GBU.UserID = p_userID AND GBU.GroupID = p_groupID AND GBU.isActive = true;
 
     -- Start transaction process
     START TRANSACTION;
@@ -64,6 +68,6 @@ BEGIN
     END IF;
 
     SELECT o_status;
-END //
+END$$
 
 DELIMITER ;
