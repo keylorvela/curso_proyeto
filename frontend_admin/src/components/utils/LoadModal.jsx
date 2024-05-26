@@ -2,7 +2,7 @@ import Stack from 'react-bootstrap/Stack';
 import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
 
-function BaseModal({ pshow = false, msg }) {
+function LoadingModal({ pshow = false, setShow, msg='' }) {
     const handleClose = () => setShow(false);
 
 
@@ -25,7 +25,7 @@ function BaseModal({ pshow = false, msg }) {
     );
 }
 
-export default BaseModal;
+export default LoadingModal;
 
 
 	

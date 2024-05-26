@@ -21,11 +21,49 @@
   font-family: var(--font);
 }
 
+/* Button.module.css */
+.button {
+  position: fixed;
+
+  z-index: 999;
+  top: 80%; /* Puedes ajustar estos valores según tus necesidades */
+  left: 50px; /* Puedes ajustar estos valores según tus necesidades */
+
+  color: black;
+  cursor: pointer;
+  width: 100px;
+  height: 200px;
+
+
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.button:hover {
+  width: 500px;
+  height: 200px;
+  transition: width 0.05s;
+}
+
+.button:hover span {
+  display: contents;
+}
+
+.button span {
+  display: none;
+}
 
 
 /* ---------- Mobile  */
 @media (max-width: 768px) {
   .floatingButton {
+    display: none;
+  }
+
+  .button{
     display: none;
   }
 

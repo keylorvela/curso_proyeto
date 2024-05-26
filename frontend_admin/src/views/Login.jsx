@@ -9,6 +9,7 @@ import styles from 'src/views/Login.module.css';
 import UserService from 'src/services/User.service.js';
 import useAuth from 'src/components/utils/AuthContext.jsx';
 import AlertModal from 'src/components/utils/AlertModal.jsx';
+import LoadModal from 'src/components/utils/LoadModal.jsx';
 
 function Login() {
 
@@ -20,6 +21,7 @@ function Login() {
 
   //Feedback
   const [showAlert, setShowAlert] = useState(false);
+  const [show, setShow] = useState(false);
 
 
 
@@ -33,16 +35,17 @@ function Login() {
     try {
 
       
-
+      setShow(true);
       const userData = await UserService.login(email, password);
 
       if (userData.ID) {
         //log user in AuthContext
         login(userData);
+        
 
         switch (userData.UserTypeID) {
           case 1: navegate('admin'); break;
-          case 2: navegate('professor/students'); break;
+          case 2: navegate('professor'); break;
           case 3: navegate('student'); break;
           default: navegate('');
         }
@@ -53,6 +56,8 @@ function Login() {
       }
     } catch (error) {
       console.error('Login fail:', error);
+    }finally{
+      setShow(false);
     }
   };
 
@@ -66,6 +71,8 @@ function Login() {
         showAlert={showAlert}
         setShowAlert={setShowAlert}
       />
+
+      <LoadModal pshow={show} setShow = {setShow}/>   
 
 
       <Row className="justify-content-center align-items-center h-100">

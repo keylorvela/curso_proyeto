@@ -36,6 +36,8 @@ function App() {
 
             {getUser().UserTypeID == 1 && (
               <>
+
+                <Route path="" element={<Students />} />
                 <Route path="admin" element={<Students />} />
                 <Route path="admin/students" element={<Students />} />
                 <Route path="admin/student" element={<ManageStudent />} />
@@ -56,6 +58,7 @@ function App() {
 
             {getUser().UserTypeID == 2 && (
               <>
+                <Route path="" element={<MyCourses />} />
                 <Route path="professor" element={<StudentsByProf />} />
                 <Route path="professor/courses" element={<MyCourses />} />
                 <Route path="professor/news" element={<ProfessorNews />} />
@@ -67,6 +70,7 @@ function App() {
 
             {getUser().UserTypeID == 3 && (
               <>
+                <Route path="" element={<MyCourses />} />
                 <Route path="student" element={<MyCourses />} />
                 <Route path="student/courses" element={<MyCourses />} />
                 <Route path="student/news" element={<StudentsNews />} />
