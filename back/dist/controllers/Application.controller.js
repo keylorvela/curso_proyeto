@@ -44,7 +44,6 @@ const respondToApplication = (req, res) => __awaiter(void 0, void 0, void 0, fun
         const result_application = yield dbConfig_1.default.query(`
         CALL SP_Application_Respond(?, ?, ?, @o_status)
         `, [applicationID, status, tempPassword]);
-        console.log(result_application[0]);
         const result = JSON.parse(JSON.stringify(result_application[0][2]));
         const result_registration = JSON.parse(JSON.stringify(result_application[0][0]));
         // Send email if user was accepted
