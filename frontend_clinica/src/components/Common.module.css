@@ -33,6 +33,7 @@
 
 .bpButton{
   background-color: #FEA734;
+  outline: 2px solid #FEA734;
   color:#FFFFFF;
   border: 0px;
   width: 100%;
@@ -40,6 +41,11 @@
 
 .bpButton:hover{
   background-color: #b87c2d;
+}
+
+.bpButton:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
 }
 
 /* ---------- Mobile  */

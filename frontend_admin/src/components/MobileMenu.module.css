@@ -12,9 +12,9 @@
 
 .close {
     cursor: pointer;
-
-    margin-top: 75%;
-    margin-right: 3%;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
 
     display: flex;
     flex-direction: row-reverse;

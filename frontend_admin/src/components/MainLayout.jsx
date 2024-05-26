@@ -82,8 +82,8 @@ function MainLayout({ children, type }) {
 
           {/* Boton flotante */}
           <div className={styles.button} onClick={() => setShowAlert(true)}>
-            <FontAwesomeIcon icon={faRightFromBracket} className="fa-4x"/>
-            <span> <b className='fs-3 ms-3'>Cerrar Sesión</b></span>
+            <FontAwesomeIcon icon={faRightFromBracket} className="fa-3x"/>
+            <span> <b className='fs-4 ms-3'>Cerrar Sesión</b></span>
           </div>
         </main>
       </div>

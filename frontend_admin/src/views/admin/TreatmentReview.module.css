@@ -59,7 +59,7 @@
 .colCustom {
     border: 1px solid #D9D9D9;
     border-radius: 10px; 
-    padding: 15px; 
+    padding: 15px 35px;
 }
 
 .reviewCard{
@@ -68,15 +68,14 @@
 }
 
 .iconButton {
-    padding: 0; 
-    margin-left: 95%; 
-    border: none; 
-    background-color: transparent; 
+    padding: 0;
+    border: none;
+    background-color: transparent;
 }
 
 .iconBtn {
-    padding: 0; 
-    margin-right: 4%; 
+    padding: 0;
+
     border: none; 
     background-color: transparent; 
 }

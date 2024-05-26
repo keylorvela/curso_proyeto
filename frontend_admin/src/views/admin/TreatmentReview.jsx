@@ -124,53 +124,59 @@ function TreatmentReview() {
                         </div>
                 )}
                 <Row>
-                    <Col md={11} className={styles.colCustom}>
-                        <div className={styles.reviewHeader}>
-                            <h3 className={styles.subTitle}>Reseñas</h3>
+                    <Col md={12}>
+                        <div className={`${styles.colCustom}`}>
+                            <div className={styles.reviewHeader}>
+                                <h3 className={styles.subTitle}>Reseñas</h3>
+                            </div>
+
+                            {
+                                (reviews.length == 0) ?
+                                    (
+                                        <div className={styles.information_container}>
+                                            <span className={styles.noReview_span}>No hay reseñas publicadas</span>
+                                        </div>
+                                    ) :
+                                    (
+                                        reviews.map((review, index) => (
+                                            <Card key={index} className={styles.reviewCard}>
+                                                <Card.Body>
+                                                    <Card.Title className={styles.reviewDate}>
+                                                        {review.Fecha}
+                                                        <div className={`d-flex flex-column align-items-end gap-2`}>
+                                                            <span className={styles.starContainer}>
+                                                                {Array.from({ length: review.Estrellas }, (_, i) => (
+                                                                    <FontAwesomeIcon key={i} icon={faStar} className={styles.starIcon} />
+                                                                ))}
+                                                            </span>
+                                                            <Button variant="link" className={styles.iconBtn} onClick={() => { setIdReview(review.ID); setModalShow(true); }}>
+                                                                <FontAwesomeIcon icon={faReplyAll} className={styles.trashIcon} />
+                                                            </Button>
+                                                        </div>
+                                                    </Card.Title>
+
+                                                    <Card.Subtitle className={styles.reviewDate} style={{ textDecoration: 'underline' }}>{review.Nombre}</Card.Subtitle>
+                                                    <Card.Text className={styles.reviewDescription}>{review.Resena}</Card.Text>
+
+                                                    <Card.Title className={styles.reviewDate}>
+                                                        Respuesta:
+                                                    </Card.Title>
+
+                                                    <Card.Subtitle className={styles.reviewDate} style={{ textDecoration: 'underline' }}>Clínica</Card.Subtitle>
+                                                    <Card.Text className={styles.reviewDescription}>{review.Respuesta || 'No hay respuesta'} </Card.Text>
+
+                                                    <div style={{ position: "relative", height: "30px" }}>
+                                                        <Button variant="link" className={styles.iconButton} style={{ position: "absolute", right: "0" }} onClick={() => handleRemoveNews(review.ID)}>
+                                                            <FontAwesomeIcon icon={faTrash} className={styles.trashIcon} />
+                                                        </Button>
+                                                    </div>
+                                                </Card.Body>
+                                            </Card>
+                                        ))
+                                    )
+                            }
                         </div>
-
-                        {
-                            (reviews.length == 0) ?
-                                (
-                                    <div className={styles.information_container}>
-                                        <span className={styles.noReview_span}>No hay reseñas publicadas</span>
-                                    </div>
-                                ) :
-                                (
-                                    reviews.map((review, index) => (
-                                        <Card key={index} className={styles.reviewCard}>
-                                            <Card.Body>
-                                                <Card.Title className={styles.reviewDate}>
-                                                    {review.Fecha}
-                                                    <span className={styles.starContainer}>
-                                                        {Array.from({ length: review.Estrellas }, (_, i) => (
-                                                            <FontAwesomeIcon key={i} icon={faStar} className={styles.starIcon} />
-                                                        ))}
-                                                    </span>
-                                                    <Button variant="link" className={styles.iconBtn} onClick={() => { setIdReview(review.ID); setModalShow(true); }}>
-                                                        <FontAwesomeIcon icon={faReplyAll} className={styles.trashIcon} />
-                                                    </Button>
-                                                </Card.Title>
-
-                                                <Card.Subtitle className={styles.reviewDate} style={{ textDecoration: 'underline' }}>{review.Nombre}</Card.Subtitle>
-                                                <Card.Text className={styles.reviewDescription}>{review.Resena}</Card.Text>
-
-                                                <Card.Title className={styles.reviewDate}>
-                                                    Respuesta:
-                                                </Card.Title>
-
-                                                <Card.Subtitle className={styles.reviewDate} style={{ textDecoration: 'underline' }}>Clínica</Card.Subtitle>
-                                                <Card.Text className={styles.reviewDescription}>{review.Respuesta || 'No hay respuesta'} </Card.Text>
-                                                <Button variant="link" className={styles.iconButton} onClick={() => handleRemoveNews(review.ID)}>
-                                                    <FontAwesomeIcon icon={faTrash} className={styles.trashIcon} />
-                                                </Button>
-                                            </Card.Body>
-                                        </Card>
-                                    ))
-                                )
-                        }
                     </Col>
-
 
                 </Row>
             </Container>
