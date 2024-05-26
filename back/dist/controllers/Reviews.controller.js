@@ -38,7 +38,7 @@ const addReview = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.addReview = addReview;
 const removeReview = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = Number(req.query.id) || null;
+    const id = Number(req.body.id) || null;
     if (isNaN(id) || id <= 0) {
         res.status(400).send({ error: "Id enter is not valid" });
         return;
