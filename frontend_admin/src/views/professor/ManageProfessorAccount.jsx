@@ -14,11 +14,11 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 import TeachersService from 'src/services/Teachers.service';
-
+import useAuth from 'src/components/utils/AuthContext.jsx';
 function ManageProfessorAccount() {
     // TODO: Obtener el userID
     // TODO: Cargar la imagen de perfil
-    const userID = 7;
+    const { getUser } = useAuth();
     const fileInputRef = useRef();
     const [loading, setLoading] = useState(false);
 
@@ -36,7 +36,7 @@ function ManageProfessorAccount() {
             try {
                 // Get teacher information
                 setLoading(true);
-                const teacher_data = await TeachersService.GetTeacherInformation(userID);
+                const teacher_data = await TeachersService.GetTeacherInformation(getUser().ID );
                 if(teacher_data.Photo)setProfilePictureURL(teacher_data.Photo);
                 setTeacherInformation({
                     personID: teacher_data.PersonId,
@@ -140,7 +140,7 @@ function ManageProfessorAccount() {
                 handleState={handleModal}
                 passInfo={passInfo}
                 setPassInfo={setPassInfo}
-                userID={userID}
+                userID={getUser().ID }
             />
             <AlertModal
                 type="light"

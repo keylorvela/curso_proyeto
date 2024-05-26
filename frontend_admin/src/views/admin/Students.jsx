@@ -32,10 +32,10 @@ function Students() {
                     Nombre: student.Name,
                     Email: student.Email,
                     Telefono: student.PhoneNumber,
-                    // Foto: student.Photo
-                    Foto: "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg"
+                    Foto: student.Photo || "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg"
                 }))
 
+                console.log(new_data)
                 setData(new_data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -77,17 +77,19 @@ function Students() {
                     </div>
                 )}
 
-
-
-                <DynamicTable
-                    columns={columns}
-                    data={data}
-                    buttons={btn}
-                    mainButton='Añadir Estudiante'
-                    mainButtonClick={handleButtonAdd}
-                    isSearching={true}
-                    searchKey='Nombre'
-                />
+                {
+                    !loading
+                    &&
+                    <DynamicTable
+                        columns={columns}
+                        data={data}
+                        buttons={btn}
+                        mainButton='Añadir Estudiante'
+                        mainButtonClick={handleButtonAdd}
+                        isSearching={true}
+                        searchKey='Nombre'
+                    />
+                }
 
                 {showModal && modalData && (
                     <TableModal

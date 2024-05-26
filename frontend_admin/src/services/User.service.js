@@ -37,7 +37,37 @@ const UserService = {
         } catch (error) {
             console.error("Error in course service", error);
         }
-    }
+    },
+
+    OTP_RequestCode: async (requested_email) => {
+        try {
+            const body = { requested_email };
+            const response = await axios.post(`/login/requestEmail`, body);
+            return response.data;
+        } catch (error) {
+            console.error("Error in OTP request service", error);
+        }
+    },
+
+    OTP_VerifyOTP: async (OTP) => {
+        try {
+            const body = { OTP };
+            const response = await axios.post(`/login/verifyOTP`, body);
+            return response.data;
+        } catch (error) {
+            console.error("Error in OTP verification service", error);
+        }
+    },
+
+    OTP_UpdatePassword: async (UserID, OTP, Password) => {
+        try {
+            const body = { UserID, OTP, Password };
+            const response = await axios.post(`/login/updatePasswordWithOTP`, body);
+            return response.data;
+        } catch (error) {
+            console.error("Error in OTP verification service", error);
+        }
+    },
 };
 
 export default UserService;

@@ -86,15 +86,19 @@ function Professors() {
                     </div>
                 )}
 
-                <DynamicTable
-                    columns={columns}
-                    data={data}
-                    buttons={btn}
-                    mainButton='Añadir Profesor'
-                    mainButtonClick={handleButtonAdd}
-                    isSearching={true}
-                    searchKey='Nombre'
-                />
+                {
+                    !loading
+                    &&
+                    <DynamicTable
+                        columns={columns}
+                        data={data}
+                        buttons={btn}
+                        mainButton='Añadir Profesor'
+                        mainButtonClick={handleButtonAdd}
+                        isSearching={true}
+                        searchKey='Nombre'
+                    />
+                }
                 {showModal && modalData && (
                     <TableModal
                         show={showModal}

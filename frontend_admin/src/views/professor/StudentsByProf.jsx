@@ -39,8 +39,7 @@ function StudentsByProf() {
                     Telefono: student.PhoneNumber,
                     UserID: student.UserID,
                     ID: student.PersonID,
-                    // Foto: student.Photo
-                    Foto: "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg"
+                    Foto: student.Photo || "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg"
                 }))
 
                 // Get group information
