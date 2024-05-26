@@ -14,8 +14,14 @@ export interface Application {
     CourseName: string;
 }
 
-export interface ApplicationRespond {
+export interface ApplicantInformation {
     ApplicantName: string | null
     ApplicantEmail: string | null
     o_status: string
+}
+
+export interface ApplicationResponse {
+    result1: [ { o_status: string } ]
+    result2: [ { o_status: string } ]
+    finalResult: [ ApplicantInformation ]
 }

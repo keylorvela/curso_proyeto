@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { RowDataPacket } from "mysql2";
 import dbConnection from "../database/dbConfig";
 import { OStatus } from "../interfaces/OStatus.interface";
-import { Application, ApplicationBody, ApplicationRespond } from "../interfaces/Application.interface";
+import { ApplicantInformation, Application, ApplicationBody, ApplicationResponse } from "../interfaces/Application.interface";
 import { generateRandomPassword } from "../utilities/PasswordGenerator";
 
 //File handling
@@ -36,54 +36,54 @@ export const respondToApplication = async (req: Request, res: Response) => {
         res.status(400).send({ error: "Invalid input provided" });
         return;
     }
-    console.log(JSON.stringify(req.body));
 
     try {
         const mailManager = new MailManager();
         const tempPassword = generateRandomPassword();
 
         const result_application = await dbConnection.query<RowDataPacket[]>(`
-            CALL SP_Application_Respond(?, ?, ?, @o_status)
+        CALL SP_Application_Respond(?, ?, ?, @o_status)
         `, [applicationID, status, tempPassword]);
 
-
-        const result = result_application[0][1][0];
         console.log(result_application[0]);
 
-        
+        const result: ApplicantInformation[] = JSON.parse(JSON.stringify(result_application[0][2]));
+        const result_registration: OStatus[] = JSON.parse(JSON.stringify(result_application[0][0]));
 
         // Send email if user was accepted
-        if (result.o_status?.includes("Success")) {
+        if (result[0].o_status.includes("Success")) {
 
-            
-            const mailContent: UserRegistration = {
-                name: result.ApplicantName,
-                username: result.ApplicantEmail,
-                password: tempPassword
+            // If user is already registered := Do not send email
+            if (result_registration[0].o_status.includes("Success")) {
+                const mailContent: UserRegistration = {
+                    name: result[0].ApplicantName,
+                    username: result[0].ApplicantEmail,
+                    password: tempPassword
+                }
+
+                await mailManager.sendMail_UserRegistration(
+                    "testELSPrueba@gmail.com",
+                    result[0].ApplicantEmail,
+                    "Bienvenid@ a ELS",
+                    mailContent
+                );
             }
-
-            await mailManager.sendMail_UserRegistration(
-                "testELSPrueba@gmail.com",
-                result.ApplicantEmail,
-                "Bienvenid@ a ELS",
-                mailContent
-            );
         }
         // Send mail if user was rejected
-        else if (result.o_status?.includes("Info")) {
+        else if (result[0].o_status.includes("Info")) {
             const mailContent: ApplicationRejected = {
-                name: result.ApplicantName
+                name: result[0].ApplicantName
             }
 
             await mailManager.sendMail_ApplicationRejected(
                 "testELSPrueba@gmail.com",
-                result.ApplicantEmail,
+                result[0].ApplicantEmail,
                 "Estado de la solicitud",
                 mailContent
             )
         }
 
-        res.status(200).send(result.o_status || {});
+        res.status(200).send(result[0] || {});
     } catch (error) {
         res.status(400).send({ error: "Request Failed", info: error });
     }
