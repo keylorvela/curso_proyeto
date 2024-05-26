@@ -42,17 +42,22 @@ const respondToApplication = (req, res) => __awaiter(void 0, void 0, void 0, fun
         const mailManager = new Mail_controller_1.default();
         const tempPassword = (0, PasswordGenerator_1.generateRandomPassword)();
         const result_application = yield dbConfig_1.default.query(`
-            CALL SP_Application_Respond(?, ?, ?, @o_status)
+        CALL SP_Application_Respond(?, ?, ?, @o_status)
         `, [applicationID, status, tempPassword]);
-        const result = JSON.parse(JSON.stringify(result_application[0][0]));
+        console.log(result_application[0]);
+        const result = JSON.parse(JSON.stringify(result_application[0][2]));
+        const result_registration = JSON.parse(JSON.stringify(result_application[0][0]));
         // Send email if user was accepted
         if (result[0].o_status.includes("Success")) {
-            const mailContent = {
-                name: result[0].ApplicantName,
-                username: result[0].ApplicantEmail,
-                password: tempPassword
-            };
-            yield mailManager.sendMail_UserRegistration("testELSPrueba@gmail.com", result[0].ApplicantEmail, "Bienvenid@ a ELS", mailContent);
+            // If user is already registered := Do not send email
+            if (result_registration[0].o_status.includes("Success")) {
+                const mailContent = {
+                    name: result[0].ApplicantName,
+                    username: result[0].ApplicantEmail,
+                    password: tempPassword
+                };
+                yield mailManager.sendMail_UserRegistration("testELSPrueba@gmail.com", result[0].ApplicantEmail, "Bienvenid@ a ELS", mailContent);
+            }
         }
         // Send mail if user was rejected
         else if (result[0].o_status.includes("Info")) {
@@ -74,7 +79,8 @@ const sendApplication = (req, res) => __awaiter(void 0, void 0, void 0, function
     const mailContent = { name: "", phoneNumber: "", email: "", courseName: "", courseSchedule: "" };
     try {
         // Use parameterized query to prevent SQL injection
-        const result_application = yield dbConfig_1.default.query(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`, [req.body.nombre, fs_1.default.readFileSync(path), req.body.correo, req.body.telefono, req.body.idCurso]);
+        const result_application = yield dbConfig_1.default.query(`CALL SP_Application_Send(?, ?, ?, ?, ?, @o_status)`, [req.body.nombre, fs_1.default.readFileSync(path), req.body.correo, req.body.telefono, req.body.groupId]);
+        console.log(result_application[0]);
         const result = JSON.parse(JSON.stringify(result_application[0][0]));
         //TODO Fix schedules
         const content = {
@@ -82,7 +88,7 @@ const sendApplication = (req, res) => __awaiter(void 0, void 0, void 0, function
             phoneNumber: req.body.telefono,
             email: req.body.correo,
             courseName: req.body.curso,
-            courseSchedule: 'N/A'
+            courseSchedule: req.body.idCurso
         };
         if (result) {
             yield mailManager.sendMail_FormVerification("testELSPrueba@gmail.com", req.body.correo, "Verificacion de formulario", content);
