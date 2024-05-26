@@ -14,11 +14,12 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 import { Container, Row, Col, Image } from 'react-bootstrap'
 import StudentService from 'src/services/Students.service';
+import useAuth from 'src/components/utils/AuthContext.jsx';
 
 function ManageAccount() {
     // TODO: Obtener el userID
     // TODO: Display user profile picture
-    const userID = 8;
+    const { getUser } = useAuth();
     const [showAlertUpdateInfo, setShowAlertUpdateInfo] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
 
@@ -35,7 +36,7 @@ function ManageAccount() {
             try {
                 setLoading(true);
                 // Get student information
-                const student_data = await StudentService.GetStudentsInformation(userID);
+                const student_data = await StudentService.GetStudentsInformation(getUser().ID );
                 if(student_data.Photo)setProfilePictureURL(student_data.Photo);
                 setStudentInformation({
                     userID: student_data.UserId,
@@ -141,7 +142,7 @@ function ManageAccount() {
                 handleState={handleModal}
                 passInfo={passInfo}
                 setPassInfo={setPassInfo}
-                userID={userID}
+                userID={getUser().ID }
             />
             <AlertModal
                 type="light"
