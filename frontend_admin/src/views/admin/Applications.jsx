@@ -10,6 +10,8 @@ import LoadModal from 'src/components/utils/LoadModal.jsx';
 
 import AlertModal from 'src/components/utils/AlertModal.jsx'
 
+import {formatDate} from 'src/services/utilities/utils.js'
+
 import Container from 'react-bootstrap/Container';
 
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
@@ -21,26 +23,28 @@ function Applications() {
     const [loading, setLoading] = useState(true);
     const [showYN, setYN] = useState(false);
     const [load, setLoad] = useState(false);
+    const [msg, setMsg] = useState(false);
 
     const columns = ['ID', 'StudentName', 'Email'];
     const [data, setData] = useState([]);
 
     const [alertMessage, setAlertMessage] = useState("");
     const [showAlertApplications, setShowAlertApplications] = useState(false);
-
+    
     useEffect(() => {
         async function fetchData() {
-            try {
-                // Get courses
-                const data_raw = await applicationsService.getApplications();
-                console.log(data_raw);
-                setData(data_raw);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                setLoading(false);
-            }
+        try {
+            // Get courses
+            const data_raw = await applicationsService.getApplications();
+            console.log(data_raw);
+            setData(data_raw);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            
+            setLoading(false);
         }
+    }
 
         fetchData();
     }, []);
@@ -58,11 +62,16 @@ function Applications() {
     };
 
     const handleReject = async () => {
+        setMsg("Rechazando aplicación...");
+        setLoad(true);
         const result = await applicationsService.respondApplication(modalData.ID, 'Rechazado');
         if (result) {
             setShowModal(false);
             setYN(false);
+            setData(data.filter(objeto => objeto.ID !== modalData.ID));
         }
+        setLoad(false);
+        
     };
 
     const handleRejectButton = () => {
@@ -70,14 +79,20 @@ function Applications() {
     };
 
     const handleAccept = async () => {
+        setMsg("Aceptando aplicación...");
+        setLoad(true);
         const result = await applicationsService.respondApplication(modalData.ID, 'Aceptado');
         if (result) {
             setShowModal(false);
+            setData(data.filter(objeto => objeto.ID !== modalData.ID));
         }
+        setLoad(false);
+
     };
 
     const handleDownloadDocument = async () => {
         try {
+            setMsg("Descargando archivo...");
             setLoad(true);
             await applicationsService.downloadPaymentReceipt(modalData.ID);
         } catch (error) {
@@ -94,7 +109,7 @@ function Applications() {
 
     return (
         <MainLayout type={1}>
-            <LoadModal pshow={load} msg="Descargando archivo..." />
+            <LoadModal pshow={load} msg={msg} />
             <AlertModal
                 type="light"
                 title="Información"
@@ -136,7 +151,7 @@ function Applications() {
                                     { title: 'Nombre', content: modalData.StudentName },
                                     { title: 'Email', content: modalData.Email },
                                     { title: 'Curso', content: modalData.CourseName },
-                                    { title: 'Fecha', content: modalData.Date},
+                                    { title: 'Fecha', content: formatDate(modalData.Date)},
                                 ]}
                             />
                         )}
