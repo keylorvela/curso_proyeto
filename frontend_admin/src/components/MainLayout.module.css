@@ -26,13 +26,13 @@
   position: fixed;
 
   z-index: 999;
-  top: 80%; /* Puedes ajustar estos valores según tus necesidades */
-  left: 50px; /* Puedes ajustar estos valores según tus necesidades */
+  top: 80%; 
+  left: 50px; 
 
   color: black;
   cursor: pointer;
   width: 100px;
-  height: 200px;
+  height: 100px;
 
 
 
@@ -40,6 +40,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  text-shadow: 6px 5px 6px rgba(0,0,0,0.50);
 }
 
 .button:hover {
