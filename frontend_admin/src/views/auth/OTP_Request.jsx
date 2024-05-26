@@ -40,7 +40,7 @@ export default function OTP_Request({ handlerChangePageState }) {
             <div className="input_container input_vertical">
                 <span>Correo electrónico</span>
                 <input
-                    type="text"
+                    type="email"
                     className="non_style_input text_field"
                     value={inputEmail}
                     onChange={handleEmailInput}
