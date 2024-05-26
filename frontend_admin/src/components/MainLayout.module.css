@@ -39,9 +39,9 @@
   text-shadow: 6px 5px 6px rgba(0,0,0,0.50);
 }
 
-.button span {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+.button:hover {
+  width: 500px;
+  transition: width 0.05s;
 }
 
 .button:hover span {
