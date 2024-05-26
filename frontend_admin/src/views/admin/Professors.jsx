@@ -34,7 +34,7 @@ function Professors() {
                     UserID: teacher.UserID,
                     PersonID: teacher.PersonID,
                     Telefono: teacher.PhoneNumber,
-                    Foto: teacher.Photo || "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg"
+                    Foto: (teacher.Photo != null && teacher.Photo != undefined) ? teacher.Photo : "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg"
                 }))
 
                 setData(new_data);

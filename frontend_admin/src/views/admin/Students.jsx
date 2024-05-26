@@ -32,7 +32,7 @@ function Students() {
                     Nombre: student.Name,
                     Email: student.Email,
                     Telefono: student.PhoneNumber,
-                    Foto: student.Photo || "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg"
+                    Foto: (student.Photo != null && student.Photo != undefined) ? student.Photo : "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg"
                 }))
 
                 console.log(new_data)
