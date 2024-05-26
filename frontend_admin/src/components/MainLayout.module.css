@@ -26,35 +26,26 @@
   position: fixed;
 
   z-index: 999;
-  top: 80%; 
-  left: 50px; 
+  bottom: 20px;
+  left: 20px;
 
   color: black;
   cursor: pointer;
-  width: 100px;
-  height: 100px;
-
 
 
   display: flex;
   align-items: center;
-  justify-content: center;
   overflow: hidden;
   text-shadow: 6px 5px 6px rgba(0,0,0,0.50);
 }
 
-.button:hover {
-  width: 500px;
-  height: 200px;
-  transition: width 0.05s;
+.button span {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .button:hover span {
-  display: contents;
-}
-
-.button span {
-  display: none;
+  opacity: 1;
 }
 
 
