@@ -71,7 +71,7 @@ function DynamicTable({ columns, data, buttons, mainButton, mainButtonClick, isS
     const newCurrent = data.slice(indexOfFirstItem, indexOfLastItem)
     setCurrentItems(newCurrent);
     setCopyItems(newCurrent)
-  }, [currentPage, itemsPerPage]);
+  }, [currentPage, itemsPerPage,data]);
 
   useEffect(() => {
     const newSortedData = [...currentItems].sort((a, b) => {

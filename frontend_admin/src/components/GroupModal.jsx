@@ -7,30 +7,49 @@ import AlertModal from 'src/components/utils/AlertModal.jsx'
 import TeachersService from "src/services/Teachers.service"
 import GroupService from "src/services/Group.service"
 
+import { formatDate } from "src/services/utilities/utils.js"
+
+const emptyDays = {
+    Lunes: false,
+    Martes: false,
+    Miércoles: false,
+    Jueves: false,
+    Viernes: false,
+    Sábado: false,
+    Domingo: false,
+};
+
 function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isModify }) {
     //TODO Fetch professors
     const [teachersList, setTeachersList] = useState([]);
     const [groupList, setGroupList] = useState([]);
     const [groupID, setGroupID] = useState();
-    const [selectedDays, setSelectedDays] = useState({
-        Lunes: false,
-        Martes: false,
-        Miércoles: false,
-        Jueves: false,
-        Viernes: false,
-        Sábado: false,
-        Domingo: false,
-    });
+    const [selectedDays, setSelectedDays] = useState(emptyDays);
 
     const [alertMessage, setAlertMessage] = useState("");
     const [showAlertGroup, setShowAlertGroup] = useState(false);
+
+
+    const fillCheckbox = () => {
+        const output = { ...emptyDays }; 
+        const days = groupInfo.ScheduleDate.split("/");
+
+
+        days.forEach(day => {
+            if (days.includes(day)) 
+                output[day] = true; 
+        });
+
+        setSelectedDays(output);
+    }
+
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const teacherList_data = await TeachersService.GetTeachersList();
                 setTeachersList(teacherList_data);
-
+                //alert(JSON.stringify(teachersList))
                 if (isModify) {
                     const groupData = await GroupService.GetGroupList(courseID);
                     const new_data_group = groupData.map(group => ({
@@ -39,6 +58,10 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isMo
                     }))
                     setGroupList(new_data_group);
 
+                    //handlefill of the coming data
+                    fillCheckbox();
+
+
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -46,28 +69,28 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isMo
         }
 
         fetchData();
-    }, [isModify]);
+    }, [groupInfo, isModify]);
 
-    // Update selected days object
     const handleCheckBoxChange = (day) => {
-        setSelectedDays(prevState => ({
-            ...prevState,
-            [day]: !prevState[day]
-        }))
+        const updatedSelectedDays = { ...selectedDays, [day]: !selectedDays[day] };
+        setSelectedDays(updatedSelectedDays);
     }
+    
 
     const handleGroupChange = async (e) => {
         const groupID = e.target.value;
         setGroupID(groupID);
 
         const groupData = await GroupService.GetGroupInformation(groupID);
+
         const new_data_group = {
-            Teacher: groupData.UserID,
-            StartingDate: groupInfo.StartingDate,
+            TeacherID: groupData.TeacherID,
+            StartingDate: groupData.StartingDate,
             ScheduleDate: groupData.ScheduleDate,
             ScheduleHour: groupData.ScheduleHour,
-            Capacity: groupInfo.Capacity
+            Capacity: groupData.Capacity
         }
+
         setGroupInfo(new_data_group);
 
     };
@@ -77,10 +100,26 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isMo
         setGroupInfo({ ...groupInfo, [fieldName]: (inputData != "-1") ? inputData : "" });
     };
 
-    const handleClose = () => handleState(false);
+    const cleanModal = () => {
+        const new_data_group = {
+            TeacherID: "",
+            StartingDate: "",
+            ScheduleDate: "",
+            ScheduleHour: "",
+            Capacity: 0
+        }
+
+        setSelectedDays(emptyDays);
+        setGroupInfo(new_data_group);
+    };
+
+    const handleClose = () => {
+        handleState(false);
+        cleanModal();
+    };
 
     const handleAddGroup = async (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
         const ScheduleDate = Object.keys(selectedDays).filter(day => selectedDays[day]).join('/');
         if (ScheduleDate == "") {
             setAlertMessage("Debe seleccionar una fecha.");
@@ -89,31 +128,31 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isMo
         }
         setGroupInfo({ ...groupInfo, ["ScheduleDate"]: ScheduleDate });
 
-
         try {
             if (isModify) {
                 await GroupService.UpdateGroup(
-                    groupInfo.StartingDate,
+                    formatDate(groupInfo.StartingDate),
                     ScheduleDate,
                     groupInfo.ScheduleHour,
                     groupInfo.Capacity,
                     groupID,
-                    groupInfo.Teacher
+                    groupInfo.TeacherID
                 );
                 setAlertMessage("Se modifico el grupo correctamente.");
             }
             else {
                 await GroupService.CreateGroup(
-                    groupInfo.StartingDate,
+                    formatDate(groupInfo.StartingDate),
                     ScheduleDate,
                     groupInfo.ScheduleHour,
                     groupInfo.Capacity,
                     courseID,
-                    groupInfo.Teacher
+                    groupInfo.TeacherID
                 );
                 setAlertMessage("Se agrego el grupo al curso correctamente.");
             }
             setShowAlertGroup(true);
+            cleanModal();
         } catch (error) {
             console.error("Error al asignar grupo al curso:", error);
         } finally {
@@ -162,7 +201,7 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isMo
                                 </option>
                                 {
                                     teachersList.map((teacher) => (
-                                        <option key={teacher.UserID} value={teacher.UserID}>{teacher.Name}</option>
+                                        <option key={teacher.UserID} value={teacher.UserID} selected={teacher.UserID === groupInfo.TeacherID}>{teacher.Name}</option>
                                     ))
                                 }
                             </Form.Select>
@@ -172,25 +211,10 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isMo
                             <Form.Label className={`fs-5 ${styles.label}`}>Selecciona la fecha de inicio:</Form.Label>
                             <Form.Control
                                 type="date"
-                                value={groupInfo.StartingDate}
+                                value={formatDate(groupInfo.StartingDate) || ""}
                                 onChange={(e) => handleChange(e, 'StartingDate')}
                                 required
                             />
-                        </Form.Group>
-
-                        <Form.Label className={`fs-5 ${styles.label}`} >Elige los días:</Form.Label>
-                        <Form.Group className={'text-center mb-3'}>
-                            {Object.keys(selectedDays).map((day, index) => (
-                                <Form.Check key={index}
-                                    inline
-                                    label={day}
-                                    name={day}
-                                    type={'checkbox'}
-                                    id={index}
-                                    checked={selectedDays[day]}
-                                    onChange={() => handleCheckBoxChange(day)}
-                                />
-                            ))}
                         </Form.Group>
 
                         <Form.Group className='mb-3' controlId="timeInput">
@@ -212,6 +236,24 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isMo
                                 required
                             />
                         </Form.Group>
+
+
+                        <Form.Label className={`fs-5 ${styles.label}`} >Elige los días:</Form.Label>
+                        <Form.Group className={'text-center mb-3'}>
+                            {Object.keys(selectedDays).map((day, index) => (
+                                <Form.Check key={index}
+                                    inline
+                                    label={day}
+                                    name={day}
+                                    type={'checkbox'}
+                                    id={index}
+                                    checked={selectedDays[day]}
+                                    onChange={() => handleCheckBoxChange(day)}
+                                />
+                            ))}
+                        </Form.Group>
+
+
                         <Modal.Footer>
                             <Button variant="primary" type='submit'>
                                 {isModify ? 'Modificar grupo' : 'Agregar grupo'}

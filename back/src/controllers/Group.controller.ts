@@ -48,7 +48,7 @@ export const getGroupInformation = async (req: Request, res: Response) => {
 
 export const createGroup = async (req: Request, res: Response) => {
     const body: GroupBody = req.body;
-
+    console.log("HERE",req.body);
     // Verificar si los parámetros requeridos están presentes
     if (!body.StartingDate || !body.ScheduleDate || !body.ScheduleHour || !body.Capacity || !body.CourseID || !body.TeacherID) {
         res.status(400).send({ error: "All parameters are requiered" });
