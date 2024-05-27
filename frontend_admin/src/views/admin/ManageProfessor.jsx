@@ -78,7 +78,7 @@ function ManageProfessor() {
                     formValues.name,
                     formValues.email,
                     formValues.phoneNumber,
-                    null,
+                    "",
                     formValues.email,
                     tempPassword,
                     "Profesor"
@@ -129,6 +129,7 @@ function ManageProfessor() {
 
             if (result.o_status.includes("Error")) {
                 setAlertMessage("Hubo un error al intentar eliminar al profesor");
+                console.error("Error al eliminar profesor", result);
                 setShowAlertTeacher(true);
                 return;
             }
