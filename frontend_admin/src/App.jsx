@@ -60,7 +60,7 @@ function App() {
             {getUser().UserTypeID == 2 && (
               <>
                 <Route path="" element={<MyCourses />} />
-                <Route path="professor" element={<StudentsByProf />} />
+                <Route path="professor" element={<MyCourses />} />
                 <Route path="professor/courses" element={<MyCourses />} />
                 <Route path="professor/news" element={<ProfessorNews />} />
                 <Route path="professor/profile" element={<ManageProfessorAccount />} />
