@@ -31,7 +31,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 "${p_name}",
                 "${p_email}",
                 "${p_phone_number}",
-                "${(p_photo != "") ? p_photo : null}",
+                "${p_photo}",
                 "${p_username}",
                 "${p_password}",
                 "${p_type}",
