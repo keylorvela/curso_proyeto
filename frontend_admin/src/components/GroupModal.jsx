@@ -147,7 +147,7 @@ function GroupModal({ hide, handleState, groupInfo, setGroupInfo, courseID, isMo
                     groupInfo.ScheduleHour,
                     groupInfo.Capacity,
                     courseID,
-                    groupInfo.TeacherID
+                    groupInfo.Teacher
                 );
                 setAlertMessage("Se agrego el grupo al curso correctamente.");
             }
