@@ -40,7 +40,7 @@ export const registerUser = async (req: Request, res: Response) => {
                 "${p_name}",
                 "${p_email}",
                 "${p_phone_number}",
-                "${(p_photo != "") ? p_photo : null}",
+                "${p_photo}",
                 "${p_username}",
                 "${p_password}",
                 "${p_type}",
