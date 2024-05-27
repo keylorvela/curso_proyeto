@@ -258,35 +258,31 @@ function TreatmentView() {
                                         <p className="fs-3">Ofrecemos los siguientes métodos de pago: transferencia bancaria, Sinpe Móvil y link de pago directo con Conexión BP. ¿Listo para realizar tu compra? ¡Contáctanos por WhatsApp y agenda tu cita hoy mismo! </p>
                                     </Col>
                                 </Row>
-                                <Row className="mt-3">
-                                    <Col xs={6} sm={6} lg={3}>
+
+                                <Row className="mb-4">
+                                    <Col xs={12} sm={6} lg={3}>
                                         <button className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.wtsButton}`}
                                             onClick={handleButtonWhats}>
                                             <FaWhatsapp size={30} /><b className="text-nowrap mx-2">Agenda tu cita </b>
                                         </button>
                                     </Col>
-                                    <Col xs={6} sm={6} lg={3}>
+                                    <Col xs={12} sm={6} lg={3}>
                                         <button onClick={handleButtonPay} disabled={!treatment.PayLink} className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-lg ${commonStyles.bpButton}`}>
                                             <FiShoppingCart /><b className="text-nowrap"> Conexión BP</b>
                                         </button>
                                     </Col>
-
-                                </Row>
-
-                                <Row className="mb-4">
-                                    <Col xs={12} md={6} lg={4} className="py-2">
+                                    <Col xs={6} md={6} lg={3}>
                                         <div onClick={handleImageSinpe} className={commonStyles.tooltip}>
                                             <span class={commonStyles.tooltiptext}>Click para copiar</span>
                                             <Image src={sinpe} fluid />
                                         </div>
                                     </Col>
-                                    <Col xs={12} md={6} lg={6} className="py-2">
+                                    <Col xs={6} md={6} lg={3}>
                                         <div onClick={handleImageTransferencia} className={commonStyles.tooltip}>
                                             <span class={commonStyles.tooltiptext}>Click para copiar</span>
                                             <Image src={transferencia} fluid />
                                         </div>
                                     </Col>
-
                                 </Row>
 
 
