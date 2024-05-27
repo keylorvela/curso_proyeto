@@ -35,7 +35,6 @@ function Students() {
                     Foto: student.Photo || "https://i.ibb.co/8DcLrrH/profile-icon-design-free-vector.jpg"
                 }))
 
-                console.log(new_data)
                 setData(new_data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -48,7 +47,6 @@ function Students() {
     }, []);
 
     const handleButtonDetails = (rowData) => {
-        console.log(rowData)
         setModalData(rowData);
         setShowModal(true);
     };

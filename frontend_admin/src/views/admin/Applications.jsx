@@ -36,7 +36,6 @@ function Applications() {
         try {
             // Get courses
             const data_raw = await applicationsService.getApplications();
-            console.log(data_raw);
             setData(data_raw);
         } catch (error) {
             console.error('Error fetching data:', error);
