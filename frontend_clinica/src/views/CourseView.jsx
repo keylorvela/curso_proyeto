@@ -198,19 +198,21 @@ function CourseView() {
                                         <Row fluid>
                                             <Col xs={12} md={12} lg={12} className="pb-2 ">
                                                 <button onClick={handleAppointmentButton} className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-primary btn-lg ${commonStyles.wtsButton}`}>
-                                                    <FaWhatsapp size={30}/><b className="text-nowrap"> Agenda tu cita </b>
+                                                    <FaWhatsapp size={30} /><b className="text-nowrap"> Realizar consulta </b>
                                                 </button>
                                                 <button onClick={handleButtonPay} disabled={!course.PayLink} className={`d-flex align-items-center flex-nowrap justify-content-center gap-1 px-3 py-3 btn mb-2 btn-lg ${commonStyles.bpButton}`}>
-                                                    <FiShoppingCart size={30}/><b className="text-nowrap"> Conexión BP</b>
+                                                    <FiShoppingCart size={30} /><b className="text-nowrap"> Conexión BP</b>
                                                 </button>
                                             </Col>
                                             <Col xs={6} md={12} lg={6} className="py-2">
-                                                <div onClick={handleImageSinpe} style={{ cursor: 'pointer' }}>
+                                                <div onClick={handleImageSinpe} className={styles.tooltip}>
+                                                    <span class={styles.tooltiptext}>Click para copiar</span>
                                                     <Image src={sinpe} fluid />
                                                 </div>
                                             </Col>
                                             <Col xs={6} md={12} lg={6} className="py-2">
-                                                <div onClick={handleImageTransferencia} style={{ cursor: 'pointer' }}>
+                                                <div onClick={handleImageTransferencia} className={styles.tooltip}>
+                                                    <span class={styles.tooltiptext}>Click para copiar</span>
                                                     <Image src={transferencia} fluid />
                                                 </div>
                                             </Col>
@@ -218,8 +220,8 @@ function CourseView() {
                                     </Col>
                                     <Col md={6} lg={6} className={`rounded ${styles.form}`}>
                                         <CourseForm
-                                            course = {course}
-                                            groupsInCourse={ groupsInCourse }
+                                            course={course}
+                                            groupsInCourse={groupsInCourse}
                                         />
                                     </Col>
                                 </Row>
