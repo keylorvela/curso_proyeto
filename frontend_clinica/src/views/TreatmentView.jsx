@@ -271,14 +271,15 @@ function TreatmentView() {
                                             <FiShoppingCart /><b className="text-nowrap"> Conexión BP</b>
                                         </button>
                                     </Col>
-                                    <Col xs={6} sm={6} lg={3}>
-                                        <div onClick={handleImageSinpe} style={{ cursor: 'pointer' }}>
+                                    <Col xs={6} md={12} lg={6} className="py-2">
+                                        <div onClick={handleImageSinpe} className={styles.tooltip}>
+                                            <span class={styles.tooltiptext}>Click para copiar</span>
                                             <Image src={sinpe} fluid />
                                         </div>
                                     </Col>
-
-                                    <Col xs={6} sm={6} lg={3}>
-                                        <div onClick={handleImageTransferencia} style={{ cursor: 'pointer' }}>
+                                    <Col xs={6} md={12} lg={6} className="py-2">
+                                        <div onClick={handleImageTransferencia} className={styles.tooltip}>
+                                            <span class={styles.tooltiptext}>Click para copiar</span>
                                             <Image src={transferencia} fluid />
                                         </div>
                                     </Col>
